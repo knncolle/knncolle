@@ -4,6 +4,8 @@
 #include <queue>
 #include "utils.hpp"
 
+namespace knncolle {
+
 /* The neighbor_queue class is a priority queue that contains indices and
  * distances in decreasing order from the top of the queue. Existing elements
  * are displaced by incoming elements that have shorter distances, thus making
@@ -142,5 +144,7 @@ private:
     typedef std::pair<double, CellIndex_t> NeighborPoint;
     std::priority_queue<NeighborPoint> nearest;
 };
+
+}
 
 #endif
