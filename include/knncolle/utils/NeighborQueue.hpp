@@ -58,11 +58,12 @@ public:
         return nearest.top().first;
     }
 
-    void report(std::vector<CellIndex_t>& neighbors, std::vector<double>& distances, bool& has_ties, bool index, bool dist) {
-        neighbors.clear();
+    bool report(std::vector<CellIndex_t>& indices, std::vector<double>& distances, bool report_indices, bool report_distances) {
+        bool has_ties = false;
+        indices.clear();
         distances.clear();
         if (nearest.empty()) {
-            return;
+            return has_ties;
         }
 
         // If 'self=false', then it never enters the !found_self clause below, which is the correct behaviour.
@@ -74,21 +75,19 @@ public:
                 found_self=true;
                 continue;
             }
-
-            if (index) {
-                neighbors.push_back(nearest.top().second);
+            if (report_indices) {
+                indices.push_back(nearest.top().second);
             }
-            if (dist || ties) {
+            if (report_distances || ties) {
                 distances.push_back(nearest.top().first);
             }
-
             nearest.pop();
         }
 
         // We use push_back + reverse to give us sorting in increasing order;
         // this is nicer than push_front() for std::vectors.
-        if (!neighbors.empty()) {
-            std::reverse(neighbors.begin(), neighbors.end());
+        if (!indices.empty()) {
+            std::reverse(indices.begin(), indices.end());
         }
         if (!distances.empty()) {
             std::reverse(distances.begin(), distances.end());
@@ -96,8 +95,8 @@ public:
 
         // Getting rid of the last entry to get the 'k' nearest neighbors, if 'self' was not in the queue.
         if (self && !found_self) {
-            if (!neighbors.empty()) { 
-                neighbors.pop_back();
+            if (!indices.empty()) { 
+                indices.pop_back();
             }
             if (!distances.empty()) {
                 distances.pop_back();
@@ -116,17 +115,15 @@ public:
             // This is necessary to allow the above code to check for whether there is a tie at the boundary of the set.
             // It is now time to remove this extra neighbor which should lie at the end of the set. The exception
             // is when we never actually fill up the queue, in which case we shouldn't do any popping.
-            if (static_cast<NumNeighbors_t>(neighbors.size()) > n_neighbors) {
-                neighbors.pop_back();
+            if (static_cast<NumNeighbors_t>(indices.size()) > n_neighbors) {
+                indices.pop_back();
             }
-            if (!dist) {
-                distances.clear();
-            } else if (static_cast<NumNeighbors_t>(distances.size()) > n_neighbors) {
+            if (static_cast<NumNeighbors_t>(distances.size()) > n_neighbors) {
                 distances.pop_back();
             }
         }
 
-        return;
+        return has_ties;
     } 
 private:
     bool ties = true;

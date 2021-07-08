@@ -5,9 +5,9 @@
 #include "utils.hpp"
 
 /**
- * @file base.hpp
+ * @file knn_base.hpp
  *
- * Defines the virtual base class for the **knncolle** library.
+ * Defines the virtual base class for all methods in the **knncolle** library.
  */
 
 namespace knncolle {
@@ -20,7 +20,7 @@ namespace knncolle {
 class knn_base {
 public:
     /**
-     * Get the number of observations.
+     * Get the number of observations in the dataset to be searched.
      */
     virtual CellIndex_t nobs() const = 0;
     
@@ -30,68 +30,6 @@ public:
     virtual MatDim_t ndims() const = 0;
 
     virtual ~knn_base() {}
-protected:
-    std::vector<CellIndex_t> current_neighbors;
-
-    std::vector<double> current_distances;
-
-    bool current_tied;
-
-public:
-    /**
-     * Get the indices of the nearest neighbors identified from the last `find_nearest_neighbors()` call.
-     * This should only be used if `store_indices()` is set to `true`.
-     *
-     * Neighbors are guaranteed to be ordered by increasing distance from the query point.
-     */
-    const std::vector<CellIndex_t>& neighbors() const { return current_neighbors; }
-
-    /**
-     * Get the distances to the nearest neighbors identified from the last `find_nearest_neighbors()` call.
-     * This should only be used if `store_distances()` is set to `true`.
-     *
-     * Distances are guaranteed to be in increasing order.
-     */
-    const std::vector<double>& distances() const { return current_distances; }
-
-    /**
-     * Get the tied status from the last `find_nearest_neighbors()` call.
-     * This should only be used if `check_ties()` is set to `true`.
-     */
-    bool tied() const { return current_tied; }
-
-protected:
-    bool get_index = true;
-    bool get_distance = true;
-    bool get_ties = true;
-
-public:
-    /**
-     * @param s Whether the indices of the nearest neighbors should be recorded in `find_nearest_neighbors()`.
-     * Setting to `false` can improve efficiency if only the distances are of interest.
-     */
-    void store_indices(bool s = true) {
-        get_index = s;
-        return;
-    }
-
-    /**
-     * @param s Whether the indices of the nearest neighbors should be recorded in `find_nearest_neighbors()`.
-     * Setting to `false` can improve efficiency if only the indices are of interest.
-     */
-    void store_distances(bool s = true) {
-        get_distance = s;
-        return;
-    }
-
-    /**
-     * @param w Whether to check for tied neighbors.
-     * Setting to `false` can improve efficiency.
-     */
-    void check_ties(bool w = true) {
-        get_ties = w;
-        return;
-    }
 
 public:
     /** 
@@ -99,20 +37,42 @@ public:
      *
      * @param index The index of the observation of interest.
      * @param k The number of neighbors to identify.
+     * @param[out] indices Vector to store the index of the nearest neighbors. 
+     * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
+     * @param[out] distances Vector to store the distances to the nearest neighbors.
+     * Each distance corresponds to a neighbor in `indices`. 
+     * Guaranteed to be sorted in increasing order.
+     * @param report_indices Whether to report indices.
+     * @param report_distances Whether to report distances.
+     * @param check_ties Whether to check for tied neighbors.
      *
-     * @return The results of the search can be extracted with `neighbors()`, `distances()` and `tied()`.
+     * @return 
+     * If `report_indices = true`, `indices` is filled with the identities of the `k` nearest neighbors.
+     * If `report_distances = true`, `distances` is filled with the distances to the `k` nearest neighbors.
+     * If `check_ties = true`, a boolean is returned indicating whether ties were detected in the first `k + 1` neighbors, otherwise `false` is always returned.
      */
-    virtual void find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k) = 0;
+    virtual bool find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances, 
+        bool report_indices = true, bool report_distances = true, bool check_ties = true) const = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
      *
      * @param query Pointer to an array of length equal to `ndims()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
+     * @param[out] indices Vector to store the index of the nearest neighbors. 
+     * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
+     * @param[out] distances Vector to store the distances to the nearest neighbors.
+     * Each distance corresponds to a neighbor in `indices`. 
+     * Guaranteed to be sorted in increasing order.
+     * @param check_ties Whether to check for tied neighbors.
      *
-     * @return The results of the search can be extracted with `neighbors()`, `distances()` and `tied()`.
+     * @return 
+     * If `report_indices = true`, `indices` is filled with the identities of the `k` nearest neighbors.
+     * If `report_distances = true`, `distances` is filled with the distances to the `k` nearest neighbors.
+     * If `check_ties = true`, a boolean is returned indicating whether ties were detected in the first `k + 1` neighbors, otherwise `false` is always returned.
      */
-    virtual void find_nearest_neighbors(const double* query, NumNeighbors_t k) = 0;
+    virtual bool find_nearest_neighbors(const double* query, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
+        bool report_indices = true, bool report_distances = true, bool check_ties = true) const = 0;
 };
 
 }

@@ -113,29 +113,32 @@ public:
     }
 
 public:
-    void find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k) {
+    bool find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances, 
+        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
+    {
         assert(index < static_cast<CellIndex_t>(num_obs));
-        NeighborQueue nearest(index, k, this->get_ties);
-        find_nearest_neighbors_internal(store.reference + index * num_dim, nearest);
-        return;
+        NeighborQueue nearest(index, k, check_ties);
+        return find_nearest_neighbors_internal(store.reference + index * num_dim, nearest, indices, distances, report_indices, report_distances);
     }
 
-    void find_nearest_neighbors(const double* query, NumNeighbors_t k) {
-        NeighborQueue nearest(k, this->get_ties);
-        find_nearest_neighbors_internal(query, nearest);
-        return;
+    bool find_nearest_neighbors(const double* query, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
+        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
+    {
+        NeighborQueue nearest(k, check_ties);
+        return find_nearest_neighbors_internal(query, nearest, indices, distances, report_indices, report_distances);
     }
 
 private:
-    void find_nearest_neighbors_internal(const double* query, NeighborQueue& nearest) {
+    bool find_nearest_neighbors_internal(const double* query, NeighborQueue& nearest, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
+        bool report_indices = true, bool report_distances = true) const
+    {
         double tau = std::numeric_limits<double>::max();
         search_nn(0, query, tau, nearest);
-        nearest.report(this->current_neighbors, this->current_distances, this->current_tied, this->get_index, this->get_distance);
-        return;
+        return nearest.report(indices, distances, report_indices, report_distances);
     }
 
 private:
-    void search_nn(NodeIndex_t curnode_index, const double* target, double& tau, NeighborQueue& nearest) { 
+    void search_nn(NodeIndex_t curnode_index, const double* target, double& tau, NeighborQueue& nearest) const { 
         if (curnode_index == LEAF_MARKER) { // indicates that we're done here
             return;
         }
