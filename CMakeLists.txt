@@ -7,9 +7,12 @@ project(knncolle
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(extern)
+
 add_library(knncolle INTERFACE)
 
 target_include_directories(knncolle INTERFACE include/)
+target_link_libraries(knncolle INTERFACE annoy)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
