@@ -20,8 +20,8 @@ TEST_P(VpTreeTest, FindEuclidean) {
     std::vector<int> bf_neighbors, vp_neighbors;
     std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
-        vp.find_nearest_neighbors(x, k, vp_neighbors, vp_distances);
-        bf.find_nearest_neighbors(x, k, bf_neighbors, bf_distances);
+        vp.find_nearest_neighbors(x, k, &vp_neighbors, &vp_distances);
+        bf.find_nearest_neighbors(x, k, &bf_neighbors, &bf_distances);
         EXPECT_EQ(vp_neighbors, bf_neighbors);
         EXPECT_EQ(vp_distances, bf_distances);
     }
@@ -38,8 +38,8 @@ TEST_P(VpTreeTest, FindManhattan) {
     std::vector<int> bf_neighbors, vp_neighbors;
     std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
-        vp.find_nearest_neighbors(x, k, vp_neighbors, vp_distances);
-        bf.find_nearest_neighbors(x, k, bf_neighbors, bf_distances);
+        vp.find_nearest_neighbors(x, k, &vp_neighbors, &vp_distances);
+        bf.find_nearest_neighbors(x, k, &bf_neighbors, &bf_distances);
         EXPECT_EQ(vp_neighbors, bf_neighbors);
         EXPECT_EQ(vp_distances, bf_distances);
     }

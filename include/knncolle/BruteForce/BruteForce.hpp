@@ -65,36 +65,39 @@ public:
      */
     BruteForce(ITYPE ndim, ITYPE nobs, std::vector<DTYPE> vals) : num_dim(ndim), num_obs(nobs), store(std::move(vals)) {}
 
-    bool find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
-    {
+    void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
         assert(index < num_obs);
-        NeighborQueue<ITYPE, DTYPE> nearest(index, k, check_ties);
-        return find_nearest_neighbors_internal(store.reference + index * num_dim, nearest, indices, distances, report_indices, report_distances);
+        NeighborQueue<ITYPE, DTYPE> nearest(k + 1);
+        search_nn(store.reference + index * num_dim, nearest);
+        nearest.report(indices, distances, true, index);
+        normalize(distances);
+        return;
     }
 
-    bool find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
-    {
-        NeighborQueue<ITYPE, DTYPE> nearest(k, check_ties);
-        return find_nearest_neighbors_internal(query, nearest, indices, distances, report_indices, report_distances);
+    void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
+        NeighborQueue<ITYPE, DTYPE> nearest(k);
+        search_nn(query, nearest);
+        nearest.report(indices, distances);
+        normalize(distances);
+        return;
     }
 
 private:
-    bool find_nearest_neighbors_internal(const DTYPE* query, NeighborQueue<ITYPE, DTYPE>& nearest, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances,
-        bool report_indices, bool report_distances) const 
-    {
+    void search_nn(const DTYPE* query, NeighborQueue<ITYPE, DTYPE>& nearest) const {
         auto copy = store.reference;
         for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
             nearest.add(i, DISTANCE<ITYPE, DTYPE>::raw_distance(query, copy, num_dim));
         }
+        return;
+    }
 
-        bool out = nearest.report(indices, distances, report_indices, report_distances);
-        for (auto& d : distances) {
-            d = DISTANCE<ITYPE, DTYPE>::normalize(d);
+    void normalize(std::vector<DTYPE>* distances) const {
+        if (distances) {
+            for (auto& d : *distances) {
+                d = DISTANCE<ITYPE, DTYPE>::normalize(d);
+            }
         }
-
-        return out;
+        return;
     }
 };
 

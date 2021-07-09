@@ -2,47 +2,25 @@
 #define NEIGHBOR_QUEUE_HPP
 
 #include <queue>
+#include <vector>
 
 namespace knncolle {
 
-/* The neighbor_queue class is a priority queue that contains indices and
+/* The NeighborQueue class is a priority queue that contains indices and
  * distances in decreasing order from the top of the queue. Existing elements
  * are displaced by incoming elements that have shorter distances, thus making
  * it a useful data structure for retaining the k-nearest neighbors.
- *
- * We augment a normal priority queue with some extra features to:
- *
- * - remove self-matches for kNN searches. In such cases, the size of the queue
- *   is set to k+1 during the search, and any self-match is removed when the
- *   neighbors are reported to yield exactly k neighbors.  We cannot simply
- *   remove the closest neighbor in case of duplicates.
- * - warn about ties for exact searches. In such cases, the size of the queue
- *   is set to k+1 search. Reporting will check for tied distances among queue
- *   elements and emit one R warning per lifetime of the queue (to avoid
- *   saturating the warning counter in practical settings).
- *
- * Both of these options can be applied together, in which case the size of the
- * queue is set to k+2, any self-matches are removed, and distances are
- * searched for ties.
  */
 
 template<typename ITYPE = int, typename DTYPE = double>
 class NeighborQueue {
 public:
-    NeighborQueue(int k, bool t) : ties(t), self(false) {
-        base_setup(k);
-        return;
-    }
-
-    NeighborQueue(ITYPE s, int k, bool t) : ties(t), self(true) , self_dex(s) {
-        base_setup(k);
-        return;
-    }
+    NeighborQueue(int k) : n_neighbors(k), full(n_neighbors == 0) {}
 
     void add(ITYPE i, DTYPE d) {
         if (!full) {
             nearest.push(NeighborPoint(d, i));
-            if (static_cast<int>(nearest.size())==check_k) {
+            if (static_cast<int>(nearest.size()) == n_neighbors) {
                 full=true;
             }
         } else if (d < limit()) {
@@ -60,86 +38,56 @@ public:
         return nearest.top().first;
     }
 
-    bool report(std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, bool report_indices, bool report_distances) {
-        bool has_ties = false;
-        indices.clear();
-        distances.clear();
-        if (nearest.empty()) {
-            return has_ties;
+    void report(std::vector<ITYPE>* indices, std::vector<DTYPE>* distances, bool check_self = false, ITYPE self_index = 0) {
+        if (indices) {
+            indices->clear();
+        }
+        if (distances) {
+            distances->clear();
         }
 
-        // If 'self=false', then it never enters the !found_self clause below, which is the correct behaviour.
-        bool found_self=!self; 
+        // If 'check_self=false', then it never enters the !found_self clause below, which is the correct behaviour.
+        bool found_self=!check_self;
 
         while (!nearest.empty()) {
-            if (!found_self && nearest.top().second==self_dex) {
+            if (!found_self && nearest.top().second==self_index) {
                 nearest.pop();
                 found_self=true;
                 continue;
             }
-            if (report_indices) {
-                indices.push_back(nearest.top().second);
+            if (indices) {
+                indices->push_back(nearest.top().second);
             }
-            if (report_distances || ties) {
-                distances.push_back(nearest.top().first);
+            if (distances) {
+                distances->push_back(nearest.top().first);
             }
             nearest.pop();
         }
 
         // We use push_back + reverse to give us sorting in increasing order;
         // this is nicer than push_front() for std::vectors.
-        if (!indices.empty()) {
-            std::reverse(indices.begin(), indices.end());
+        if (indices) {
+            std::reverse(indices->begin(), indices->end());
         }
-        if (!distances.empty()) {
-            std::reverse(distances.begin(), distances.end());
+        if (distances) {
+            std::reverse(distances->begin(), distances->end());
         }
 
         // Getting rid of the last entry to get the 'k' nearest neighbors, if 'self' was not in the queue.
-        if (self && !found_self) {
-            if (!indices.empty()) { 
-                indices.pop_back();
+        if (check_self && !found_self) {
+            if (indices) {
+                indices->pop_back();
             }
-            if (!distances.empty()) {
-                distances.pop_back();
-            }
-        }
-
-        if (ties) {
-            for (size_t d=1; d<distances.size(); ++d) {
-                if (distances[d-1] >= distances[d]) {
-                    has_ties = true;
-                    break;
-                }
-            }
-        
-            // We assume that the NN search was conducted with an extra neighbor if ties=true upon entry.
-            // This is necessary to allow the above code to check for whether there is a tie at the boundary of the set.
-            // It is now time to remove this extra neighbor which should lie at the end of the set. The exception
-            // is when we never actually fill up the queue, in which case we shouldn't do any popping.
-            if (static_cast<int>(indices.size()) > n_neighbors) {
-                indices.pop_back();
-            }
-            if (static_cast<int>(distances.size()) > n_neighbors) {
-                distances.pop_back();
+            if (distances) {
+                distances->pop_back();
             }
         }
 
-        return has_ties;
+        return;
     } 
 private:
-    bool ties = true;
-    bool self = false;
-    ITYPE self_dex=0;
-    int n_neighbors=0, check_k=1;
-    bool full=false;
-
-    void base_setup(int k) {
-        n_neighbors=k;
-        check_k=n_neighbors + self + ties;
-        full=(check_k==0);
-        return;
-    }
+    int n_neighbors;
+    bool full = false;
 
     typedef std::pair<DTYPE, ITYPE> NeighborPoint;
     std::priority_queue<NeighborPoint> nearest;

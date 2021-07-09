@@ -40,44 +40,38 @@ public:
      *
      * @param index The index of the observation of interest.
      * @param k The number of neighbors to identify.
-     * @param[out] indices Vector to store the index of the nearest neighbors. 
+     * @param[out] indices Pointer to a vector to store the index of the nearest neighbors. 
      * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
-     * @param[out] distances Vector to store the distances to the nearest neighbors.
+     * If `NULL`, no indices are returned.
+     * @param[out] distances Pointer to a vector to store the distances to the nearest neighbors.
      * Each distance corresponds to a neighbor in `indices`. 
      * Guaranteed to be sorted in increasing order.
-     * @param report_indices Whether to report indices.
-     * @param report_distances Whether to report distances.
-     * @param check_ties Whether to check for tied neighbors.
+     * If `NULL`, no distances are returned.
      *
      * @return 
-     * If `report_indices = true`, `indices` is filled with the identities of the `k` nearest neighbors.
-     * If `report_distances = true`, `distances` is filled with the distances to the `k` nearest neighbors.
-     * If `check_ties = true`, a boolean is returned indicating whether ties were detected in the first `k + 1` neighbors, otherwise `false` is always returned.
+     * If `report_indices = true`, `*indices` is filled with the identities of the `k` nearest neighbors.
+     * If `report_distances = true`, `*distances` is filled with the distances to the `k` nearest neighbors.
      */
-    virtual bool find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const = 0;
+    virtual void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
      *
      * @param query Pointer to an array of length equal to `ndims()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
-     * @param[out] indices Vector to store the index of the nearest neighbors. 
+     * @param[out] indices Pointer to a vector to store the index of the nearest neighbors. 
      * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
-     * @param[out] distances Vector to store the distances to the nearest neighbors.
+     * If `NULL`, no indices are returned.
+     * @param[out] distances Pointer to a vector to store the distances to the nearest neighbors.
      * Each distance corresponds to a neighbor in `indices`. 
      * Guaranteed to be sorted in increasing order.
-     * @param report_indices Whether to report indices.
-     * @param report_distances Whether to report distances.
-     * @param check_ties Whether to check for tied neighbors.
+     * If `NULL`, no distances are returned.
      *
      * @return 
-     * If `report_indices = true`, `indices` is filled with the identities of the `k` nearest neighbors.
-     * If `report_distances = true`, `distances` is filled with the distances to the `k` nearest neighbors.
-     * If `check_ties = true`, a boolean is returned indicating whether ties were detected in the first `k + 1` neighbors, otherwise `false` is always returned.
+     * If `report_indices = true`, `*indices` is filled with the identities of the `k` nearest neighbors.
+     * If `report_distances = true`, `*distances` is filled with the distances to the `k` nearest neighbors.
      */
-    virtual bool find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances,
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const = 0;
+    virtual void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const = 0;
 };
 
 }

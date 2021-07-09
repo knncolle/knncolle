@@ -170,23 +170,21 @@ private:
     }
 
 public:
-    bool find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
-    {
+    void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const { 
         assert(index < num_obs);
-        NeighborQueue<ITYPE, DTYPE> nearest(index, k, check_ties);
+        NeighborQueue<ITYPE, DTYPE> nearest(k + 1);
         double tau = std::numeric_limits<double>::max();
         search_nn(0, store.reference + index * num_dim, tau, nearest);
-        return nearest.report(indices, distances, report_indices, report_distances);
+        nearest.report(indices, distances, true, index);
+        return;
     }
 
-    bool find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances,
-        bool report_indices = true, bool report_distances = true, bool check_ties = true) const
-    {
-        NeighborQueue<ITYPE, DTYPE> nearest(k, check_ties);
+    void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
+        NeighborQueue<ITYPE, DTYPE> nearest(k);
         double tau = std::numeric_limits<double>::max();
         search_nn(0, query, tau, nearest);
-        return nearest.report(indices, distances, report_indices, report_distances);
+        nearest.report(indices, distances);
+        return;
     }
 
 private:
