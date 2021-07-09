@@ -2,7 +2,6 @@
 #define NEIGHBOR_QUEUE_HPP
 
 #include <queue>
-#include "utils.hpp"
 
 namespace knncolle {
 
@@ -27,22 +26,23 @@ namespace knncolle {
  * searched for ties.
  */
 
+template<typename ITYPE = int, typename DTYPE = double>
 class NeighborQueue {
 public:
-    NeighborQueue(NumNeighbors_t k, bool t) : ties(t), self(false) {
+    NeighborQueue(int k, bool t) : ties(t), self(false) {
         base_setup(k);
         return;
     }
 
-    NeighborQueue(CellIndex_t s, NumNeighbors_t k, bool t) : ties(t), self(true) , self_dex(s) {
+    NeighborQueue(ITYPE s, int k, bool t) : ties(t), self(true) , self_dex(s) {
         base_setup(k);
         return;
     }
 
-    void add(CellIndex_t i, double d) {
+    void add(ITYPE i, DTYPE d) {
         if (!full) {
             nearest.push(NeighborPoint(d, i));
-            if (static_cast<NumNeighbors_t>(nearest.size())==check_k) {
+            if (static_cast<int>(nearest.size())==check_k) {
                 full=true;
             }
         } else if (d < limit()) {
@@ -56,11 +56,11 @@ public:
         return full;
     }
 
-    double limit() const {
+    DTYPE limit() const {
         return nearest.top().first;
     }
 
-    bool report(std::vector<CellIndex_t>& indices, std::vector<double>& distances, bool report_indices, bool report_distances) {
+    bool report(std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, bool report_indices, bool report_distances) {
         bool has_ties = false;
         indices.clear();
         distances.clear();
@@ -117,10 +117,10 @@ public:
             // This is necessary to allow the above code to check for whether there is a tie at the boundary of the set.
             // It is now time to remove this extra neighbor which should lie at the end of the set. The exception
             // is when we never actually fill up the queue, in which case we shouldn't do any popping.
-            if (static_cast<NumNeighbors_t>(indices.size()) > n_neighbors) {
+            if (static_cast<int>(indices.size()) > n_neighbors) {
                 indices.pop_back();
             }
-            if (static_cast<NumNeighbors_t>(distances.size()) > n_neighbors) {
+            if (static_cast<int>(distances.size()) > n_neighbors) {
                 distances.pop_back();
             }
         }
@@ -130,18 +130,18 @@ public:
 private:
     bool ties = true;
     bool self = false;
-    CellIndex_t self_dex=0;
-    NumNeighbors_t n_neighbors=0, check_k=1;
+    ITYPE self_dex=0;
+    int n_neighbors=0, check_k=1;
     bool full=false;
 
-    void base_setup(NumNeighbors_t k) {
+    void base_setup(int k) {
         n_neighbors=k;
         check_k=n_neighbors + self + ties;
         full=(check_k==0);
         return;
     }
 
-    typedef std::pair<double, CellIndex_t> NeighborPoint;
+    typedef std::pair<DTYPE, ITYPE> NeighborPoint;
     std::priority_queue<NeighborPoint> nearest;
 };
 

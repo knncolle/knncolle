@@ -6,20 +6,18 @@
 
 namespace knncolle {
 
-template<bool COPY>
+template<typename DTYPE>
 struct MatrixStore {
-    MatrixStore(size_t n, const double* ptr) : store(COPY ? n : 0), reference(COPY ? store.data() : ptr) {
-        if constexpr(COPY) {
-            std::fill(ptr, ptr + n, store.begin());
-        }
-        return;
-    }
+    MatrixStore(const DTYPE* ptr) : copy(false), reference(ptr) {}
 
-    MatrixStore(const MatrixStore<COPY>& x) : store(x.store), reference(COPY ? store.data() : x.reference) {}
+    MatrixStore(std::vector<DTYPE> val) : copy(true), store(std::move(val)), reference(store.data()) {}
 
-    MatrixStore& operator=(const MatrixStore<COPY>& x) {
+    MatrixStore(const MatrixStore<DTYPE>& x) : copy(x.copy), store(x.store), reference(copy ? store.data() : x.reference) {}
+
+    MatrixStore& operator=(const MatrixStore<DTYPE>& x) {
+        copy = x.copy;
         store = x.store;
-        if constexpr(COPY) {
+        if (copy) {
             reference = store.data();
         } else {
             reference = x.reference;
@@ -27,11 +25,12 @@ struct MatrixStore {
         return *this;
     }
 
-    MatrixStore(MatrixStore<COPY>&& x) : store(std::move(x.store)), reference(COPY ? store.data() : x.reference) {}
+    MatrixStore(MatrixStore<DTYPE>&& x) : copy(x.copy), store(std::move(x.store)), reference(copy ? store.data() : x.reference) {}
 
-    MatrixStore& operator=(MatrixStore<COPY>&& x) {
+    MatrixStore& operator=(MatrixStore<DTYPE>&& x) {
+        copy = x.copy;
         store = std::move(x.store);
-        if constexpr(COPY) {
+        if (copy) {
             reference = store.data();
         } else {
             reference = x.reference;
@@ -41,6 +40,7 @@ struct MatrixStore {
 
     ~MatrixStore() {}
 
+    bool copy;
     std::vector<double> store; 
     const double* reference;
 };

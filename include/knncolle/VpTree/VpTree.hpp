@@ -10,20 +10,48 @@
 #include <random>
 #include <limits>
 
+/**
+ * @file VpTree.hpp
+ *
+ * Implements a vantage point (VP) tree to search for nearest neighbors.
+ */
+
+
 namespace knncolle {
 
-/* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
+/**
+ * @brief Perform a nearest neighbor search based on a vantage point (VP) tree.
+ *
+ * In a VP tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions.
+ * The split is determined by picking an arbitrary point inside that subset as the node center, 
+ * computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere.
+ * The left child of this node contains all points within that hypersphere while the right child contains the remaining points.
+ * This is applied recursively until all points resolve to individual nodes.
+ *
+ * The nearest neighbor search traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.
+ * VP trees are often faster than more conventional KD-trees or ball trees as the former uses the points themselves as the nodes of the tree,
+ * avoiding the need to create many intermediate nodes and reducing the total number of distance calculations.
+ *
+ * @tparam DISTANCE Template class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam ITYPE Integer type for the indices.
+ * @tparam DTYPE Floating point type for the data.
+ *
+ * @see
+ * Yianilos PN (1993).
+ * Data structures and algorithms for nearest neighbor search in general metric spaces.
+ * _Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms_, 311-321.
+ */
+template<template<typename, typename> class DISTANCE, typename ITYPE = int, typename DTYPE = double>
+class VpTree : public knn_base<ITYPE, DTYPE> {
+    /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
-template<bool COPY, class DISTANCE>
-class VpTree : public knn_base {
 private:
-    MatDim_t num_dim;
-    CellIndex_t num_obs;
+    ITYPE num_dim;
+    ITYPE num_obs;
 public:
-    CellIndex_t nobs() const { return num_obs; } 
+    ITYPE nobs() const { return num_obs; } 
     
-    MatDim_t ndims() const { return num_dim; }
-
+    ITYPE ndim() const { return num_dim; }
 private:
     typedef int NodeIndex_t;
     static const NodeIndex_t LEAF_MARKER=-1;
@@ -31,14 +59,14 @@ private:
     // Single node of a VP tree (has a point and radius; left children are closer to point than the radius)
     struct Node {
         double threshold;  // radius 
-        CellIndex_t index; // original index of current vantage point 
+        ITYPE index; // original index of current vantage point 
         NodeIndex_t left;  // node index of the next vantage point for all children closer than 'threshold' from the current vantage point
         NodeIndex_t right; // node index of the next vantage point for all children further than 'threshold' from the current vantage point
         Node(NodeIndex_t i=0) : threshold(0), index(i), left(LEAF_MARKER), right(LEAF_MARKER) {}
     };
     std::vector<Node> nodes;
 
-    typedef std::tuple<CellIndex_t, const double*, double> DataPoint;
+    typedef std::tuple<ITYPE, const double*, double> DataPoint;
 
     template<class SAMPLER>
     NodeIndex_t buildFromPoints(NodeIndex_t lower, NodeIndex_t upper, std::vector<DataPoint>& items, SAMPLER& rng) {
@@ -69,7 +97,7 @@ private:
             const double * ref = std::get<1>(vantage);
             for (size_t i = lower + 1; i < upper; ++i) {
                 const double* loc = std::get<1>(items[i]);
-                std::get<2>(items[i]) = DISTANCE::raw_distance(ref, loc, num_dim);
+                std::get<2>(items[i]) = DISTANCE<ITYPE, DTYPE>::raw_distance(ref, loc, num_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -81,7 +109,7 @@ private:
             );
            
             // Threshold of the new node will be the distance to the median
-            node.threshold = DISTANCE::normalize(std::get<2>(items[median]));
+            node.threshold = DISTANCE<ITYPE, DTYPE>::normalize(std::get<2>(items[median]));
 
             // Recursively build tree
             node.index = std::get<0>(vantage);
@@ -95,57 +123,81 @@ private:
     }
 
 private:
-    MatrixStore<COPY> store;
+    MatrixStore<DTYPE> store;
 
 public:
-    VpTree(CellIndex_t nobs, MatDim_t ndim, const double* vals) : num_dim(ndim), num_obs(nobs), store(ndim * nobs, vals) { 
+    /**
+     * Construct a `VpTree` instance without any copying of the data.
+     * The `vals` pointer is directly stored in the instance, assuming that the lifetime of the array exceeds that of the `BruteForce` object.
+     *
+     * @param ndim Number of dimensions.
+     * @param nobs Number of observations.
+     * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
+     * i.e., contiguous elements belong to the same observation.
+     */
+    VpTree(ITYPE ndim, ITYPE nobs, const DTYPE* vals) : num_dim(ndim), num_obs(nobs), store(vals) { 
+        complete_assembly();
+        return;
+    }
+
+    /**
+     * Construct a `VpTree` instance by copying the data.
+     * This is useful when the original data container has an unknown lifetime.
+     *
+     * @param ndim Number of dimensions.
+     * @param nobs Number of observations.
+     * @param vals Vector of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
+     * i.e., contiguous elements belong to the same observation.
+     */
+    VpTree(ITYPE ndim, ITYPE nobs, std::vector<DTYPE> vals) : num_dim(ndim), num_obs(nobs), store(std::move(vals)) { 
+        complete_assembly();
+        return;
+    }
+
+private:
+    void complete_assembly() {
         std::vector<DataPoint> items;
-        items.reserve(nobs);
+        items.reserve(num_obs);
         auto copy = store.reference;
-        for (MatDim_t i = 0; i < nobs; ++i, copy += ndim) {
+        for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
             items.push_back(DataPoint(i, copy, 0));
         }
 
-        nodes.reserve(nobs);
+        nodes.reserve(num_obs);
         std::mt19937_64 rand(1234567890); // seed doesn't really matter, we don't need statistical correctness here.
-        buildFromPoints(0, nobs, items, rand);
+        buildFromPoints(0, num_obs, items, rand);
         return;
     }
 
 public:
-    bool find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances, 
+    bool find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
         bool report_indices = true, bool report_distances = true, bool check_ties = true) const
     {
-        assert(index < static_cast<CellIndex_t>(num_obs));
-        NeighborQueue nearest(index, k, check_ties);
-        return find_nearest_neighbors_internal(store.reference + index * num_dim, nearest, indices, distances, report_indices, report_distances);
+        assert(index < num_obs);
+        NeighborQueue<ITYPE, DTYPE> nearest(index, k, check_ties);
+        double tau = std::numeric_limits<double>::max();
+        search_nn(0, store.reference + index * num_dim, tau, nearest);
+        return nearest.report(indices, distances, report_indices, report_distances);
     }
 
-    bool find_nearest_neighbors(const double* query, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
+    bool find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances,
         bool report_indices = true, bool report_distances = true, bool check_ties = true) const
     {
-        NeighborQueue nearest(k, check_ties);
-        return find_nearest_neighbors_internal(query, nearest, indices, distances, report_indices, report_distances);
-    }
-
-private:
-    bool find_nearest_neighbors_internal(const double* query, NeighborQueue& nearest, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
-        bool report_indices = true, bool report_distances = true) const
-    {
+        NeighborQueue<ITYPE, DTYPE> nearest(k, check_ties);
         double tau = std::numeric_limits<double>::max();
         search_nn(0, query, tau, nearest);
         return nearest.report(indices, distances, report_indices, report_distances);
     }
 
 private:
-    void search_nn(NodeIndex_t curnode_index, const double* target, double& tau, NeighborQueue& nearest) const { 
+    void search_nn(NodeIndex_t curnode_index, const double* target, double& tau, NeighborQueue<ITYPE, DTYPE>& nearest) const { 
         if (curnode_index == LEAF_MARKER) { // indicates that we're done here
             return;
         }
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        double dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
+        double dist = DISTANCE<ITYPE, DTYPE>::normalize(DISTANCE<ITYPE, DTYPE>::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {
@@ -183,11 +235,17 @@ private:
     }
 };
 
-template<bool COPY = false>
-using VpTreeEuclidean = VpTree<COPY, distances::Euclidean>;
+/**
+ * Perform a VP tree search with Euclidean distances.
+ */
+template<typename ITYPE = int, typename DTYPE = double>
+using VpTreeEuclidean = VpTree<distances::Euclidean, ITYPE, DTYPE>;
 
-template<bool COPY = false>
-using VpTreeManhattan = VpTree<COPY, distances::Manhattan>;
+/**
+ * Perform a VP tree search with Manhattan distances.
+ */
+template<typename ITYPE = int, typename DTYPE = double>
+using VpTreeManhattan = VpTree<distances::Manhattan, ITYPE, DTYPE>;
 
 };
 

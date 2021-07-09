@@ -14,10 +14,10 @@ TEST_P(VpTreeTest, FindEuclidean) {
     assemble(param);
     int k = std::get<2>(param);    
 
-    knncolle::VpTreeEuclidean<> vp(nobs, ndim, data.data());
-    knncolle::BruteForceEuclidean<> bf(nobs, ndim, data.data());
+    knncolle::VpTreeEuclidean<> vp(ndim, nobs, data.data());
+    knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
 
-    std::vector<CellIndex_t> bf_neighbors, vp_neighbors;
+    std::vector<int> bf_neighbors, vp_neighbors;
     std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
         vp.find_nearest_neighbors(x, k, vp_neighbors, vp_distances);
@@ -32,10 +32,10 @@ TEST_P(VpTreeTest, FindManhattan) {
     assemble(param);
     int k = std::get<2>(param);    
 
-    knncolle::VpTreeManhattan<> vp(nobs, ndim, data.data());
-    knncolle::BruteForceManhattan<> bf(nobs, ndim, data.data());
+    knncolle::VpTreeManhattan<> vp(ndim, nobs, data.data());
+    knncolle::BruteForceManhattan<> bf(ndim, nobs, data.data());
 
-    std::vector<CellIndex_t> bf_neighbors, vp_neighbors;
+    std::vector<int> bf_neighbors, vp_neighbors;
     std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
         vp.find_nearest_neighbors(x, k, vp_neighbors, vp_distances);

@@ -8,72 +8,107 @@
 
 #include <vector>
 
+/**
+ * @file BruteForce.hpp
+ *
+ * Implements a brute-force search for nearest neighbors.
+ */
+
 namespace knncolle {
 
 /**
  * @brief Perform a brute-force nearest neighbor search.
  *
- * Implements a brute-force search, mostly for testing purposes.
- * It may also be more performant than the other algorithms for very small numbers of observations.
+ * The brute-force search computes all pairwise distances between data and query points to identify nearest neighbors of the latter.
+ * It has quadratic complexity and is theoretically the worst-performing method;
+ * however, it has effectively no overhead from constructing or querying indexing structures, 
+ * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * @tparam COPY Whether to copy the input data.
- * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam DISTANCE Template class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam ITYPE Integer type for the indices.
+ * @tparam DTYPE Floating point type for the data.
  */
-template<bool COPY, class DISTANCE>
-class BruteForce : public knn_base {
+template<template<typename, typename> class DISTANCE, typename ITYPE = int, typename DTYPE = double>
+class BruteForce : public knn_base<ITYPE, DTYPE> {
 private:
-    MatDim_t num_dim;
-    CellIndex_t num_obs;
+    ITYPE num_dim;
+    ITYPE num_obs;
 
 public:
-    CellIndex_t nobs() const { return num_obs; } 
+    ITYPE nobs() const { return num_obs; } 
     
-    MatDim_t ndims() const { return num_dim; }
+    ITYPE ndim() const { return num_dim; }
 
 private:
-    MatrixStore<COPY> store;
+    MatrixStore<DTYPE> store;
 
 public:
-    BruteForce(CellIndex_t nobs, MatDim_t ndim, const double* vals) : num_dim(ndim), num_obs(nobs), store(ndim * nobs, vals) {}
+    /**
+     * Construct a `BruteForce` instance without any copying of the data.
+     * The `vals` pointer is directly stored in the instance, assuming that the lifetime of the array exceeds that of the `BruteForce` object.
+     *
+     * @param ndim Number of dimensions.
+     * @param nobs Number of observations.
+     * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
+     * i.e., contiguous elements belong to the same observation.
+     */
+    BruteForce(ITYPE ndim, ITYPE nobs, const DTYPE* vals) : num_dim(ndim), num_obs(nobs), store(vals) {}
 
-    bool find_nearest_neighbors(CellIndex_t index, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances, 
+    /**
+     * Construct a `BruteForce` instance by copying the data.
+     * This is useful when the original data container has an unknown lifetime.
+     *
+     * @param ndim Number of dimensions.
+     * @param nobs Number of observations.
+     * @param vals Vector of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
+     * i.e., contiguous elements belong to the same observation.
+     */
+    BruteForce(ITYPE ndim, ITYPE nobs, std::vector<DTYPE> vals) : num_dim(ndim), num_obs(nobs), store(std::move(vals)) {}
+
+    bool find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
         bool report_indices = true, bool report_distances = true, bool check_ties = true) const
     {
-        assert(index < static_cast<CellIndex_t>(num_obs));
-        NeighborQueue nearest(index, k, check_ties);
+        assert(index < num_obs);
+        NeighborQueue<ITYPE, DTYPE> nearest(index, k, check_ties);
         return find_nearest_neighbors_internal(store.reference + index * num_dim, nearest, indices, distances, report_indices, report_distances);
     }
 
-    bool find_nearest_neighbors(const double* query, NumNeighbors_t k, std::vector<CellIndex_t>& indices, std::vector<double>& distances, 
+    bool find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances, 
         bool report_indices = true, bool report_distances = true, bool check_ties = true) const
     {
-        NeighborQueue nearest(k, check_ties);
+        NeighborQueue<ITYPE, DTYPE> nearest(k, check_ties);
         return find_nearest_neighbors_internal(query, nearest, indices, distances, report_indices, report_distances);
     }
 
 private:
-    bool find_nearest_neighbors_internal(const double* query, NeighborQueue& nearest, std::vector<CellIndex_t>& indices, std::vector<double>& distances,
+    bool find_nearest_neighbors_internal(const DTYPE* query, NeighborQueue<ITYPE, DTYPE>& nearest, std::vector<ITYPE>& indices, std::vector<DTYPE>& distances,
         bool report_indices, bool report_distances) const 
     {
         auto copy = store.reference;
-        for (CellIndex_t i = 0; i < num_obs; ++i, copy += num_dim) {
-            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));
+        for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
+            nearest.add(i, DISTANCE<ITYPE, DTYPE>::raw_distance(query, copy, num_dim));
         }
 
         bool out = nearest.report(indices, distances, report_indices, report_distances);
         for (auto& d : distances) {
-            d = DISTANCE::normalize(d);
+            d = DISTANCE<ITYPE, DTYPE>::normalize(d);
         }
 
         return out;
     }
 };
 
-template<bool COPY = false>
-using BruteForceEuclidean = BruteForce<COPY, distances::Euclidean>;
+/**
+ * Perform a brute-force search with Euclidean distances.
+ */
+template<typename ITYPE = int, typename DTYPE = double>
+using BruteForceEuclidean = BruteForce<distances::Euclidean, ITYPE, DTYPE>;
 
-template<bool COPY = false>
-using BruteForceManhattan = BruteForce<COPY, distances::Manhattan>;
+/**
+ * Perform a brute-force search with Manhattan distances.
+ */
+template<typename ITYPE = int, typename DTYPE = double>
+using BruteForceManhattan = BruteForce<distances::Manhattan, ITYPE, DTYPE>;
 
 }
 
