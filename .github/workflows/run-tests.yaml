@@ -1,0 +1,35 @@
+on: [push, pull_request]
+
+name: Run unit tests
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-latest
+          }
+        - {
+            name: "macOS Latest Clang", artifact: "macOS.tar.xz",
+            os: macos-latest
+          }
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Get latest CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Configure the build
+      run: cmake -S . -B build
+
+    - name: Run the build
+      run: cmake --build build
+
+    - name: Run the tests
+      run: build/tests/libtest
