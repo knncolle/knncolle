@@ -11,7 +11,8 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(
-    libtest 
+    libtest
+    src/BruteForce.cpp
     src/VpTree.cpp
     src/Annoy.cpp
 )

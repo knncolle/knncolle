@@ -25,6 +25,27 @@ protected:
 
         return;
     }
+
+    void sanity_checks(const std::vector<int>& neighbors, const std::vector<double>& distances, int k) { // for finding by vector
+        EXPECT_EQ(neighbors.size(), distances.size());
+        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs));
+        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
+            EXPECT_TRUE(distances[i] >= distances[i-1]);
+        }
+    }
+
+    void sanity_checks(const std::vector<int>& neighbors, const std::vector<double>& distances, int k, int index) const { // for finding by index
+        EXPECT_EQ(neighbors.size(), distances.size());
+        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs - 1));
+
+        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
+            EXPECT_TRUE(distances[i] >= distances[i-1]);
+        }
+
+        for (auto i : neighbors) { // self is not in there.
+            EXPECT_TRUE(i != index);
+        }
+    }
 };
 
 #endif
