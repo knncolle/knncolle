@@ -15,6 +15,7 @@ add_executable(
     src/BruteForce.cpp
     src/VpTree.cpp
     src/Annoy.cpp
+    src/Hnsw.cpp
 )
 
 target_link_libraries(

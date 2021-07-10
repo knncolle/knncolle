@@ -12,7 +12,7 @@ add_subdirectory(extern)
 add_library(knncolle INTERFACE)
 
 target_include_directories(knncolle INTERFACE include/)
-target_link_libraries(knncolle INTERFACE Annoy)
+target_link_libraries(knncolle INTERFACE Annoy hnswlib)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
