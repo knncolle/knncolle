@@ -32,7 +32,7 @@ namespace knncolle {
  * VP trees are often faster than more conventional KD-trees or ball trees as the former uses the points themselves as the nodes of the tree,
  * avoiding the need to create many intermediate nodes and reducing the total number of distance calculations.
  *
- * @tparam DISTANCE Template class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
  * @tparam ITYPE Integer type for the indices.
  * @tparam DTYPE Floating point type for the data.
  *
@@ -41,7 +41,7 @@ namespace knncolle {
  * Data structures and algorithms for nearest neighbor search in general metric spaces.
  * _Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms_, 311-321.
  */
-template<template<typename, typename> class DISTANCE, typename ITYPE = int, typename DTYPE = double>
+template<class DISTANCE, typename ITYPE = int, typename DTYPE = double>
 class VpTree : public knn_base<ITYPE, DTYPE> {
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
@@ -97,7 +97,7 @@ private:
             const double * ref = std::get<1>(vantage);
             for (size_t i = lower + 1; i < upper; ++i) {
                 const double* loc = std::get<1>(items[i]);
-                std::get<2>(items[i]) = DISTANCE<ITYPE, DTYPE>::raw_distance(ref, loc, num_dim);
+                std::get<2>(items[i]) = DISTANCE::raw_distance(ref, loc, num_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -109,7 +109,7 @@ private:
             );
            
             // Threshold of the new node will be the distance to the median
-            node.threshold = DISTANCE<ITYPE, DTYPE>::normalize(std::get<2>(items[median]));
+            node.threshold = DISTANCE::normalize(std::get<2>(items[median]));
 
             // Recursively build tree
             node.index = std::get<0>(vantage);
@@ -195,7 +195,7 @@ private:
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        double dist = DISTANCE<ITYPE, DTYPE>::normalize(DISTANCE<ITYPE, DTYPE>::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
+        double dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {

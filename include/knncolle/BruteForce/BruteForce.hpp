@@ -24,11 +24,11 @@ namespace knncolle {
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * @tparam DISTANCE Template class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
  * @tparam ITYPE Integer type for the indices.
  * @tparam DTYPE Floating point type for the data.
  */
-template<template<typename, typename> class DISTANCE, typename ITYPE = int, typename DTYPE = double>
+template<class DISTANCE, typename ITYPE = int, typename DTYPE = double>
 class BruteForce : public knn_base<ITYPE, DTYPE> {
 private:
     ITYPE num_dim;
@@ -86,7 +86,7 @@ private:
     void search_nn(const DTYPE* query, NeighborQueue<ITYPE, DTYPE>& nearest) const {
         auto copy = store.reference;
         for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
-            nearest.add(i, DISTANCE<ITYPE, DTYPE>::raw_distance(query, copy, num_dim));
+            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));
         }
         return;
     }
@@ -94,7 +94,7 @@ private:
     void normalize(std::vector<DTYPE>* distances) const {
         if (distances) {
             for (auto& d : *distances) {
-                d = DISTANCE<ITYPE, DTYPE>::normalize(d);
+                d = DISTANCE::normalize(d);
             }
         }
         return;
