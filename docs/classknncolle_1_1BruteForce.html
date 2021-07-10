@@ -121,14 +121,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbor
 <tr class="separator:a37109919305c446aa9c1249a51d0cc53 inherit pub_methods_classknncolle_1_1knn__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE = int, typename DTYPE = double&gt;<br />
+<div class="textblock"><h3>template&lt;class DISTANCE, typename ITYPE = int, typename DTYPE = double&gt;<br />
 class knncolle::BruteForce&lt; DISTANCE, ITYPE, DTYPE &gt;</h3>
 
 <p>Perform a brute-force nearest neighbor search. </p>
 <p>The brute-force search computes all pairwise distances between data and query points to identify nearest neighbors of the latter. It has quadratic complexity and is theoretically the worst-performing method; however, it has effectively no overhead from constructing or querying indexing structures, potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">DISTANCE</td><td>Template class to compute the distance between vectors, see <code>distance::Euclidean</code> for an example. </td></tr>
+    <tr><td class="paramname">DISTANCE</td><td>Class to compute the distance between vectors, see <code>distance::Euclidean</code> for an example. </td></tr>
     <tr><td class="paramname">ITYPE</td><td>Integer type for the indices. </td></tr>
     <tr><td class="paramname">DTYPE</td><td>Floating point type for the data. </td></tr>
   </table>
@@ -141,7 +141,7 @@ class knncolle::BruteForce&lt; DISTANCE, ITYPE, DTYPE &gt;</h3>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -194,7 +194,7 @@ template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -248,7 +248,7 @@ template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -278,7 +278,7 @@ template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;template&lt; typename, typename &gt; class DISTANCE, typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

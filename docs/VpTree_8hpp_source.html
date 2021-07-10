@@ -85,7 +85,7 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>DISTANCE, <span class="keyword">typename</span> ITYPE = int, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html">   45</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1VpTree.html">VpTree</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1knn__base.html">knn_base</a>&lt;ITYPE, DTYPE&gt; {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">/* Adapted from http://stevehanov.ca/blog/index.php?id=130 */</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
@@ -141,7 +141,7 @@ $(function() {
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">double</span> * ref = std::get&lt;1&gt;(vantage);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = lower + 1; i &lt; upper; ++i) {</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keyword">const</span> <span class="keywordtype">double</span>* loc = std::get&lt;1&gt;(items[i]);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                std::get&lt;2&gt;(items[i]) = DISTANCE&lt;ITYPE, DTYPE&gt;::raw_distance(ref, loc, num_dim);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                std::get&lt;2&gt;(items[i]) = DISTANCE::raw_distance(ref, loc, num_dim);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            }</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="comment">// Partition around the median distance from the vantage point.</span></div>
@@ -153,7 +153,7 @@ $(function() {
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            );</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;           </div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="comment">// Threshold of the new node will be the distance to the median</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            node.threshold = DISTANCE&lt;ITYPE, DTYPE&gt;::normalize(std::get&lt;2&gt;(items[median]));</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            node.threshold = DISTANCE::normalize(std::get&lt;2&gt;(items[median]));</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="comment">// Recursively build tree</span></div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            node.index = std::get&lt;0&gt;(vantage);</div>
@@ -221,7 +221,7 @@ $(function() {
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        </div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="comment">// Compute distance between target and current node</span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; curnode=nodes[curnode_index];</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <span class="keywordtype">double</span> dist = DISTANCE&lt;ITYPE, DTYPE&gt;::normalize(DISTANCE&lt;ITYPE, DTYPE&gt;::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <span class="keywordtype">double</span> dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="comment">// If current node within radius tau</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <span class="keywordflow">if</span> (dist &lt; tau) {</div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::distances::Euclidean&lt; ITYPE, DTYPE &gt; Struct Template Reference</title>
+<title>knncolle: knncolle::distances::Euclidean Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ $(function() {
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="structknncolle_1_1distances_1_1Euclidean-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">knncolle::distances::Euclidean&lt; ITYPE, DTYPE &gt; Struct Template Reference</div>  </div>
+<div class="title">knncolle::distances::Euclidean Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -82,37 +82,29 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a799596f756e5916ff3614123a9368de4"><td class="memItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a799596f756e5916ff3614123a9368de4">raw_distance</a> (const DTYPE *x, const DTYPE *y, ITYPE n)</td></tr>
-<tr class="separator:a799596f756e5916ff3614123a9368de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f3a4bb984aa93d34061bd713414252c"><td class="memItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a4f3a4bb984aa93d34061bd713414252c">normalize</a> (DTYPE raw)</td></tr>
-<tr class="separator:a4f3a4bb984aa93d34061bd713414252c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbef590827a96afdbf7285da2fddc64b"><td class="memTemplParams" colspan="2">template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </td></tr>
+<tr class="memitem:afbef590827a96afdbf7285da2fddc64b"><td class="memTemplItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">raw_distance</a> (const DTYPE *x, const DTYPE *y, ITYPE n)</td></tr>
+<tr class="separator:afbef590827a96afdbf7285da2fddc64b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memTemplParams" colspan="2">template&lt;typename DTYPE  = double&gt; </td></tr>
+<tr class="memitem:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memTemplItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">normalize</a> (DTYPE raw)</td></tr>
+<tr class="separator:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ITYPE = int, typename DTYPE = double&gt;<br />
-struct knncolle::distances::Euclidean&lt; ITYPE, DTYPE &gt;</h3>
-
-<p>Compute <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html" title="Compute Euclidean distances between two input vectors.">Euclidean</a> distances between two input vectors. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">ITYPE</td><td>Integer type for the vector length. </td></tr>
-    <tr><td class="paramname">DTYPE</td><td>Floating point type for the data. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Compute <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html" title="Compute Euclidean distances between two input vectors.">Euclidean</a> distances between two input vectors. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4f3a4bb984aa93d34061bd713414252c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f3a4bb984aa93d34061bd713414252c">&#9670;&nbsp;</a></span>normalize()</h2>
+<a id="a3841fb6e1d1bfc16e840eda7409ee162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3841fb6e1d1bfc16e840eda7409ee162">&#9670;&nbsp;</a></span>normalize()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename DTYPE  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static DTYPE <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html">knncolle::distances::Euclidean</a>&lt; ITYPE, DTYPE &gt;::normalize </td>
+          <td class="memname">static DTYPE knncolle::distances::Euclidean::normalize </td>
           <td>(</td>
           <td class="paramtype">DTYPE&#160;</td>
           <td class="paramname"><em>raw</em></td><td>)</td>
@@ -125,9 +117,15 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">DTYPE</td><td>Floating point type for the distance.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">raw</td><td>The value produced by <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a799596f756e5916ff3614123a9368de4">raw_distance()</a></code>.</td></tr>
+    <tr><td class="paramname">raw</td><td>The value produced by <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">raw_distance()</a></code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -135,8 +133,8 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 
 </div>
 </div>
-<a id="a799596f756e5916ff3614123a9368de4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a799596f756e5916ff3614123a9368de4">&#9670;&nbsp;</a></span>raw_distance()</h2>
+<a id="afbef590827a96afdbf7285da2fddc64b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbef590827a96afdbf7285da2fddc64b">&#9670;&nbsp;</a></span>raw_distance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +145,7 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static DTYPE <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html">knncolle::distances::Euclidean</a>&lt; ITYPE, DTYPE &gt;::raw_distance </td>
+          <td class="memname">static DTYPE knncolle::distances::Euclidean::raw_distance </td>
           <td>(</td>
           <td class="paramtype">const DTYPE *&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -184,8 +182,15 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ITYPE</td><td>Integer type for the vector length. </td></tr>
+    <tr><td class="paramname">DTYPE</td><td>Floating point type for the data.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>The squared <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html" title="Compute Euclidean distances between two input vectors.">Euclidean</a> distance between vectors.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>This should be passed through <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a4f3a4bb984aa93d34061bd713414252c">normalize()</a></code> to obtain the actual <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html" title="Compute Euclidean distances between two input vectors.">Euclidean</a> distance. We separate out these two steps to avoid the costly root operation when only the relative values are of interest. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This should be passed through <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">normalize()</a></code> to obtain the actual <a class="el" href="structknncolle_1_1distances_1_1Euclidean.html" title="Compute Euclidean distances between two input vectors.">Euclidean</a> distance. We separate out these two steps to avoid the costly root operation when only the relative values are of interest. </dd></dl>
 
 </div>
 </div>

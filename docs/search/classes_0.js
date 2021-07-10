@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['annoybase_21',['AnnoyBase',['../classknncolle_1_1AnnoyBase.html',1,'knncolle']]]
+  ['annoysearch_24',['AnnoySearch',['../classknncolle_1_1AnnoySearch.html',1,'knncolle']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['bruteforceeuclidean_40',['BruteForceEuclidean',['../BruteForce_8hpp.html#a9fedf084c188428756f261e545e4e2df',1,'knncolle']]],
-  ['bruteforcemanhattan_41',['BruteForceManhattan',['../BruteForce_8hpp.html#a5b6c4b43a7d1f8ef942ea619e849f6c9',1,'knncolle']]]
+  ['annoyeuclidean_44',['AnnoyEuclidean',['../Annoy_8hpp.html#a380727a26c481435e753ebd4377d28fa',1,'knncolle']]],
+  ['annoymanhattan_45',['AnnoyManhattan',['../Annoy_8hpp.html#ae1df27e5c6190227e7ab830e8bf511af',1,'knncolle']]]
 ];

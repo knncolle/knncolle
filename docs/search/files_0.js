@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bruteforce_2ehpp_28',['BruteForce.hpp',['../BruteForce_8hpp.html',1,'']]]
+  ['annoy_2ehpp_31',['Annoy.hpp',['../Annoy_8hpp.html',1,'']]]
 ];

@@ -83,7 +83,7 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>DISTANCE, <span class="keyword">typename</span> ITYPE = int, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1BruteForce.html">BruteForce</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1knn__base.html">knn_base</a>&lt;ITYPE, DTYPE&gt; {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    ITYPE num_dim;</div>
@@ -123,7 +123,7 @@ $(function() {
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> search_nn(<span class="keyword">const</span> DTYPE* query, NeighborQueue&lt;ITYPE, DTYPE&gt;&amp; nearest)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">auto</span> copy = store.reference;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">for</span> (ITYPE i = 0; i &lt; num_obs; ++i, copy += num_dim) {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            nearest.add(i, DISTANCE&lt;ITYPE, DTYPE&gt;::raw_distance(query, copy, num_dim));</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    }</div>
@@ -131,7 +131,7 @@ $(function() {
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> normalize(std::vector&lt;DTYPE&gt;* distances)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">if</span> (distances) {</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : *distances) {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                d = DISTANCE&lt;ITYPE, DTYPE&gt;::normalize(d);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                d = DISTANCE::normalize(d);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        }</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span>;</div>

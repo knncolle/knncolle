@@ -79,9 +79,9 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>distances {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html">   22</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structknncolle_1_1distances_1_1Euclidean.html">Euclidean</a> {</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html#a799596f756e5916ff3614123a9368de4">   34</a></span>&#160;    <span class="keyword">static</span> DTYPE <a class="code" href="structknncolle_1_1distances_1_1Euclidean.html#a799596f756e5916ff3614123a9368de4">raw_distance</a>(<span class="keyword">const</span> DTYPE* x, <span class="keyword">const</span> DTYPE* y, ITYPE n) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html">   18</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structknncolle_1_1distances_1_1Euclidean.html">Euclidean</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">   34</a></span>&#160;    <span class="keyword">static</span> DTYPE <a class="code" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">raw_distance</a>(<span class="keyword">const</span> DTYPE* x, <span class="keyword">const</span> DTYPE* y, ITYPE n) {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">double</span> output = 0;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">for</span> (ITYPE i = 0; i &lt; n; ++i, ++x, ++y) {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            output += ((*x) - (*y)) * ((*x) - (*y));</div>
@@ -89,37 +89,39 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">return</span> output;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html#a4f3a4bb984aa93d34061bd713414252c">   47</a></span>&#160;    <span class="keyword">static</span> DTYPE <a class="code" href="structknncolle_1_1distances_1_1Euclidean.html#a4f3a4bb984aa93d34061bd713414252c">normalize</a>(DTYPE raw) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> std::sqrt(raw);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;};</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html">   59</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structknncolle_1_1distances_1_1Manhattan.html">Manhattan</a> {</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html#a17f0cd8ea800657dda89773cb9e5010a">   67</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="structknncolle_1_1distances_1_1Manhattan.html#a17f0cd8ea800657dda89773cb9e5010a">raw_distance</a>(<span class="keyword">const</span> DTYPE* x, <span class="keyword">const</span> DTYPE* y, ITYPE n) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">double</span> output = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">for</span> (ITYPE i = 0; i &lt; n; ++i, ++x, ++y) {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            output += std::abs(*x - *y);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html#a7aad27003bd449fb5efbc09a56830305">   80</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="structknncolle_1_1distances_1_1Manhattan.html#a7aad27003bd449fb5efbc09a56830305">normalize</a>(<span class="keywordtype">double</span> raw) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> raw;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html">knncolle::distances::Euclidean</a></div><div class="ttdoc">Compute Euclidean distances between two input vectors.</div><div class="ttdef"><b>Definition:</b> distances.hpp:22</div></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html_a4f3a4bb984aa93d34061bd713414252c"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html#a4f3a4bb984aa93d34061bd713414252c">knncolle::distances::Euclidean::normalize</a></div><div class="ttdeci">static DTYPE normalize(DTYPE raw)</div><div class="ttdef"><b>Definition:</b> distances.hpp:47</div></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html_a799596f756e5916ff3614123a9368de4"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html#a799596f756e5916ff3614123a9368de4">knncolle::distances::Euclidean::raw_distance</a></div><div class="ttdeci">static DTYPE raw_distance(const DTYPE *x, const DTYPE *y, ITYPE n)</div><div class="ttdef"><b>Definition:</b> distances.hpp:34</div></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html">knncolle::distances::Manhattan</a></div><div class="ttdoc">Compute Manhattan distances between two input vectors.</div><div class="ttdef"><b>Definition:</b> distances.hpp:59</div></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html_a17f0cd8ea800657dda89773cb9e5010a"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html#a17f0cd8ea800657dda89773cb9e5010a">knncolle::distances::Manhattan::raw_distance</a></div><div class="ttdeci">static double raw_distance(const DTYPE *x, const DTYPE *y, ITYPE n)</div><div class="ttdef"><b>Definition:</b> distances.hpp:67</div></div>
-<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html_a7aad27003bd449fb5efbc09a56830305"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html#a7aad27003bd449fb5efbc09a56830305">knncolle::distances::Manhattan::normalize</a></div><div class="ttdeci">static double normalize(double raw)</div><div class="ttdef"><b>Definition:</b> distances.hpp:80</div></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">   50</a></span>&#160;    <span class="keyword">static</span> DTYPE <a class="code" href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">normalize</a>(DTYPE raw) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">return</span> std::sqrt(raw);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html">   58</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structknncolle_1_1distances_1_1Manhattan.html">Manhattan</a> {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ITYPE = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html#a5ee6c8e693d68f99e639a4995d13af29">   70</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="structknncolle_1_1distances_1_1Manhattan.html#a5ee6c8e693d68f99e639a4995d13af29">raw_distance</a>(<span class="keyword">const</span> DTYPE* x, <span class="keyword">const</span> DTYPE* y, ITYPE n) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">double</span> output = 0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">for</span> (ITYPE i = 0; i &lt; n; ++i, ++x, ++y) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            output += std::abs(*x - *y);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> DTYPE = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="structknncolle_1_1distances_1_1Manhattan.html#a18c85fe4c9a19ad6404e0e3567999f20">   85</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="structknncolle_1_1distances_1_1Manhattan.html#a18c85fe4c9a19ad6404e0e3567999f20">normalize</a>(<span class="keywordtype">double</span> raw) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span> raw;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html">knncolle::distances::Euclidean</a></div><div class="ttdoc">Compute Euclidean distances between two input vectors.</div><div class="ttdef"><b>Definition:</b> distances.hpp:18</div></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html_a3841fb6e1d1bfc16e840eda7409ee162"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">knncolle::distances::Euclidean::normalize</a></div><div class="ttdeci">static DTYPE normalize(DTYPE raw)</div><div class="ttdef"><b>Definition:</b> distances.hpp:50</div></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Euclidean_html_afbef590827a96afdbf7285da2fddc64b"><div class="ttname"><a href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">knncolle::distances::Euclidean::raw_distance</a></div><div class="ttdeci">static DTYPE raw_distance(const DTYPE *x, const DTYPE *y, ITYPE n)</div><div class="ttdef"><b>Definition:</b> distances.hpp:34</div></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html">knncolle::distances::Manhattan</a></div><div class="ttdoc">Compute Manhattan distances between two input vectors.</div><div class="ttdef"><b>Definition:</b> distances.hpp:58</div></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html_a18c85fe4c9a19ad6404e0e3567999f20"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html#a18c85fe4c9a19ad6404e0e3567999f20">knncolle::distances::Manhattan::normalize</a></div><div class="ttdeci">static double normalize(double raw)</div><div class="ttdef"><b>Definition:</b> distances.hpp:85</div></div>
+<div class="ttc" id="astructknncolle_1_1distances_1_1Manhattan_html_a5ee6c8e693d68f99e639a4995d13af29"><div class="ttname"><a href="structknncolle_1_1distances_1_1Manhattan.html#a5ee6c8e693d68f99e639a4995d13af29">knncolle::distances::Manhattan::raw_distance</a></div><div class="ttdeci">static double raw_distance(const DTYPE *x, const DTYPE *y, ITYPE n)</div><div class="ttdef"><b>Definition:</b> distances.hpp:70</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
