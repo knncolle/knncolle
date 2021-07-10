@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "knncolle/Annoy/AnnoyBase.hpp"
+#include "knncolle/Annoy/Annoy.hpp"
 
 #include <random>
 #include <vector>
@@ -19,16 +19,7 @@ TEST_P(AnnoyTest, FindEuclidean) {
     std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
         annE.find_nearest_neighbors(x, k, &neighbors, &distances);
-        EXPECT_EQ(neighbors.size(), distances.size());
-        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs - 1));
-
-        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
-            EXPECT_TRUE(distances[i] >= distances[i-1]);
-        }
-
-        for (auto i : neighbors) { // self is not in there.
-            EXPECT_TRUE(i != x);
-        }
+        sanity_checks(neighbors, distances, k, x);
     }
 }
 
@@ -43,16 +34,7 @@ TEST_P(AnnoyTest, FindManhattan) {
     std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
         annM.find_nearest_neighbors(x, k, &neighbors, &distances);
-        EXPECT_EQ(neighbors.size(), distances.size());
-        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs - 1));
-
-        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
-            EXPECT_TRUE(distances[i] >= distances[i-1]);
-        }
-
-        for (auto i : neighbors) { // self is not in there.
-            EXPECT_TRUE(i != x);
-        }
+        sanity_checks(neighbors, distances, k, x);
     }
 }
 
@@ -62,8 +44,8 @@ INSTANTIATE_TEST_CASE_P(
     AnnoyTest,
     ::testing::Combine(
         ::testing::Values(10, 500), // number of observations
-        ::testing::Values(1, 20), // number of dimensions
-        ::testing::Values(1, 10) // number of neighbors
+        ::testing::Values(5, 20), // number of dimensions
+        ::testing::Values(3, 10) // number of neighbors
     )
 );
 

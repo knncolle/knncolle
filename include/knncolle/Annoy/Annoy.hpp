@@ -2,8 +2,8 @@
 #define KNNCOLLE_ANNOYBASE_HPP
 
 #include "../utils/knn_base.hpp"
-#include "annoylib.h"
-#include "kissrandom.h"
+#include "annoy/annoylib.h"
+#include "annoy/kissrandom.h"
 
 /**
  * @file Annoy.hpp
@@ -16,12 +16,13 @@ namespace knncolle {
 /**
  * @brief Perform an approximate nearest neighbor search with Annoy.
  *
- * @tparam DISTANCE Template class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam DISTANCE An **Annoy**-derived class to compute the distance between vectors.
+ * Note that this is not the same as the classes in `distances.hpp`.
  * @tparam ITYPE Integer type for the indices.
  * @tparam DTYPE Floating point type for the data.
  */
-template<class ANNOY_DISTANCE, typename ITYPE = int, typename DTYPE = double>
-class AnnoyBase : public knn_base<ITYPE, DTYPE> {
+template<class DISTANCE, typename ITYPE = int, typename DTYPE = double>
+class AnnoySearch : public knn_base<ITYPE, DTYPE> {
 public:
     ITYPE nobs() const {
         return annoy_index.get_n_items();
@@ -33,14 +34,14 @@ public:
 
 public:
     /**
-     * Construct an `AnnoyBase` instance.
+     * Construct an `Annoy` instance.
      *
      * @param ndim Number of dimensions.
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
      */
-    AnnoyBase(ITYPE ndim, ITYPE nobs, const DTYPE* vals, int ntrees = 50, double search_mult = 50) : annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) {
+    AnnoySearch(ITYPE ndim, ITYPE nobs, const DTYPE* vals, int ntrees = 50, double search_mult = 50) : annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) {
         for (ITYPE i=0; i < nobs; ++i, vals += ndim) {
             annoy_index.add_item(i, vals);
         }
@@ -82,7 +83,7 @@ public:
     }
 
 private:
-    AnnoyIndex<ITYPE, DTYPE, ANNOY_DISTANCE, Kiss64Random, AnnoyIndexSingleThreadedBuildPolicy> annoy_index;
+    Annoy::AnnoyIndex<ITYPE, DTYPE, DISTANCE, Annoy::Kiss64Random, Annoy::AnnoyIndexSingleThreadedBuildPolicy> annoy_index;
     ITYPE num_dim;
     double search_k_mult;
 
@@ -121,13 +122,13 @@ private:
  * Perform an Annoy search with Euclidean distances.
  */
 template<typename ITYPE = int, typename DTYPE = double>
-using AnnoyEuclidean = AnnoyBase<Euclidean, ITYPE, DTYPE>;
+using AnnoyEuclidean = AnnoySearch<Annoy::Euclidean, ITYPE, DTYPE>;
 
 /**
  * Perform an Annoy search with Manhattan distances.
  */
 template<typename ITYPE = int, typename DTYPE = double>
-using AnnoyManhattan = AnnoyBase<Manhattan, ITYPE, DTYPE>;
+using AnnoyManhattan = AnnoySearch<Annoy::Manhattan, ITYPE, DTYPE>;
 
 }
 
