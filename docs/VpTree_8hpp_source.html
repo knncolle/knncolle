@@ -86,16 +86,16 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html">   52</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1VpTree.html">VpTree</a> : <span class="keyword">public</span> Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html">   52</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1VpTree.html">VpTree</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">/* Adapted from http://stevehanov.ca/blog/index.php?id=130 */</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    INDEX_t num_dim;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    INDEX_t num_obs;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    INDEX_t nobs()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">   59</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    INDEX_t ndim()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">   61</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">int</span> NodeIndex_t;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> NodeIndex_t LEAF_MARKER=-1;</div>
@@ -171,7 +171,7 @@ $(function() {
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">  147</a></span>&#160;    <a class="code" href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">VpTree</a>(INDEX_t ndim, INDEX_t nobs, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">bool</span> copy = <span class="keyword">false</span>) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) { </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">  147</a></span>&#160;    <a class="code" href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">VpTree</a>(INDEX_t <a class="code" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">bool</span> copy = <span class="keyword">false</span>) : num_dim(<a class="code" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>), num_obs(<a class="code" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>), store(vals, <a class="code" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a> * <a class="code" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, copy) { </div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        std::vector&lt;DataPoint&gt; items;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        items.reserve(num_obs);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keyword">auto</span> ptr = store.reference;</div>
@@ -210,7 +210,7 @@ $(function() {
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        }</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    }</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keyword">using</span> Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keyword">using</span> <a class="code" href="classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de">Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation</a>;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">void</span> search_nn(NodeIndex_t curnode_index, <span class="keyword">const</span> INTERNAL_t* target, INTERNAL_t&amp; tau, NeighborQueue&lt;INDEX_t, DISTANCE_t&gt;&amp; nearest)<span class="keyword"> const </span>{ </div>
@@ -267,7 +267,11 @@ $(function() {
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;};</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassknncolle_1_1Base_html"><div class="ttname"><a href="classknncolle_1_1Base.html">knncolle::Base</a></div><div class="ttdoc">Virtual base class defining the knncolle interface.</div><div class="ttdef"><b>Definition:</b> Base.hpp:24</div></div>
+<div class="ttc" id="aclassknncolle_1_1Base_html_abe1f8bfc6f37fd0c98ec75fe1fdc67de"><div class="ttname"><a href="classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de">knncolle::Base::observation</a></div><div class="ttdeci">virtual const QUERY_t * observation(INDEX_t index, QUERY_t *buffer) const =0</div></div>
 <div class="ttc" id="aclassknncolle_1_1VpTree_html"><div class="ttname"><a href="classknncolle_1_1VpTree.html">knncolle::VpTree</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:52</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html_a8869f31b0220424c7318b86709bbf69e"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">knncolle::VpTree::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:59</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html_a912697b91cd4f8a9458bd3b988dadf6f"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">knncolle::VpTree::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:61</div></div>
 <div class="ttc" id="aclassknncolle_1_1VpTree_html_a9287df6e4a53fff160376be1b28b9186"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">knncolle::VpTree::VpTree</a></div><div class="ttdeci">VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, bool copy=false)</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:147</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

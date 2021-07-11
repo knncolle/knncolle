@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['search_5fmult_32',['search_mult',['../structknncolle_1_1Dispatch_1_1Annoy__param.html#a59ed3776f1b3a69488a59fa332dfeb8f',1,'knncolle::Dispatch::Annoy_param::search_mult()'],['../Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1',1,'knncolle::AnnoyDefaults::search_mult()']]]
+  ['observation_37',['observation',['../classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de',1,'knncolle::Base::observation(INDEX_t index, QUERY_t *buffer) const =0'],['../classknncolle_1_1Base.html#adea88ffb0a8a00877ac4be912092faee',1,'knncolle::Base::observation(INDEX_t index) const']]]
 ];

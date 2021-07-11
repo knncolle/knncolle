@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['manhattan_27',['Manhattan',['../structknncolle_1_1distances_1_1Manhattan.html',1,'knncolle::distances']]]
+  ['knncolle_2ehpp_30',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]]
 ];
