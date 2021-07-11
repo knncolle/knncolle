@@ -124,8 +124,8 @@ std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class=
 class knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</h3>
 
 <p>Perform a nearest neighbor search based on a vantage point (VP) tree. </p>
-<p>In a VP tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions. The split is determined by picking an arbitrary point inside that subset as the node center, computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere. The left child of this node contains all points within that hypersphere while the right child contains the remaining points. This is applied recursively until all points resolve to individual nodes.</p>
-<p>The nearest neighbor search traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space. VP trees are often faster than more conventional KD-trees or ball trees as the former uses the points themselves as the nodes of the tree, avoiding the need to create many intermediate nodes and reducing the total number of distance calculations.</p>
+<p>In a vantage point tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions. The split is determined by picking an arbitrary point inside that subset as the node center, computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere. The left child of this node contains all points within that hypersphere while the right child contains the remaining points. This procedure is applied recursively until all points resolve to individual nodes, thus yielding a VP tree. Upon searching, the algorithm traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.</p>
+<p>The major advantage of VP trees over more conventional KD-trees or ball trees is that the former does not need to construct intermediate nodes, instead using the data points themselves at the nodes. This reduces the memory usage of the tree and total number of distance calculations for any search. It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for <b>knncolle</b>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">DISTANCE</td><td>Class to compute the distance between vectors, see <code>distance::Euclidean</code> for an example. </td></tr>
@@ -136,7 +136,9 @@ class knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &g
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321.</dd>
+<dd>
+Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9287df6e4a53fff160376be1b28b9186"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9287df6e4a53fff160376be1b28b9186">&#9670;&nbsp;</a></span>VpTree()</h2>

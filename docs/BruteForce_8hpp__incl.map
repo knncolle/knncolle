@@ -1,10 +1,10 @@
 <map id="knncolle/BruteForce/BruteForce.hpp" name="knncolle/BruteForce/BruteForce.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="313,5,451,47"/>
-<area shape="rect" id="node2" href="$distances_8hpp.html" title=" " alt="" coords="5,95,145,121"/>
+<area shape="rect" id="node1" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="313,5,451,47"/>
+<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,95,145,121"/>
 <area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="169,95,344,121"/>
 <area shape="rect" id="node6" title=" " alt="" coords="394,169,453,196"/>
 <area shape="rect" id="node7" href="$MatrixStore_8hpp_source.html" title=" " alt="" coords="584,95,735,121"/>
-<area shape="rect" id="node10" href="$knn__base_8hpp.html" title=" " alt="" coords="420,95,560,121"/>
+<area shape="rect" id="node10" href="$knn__base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="420,95,560,121"/>
 <area shape="rect" id="node3" title=" " alt="" coords="46,169,105,196"/>
 <area shape="rect" id="node5" title=" " alt="" coords="228,169,285,196"/>
 <area shape="rect" id="node8" title=" " alt="" coords="570,169,645,196"/>

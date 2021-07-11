@@ -69,11 +69,15 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Annoy.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Implements an approximate nearest neighbor search with Annoy.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
 <code>#include &quot;<a class="el" href="knn__base_8hpp_source.html">../utils/knn_base.hpp</a>&quot;</code><br />
 <code>#include &quot;annoy/annoylib.h&quot;</code><br />
@@ -83,9 +87,9 @@ Include dependency graph for Annoy.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="Annoy_8hpp__incl.png" border="0" usemap="#aknncolle_2Annoy_2Annoy_8hpp" alt=""/></div>
 <map name="aknncolle_2Annoy_2Annoy_8hpp" id="aknncolle_2Annoy_2Annoy_8hpp">
-<area shape="rect" title=" " alt="" coords="150,5,325,32"/>
+<area shape="rect" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="150,5,325,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,67,107"/>
-<area shape="rect" href="knn__base_8hpp.html" title=" " alt="" coords="91,80,231,107"/>
+<area shape="rect" href="knn__base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="91,80,231,107"/>
 <area shape="rect" title=" " alt="" coords="256,80,373,107"/>
 <area shape="rect" title=" " alt="" coords="398,80,535,107"/>
 <area shape="rect" title=" " alt="" coords="132,155,191,181"/>
@@ -96,8 +100,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Annoy_8hpp__dep__incl.png" border="0" usemap="#aknncolle_2Annoy_2Annoy_8hppdep" alt=""/></div>
 <map name="aknncolle_2Annoy_2Annoy_8hppdep" id="aknncolle_2Annoy_2Annoy_8hppdep">
-<area shape="rect" title=" " alt="" coords="5,5,180,32"/>
-<area shape="rect" href="knncolle_8hpp_source.html" title=" " alt="" coords="19,80,166,107"/>
+<area shape="rect" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="5,5,180,32"/>
+<area shape="rect" href="knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="19,80,166,107"/>
 </map>
 </div>
 </div>
@@ -117,6 +121,13 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a3968927b78cc0faa38498e4169ebe17c"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </td></tr>
 <tr class="memitem:a3968927b78cc0faa38498e4169ebe17c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a3968927b78cc0faa38498e4169ebe17c">knncolle::AnnoyManhattan</a> = AnnoySearch&lt; Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</td></tr>
 <tr class="separator:a3968927b78cc0faa38498e4169ebe17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9802be3629e344a4b2da00a6f42f5f28"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a9802be3629e344a4b2da00a6f42f5f28">knncolle::AnnoyDefaults::ntrees</a> = 50</td></tr>
+<tr class="separator:a9802be3629e344a4b2da00a6f42f5f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e5c0692a51f2cfe1f6554c559e3c6c1"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1">knncolle::AnnoyDefaults::search_mult</a> = -1</td></tr>
+<tr class="separator:a7e5c0692a51f2cfe1f6554c559e3c6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements an approximate nearest neighbor search with Annoy. </p>
@@ -152,6 +163,37 @@ template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUE
       </table>
 </div><div class="memdoc">
 <p>Perform an Annoy search with Manhattan distances. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a9802be3629e344a4b2da00a6f42f5f28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9802be3629e344a4b2da00a6f42f5f28">&#9670;&nbsp;</a></span>ntrees</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int knncolle::AnnoyDefaults::ntrees = 50</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default value for <code>ntrees</code> in the <code>Annoy</code> constructor. </p>
+
+</div>
+</div>
+<a id="a7e5c0692a51f2cfe1f6554c559e3c6c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e5c0692a51f2cfe1f6554c559e3c6c1">&#9670;&nbsp;</a></span>search_mult</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const double knncolle::AnnoyDefaults::search_mult = -1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default value for <code>search_mult</code> in the <code>Annoy</code> constructor. </p>
 
 </div>
 </div>

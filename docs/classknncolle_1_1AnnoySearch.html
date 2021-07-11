@@ -124,9 +124,11 @@ std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class=
 class knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</h3>
 
 <p>Perform an approximate nearest neighbor search with Annoy. </p>
+<p>In the Approximate Nearest Neighbors Oh Yeah (Annoy) algorithm, a tree is constructed where a random hyperplane splits the points into two subsets at each internal node. Leaf nodes are defined when the number of points in a subset falls below a threshold (close to twice the number of dimensions for the settings used here). Multiple trees are constructed in this manner, each of which is different due to the random choice of hyperplanes. For a given query point, each tree is searched to identify the subset of all points in the same leaf node as the query point. The union of these subsets across all trees is exhaustively searched to identify the actual nearest neighbors to the query.</p>
+<dl class="section see"><dt>See also</dt><dd>Bernhardsson E (2018). Annoy. <a href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">DISTANCE</td><td>An <b>Annoy</b>-derived class to compute the distance between vectors. Note that this is not the same as the classes in <code><a class="el" href="distances_8hpp.html">distances.hpp</a></code>. </td></tr>
+    <tr><td class="paramname">DISTANCE</td><td>An <b>Annoy</b>-derived class to compute the distance between vectors. Note that this is not the same as the classes in <code><a class="el" href="distances_8hpp.html" title="Classes for distance calculations.">distances.hpp</a></code>. </td></tr>
     <tr><td class="paramname">INDEX_t</td><td>Integer type for the indices. </td></tr>
     <tr><td class="paramname">DISTANCE_t</td><td>Floating point type for the distances. </td></tr>
     <tr><td class="paramname">INTERNAL_INDEX_t</td><td>Integer type for the internal indices. </td></tr>
@@ -194,7 +196,9 @@ template&lt;typename INPUT &gt; </div>
   <table class="params">
     <tr><td class="paramname">ndim</td><td>Number of dimensions. </td></tr>
     <tr><td class="paramname">nobs</td><td>Number of observations. </td></tr>
-    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation.</td></tr>
+    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation. </td></tr>
+    <tr><td class="paramname">ntrees</td><td>Number of trees to construct. Larger values improve accuracy at the cost of index size (i.e., memory usage), see <a href="https://github.com/spotify/annoy#tradeoffs">here</a> for details. </td></tr>
+    <tr><td class="paramname">search_mult</td><td>Factor that is multiplied by the number of neighbors <code>k</code> to determine the number of nodes to search in <code>find_nearest_neighbors()</code>. Larger values improve accuracy at the cost of runtime, see <a href="https://github.com/spotify/annoy#tradeoffs">here</a> for details. If set to -1, it defaults to <code>ntrees</code>.</td></tr>
   </table>
   </dd>
 </dl>
