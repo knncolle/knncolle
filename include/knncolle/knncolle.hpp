@@ -39,35 +39,43 @@ enum DispatchAlgorithm { BRUTEFORCE, VPTREE, ANNOY, HNSW };
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
 class Dispatch {
 public:
-    using BASE = Base<INDEX_t, DISTANCE_t, QUERY_t>;
-
     /**
      * Type of distance metric to use.
      */
     DispatchDistance distance_type = EUCLIDEAN;
 public:
     /**
-     * @brief Parameters for the brute-force search in the `BruteForce` class.
+     * @brief Parameter store for the brute-force search.
      */
     struct BruteForce_param {
         /** 
          * See the `BruteForce::BruteForce()` constructor.
          */
         bool copy = false;
-    } BruteForce;
+    };
 
     /**
-     * @brief Parameters for the vantage point tree search in the `VpTree` class.
+     * Parameters to be passed to the `BruteForce` constructor.
+     */
+    BruteForce_param BruteForce;
+
+    /**
+     * @brief Parameter store for the vantage point tree search.
      */
     struct VpTree_param {
         /** 
          * See the `VpTree::VpTree()` constructor.
          */
         bool copy = false;
-    } VpTree;
+    };
+    
+    /**
+     * Parameters to be passed to the `VpTree` constructor.
+     */
+    VpTree_param VpTree;
 
     /**
-     * @brief Parameters for the Annoy search in the `AnnoySearch` class.
+     * @brief Parameter store for the Annoy search.
      */
     struct Annoy_param {
         /** 
@@ -79,10 +87,15 @@ public:
          * See the `AnnoySearch::AnnoySearch()` constructor.
          */
         double search_mult = AnnoyDefaults::search_mult;
-    } Annoy;
+    };
+    
+    /**
+     * Parameters to be passed to the `AnnoySearch` constructor.
+     */
+    Annoy_param Annoy;
 
     /**
-     * @brief Parameters for the HNSW search in the `Hnsw` class.
+     * @brief Parameter store for the HNSW search.
      */
     struct Hnsw_param {
         /** 
@@ -99,7 +112,12 @@ public:
          * See the `Hnsw::Hnsw()` constructor.
          */
         int ef_search = HnswDefaults::ef_search;
-    } Hnsw;
+    };
+    
+    /**
+     * Parameters to be passed to the `Hnsw` constructor.
+     */
+    Hnsw_param Hnsw;
 
 public:
     /**
@@ -115,7 +133,8 @@ public:
      * The exact algorithm used depends on the choice of algorithm in `algorithm`.
      */
     template<class INPUT> 
-    std::shared_ptr<BASE> build(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, DispatchAlgorithm algorithm) {
+    std::shared_ptr<Base<INDEX_t, DISTANCE_t, QUERY_t> > build(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, DispatchAlgorithm algorithm) {
+        typedef Base<INDEX_t, DISTANCE_t, QUERY_t> BASE;
         if (distance_type == EUCLIDEAN) {
             switch(algorithm) {
                 case VPTREE:
