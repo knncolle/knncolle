@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['knn_5fbase_12',['knn_base',['../classknncolle_1_1knn__base.html',1,'knncolle']]],
-  ['knn_5fbase_2ehpp_13',['knn_base.hpp',['../knn__base_8hpp.html',1,'']]],
-  ['knn_5fbase_3c_20int_2c_20double_20_3e_14',['knn_base&lt; int, double &gt;',['../classknncolle_1_1knn__base.html',1,'knncolle']]]
+  ['hnsw_2ehpp_12',['Hnsw.hpp',['../Hnsw_8hpp.html',1,'']]],
+  ['hnsweuclidean_13',['HnswEuclidean',['../Hnsw_8hpp.html#a0522165545273e6f0fba90817ce8eb5f',1,'knncolle']]],
+  ['hnswmanhattan_14',['HnswManhattan',['../Hnsw_8hpp.html#a3a0e8d0d13259c2abfad24a693457124',1,'knncolle']]],
+  ['hnswsearch_15',['HnswSearch',['../classknncolle_1_1HnswSearch.html#a403a2ff534cdbc41ea4fef396a6c090d',1,'knncolle::HnswSearch::HnswSearch()'],['../classknncolle_1_1HnswSearch.html',1,'knncolle::HnswSearch&lt; SPACE, ITYPE, DTYPE &gt;']]]
 ];

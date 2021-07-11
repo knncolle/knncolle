@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vptree_2ehpp_35',['VpTree.hpp',['../VpTree_8hpp.html',1,'']]]
+  ['knn_5fbase_2ehpp_40',['knn_base.hpp',['../knn__base_8hpp.html',1,'']]]
 ];

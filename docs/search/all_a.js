@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['vptree_20',['VpTree',['../classknncolle_1_1VpTree.html',1,'knncolle::VpTree&lt; DISTANCE, ITYPE, DTYPE &gt;'],['../classknncolle_1_1VpTree.html#a47088f14f8808c4e334928bb00beb765',1,'knncolle::VpTree::VpTree(ITYPE ndim, ITYPE nobs, const DTYPE *vals)'],['../classknncolle_1_1VpTree.html#a3b96f548f539500456a983fa54f685a4',1,'knncolle::VpTree::VpTree(ITYPE ndim, ITYPE nobs, std::vector&lt; DTYPE &gt; vals)']]],
-  ['vptree_2ehpp_21',['VpTree.hpp',['../VpTree_8hpp.html',1,'']]],
-  ['vptreeeuclidean_22',['VpTreeEuclidean',['../VpTree_8hpp.html#a1f19a403fb68e9fedcca75b48d495743',1,'knncolle']]],
-  ['vptreemanhattan_23',['VpTreeManhattan',['../VpTree_8hpp.html#a77d95c8d4591d1237e59bfec8a647ff5',1,'knncolle']]]
+  ['raw_5fdistance_23',['raw_distance',['../structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b',1,'knncolle::distances::Euclidean::raw_distance()'],['../structknncolle_1_1distances_1_1Manhattan.html#a5ee6c8e693d68f99e639a4995d13af29',1,'knncolle::distances::Manhattan::raw_distance()']]]
 ];
