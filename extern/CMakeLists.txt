@@ -3,7 +3,7 @@ include(FetchContent)
 FetchContent_Declare(
   Annoy 
   GIT_REPOSITORY https://github.com/LTLA/Annoy
-  GIT_TAG cmake 
+  GIT_TAG direct_access
 )
 
 FetchContent_MakeAvailable(Annoy)
