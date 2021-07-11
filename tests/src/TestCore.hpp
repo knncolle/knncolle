@@ -26,24 +26,22 @@ protected:
         return;
     }
 
-    void sanity_checks(const std::vector<int>& neighbors, const std::vector<double>& distances, int k) { // for finding by vector
-        EXPECT_EQ(neighbors.size(), distances.size());
-        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs));
-        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
-            EXPECT_TRUE(distances[i] >= distances[i-1]);
+    void sanity_checks(const std::vector<std::pair<int, double> >& results, int k) { // for finding by vector
+        EXPECT_EQ(results.size(), std::min(k, (int)nobs));
+        for (size_t i = 1; i < results.size(); ++i) { // check for sortedness.
+            EXPECT_TRUE(results[i].second >= results[i-1].second);
         }
     }
 
-    void sanity_checks(const std::vector<int>& neighbors, const std::vector<double>& distances, int k, int index) const { // for finding by index
-        EXPECT_EQ(neighbors.size(), distances.size());
-        EXPECT_EQ(neighbors.size(), std::min(k, (int)nobs - 1));
+    void sanity_checks(const std::vector<std::pair<int, double> >& results, int k, int index) const { // for finding by index
+        EXPECT_EQ(results.size(), std::min(k, (int)nobs - 1));
 
-        for (size_t i = 1; i < distances.size(); ++i) { // check for sortedness.
-            EXPECT_TRUE(distances[i] >= distances[i-1]);
+        for (size_t i = 1; i < results.size(); ++i) { // check for sortedness.
+            EXPECT_TRUE(results[i].second >= results[i-1].second);
         }
 
-        for (auto i : neighbors) { // self is not in there.
-            EXPECT_TRUE(i != index);
+        for (const auto& res : results) { // self is not in there.
+            EXPECT_TRUE(res.first != index);
         }
     }
 };

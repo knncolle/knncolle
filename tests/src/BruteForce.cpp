@@ -14,11 +14,9 @@ TEST_P(BruteForceTest, FindEuclidean) {
 
     knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
 
-    std::vector<int> neighbors;
-    std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
-        bf.find_nearest_neighbors(x, k, &neighbors, &distances);
-        sanity_checks(neighbors, distances, k, x);
+        auto results = bf.find_nearest_neighbors(x, k);
+        sanity_checks(results, k, x);
     }
 }
 
@@ -27,14 +25,11 @@ TEST_P(BruteForceTest, FindManhattan) {
     assemble(param);
     int k = std::get<2>(param);    
 
-    knncolle::BruteForceManhattan<> vp(ndim, nobs, data.data());
     knncolle::BruteForceManhattan<> bf(ndim, nobs, data.data());
 
-    std::vector<int> neighbors; 
-    std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
-        vp.find_nearest_neighbors(x, k, &neighbors, &distances);
-        sanity_checks(neighbors, distances, k, x);
+        auto results = bf.find_nearest_neighbors(x, k);
+        sanity_checks(results, k, x);
     }
 }
 
@@ -45,44 +40,18 @@ TEST_P(BruteForceTest, QueryEuclidean) {
 
     knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
 
-    std::vector<int> neighbors1, neighbors2;
-    std::vector<double> distances1, distances2;
     for (size_t x = 0; x < nobs; ++x) {
-        bf.find_nearest_neighbors(x, k, &neighbors1, &distances1);
-        bf.find_nearest_neighbors(data.data() + x * ndim, k, &neighbors2, &distances2);
+        auto results1 = bf.find_nearest_neighbors(x, k);
+        auto results2 = bf.find_nearest_neighbors(data.data() + x * ndim, k);
 
-        EXPECT_EQ(neighbors2[0], x);
+        EXPECT_EQ(results2[0].first, x);
+        EXPECT_EQ(results2[0].second, 0);
         if (nobs > k) {
-            neighbors1.pop_back();
+            results1.pop_back();
         }
-        neighbors2.erase(neighbors2.begin());
-        EXPECT_EQ(neighbors1, neighbors2);
-
-        EXPECT_EQ(distances2[0], 0);
-        if (nobs > k) {
-            distances1.pop_back();
-        }
-        distances2.erase(distances2.begin());
-        EXPECT_EQ(distances1, distances2);
+        results2.erase(results2.begin());
+        EXPECT_EQ(results1, results2);
     }
-}
-
-TEST_P(BruteForceTest, Options) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
-
-    knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
-
-    std::vector<int> neighbors;
-    std::vector<double> distances;
-    bf.find_nearest_neighbors(0, k, NULL, &distances);
-    EXPECT_TRUE(distances.size() >= 1);
-
-    distances.clear();
-    bf.find_nearest_neighbors(0, k, &neighbors, NULL);
-    EXPECT_TRUE(neighbors.size() >= 1);
-    EXPECT_TRUE(distances.size() == 0);
 }
 
 INSTANTIATE_TEST_CASE_P(

@@ -15,11 +15,9 @@ TEST_P(HnswTest, FindEuclidean) {
 
     knncolle::HnswEuclidean<> nsw(ndim, nobs, data.data());
 
-    std::vector<int> neighbors; 
-    std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
-        nsw.find_nearest_neighbors(x, k, &neighbors, &distances);
-        sanity_checks(neighbors, distances, k, x);
+        auto res = nsw.find_nearest_neighbors(x, k);
+        sanity_checks(res, k, x);
     }
 }
 
@@ -33,8 +31,8 @@ TEST_P(HnswTest, FindManhattan) {
     std::vector<int> neighbors; 
     std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
-        nsw.find_nearest_neighbors(x, k, &neighbors, &distances);
-        sanity_checks(neighbors, distances, k, x);
+        auto res = nsw.find_nearest_neighbors(x, k);
+        sanity_checks(res, k, x);
     }
 }
 
@@ -48,27 +46,9 @@ TEST_P(HnswTest, QueryEuclidean) {
     std::vector<int> neighbors;
     std::vector<double> distances;
     for (size_t x = 0; x < nobs; ++x) {
-        nsw.find_nearest_neighbors(data.data() + x * ndim, k, &neighbors, &distances);
-        sanity_checks(neighbors, distances, k);
+        auto res = nsw.find_nearest_neighbors(data.data() + x * ndim, k);
+        sanity_checks(res, k);
     }
-}
-
-TEST_P(HnswTest, Options) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
-
-    knncolle::HnswEuclidean<> vp(ndim, nobs, data.data());
-
-    std::vector<int> neighbors;
-    std::vector<double> distances;
-    vp.find_nearest_neighbors(0, k, NULL, &distances);
-    EXPECT_TRUE(distances.size() >= 1);
-
-    distances.clear();
-    vp.find_nearest_neighbors(0, k, &neighbors, NULL);
-    EXPECT_TRUE(neighbors.size() >= 1);
-    EXPECT_TRUE(distances.size() == 0);
 }
 
 INSTANTIATE_TEST_CASE_P(

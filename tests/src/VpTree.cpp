@@ -17,13 +17,10 @@ TEST_P(VpTreeTest, FindEuclidean) {
     knncolle::VpTreeEuclidean<> vp(ndim, nobs, data.data());
     knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
 
-    std::vector<int> bf_neighbors, vp_neighbors;
-    std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
-        vp.find_nearest_neighbors(x, k, &vp_neighbors, &vp_distances);
-        bf.find_nearest_neighbors(x, k, &bf_neighbors, &bf_distances);
-        EXPECT_EQ(vp_neighbors, bf_neighbors);
-        EXPECT_EQ(vp_distances, bf_distances);
+        auto vpres = vp.find_nearest_neighbors(x, k);
+        auto bfres = bf.find_nearest_neighbors(x, k);
+        EXPECT_EQ(vpres, bfres);
     }
 }
 
@@ -35,13 +32,10 @@ TEST_P(VpTreeTest, FindManhattan) {
     knncolle::VpTreeManhattan<> vp(ndim, nobs, data.data());
     knncolle::BruteForceManhattan<> bf(ndim, nobs, data.data());
 
-    std::vector<int> bf_neighbors, vp_neighbors;
-    std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
-        vp.find_nearest_neighbors(x, k, &vp_neighbors, &vp_distances);
-        bf.find_nearest_neighbors(x, k, &bf_neighbors, &bf_distances);
-        EXPECT_EQ(vp_neighbors, bf_neighbors);
-        EXPECT_EQ(vp_distances, bf_distances);
+        auto vpres = vp.find_nearest_neighbors(x, k);
+        auto bfres = bf.find_nearest_neighbors(x, k);
+        EXPECT_EQ(vpres, bfres);
     }
 }
 
@@ -56,29 +50,10 @@ TEST_P(VpTreeTest, QueryEuclidean) {
     std::vector<int> bf_neighbors, vp_neighbors;
     std::vector<double> bf_distances, vp_distances;
     for (size_t x = 0; x < nobs; ++x) {
-        bf.find_nearest_neighbors(data.data() + x * ndim, k, &vp_neighbors, &vp_distances);
-        vp.find_nearest_neighbors(data.data() + x * ndim, k, &bf_neighbors, &bf_distances);
-        EXPECT_EQ(vp_neighbors, bf_neighbors);
-        EXPECT_EQ(vp_distances, bf_distances);
+        auto vpres = vp.find_nearest_neighbors(data.data() + x * ndim, k);
+        auto bfres = bf.find_nearest_neighbors(data.data() + x * ndim, k);
+        EXPECT_EQ(vpres, bfres);
     }
-}
-
-TEST_P(VpTreeTest, Options) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
-
-    knncolle::VpTreeEuclidean<> vp(ndim, nobs, data.data());
-
-    std::vector<int> neighbors;
-    std::vector<double> distances;
-    vp.find_nearest_neighbors(0, k, NULL, &distances);
-    EXPECT_TRUE(distances.size() >= 1);
-
-    distances.clear();
-    vp.find_nearest_neighbors(0, k, &neighbors, NULL);
-    EXPECT_TRUE(neighbors.size() >= 1);
-    EXPECT_TRUE(distances.size() == 0);
 }
 
 INSTANTIATE_TEST_CASE_P(
