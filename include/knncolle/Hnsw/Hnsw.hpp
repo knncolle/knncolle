@@ -10,23 +10,46 @@
 /**
  * @file Hnsw.hpp
  *
- * Implements an approximate nearest neighbor search with HNSW.
+ * @brief Implements an approximate nearest neighbor search with HNSW.
  */
 
 namespace knncolle {
 
 namespace HnswDefaults {
 
+/**
+ * Default value for `nlinks` in the `Hnsw()` constructor.
+ */
 static constexpr int nlinks = 16;
 
+/**
+ * Default value for `ef_construction` in the `Hnsw()` constructor.
+ */
 static constexpr int ef_construction = 200;
 
+/**
+ * Default value for `ef_search` in the `Hnsw()` constructor.
+ */
 static constexpr int ef_search = 10;
 
 };
 
 /**
  * @brief Perform an approximate nearest neighbor search with HNSW.
+ *
+ * In the HNSW algorithm (Malkov and Yashunin, 2016), each point is a node in a \dQuote{nagivable small world} graph.
+ * The nearest neighbor search proceeds by starting at a node and walking through the graph to obtain closer neighbors to a given query point.
+ * Nagivable small world graphs are used to maintain connectivity across the data set by creating links between distant points.
+ * This speeds up the search by ensuring that the algorithm does not need to take many small steps to move from one cluster to another.
+ * The HNSW algorithm extends this idea by using a hierarchy of such graphs containing links of different lengths, 
+ * which avoids wasting time on small steps in the early stages of the search where the current node position is far from the query.
+ *
+ * @see
+ * Malkov YA, Yashunin DA (2016).
+ * Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs.
+ * _arXiv_.
+ * https://arxiv.org/abs/1603.09320
+ *
  *
  * @tparam DISTANCE An **hnswlib**-derived class to compute the distance between vectors.
  * Note that this is not the same as the classes in `distances.hpp`.
@@ -52,6 +75,14 @@ public:
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
+     * @param nlinks Number of bidirectional links for each node.
+     * This is equivalent to the `M` parameter in the underlying **hnswlib** library, see [here](https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md) for details.
+     * @param ef_construction Size of the dynamic list of nearest neighbors during index construction.
+     * This controls the trade-off between indexing time and accuracy and is equivalent to the `ef_construct` parameter in the underlying **hnswlib** library, 
+     * see [here](https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md) for details.
+     * @param ef_search Size of the dynamic list of nearest neighbors during searching.
+     * This controls the trade-off between search speed and accuracy and is equivalent to the `ef` parameter in the underlying **hnswlib** library, 
+     * see [here](https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md) for details.
      *
      * @tparam INPUT Floating-point type of the input data.
      */

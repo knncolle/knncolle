@@ -5,7 +5,7 @@
 /**
  * @file distances.hpp
  *
- * Classes for distance calculations.
+ * @brief Classes for distance calculations.
  */
 
 namespace knncolle {

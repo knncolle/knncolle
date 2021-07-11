@@ -7,6 +7,12 @@
 #include "Hnsw/Hnsw.hpp"
 #include <memory>
 
+/**
+ * @file knncolle.hpp
+ *
+ * @brief Umbrella header to include all algorithms.
+ */
+
 namespace knncolle {
 
 /**

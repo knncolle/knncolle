@@ -6,7 +6,7 @@
 /**
  * @file knn_base.hpp
  *
- * Defines the virtual base class for all methods in the **knncolle** library.
+ * @brief Defines the virtual base class for all **knncolle** methods.
  */
 
 namespace knncolle {
@@ -14,7 +14,7 @@ namespace knncolle {
 /**
  * @brief Virtual base class defining the **knncolle** interface.
  *
- * Defines the minimum set up methods supported by all subclasses implementing specific methods.
+ * Defines the minimum set of methods, to be implemented by all concrete subclasses. 
  *
  * @tparam INDEX_t Integer type for the indices.
  * @tparam DISTANCE_t Floating point type for the distances.

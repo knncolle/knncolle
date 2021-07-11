@@ -9,21 +9,38 @@
 /**
  * @file Annoy.hpp
  *
- * Implements an approximate nearest neighbor search with Annoy.
+ * @brief Implements an approximate nearest neighbor search with Annoy.
  */
 
 namespace knncolle {
 
 namespace AnnoyDefaults {
 
-static constexpr int ntrees = 50;
+/**
+ * Default value for `ntrees` in the `Annoy` constructor.
+ */
+const int ntrees = 50;
 
-static constexpr double search_mult = -1;
+/**
+ * Default value for `search_mult` in the `Annoy` constructor.
+ */
+const double search_mult = -1;
 
 }
 
 /**
  * @brief Perform an approximate nearest neighbor search with Annoy.
+ *
+ * In the Approximate Nearest Neighbors Oh Yeah (Annoy) algorithm, a tree is constructed where a random hyperplane splits the points into two subsets at each internal node.
+ * Leaf nodes are defined when the number of points in a subset falls below a threshold (close to twice the number of dimensions for the settings used here).
+ * Multiple trees are constructed in this manner, each of which is different due to the random choice of hyperplanes.
+ * For a given query point, each tree is searched to identify the subset of all points in the same leaf node as the query point. 
+ * The union of these subsets across all trees is exhaustively searched to identify the actual nearest neighbors to the query.
+ *
+ * @see
+ * Bernhardsson E (2018).
+ * Annoy.
+ * https://github.com/spotify/annoy
  *
  * @tparam DISTANCE An **Annoy**-derived class to compute the distance between vectors.
  * Note that this is not the same as the classes in `distances.hpp`.
@@ -50,6 +67,11 @@ public:
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
+     * @param ntrees Number of trees to construct.
+     * Larger values improve accuracy at the cost of index size (i.e., memory usage), see [here](https://github.com/spotify/annoy#tradeoffs) for details.
+     * @param search_mult Factor that is multiplied by the number of neighbors `k` to determine the number of nodes to search in `find_nearest_neighbors()`.
+     * Larger values improve accuracy at the cost of runtime, see [here](https://github.com/spotify/annoy#tradeoffs) for details.
+     * If set to -1, it defaults to `ntrees`.
      *
      * @tparam INPUT Floating-point type of the input data.
      */

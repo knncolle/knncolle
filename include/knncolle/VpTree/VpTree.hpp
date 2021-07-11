@@ -13,24 +13,24 @@
 /**
  * @file VpTree.hpp
  *
- * Implements a vantage point (VP) tree to search for nearest neighbors.
+ * @brief Implements a vantage point (VP) tree to search for nearest neighbors.
  */
-
 
 namespace knncolle {
 
 /**
  * @brief Perform a nearest neighbor search based on a vantage point (VP) tree.
  *
- * In a VP tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions.
+ * In a vantage point tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions.
  * The split is determined by picking an arbitrary point inside that subset as the node center, 
  * computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere.
  * The left child of this node contains all points within that hypersphere while the right child contains the remaining points.
- * This is applied recursively until all points resolve to individual nodes.
+ * This procedure is applied recursively until all points resolve to individual nodes, thus yielding a VP tree. 
+ * Upon searching, the algorithm traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.
  *
- * The nearest neighbor search traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.
- * VP trees are often faster than more conventional KD-trees or ball trees as the former uses the points themselves as the nodes of the tree,
- * avoiding the need to create many intermediate nodes and reducing the total number of distance calculations.
+ * The major advantage of VP trees over more conventional KD-trees or ball trees is that the former does not need to construct intermediate nodes, instead using the data points themselves at the nodes.
+ * This reduces the memory usage of the tree and total number of distance calculations for any search.
+ * It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for **knncolle**.
  *
  * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
  * @tparam INDEX_t Integer type for the indices.
@@ -42,6 +42,11 @@ namespace knncolle {
  * Yianilos PN (1993).
  * Data structures and algorithms for nearest neighbor search in general metric spaces.
  * _Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms_, 311-321.
+ * 
+ * @see
+ * Hanov S (2011).
+ * VP trees: A data structure for finding stuff fast.
+ * http://stevehanov.ca/blog/index.php?id=130
  */
 template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
 class VpTree : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {

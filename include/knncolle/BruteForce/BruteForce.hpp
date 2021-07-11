@@ -11,7 +11,7 @@
 /**
  * @file BruteForce.hpp
  *
- * Implements a brute-force search for nearest neighbors.
+ * @brief Implements a brute-force search for nearest neighbors.
  */
 
 namespace knncolle {
