@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['find_5fnearest_5fneighbors_67',['find_nearest_neighbors',['../classknncolle_1_1knn__base.html#a6333b53ccc5c80da53b736f0ebd8e051',1,'knncolle::knn_base::find_nearest_neighbors(INDEX_t index, int k) const =0'],['../classknncolle_1_1knn__base.html#a59ebba6f71672e3c36849c47f52b516d',1,'knncolle::knn_base::find_nearest_neighbors(const QUERY_t *query, int k) const =0']]]
+  ['hnsw_58',['Hnsw',['../classknncolle_1_1Hnsw.html#a0d8a1e355acb6e81a6262a243c72455f',1,'knncolle::Hnsw']]]
 ];

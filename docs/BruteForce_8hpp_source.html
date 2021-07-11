@@ -77,80 +77,90 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../utils/distances.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../utils/NeighborQueue.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../utils/MatrixStore.hpp&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../utils/knn_base.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../utils/Base.hpp&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1BruteForce.html">BruteForce</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1knn__base.html">knn_base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    INDEX_t num_dim;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    INDEX_t num_obs;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">   40</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">   42</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    MatrixStore&lt;INTERNAL_t&gt; store;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">   59</a></span>&#160;    <a class="code" href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">BruteForce</a>(INDEX_t <a class="code" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">bool</span> copy = <span class="keyword">false</span>) : num_dim(<a class="code" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a>), num_obs(<a class="code" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>), store(vals, <a class="code" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a> * <a class="code" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>, copy) {}</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        assert(index &lt; num_obs);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k, index);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        search_nn(store.reference + index * num_dim, nearest);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">auto</span> output = nearest.template report&lt;DISTANCE_t&gt;();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        normalize(output);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        search_nn(query, nearest);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">auto</span> output = nearest.template report&lt;DISTANCE_t&gt;();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        normalize(output);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> QUEUE&gt;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> search_nn(<span class="keyword">const</span> DISTANCE_t* query, QUEUE&amp; nearest)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">auto</span> copy = store.reference;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">for</span> (INDEX_t i = 0; i &lt; num_obs; ++i, copy += num_dim) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> normalize(std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt;&amp; results)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : results) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            d.second = DISTANCE::normalize(d.second);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    } </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;};</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="BruteForce_8hpp.html#ac9ceed8acd0b783637526aa265e113b0">  101</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1BruteForce.html">BruteForceEuclidean</a> = <a class="code" href="classknncolle_1_1BruteForce.html">BruteForce&lt;distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="BruteForce_8hpp.html#a31bad5cef46e76faadbf673ff587cc94">  107</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1BruteForce.html">BruteForceManhattan</a> = <a class="code" href="classknncolle_1_1BruteForce.html">BruteForce&lt;distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassknncolle_1_1BruteForce_html"><div class="ttname"><a href="classknncolle_1_1BruteForce.html">knncolle::BruteForce</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:34</div></div>
-<div class="ttc" id="aclassknncolle_1_1BruteForce_html_a924ec3901151266eb87c3b69ab9308ed"><div class="ttname"><a href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">knncolle::BruteForce::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:42</div></div>
-<div class="ttc" id="aclassknncolle_1_1BruteForce_html_ad27741895978d99d69a7a5dc0737f688"><div class="ttname"><a href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">knncolle::BruteForce::BruteForce</a></div><div class="ttdeci">BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, bool copy=false)</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:59</div></div>
-<div class="ttc" id="aclassknncolle_1_1BruteForce_html_af66908b1bb475bdfbb998f57d33032d0"><div class="ttname"><a href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">knncolle::BruteForce::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:40</div></div>
-<div class="ttc" id="aclassknncolle_1_1knn__base_html"><div class="ttname"><a href="classknncolle_1_1knn__base.html">knncolle::knn_base</a></div><div class="ttdoc">Virtual base class defining the knncolle interface.</div><div class="ttdef"><b>Definition:</b> knn_base.hpp:24</div></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1BruteForce.html">BruteForce</a> : <span class="keyword">public</span> Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    INDEX_t num_dim;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    INDEX_t num_obs;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    INDEX_t nobs()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    INDEX_t ndim()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    MatrixStore&lt;INTERNAL_t&gt; store;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">   60</a></span>&#160;    <a class="code" href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">BruteForce</a>(INDEX_t ndim, INDEX_t nobs, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">bool</span> copy = <span class="keyword">false</span>) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) {}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        assert(index &lt; num_obs);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k, index);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        search_nn(store.reference + index * num_dim, nearest);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">auto</span> output = nearest.template report&lt;DISTANCE_t&gt;();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        normalize(output);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        search_nn(query, nearest);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">auto</span> output = nearest.template report&lt;DISTANCE_t&gt;();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        normalize(output);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">auto</span> candidate = store.reference + num_dim * index;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_t&gt;::value) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordflow">return</span> candidate;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            std::copy(candidate, candidate + num_dim, buffer);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">using</span> Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> QUEUE&gt;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> search_nn(<span class="keyword">const</span> DISTANCE_t* query, QUEUE&amp; nearest)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">auto</span> copy = store.reference;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">for</span> (INDEX_t i = 0; i &lt; num_obs; ++i, copy += num_dim) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">void</span> normalize(std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt;&amp; results)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : results) {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            d.second = DISTANCE::normalize(d.second);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    } </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;};</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="BruteForce_8hpp.html#ac9ceed8acd0b783637526aa265e113b0">  114</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1BruteForce.html">BruteForceEuclidean</a> = <a class="code" href="classknncolle_1_1BruteForce.html">BruteForce&lt;distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="BruteForce_8hpp.html#a31bad5cef46e76faadbf673ff587cc94">  120</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1BruteForce.html">BruteForceManhattan</a> = <a class="code" href="classknncolle_1_1BruteForce.html">BruteForce&lt;distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassknncolle_1_1BruteForce_html"><div class="ttname"><a href="classknncolle_1_1BruteForce.html">knncolle::BruteForce</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:35</div></div>
+<div class="ttc" id="aclassknncolle_1_1BruteForce_html_ad27741895978d99d69a7a5dc0737f688"><div class="ttname"><a href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">knncolle::BruteForce::BruteForce</a></div><div class="ttdeci">BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, bool copy=false)</div><div class="ttdef"><b>Definition:</b> BruteForce.hpp:60</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

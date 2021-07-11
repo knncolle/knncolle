@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['euclidean_49',['Euclidean',['../structknncolle_1_1distances_1_1Euclidean.html',1,'knncolle::distances']]]
+  ['euclidean_43',['Euclidean',['../structknncolle_1_1distances_1_1Euclidean.html',1,'knncolle::distances']]]
 ];

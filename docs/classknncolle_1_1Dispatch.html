@@ -112,14 +112,14 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a2a6966fc0f86fd5365d843dfefca3b47"><td class="memItemLeft" align="right" valign="top"><a id="a2a6966fc0f86fd5365d843dfefca3b47"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>BASE</b> = <a class="el" href="classknncolle_1_1knn__base.html">knn_base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</td></tr>
-<tr class="separator:a2a6966fc0f86fd5365d843dfefca3b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc469caa2cb1a10d42ab72a698c4809f"><td class="memItemLeft" align="right" valign="top"><a id="adc469caa2cb1a10d42ab72a698c4809f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>BASE</b> = Base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</td></tr>
+<tr class="separator:adc469caa2cb1a10d42ab72a698c4809f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memTemplParams" colspan="2">template&lt;class INPUT &gt; </td></tr>
-<tr class="memitem:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1knn__base.html">BASE</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a130b6bbfc9d882763ea17b9e6df1305c">build</a> (INDEX_t ndim, INDEX_t nobs, const INPUT *vals, <a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">DispatchAlgorithm</a> algorithm)</td></tr>
+<tr class="memitem:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; BASE &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a130b6bbfc9d882763ea17b9e6df1305c">build</a> (INDEX_t ndim, INDEX_t nobs, const INPUT *vals, <a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">DispatchAlgorithm</a> algorithm)</td></tr>
 <tr class="separator:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -168,7 +168,7 @@ template&lt;class INPUT &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classknncolle_1_1knn__base.html">BASE</a>&gt; <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::build </td>
+          <td class="memname">std::shared_ptr&lt;BASE&gt; <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::build </td>
           <td>(</td>
           <td class="paramtype">INDEX_t&#160;</td>
           <td class="paramname"><em>ndim</em>, </td>
@@ -218,7 +218,7 @@ template&lt;class INPUT &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a <code><a class="el" href="classknncolle_1_1knn__base.html" title="Virtual base class defining the knncolle interface.">knn_base</a></code> subclass, which can be used to identify nearest neighbors using the <code><a class="el" href="classknncolle_1_1knn__base.html#a6333b53ccc5c80da53b736f0ebd8e051">knn_base::find_nearest_neighbors()</a></code> method. The exact algorithm used depends on the choice of algorithm in <code>algorithm</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to a <code>Base</code> subclass, which can be used to identify nearest neighbors using the <code>Base::find_nearest_neighbors()</code> method. The exact algorithm used depends on the choice of algorithm in <code>algorithm</code>. </dd></dl>
 
 </div>
 </div>
