@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['collection_20of_20knn_20algorithms_59',['Collection of KNN algorithms',['../index.html',1,'']]]
+  ['collection_20of_20knn_20algorithms_85',['Collection of KNN algorithms',['../index.html',1,'']]]
 ];

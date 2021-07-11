@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['annoysearch_42',['AnnoySearch',['../classknncolle_1_1AnnoySearch.html#ac4369ef187c8e74163392ecc8e234874',1,'knncolle::AnnoySearch']]]
+  ['annoysearch_60',['AnnoySearch',['../classknncolle_1_1AnnoySearch.html#aa141cd7397624e9740e2a0cbf993a74c',1,'knncolle::AnnoySearch']]]
 ];

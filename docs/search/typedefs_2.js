@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hnsweuclidean_55',['HnswEuclidean',['../Hnsw_8hpp.html#a0e2f1a48e5ca3f549b48b71f279f8bac',1,'knncolle']]],
-  ['hnswmanhattan_56',['HnswManhattan',['../Hnsw_8hpp.html#ab9a421c6c912026f5d01d155279eeccb',1,'knncolle']]]
+  ['hnsweuclidean_81',['HnswEuclidean',['../Hnsw_8hpp.html#ad69434af85fbf8c3e97562e6ea2749eb',1,'knncolle']]],
+  ['hnswmanhattan_82',['HnswManhattan',['../Hnsw_8hpp.html#a1043fa719cf20d0c964973a661d7efbf',1,'knncolle']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hnswsearch_31',['HnswSearch',['../classknncolle_1_1HnswSearch.html',1,'knncolle']]]
+  ['euclidean_46',['Euclidean',['../structknncolle_1_1distances_1_1Euclidean.html',1,'knncolle::distances']]]
 ];
