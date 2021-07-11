@@ -3,18 +3,25 @@
 
 #include <vector>
 #include <algorithm>
+#include <type_traits>
 
 namespace knncolle {
 
-template<typename DTYPE>
+template<typename DATA>
 struct MatrixStore {
-    MatrixStore(const DTYPE* ptr) : copy(false), reference(ptr) {}
+    template<typename INPUT>
+    MatrixStore(const INPUT* ptr, size_t n, bool copy_ = false) : copy(copy_) {
+        if (std::is_same<INPUT, DATA>::value && !copy) {
+            reference = ptr;
+        } else {
+            copy = true;
+            store.resize(n);
+            std::copy(ptr, ptr + n, store.begin());
+        }
+        return;
+    }
 
-    MatrixStore(std::vector<DTYPE> val) : copy(true), store(std::move(val)), reference(store.data()) {}
-
-    MatrixStore(const MatrixStore<DTYPE>& x) : copy(x.copy), store(x.store), reference(copy ? store.data() : x.reference) {}
-
-    MatrixStore& operator=(const MatrixStore<DTYPE>& x) {
+    MatrixStore& operator=(const MatrixStore<DATA>& x) {
         copy = x.copy;
         store = x.store;
         if (copy) {
@@ -25,9 +32,9 @@ struct MatrixStore {
         return *this;
     }
 
-    MatrixStore(MatrixStore<DTYPE>&& x) : copy(x.copy), store(std::move(x.store)), reference(copy ? store.data() : x.reference) {}
+    MatrixStore(MatrixStore<DATA>&& x) : copy(x.copy), store(std::move(x.store)), reference(copy ? store.data() : x.reference) {}
 
-    MatrixStore& operator=(MatrixStore<DTYPE>&& x) {
+    MatrixStore& operator=(MatrixStore<DATA>&& x) {
         copy = x.copy;
         store = std::move(x.store);
         if (copy) {
@@ -41,8 +48,8 @@ struct MatrixStore {
     ~MatrixStore() {}
 
     bool copy;
-    std::vector<double> store; 
-    const double* reference;
+    std::vector<DATA> store; 
+    const DATA* reference;
 };
 
 }

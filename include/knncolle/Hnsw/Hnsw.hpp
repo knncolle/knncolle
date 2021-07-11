@@ -20,67 +20,81 @@ namespace knncolle {
  *
  * @tparam DISTANCE An **hnswlib**-derived class to compute the distance between vectors.
  * Note that this is not the same as the classes in `distances.hpp`.
- * @tparam ITYPE Integer type for the indices.
- * @tparam DTYPE Floating point type for the data.
+ * @tparam INDEX_t Integer type for the indices.
+ * @tparam DISTANCE_t Floating point type for the distances.
  */
-template<class SPACE, typename ITYPE = int, typename DTYPE = double>
-class HnswSearch : public knn_base<ITYPE, DTYPE> {
+template<class SPACE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+class HnswSearch : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+    typedef float INTERNAL_DATA_t; // floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.
+
 public:
-    ITYPE nobs() const {
+    INDEX_t nobs() const {
         return num_obs;
     }
     
-    ITYPE ndim() const {
+    INDEX_t ndim() const {
         return num_dim;
     }
 
 public:
     /**
-     * Construct an `HnswSearch` instance.
-     *
      * @param ndim Number of dimensions.
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
+     *
+     * @tparam INPUT Floating-point type of the input data.
      */
-    HnswSearch(ITYPE ndim, ITYPE nobs, const DTYPE* vals, int nlinks = 16, int ef_construction= 200, int ef_search = 10) : 
+    template<typename INPUT>
+    HnswSearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int nlinks = 16, int ef_construction= 200, int ef_search = 10) : 
         space(ndim), hnsw_index(&space, nobs, nlinks, ef_construction), num_dim(ndim), num_obs(nobs)
     {
-        std::vector<float> copy(ndim);
-        for (ITYPE i=0; i < nobs; ++i, vals += ndim) {
-            std::copy(vals, vals + ndim, copy.begin());
-            hnsw_index.addPoint(copy.data(), i);
+        if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {
+            for (INDEX_t i=0; i < nobs; ++i, vals += ndim) {
+                hnsw_index.addPoint(vals, i);
+            }
+        } else {
+            std::vector<INTERNAL_DATA_t> copy(ndim);
+            for (INDEX_t i=0; i < nobs; ++i, vals += ndim) {
+                std::copy(vals, vals + ndim, copy.begin());
+                hnsw_index.addPoint(copy.data(), i);
+            }
         }
         hnsw_index.setEf(ef_search);
         return;
     }
 
-    void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const { 
-        auto V = hnsw_index.getDataByLabel<float>(index);
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
+        auto V = hnsw_index.getDataByLabel<INTERNAL_DATA_t>(index);
         auto Q = hnsw_index.searchKnn(V.data(), k+1);
-        harvest_queue(Q, indices, distances, true, index);
-        normalize(distances);
-        return;
+        auto output = harvest_queue<INDEX_t, DISTANCE_t>(Q, true, index);
+        normalize(output);
+        return output;
     }
         
-    void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
-        std::vector<float> copy(query, query + num_dim);
-        auto Q = hnsw_index.searchKnn(copy.data(), k);
-        harvest_queue(Q, indices, distances);
-        normalize(distances);
-        return;
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
+        if constexpr(std::is_same<QUERY_t, INTERNAL_DATA_t>::value) {
+            auto Q = hnsw_index.searchKnn(query, k);
+            auto output = harvest_queue<INDEX_t, DISTANCE_t>(Q);
+            normalize(output);
+            return output;
+        } else {
+            std::vector<INTERNAL_DATA_t> copy(query, query + num_dim);
+            auto Q = hnsw_index.searchKnn(copy.data(), k);
+            auto output = harvest_queue<INDEX_t, DISTANCE_t>(Q);
+            normalize(output);
+            return output;
+        }
     }
 
 private:
     SPACE space;
-    hnswlib::HierarchicalNSW<float> hnsw_index;
-    ITYPE num_dim, num_obs;
+    hnswlib::HierarchicalNSW<INTERNAL_DATA_t> hnsw_index;
+    INDEX_t num_dim, num_obs;
 
-    static void normalize (std::vector<DTYPE>* distances) {
-        if (distances) {
-            for (auto& d : *distances) {
-                d = SPACE::normalize(d);
-            }
+    static void normalize(std::vector<std::pair<INDEX_t, DISTANCE_t> >& results) {
+        for (auto& d : results) {
+            d.second = SPACE::normalize(d.second);
         }
         return;
     }
@@ -139,14 +153,14 @@ public:
 /**
  * Perform an Hnsw search with Euclidean distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using HnswEuclidean = HnswSearch<hnsw_distances::Euclidean, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+using HnswEuclidean = HnswSearch<hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t>;
 
 /**
  * Perform an Hnsw search with Manhattan distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using HnswManhattan = HnswSearch<hnsw_distances::Manhattan, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+using HnswManhattan = HnswSearch<hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t>;
 
 }
 

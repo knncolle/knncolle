@@ -25,93 +25,86 @@ namespace knncolle {
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
  * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
- * @tparam ITYPE Integer type for the indices.
- * @tparam DTYPE Floating point type for the data.
+ * @tparam INDEX_t Integer type for the indices.
+ * @tparam DISTANCE_t Floating point type for the distances.
+ * @tparam QUERY_t Floating point type for the query data.
+ * @tparam INTERNAL_t Floating point type for the internal calculations.
  */
-template<class DISTANCE, typename ITYPE = int, typename DTYPE = double>
-class BruteForce : public knn_base<ITYPE, DTYPE> {
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+class BruteForce : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
 private:
-    ITYPE num_dim;
-    ITYPE num_obs;
+    INDEX_t num_dim;
+    INDEX_t num_obs;
 
 public:
-    ITYPE nobs() const { return num_obs; } 
+    INDEX_t nobs() const { return num_obs; } 
     
-    ITYPE ndim() const { return num_dim; }
+    INDEX_t ndim() const { return num_dim; }
 
 private:
-    MatrixStore<DTYPE> store;
+    MatrixStore<INTERNAL_t> store;
 
 public:
     /**
-     * Construct a `BruteForce` instance without any copying of the data.
-     * The `vals` pointer is directly stored in the instance, assuming that the lifetime of the array exceeds that of the `BruteForce` object.
-     *
      * @param ndim Number of dimensions.
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
-     */
-    BruteForce(ITYPE ndim, ITYPE nobs, const DTYPE* vals) : num_dim(ndim), num_obs(nobs), store(vals) {}
-
-    /**
-     * Construct a `BruteForce` instance by copying the data.
-     * This is useful when the original data container has an unknown lifetime.
+     * @param copy Whether the data in `vals` should be copied to an internal store.
+     * By default, no copy is performed under the assumption that the array in `vals` lives longer than the constructed `BruteForce` instance.
      *
-     * @param ndim Number of dimensions.
-     * @param nobs Number of observations.
-     * @param vals Vector of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
-     * i.e., contiguous elements belong to the same observation.
+     * @tparam INPUT Floating-point type of the input data.
      */
-    BruteForce(ITYPE ndim, ITYPE nobs, std::vector<DTYPE> vals) : num_dim(ndim), num_obs(nobs), store(std::move(vals)) {}
+    template<typename INPUT>
+    BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) {}
 
-    void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
         assert(index < num_obs);
-        NeighborQueue<ITYPE, DTYPE> nearest(k + 1);
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
         search_nn(store.reference + index * num_dim, nearest);
-        nearest.report(indices, distances, true, index);
-        normalize(distances);
-        return;
+
+        auto output = nearest.template report<DISTANCE_t>();
+        normalize(output);
+        return output;
     }
 
-    void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
-        NeighborQueue<ITYPE, DTYPE> nearest(k);
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
         search_nn(query, nearest);
-        nearest.report(indices, distances);
-        normalize(distances);
-        return;
+        auto output = nearest.template report<DISTANCE_t>();
+        normalize(output);
+        return output;
     }
 
 private:
-    void search_nn(const DTYPE* query, NeighborQueue<ITYPE, DTYPE>& nearest) const {
+    template<class QUEUE>
+    void search_nn(const DISTANCE_t* query, QUEUE& nearest) const {
         auto copy = store.reference;
-        for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
+        for (INDEX_t i = 0; i < num_obs; ++i, copy += num_dim) {
             nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));
         }
         return;
     }
 
-    void normalize(std::vector<DTYPE>* distances) const {
-        if (distances) {
-            for (auto& d : *distances) {
-                d = DISTANCE::normalize(d);
-            }
+    void normalize(std::vector<std::pair<INDEX_t, DISTANCE_t> >& results) const {
+        for (auto& d : results) {
+            d.second = DISTANCE::normalize(d.second);
         }
         return;
-    }
+    } 
 };
 
 /**
  * Perform a brute-force search with Euclidean distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using BruteForceEuclidean = BruteForce<distances::Euclidean, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+using BruteForceEuclidean = BruteForce<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 /**
  * Perform a brute-force search with Manhattan distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using BruteForceManhattan = BruteForce<distances::Manhattan, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+using BruteForceManhattan = BruteForce<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 }
 

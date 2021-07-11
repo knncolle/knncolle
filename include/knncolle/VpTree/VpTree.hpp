@@ -33,40 +33,42 @@ namespace knncolle {
  * avoiding the need to create many intermediate nodes and reducing the total number of distance calculations.
  *
  * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
- * @tparam ITYPE Integer type for the indices.
- * @tparam DTYPE Floating point type for the data.
+ * @tparam INDEX_t Integer type for the indices.
+ * @tparam DISTANCE_t Floating point type for the distances.
+ * @tparam QUERY_t Floating point type for the query data.
+ * @tparam INTERNAL_t Floating point type for the data.
  *
  * @see
  * Yianilos PN (1993).
  * Data structures and algorithms for nearest neighbor search in general metric spaces.
  * _Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms_, 311-321.
  */
-template<class DISTANCE, typename ITYPE = int, typename DTYPE = double>
-class VpTree : public knn_base<ITYPE, DTYPE> {
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+class VpTree : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
 private:
-    ITYPE num_dim;
-    ITYPE num_obs;
+    INDEX_t num_dim;
+    INDEX_t num_obs;
 public:
-    ITYPE nobs() const { return num_obs; } 
+    INDEX_t nobs() const { return num_obs; } 
     
-    ITYPE ndim() const { return num_dim; }
+    INDEX_t ndim() const { return num_dim; }
 private:
     typedef int NodeIndex_t;
     static const NodeIndex_t LEAF_MARKER=-1;
 
     // Single node of a VP tree (has a point and radius; left children are closer to point than the radius)
     struct Node {
-        double threshold;  // radius 
-        ITYPE index; // original index of current vantage point 
+        INTERNAL_t threshold;  // radius 
+        INDEX_t index; // original index of current vantage point 
         NodeIndex_t left;  // node index of the next vantage point for all children closer than 'threshold' from the current vantage point
         NodeIndex_t right; // node index of the next vantage point for all children further than 'threshold' from the current vantage point
         Node(NodeIndex_t i=0) : threshold(0), index(i), left(LEAF_MARKER), right(LEAF_MARKER) {}
     };
     std::vector<Node> nodes;
 
-    typedef std::tuple<ITYPE, const double*, double> DataPoint;
+    typedef std::tuple<INDEX_t, const INTERNAL_t*, INTERNAL_t> DataPoint; // internal distances computed using "INTERNAL_t" type, even if output is returned with DISTANCE_t.
 
     template<class SAMPLER>
     NodeIndex_t buildFromPoints(NodeIndex_t lower, NodeIndex_t upper, std::vector<DataPoint>& items, SAMPLER& rng) {
@@ -94,9 +96,9 @@ private:
             const auto& vantage = items[lower];
 
             // Compute distances to the new vantage point.
-            const double * ref = std::get<1>(vantage);
+            const INTERNAL_t* ref = std::get<1>(vantage);
             for (size_t i = lower + 1; i < upper; ++i) {
-                const double* loc = std::get<1>(items[i]);
+                const INTERNAL_t* loc = std::get<1>(items[i]);
                 std::get<2>(items[i]) = DISTANCE::raw_distance(ref, loc, num_dim);
             }
 
@@ -123,44 +125,26 @@ private:
     }
 
 private:
-    MatrixStore<DTYPE> store;
+    MatrixStore<DISTANCE_t> store;
 
 public:
     /**
-     * Construct a `VpTree` instance without any copying of the data.
-     * The `vals` pointer is directly stored in the instance, assuming that the lifetime of the array exceeds that of the `BruteForce` object.
-     *
      * @param ndim Number of dimensions.
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
-     */
-    VpTree(ITYPE ndim, ITYPE nobs, const DTYPE* vals) : num_dim(ndim), num_obs(nobs), store(vals) { 
-        complete_assembly();
-        return;
-    }
-
-    /**
-     * Construct a `VpTree` instance by copying the data.
-     * This is useful when the original data container has an unknown lifetime.
+     * @param copy Whether the data in `vals` should be copied to an internal store.
+     * By default, no copy is performed under the assumption that the array in `vals` lives longer than the constructed `VpTree` instance.
      *
-     * @param ndim Number of dimensions.
-     * @param nobs Number of observations.
-     * @param vals Vector of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
-     * i.e., contiguous elements belong to the same observation.
+     * @tparam INPUT Floating-point type of the input data.
      */
-    VpTree(ITYPE ndim, ITYPE nobs, std::vector<DTYPE> vals) : num_dim(ndim), num_obs(nobs), store(std::move(vals)) { 
-        complete_assembly();
-        return;
-    }
-
-private:
-    void complete_assembly() {
+    template<typename INPUT>
+    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) { 
         std::vector<DataPoint> items;
         items.reserve(num_obs);
-        auto copy = store.reference;
-        for (ITYPE i = 0; i < num_obs; ++i, copy += num_dim) {
-            items.push_back(DataPoint(i, copy, 0));
+        auto ptr = store.reference;
+        for (INDEX_t i = 0; i < num_obs; ++i, ptr += num_dim) {
+            items.push_back(DataPoint(i, ptr, 0));
         }
 
         nodes.reserve(num_obs);
@@ -169,33 +153,30 @@ private:
         return;
     }
 
-public:
-    void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const { 
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
         assert(index < num_obs);
-        NeighborQueue<ITYPE, DTYPE> nearest(k + 1);
-        double tau = std::numeric_limits<double>::max();
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
+        INTERNAL_t tau = std::numeric_limits<INTERNAL_t>::max();
         search_nn(0, store.reference + index * num_dim, tau, nearest);
-        nearest.report(indices, distances, true, index);
-        return;
+        return nearest.template report<DISTANCE_t>();
     }
 
-    void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const {
-        NeighborQueue<ITYPE, DTYPE> nearest(k);
-        double tau = std::numeric_limits<double>::max();
+    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
+        INTERNAL_t tau = std::numeric_limits<INTERNAL_t>::max();
         search_nn(0, query, tau, nearest);
-        nearest.report(indices, distances);
-        return;
+        return nearest.template report<DISTANCE_t>();
     }
 
 private:
-    void search_nn(NodeIndex_t curnode_index, const double* target, double& tau, NeighborQueue<ITYPE, DTYPE>& nearest) const { 
+    void search_nn(NodeIndex_t curnode_index, const INTERNAL_t* target, INTERNAL_t& tau, NeighborQueue<INDEX_t, DISTANCE_t>& nearest) const { 
         if (curnode_index == LEAF_MARKER) { // indicates that we're done here
             return;
         }
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        double dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
+        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {
@@ -236,14 +217,14 @@ private:
 /**
  * Perform a VP tree search with Euclidean distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using VpTreeEuclidean = VpTree<distances::Euclidean, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+using VpTreeEuclidean = VpTree<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 /**
  * Perform a VP tree search with Manhattan distances.
  */
-template<typename ITYPE = int, typename DTYPE = double>
-using VpTreeManhattan = VpTree<distances::Manhattan, ITYPE, DTYPE>;
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+using VpTreeManhattan = VpTree<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 };
 

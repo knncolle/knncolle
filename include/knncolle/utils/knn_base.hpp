@@ -16,21 +16,22 @@ namespace knncolle {
  *
  * Defines the minimum set up methods supported by all subclasses implementing specific methods.
  *
- * @tparam ITYPE Integer type for the indices.
- * @tparam DTYPE Floating point type for the distances.
+ * @tparam INDEX_t Integer type for the indices.
+ * @tparam DISTANCE_t Floating point type for the distances.
+ * @tparam QUERY_t Floating point type for the query data.
  */
-template<typename ITYPE = int, typename DTYPE = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
 class knn_base {
 public:
     /**
      * Get the number of observations in the dataset to be searched.
      */
-    virtual ITYPE nobs() const = 0;
+    virtual INDEX_t nobs() const = 0;
     
     /**
      * Get the number of dimensions.
      */
-    virtual ITYPE ndim() const = 0;
+    virtual INDEX_t ndim() const = 0;
 
     virtual ~knn_base() {}
 
@@ -40,38 +41,22 @@ public:
      *
      * @param index The index of the observation of interest.
      * @param k The number of neighbors to identify.
-     * @param[out] indices Pointer to a vector to store the index of the nearest neighbors. 
-     * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
-     * If `NULL`, no indices are returned.
-     * @param[out] distances Pointer to a vector to store the distances to the nearest neighbors.
-     * Each distance corresponds to a neighbor in `indices`. 
-     * Guaranteed to be sorted in increasing order.
-     * If `NULL`, no distances are returned.
      *
-     * @return 
-     * If `report_indices = true`, `*indices` is filled with the identities of the `k` nearest neighbors.
-     * If `report_distances = true`, `*distances` is filled with the distances to the `k` nearest neighbors.
+     * @return A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
+     * Length is at most `k` but may be shorter if the total number of observations is less than `k + 1`.
      */
-    virtual void find_nearest_neighbors(ITYPE index, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const = 0;
+    virtual std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
      *
      * @param query Pointer to an array of length equal to `ndims()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
-     * @param[out] indices Pointer to a vector to store the index of the nearest neighbors. 
-     * Vector is resized to length no greater than `k` (but possibly less, if the total number of observations is less than `k`).
-     * If `NULL`, no indices are returned.
-     * @param[out] distances Pointer to a vector to store the distances to the nearest neighbors.
-     * Each distance corresponds to a neighbor in `indices`. 
-     * Guaranteed to be sorted in increasing order.
-     * If `NULL`, no distances are returned.
      *
-     * @return 
-     * If `report_indices = true`, `*indices` is filled with the identities of the `k` nearest neighbors.
-     * If `report_distances = true`, `*distances` is filled with the distances to the `k` nearest neighbors.
+     * @return A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
+     * Length is at most `k` but may be shorter if the total number of observations is less than `k`.
      */
-    virtual void find_nearest_neighbors(const DTYPE* query, int k, std::vector<ITYPE>* indices, std::vector<DTYPE>* distances) const = 0;
+    virtual std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const = 0;
 };
 
 }
