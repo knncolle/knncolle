@@ -15,6 +15,16 @@
 
 namespace knncolle {
 
+namespace HnswDefaults {
+
+static constexpr int nlinks = 16;
+
+static constexpr int ef_construction = 200;
+
+static constexpr int ef_search = 10;
+
+};
+
 /**
  * @brief Perform an approximate nearest neighbor search with HNSW.
  *
@@ -24,7 +34,7 @@ namespace knncolle {
  * @tparam DISTANCE_t Floating point type for the distances.
  */
 template<class SPACE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
-class HnswSearch : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+class Hnsw : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
     typedef float INTERNAL_DATA_t; // floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.
 
 public:
@@ -46,7 +56,7 @@ public:
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    HnswSearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int nlinks = 16, int ef_construction= 200, int ef_search = 10) : 
+    Hnsw(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int nlinks = HnswDefaults::nlinks, int ef_construction = HnswDefaults::ef_construction, int ef_search = HnswDefaults::ef_search) : 
         space(ndim), hnsw_index(&space, nobs, nlinks, ef_construction), num_dim(ndim), num_obs(nobs)
     {
         if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {
@@ -154,13 +164,13 @@ public:
  * Perform an Hnsw search with Euclidean distances.
  */
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
-using HnswEuclidean = HnswSearch<hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t>;
+using HnswEuclidean = Hnsw<hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t>;
 
 /**
  * Perform an Hnsw search with Manhattan distances.
  */
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
-using HnswManhattan = HnswSearch<hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t>;
+using HnswManhattan = Hnsw<hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t>;
 
 }
 

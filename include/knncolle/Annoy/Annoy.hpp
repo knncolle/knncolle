@@ -14,6 +14,14 @@
 
 namespace knncolle {
 
+namespace AnnoyDefaults {
+
+static constexpr int ntrees = 50;
+
+static constexpr double search_mult = -1;
+
+}
+
 /**
  * @brief Perform an approximate nearest neighbor search with Annoy.
  *
@@ -46,7 +54,9 @@ public:
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = 50, double search_mult = 50) : annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) {
+    AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = AnnoyDefaults::ntrees, double search_mult = AnnoyDefaults::search_mult) : 
+        annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) 
+    {
         if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {
             for (INDEX_t i=0; i < nobs; ++i, vals += ndim) {
                 annoy_index.add_item(i, vals);
@@ -84,7 +94,11 @@ private:
     double search_k_mult;
 
     int get_search_k(int k) const {
-        return search_k_mult * k + 0.5; // rounded up.
+        if (search_k_mult < 0) {
+            return -1;
+        } else {
+            return search_k_mult * k + 0.5; // rounded up.
+        }
     }
 
     template<class PAIRED> 

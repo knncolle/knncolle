@@ -16,6 +16,7 @@ add_executable(
     src/VpTree.cpp
     src/Annoy.cpp
     src/Hnsw.cpp
+    src/Dispatch.cpp
 )
 
 target_link_libraries(
