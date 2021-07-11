@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classknncolle_1_1knn__base.html" title="Virtual base class defining the knncolle interface." alt="" coords="5,5,137,47"/>
+<area shape="rect" id="node1" href="$classknncolle_1_1knn__base.html" title=" " alt="" coords="5,174,153,215"/>
+<area shape="rect" id="node2" href="$classknncolle_1_1AnnoySearch.html" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="201,5,424,91"/>
+<area shape="rect" id="node3" href="$classknncolle_1_1BruteForce.html" title="Perform a brute&#45;force nearest neighbor search." alt="" coords="227,115,398,186"/>
+<area shape="rect" id="node4" href="$classknncolle_1_1HnswSearch.html" title="Perform an approximate nearest neighbor search with HNSW." alt="" coords="209,211,417,267"/>
+<area shape="rect" id="node5" href="$classknncolle_1_1VpTree.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="206,291,419,347"/>
 </map>

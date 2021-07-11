@@ -1,4 +1,4 @@
-<map id="knncolle::VpTree&lt; DISTANCE, ITYPE, DTYPE &gt;" name="knncolle::VpTree&lt; DISTANCE, ITYPE, DTYPE &gt;">
-<area shape="rect" id="node1" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="5,95,204,136"/>
-<area shape="rect" id="node2" href="$classknncolle_1_1knn__base.html" title=" " alt="" coords="39,5,171,47"/>
+<map id="knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;" name="knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;">
+<area shape="rect" id="node1" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="5,95,219,151"/>
+<area shape="rect" id="node2" href="$classknncolle_1_1knn__base.html" title=" " alt="" coords="38,5,186,47"/>
 </map>

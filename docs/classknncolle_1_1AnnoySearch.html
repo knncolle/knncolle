@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt; Class Template Reference</title>
+<title>knncolle: knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1AnnoySearch-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt; Class Template Reference</div>  </div>
+<div class="title">knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -80,85 +80,90 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="Annoy_8hpp_source.html">Annoy.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt;:</div>
+Inheritance diagram for knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1AnnoySearch__inherit__graph.png" border="0" usemap="#aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_inherit__map" id="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_inherit__map">
-<area shape="rect" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,95,211,136"/>
-<area shape="rect" href="classknncolle_1_1knn__base.html" title=" " alt="" coords="42,5,174,47"/>
+<div class="center"><img src="classknncolle_1_1AnnoySearch__inherit__graph.png" border="0" usemap="#aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_inherit__map" id="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_inherit__map">
+<area shape="rect" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,95,228,180"/>
+<area shape="rect" href="classknncolle_1_1knn__base.html" title=" " alt="" coords="43,5,191,47"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
-Collaboration diagram for knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt;:</div>
+Collaboration diagram for knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1AnnoySearch__coll__graph.png" border="0" usemap="#aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_coll__map" id="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01ITYPE_00_01DTYPE_01_4_coll__map">
-<area shape="rect" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,95,211,136"/>
-<area shape="rect" href="classknncolle_1_1knn__base.html" title=" " alt="" coords="42,5,174,47"/>
+<div class="center"><img src="classknncolle_1_1AnnoySearch__coll__graph.png" border="0" usemap="#aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_coll__map" id="aknncolle_1_1AnnoySearch_3_01DISTANCE_00_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_00_01INTERNAL__INDEX__t_00_01INTERNAL__DATA__t_01_4_coll__map">
+<area shape="rect" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,95,228,180"/>
+<area shape="rect" href="classknncolle_1_1knn__base.html" title=" " alt="" coords="43,5,191,47"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afe3ae588836f259876b0914b602e8fc8"><td class="memItemLeft" align="right" valign="top">ITYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#afe3ae588836f259876b0914b602e8fc8">nobs</a> () const</td></tr>
-<tr class="separator:afe3ae588836f259876b0914b602e8fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe3511cbbd9f563afe15a31b66c9be5"><td class="memItemLeft" align="right" valign="top">ITYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#aebe3511cbbd9f563afe15a31b66c9be5">ndim</a> () const</td></tr>
-<tr class="separator:aebe3511cbbd9f563afe15a31b66c9be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6121c79718fefdb812c1f5a25700478f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#a6121c79718fefdb812c1f5a25700478f">AnnoySearch</a> (ITYPE <a class="el" href="classknncolle_1_1AnnoySearch.html#aebe3511cbbd9f563afe15a31b66c9be5">ndim</a>, ITYPE <a class="el" href="classknncolle_1_1AnnoySearch.html#afe3ae588836f259876b0914b602e8fc8">nobs</a>, const DTYPE *vals, int ntrees=50, double search_mult=50)</td></tr>
-<tr class="separator:a6121c79718fefdb812c1f5a25700478f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe736dabc466b65fd6dff101325a618b"><td class="memItemLeft" align="right" valign="top"><a id="afe736dabc466b65fd6dff101325a618b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (ITYPE index, int k, std::vector&lt; ITYPE &gt; *indices, std::vector&lt; DTYPE &gt; *distances) const</td></tr>
-<tr class="separator:afe736dabc466b65fd6dff101325a618b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76416e8e3f613f6fb024c22da373c616"><td class="memItemLeft" align="right" valign="top"><a id="a76416e8e3f613f6fb024c22da373c616"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (const DTYPE *query, int k, std::vector&lt; ITYPE &gt; *indices, std::vector&lt; DTYPE &gt; *distances) const</td></tr>
-<tr class="separator:a76416e8e3f613f6fb024c22da373c616"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classknncolle_1_1knn__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classknncolle_1_1knn__base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base&lt; int, double &gt;</a></td></tr>
-<tr class="memitem:a64f90620b75441897f0331a117e49e4a inherit pub_methods_classknncolle_1_1knn__base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a64f90620b75441897f0331a117e49e4a">find_nearest_neighbors</a> (int index, int k, std::vector&lt; int &gt; *indices, std::vector&lt; double &gt; *distances) const=0</td></tr>
-<tr class="separator:a64f90620b75441897f0331a117e49e4a inherit pub_methods_classknncolle_1_1knn__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37109919305c446aa9c1249a51d0cc53 inherit pub_methods_classknncolle_1_1knn__base"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a37109919305c446aa9c1249a51d0cc53">find_nearest_neighbors</a> (const double *query, int k, std::vector&lt; int &gt; *indices, std::vector&lt; double &gt; *distances) const=0</td></tr>
-<tr class="separator:a37109919305c446aa9c1249a51d0cc53 inherit pub_methods_classknncolle_1_1knn__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2e8616ee4f969c6b0cba2ad044df8c2"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a> () const</td></tr>
+<tr class="separator:ae2e8616ee4f969c6b0cba2ad044df8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5199d712d2312a5300f455093b0643d5"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a> () const</td></tr>
+<tr class="separator:a5199d712d2312a5300f455093b0643d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4369ef187c8e74163392ecc8e234874"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
+<tr class="memitem:ac4369ef187c8e74163392ecc8e234874"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html#ac4369ef187c8e74163392ecc8e234874">AnnoySearch</a> (INDEX_t <a class="el" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a>, const INPUT *vals, int ntrees=50, double search_mult=50)</td></tr>
+<tr class="separator:ac4369ef187c8e74163392ecc8e234874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0a05436e48f58600cb9aae5dd7ef21f"><td class="memItemLeft" align="right" valign="top"><a id="ae0a05436e48f58600cb9aae5dd7ef21f"></a>
+std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (INDEX_t index, int k) const</td></tr>
+<tr class="separator:ae0a05436e48f58600cb9aae5dd7ef21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c14ddf64889590e4c110294e135122"><td class="memItemLeft" align="right" valign="top"><a id="ab8c14ddf64889590e4c110294e135122"></a>
+std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (const QUERY_t *query, int k) const</td></tr>
+<tr class="separator:ab8c14ddf64889590e4c110294e135122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classknncolle_1_1knn__base"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classknncolle_1_1knn__base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base&lt; int, double, double &gt;</a></td></tr>
+<tr class="memitem:a6333b53ccc5c80da53b736f0ebd8e051 inherit pub_methods_classknncolle_1_1knn__base"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair&lt; int, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a6333b53ccc5c80da53b736f0ebd8e051">find_nearest_neighbors</a> (int index, int k) const=0</td></tr>
+<tr class="separator:a6333b53ccc5c80da53b736f0ebd8e051 inherit pub_methods_classknncolle_1_1knn__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ebba6f71672e3c36849c47f52b516d inherit pub_methods_classknncolle_1_1knn__base"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair&lt; int, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a59ebba6f71672e3c36849c47f52b516d">find_nearest_neighbors</a> (const double *query, int k) const=0</td></tr>
+<tr class="separator:a59ebba6f71672e3c36849c47f52b516d inherit pub_methods_classknncolle_1_1knn__base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class DISTANCE, typename ITYPE = int, typename DTYPE = double&gt;<br />
-class knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt;</h3>
+<div class="textblock"><h3>template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float&gt;<br />
+class knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</h3>
 
 <p>Perform an approximate nearest neighbor search with Annoy. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">DISTANCE</td><td>An <b>Annoy</b>-derived class to compute the distance between vectors. Note that this is not the same as the classes in <code><a class="el" href="distances_8hpp.html">distances.hpp</a></code>. </td></tr>
-    <tr><td class="paramname">ITYPE</td><td>Integer type for the indices. </td></tr>
-    <tr><td class="paramname">DTYPE</td><td>Floating point type for the data. </td></tr>
+    <tr><td class="paramname">INDEX_t</td><td>Integer type for the indices. </td></tr>
+    <tr><td class="paramname">DISTANCE_t</td><td>Floating point type for the distances. </td></tr>
+    <tr><td class="paramname">INTERNAL_INDEX_t</td><td>Integer type for the internal indices. </td></tr>
+    <tr><td class="paramname">INTERNAL_DATA_t</td><td>Floating point type for the internal data store. This uses a <code>float</code> instead of a <code>double</code> to sacrifice some accuracy for performance. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6121c79718fefdb812c1f5a25700478f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6121c79718fefdb812c1f5a25700478f">&#9670;&nbsp;</a></span>AnnoySearch()</h2>
+<a id="ac4369ef187c8e74163392ecc8e234874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4369ef187c8e74163392ecc8e234874">&#9670;&nbsp;</a></span>AnnoySearch()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
+<div class="memtemplate">
+template&lt;typename INPUT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, ITYPE, DTYPE &gt;::<a class="el" href="classknncolle_1_1AnnoySearch.html">AnnoySearch</a> </td>
+          <td class="memname"><a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;::<a class="el" href="classknncolle_1_1AnnoySearch.html">AnnoySearch</a> </td>
           <td>(</td>
-          <td class="paramtype">ITYPE&#160;</td>
+          <td class="paramtype">INDEX_t&#160;</td>
           <td class="paramname"><em>ndim</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ITYPE&#160;</td>
+          <td class="paramtype">INDEX_t&#160;</td>
           <td class="paramname"><em>nobs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const DTYPE *&#160;</td>
+          <td class="paramtype">const INPUT *&#160;</td>
           <td class="paramname"><em>vals</em>, </td>
         </tr>
         <tr>
@@ -185,12 +190,17 @@ template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt;
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct an <code>Annoy</code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ndim</td><td>Number of dimensions. </td></tr>
     <tr><td class="paramname">nobs</td><td>Number of observations. </td></tr>
-    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation. </td></tr>
+    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">INPUT</td><td>Floating-point type of the input data. </td></tr>
   </table>
   </dd>
 </dl>
@@ -198,19 +208,19 @@ template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt;
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aebe3511cbbd9f563afe15a31b66c9be5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebe3511cbbd9f563afe15a31b66c9be5">&#9670;&nbsp;</a></span>ndim()</h2>
+<a id="a5199d712d2312a5300f455093b0643d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5199d712d2312a5300f455093b0643d5">&#9670;&nbsp;</a></span>ndim()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ITYPE <a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, ITYPE, DTYPE &gt;::ndim </td>
+          <td class="memname">INDEX_t <a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;::ndim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -224,23 +234,23 @@ template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt;
 </div><div class="memdoc">
 <p>Get the number of dimensions. </p>
 
-<p>Implements <a class="el" href="classknncolle_1_1knn__base.html#a77d68bac8e294aa7e243736f2af90abf">knncolle::knn_base&lt; int, double &gt;</a>.</p>
+<p>Implements <a class="el" href="classknncolle_1_1knn__base.html#a6576816c284207b88d774b9dd3160948">knncolle::knn_base&lt; int, double, double &gt;</a>.</p>
 
 </div>
 </div>
-<a id="afe3ae588836f259876b0914b602e8fc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe3ae588836f259876b0914b602e8fc8">&#9670;&nbsp;</a></span>nobs()</h2>
+<a id="ae2e8616ee4f969c6b0cba2ad044df8c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2e8616ee4f969c6b0cba2ad044df8c2">&#9670;&nbsp;</a></span>nobs()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ITYPE <a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, ITYPE, DTYPE &gt;::nobs </td>
+          <td class="memname">INDEX_t <a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a>&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;::nobs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -254,7 +264,7 @@ template&lt;class DISTANCE , typename ITYPE  = int, typename DTYPE  = double&gt;
 </div><div class="memdoc">
 <p>Get the number of observations in the dataset to be searched. </p>
 
-<p>Implements <a class="el" href="classknncolle_1_1knn__base.html#a88dcba584adfbf34a84d322a8c8fcfac">knncolle::knn_base&lt; int, double &gt;</a>.</p>
+<p>Implements <a class="el" href="classknncolle_1_1knn__base.html#ac1b89128bee92a46a94dd0fe9655eddb">knncolle::knn_base&lt; int, double, double &gt;</a>.</p>
 
 </div>
 </div>

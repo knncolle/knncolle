@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::knn_base&lt; ITYPE, DTYPE &gt; Class Template Reference</title>
+<title>knncolle: knncolle::knn_base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1knn__base-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">knncolle::knn_base&lt; ITYPE, DTYPE &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">knncolle::knn_base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -82,63 +82,52 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a88dcba584adfbf34a84d322a8c8fcfac"><td class="memItemLeft" align="right" valign="top">virtual ITYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a88dcba584adfbf34a84d322a8c8fcfac">nobs</a> () const =0</td></tr>
-<tr class="separator:a88dcba584adfbf34a84d322a8c8fcfac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77d68bac8e294aa7e243736f2af90abf"><td class="memItemLeft" align="right" valign="top">virtual ITYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a77d68bac8e294aa7e243736f2af90abf">ndim</a> () const =0</td></tr>
-<tr class="separator:a77d68bac8e294aa7e243736f2af90abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64f90620b75441897f0331a117e49e4a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a64f90620b75441897f0331a117e49e4a">find_nearest_neighbors</a> (ITYPE index, int k, std::vector&lt; ITYPE &gt; *indices, std::vector&lt; DTYPE &gt; *distances) const =0</td></tr>
-<tr class="separator:a64f90620b75441897f0331a117e49e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37109919305c446aa9c1249a51d0cc53"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a37109919305c446aa9c1249a51d0cc53">find_nearest_neighbors</a> (const DTYPE *query, int k, std::vector&lt; ITYPE &gt; *indices, std::vector&lt; DTYPE &gt; *distances) const =0</td></tr>
-<tr class="separator:a37109919305c446aa9c1249a51d0cc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1b89128bee92a46a94dd0fe9655eddb"><td class="memItemLeft" align="right" valign="top">virtual INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#ac1b89128bee92a46a94dd0fe9655eddb">nobs</a> () const =0</td></tr>
+<tr class="separator:ac1b89128bee92a46a94dd0fe9655eddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6576816c284207b88d774b9dd3160948"><td class="memItemLeft" align="right" valign="top">virtual INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a6576816c284207b88d774b9dd3160948">ndim</a> () const =0</td></tr>
+<tr class="separator:a6576816c284207b88d774b9dd3160948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6333b53ccc5c80da53b736f0ebd8e051"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a6333b53ccc5c80da53b736f0ebd8e051">find_nearest_neighbors</a> (INDEX_t index, int k) const =0</td></tr>
+<tr class="separator:a6333b53ccc5c80da53b736f0ebd8e051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ebba6f71672e3c36849c47f52b516d"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1knn__base.html#a59ebba6f71672e3c36849c47f52b516d">find_nearest_neighbors</a> (const QUERY_t *query, int k) const =0</td></tr>
+<tr class="separator:a59ebba6f71672e3c36849c47f52b516d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ITYPE = int, typename DTYPE = double&gt;<br />
-class knncolle::knn_base&lt; ITYPE, DTYPE &gt;</h3>
+<div class="textblock"><h3>template&lt;typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double&gt;<br />
+class knncolle::knn_base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</h3>
 
 <p>Virtual base class defining the <b>knncolle</b> interface. </p>
 <p>Defines the minimum set up methods supported by all subclasses implementing specific methods.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">ITYPE</td><td>Integer type for the indices. </td></tr>
-    <tr><td class="paramname">DTYPE</td><td>Floating point type for the distances. </td></tr>
+    <tr><td class="paramname">INDEX_t</td><td>Integer type for the indices. </td></tr>
+    <tr><td class="paramname">DISTANCE_t</td><td>Floating point type for the distances. </td></tr>
+    <tr><td class="paramname">QUERY_t</td><td>Floating point type for the query data. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a37109919305c446aa9c1249a51d0cc53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37109919305c446aa9c1249a51d0cc53">&#9670;&nbsp;</a></span>find_nearest_neighbors() <span class="overload">[1/2]</span></h2>
+<a id="a59ebba6f71672e3c36849c47f52b516d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59ebba6f71672e3c36849c47f52b516d">&#9670;&nbsp;</a></span>find_nearest_neighbors() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; ITYPE, DTYPE &gt;::find_nearest_neighbors </td>
+          <td class="memname">virtual std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::find_nearest_neighbors </td>
           <td>(</td>
-          <td class="paramtype">const DTYPE *&#160;</td>
+          <td class="paramtype">const QUERY_t *&#160;</td>
           <td class="paramname"><em>query</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>k</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; ITYPE &gt; *&#160;</td>
-          <td class="paramname"><em>indices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; DTYPE &gt; *&#160;</td>
-          <td class="paramname"><em>distances</em>&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -155,51 +144,37 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <p>Find the nearest neighbors of a new observation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code>ndims()</code>, containing the coordinates of the query point. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">indices</td><td>Pointer to a vector to store the index of the nearest neighbors. Vector is resized to length no greater than <code>k</code> (but possibly less, if the total number of observations is less than <code>k</code>). If <code>NULL</code>, no indices are returned. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">distances</td><td>Pointer to a vector to store the distances to the nearest neighbors. Each distance corresponds to a neighbor in <code>indices</code>. Guaranteed to be sorted in increasing order. If <code>NULL</code>, no distances are returned.</td></tr>
+    <tr><td class="paramname">query</td><td>Pointer to an array of length equal to <code>ndims()</code>, containing the coordinates of the query point. </td></tr>
+    <tr><td class="paramname">k</td><td>The number of neighbors to identify.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If <code>report_indices = true</code>, <code>*indices</code> is filled with the identities of the <code>k</code> nearest neighbors. If <code>report_distances = true</code>, <code>*distances</code> is filled with the distances to the <code>k</code> nearest neighbors. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance. Length is at most <code>k</code> but may be shorter if the total number of observations is less than <code>k</code>. </dd></dl>
 
 </div>
 </div>
-<a id="a64f90620b75441897f0331a117e49e4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64f90620b75441897f0331a117e49e4a">&#9670;&nbsp;</a></span>find_nearest_neighbors() <span class="overload">[2/2]</span></h2>
+<a id="a6333b53ccc5c80da53b736f0ebd8e051"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6333b53ccc5c80da53b736f0ebd8e051">&#9670;&nbsp;</a></span>find_nearest_neighbors() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; ITYPE, DTYPE &gt;::find_nearest_neighbors </td>
+          <td class="memname">virtual std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::find_nearest_neighbors </td>
           <td>(</td>
-          <td class="paramtype">ITYPE&#160;</td>
+          <td class="paramtype">INDEX_t&#160;</td>
           <td class="paramname"><em>index</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>k</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; ITYPE &gt; *&#160;</td>
-          <td class="paramname"><em>indices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; DTYPE &gt; *&#160;</td>
-          <td class="paramname"><em>distances</em>&#160;</td>
+          <td class="paramname"><em>k</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -216,30 +191,28 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <p>Find the nearest neighbors of the <code>index</code>-th observation in the dataset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">index</td><td>The index of the observation of interest. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">indices</td><td>Pointer to a vector to store the index of the nearest neighbors. Vector is resized to length no greater than <code>k</code> (but possibly less, if the total number of observations is less than <code>k</code>). If <code>NULL</code>, no indices are returned. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">distances</td><td>Pointer to a vector to store the distances to the nearest neighbors. Each distance corresponds to a neighbor in <code>indices</code>. Guaranteed to be sorted in increasing order. If <code>NULL</code>, no distances are returned.</td></tr>
+    <tr><td class="paramname">index</td><td>The index of the observation of interest. </td></tr>
+    <tr><td class="paramname">k</td><td>The number of neighbors to identify.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If <code>report_indices = true</code>, <code>*indices</code> is filled with the identities of the <code>k</code> nearest neighbors. If <code>report_distances = true</code>, <code>*distances</code> is filled with the distances to the <code>k</code> nearest neighbors. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance. Length is at most <code>k</code> but may be shorter if the total number of observations is less than <code>k + 1</code>. </dd></dl>
 
 </div>
 </div>
-<a id="a77d68bac8e294aa7e243736f2af90abf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77d68bac8e294aa7e243736f2af90abf">&#9670;&nbsp;</a></span>ndim()</h2>
+<a id="a6576816c284207b88d774b9dd3160948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6576816c284207b88d774b9dd3160948">&#9670;&nbsp;</a></span>ndim()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ITYPE <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; ITYPE, DTYPE &gt;::ndim </td>
+          <td class="memname">virtual INDEX_t <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::ndim </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -253,23 +226,23 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 </div><div class="memdoc">
 <p>Get the number of dimensions. </p>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1VpTree.html#ac77df49096bce32c938a923dee46569d">knncolle::VpTree&lt; DISTANCE, ITYPE, DTYPE &gt;</a>, <a class="el" href="classknncolle_1_1HnswSearch.html#a3fb89ef32d16068426ad7c383353928a">knncolle::HnswSearch&lt; SPACE, ITYPE, DTYPE &gt;</a>, <a class="el" href="classknncolle_1_1BruteForce.html#a9c6c27ca2c8bf2403470961e070ad69f">knncolle::BruteForce&lt; DISTANCE, ITYPE, DTYPE &gt;</a>, and <a class="el" href="classknncolle_1_1AnnoySearch.html#aebe3511cbbd9f563afe15a31b66c9be5">knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</a>, <a class="el" href="classknncolle_1_1HnswSearch.html#abf5df3b15620ecb3717e002e924f3ff9">knncolle::HnswSearch&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;</a>, <a class="el" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">knncolle::BruteForce&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</a>, and <a class="el" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a88dcba584adfbf34a84d322a8c8fcfac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88dcba584adfbf34a84d322a8c8fcfac">&#9670;&nbsp;</a></span>nobs()</h2>
+<a id="ac1b89128bee92a46a94dd0fe9655eddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1b89128bee92a46a94dd0fe9655eddb">&#9670;&nbsp;</a></span>nobs()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ITYPE <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; ITYPE, DTYPE &gt;::nobs </td>
+          <td class="memname">virtual INDEX_t <a class="el" href="classknncolle_1_1knn__base.html">knncolle::knn_base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::nobs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -283,7 +256,7 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 </div><div class="memdoc">
 <p>Get the number of observations in the dataset to be searched. </p>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1VpTree.html#abf1c8802ddbb709e9eb3a0d233e339a3">knncolle::VpTree&lt; DISTANCE, ITYPE, DTYPE &gt;</a>, <a class="el" href="classknncolle_1_1HnswSearch.html#ac6f425225ed575621fc1961ad97e9d9f">knncolle::HnswSearch&lt; SPACE, ITYPE, DTYPE &gt;</a>, <a class="el" href="classknncolle_1_1BruteForce.html#a84b9f5c25b363446b16bf4dcfeeed97a">knncolle::BruteForce&lt; DISTANCE, ITYPE, DTYPE &gt;</a>, and <a class="el" href="classknncolle_1_1AnnoySearch.html#afe3ae588836f259876b0914b602e8fc8">knncolle::AnnoySearch&lt; DISTANCE, ITYPE, DTYPE &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</a>, <a class="el" href="classknncolle_1_1HnswSearch.html#aa50ae15b2844850d6cdd593b876fb607">knncolle::HnswSearch&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;</a>, <a class="el" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">knncolle::BruteForce&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</a>, and <a class="el" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</a>.</p>
 
 </div>
 </div>

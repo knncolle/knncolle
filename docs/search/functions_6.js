@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vptree_50',['VpTree',['../classknncolle_1_1VpTree.html#a47088f14f8808c4e334928bb00beb765',1,'knncolle::VpTree::VpTree(ITYPE ndim, ITYPE nobs, const DTYPE *vals)'],['../classknncolle_1_1VpTree.html#a3b96f548f539500456a983fa54f685a4',1,'knncolle::VpTree::VpTree(ITYPE ndim, ITYPE nobs, std::vector&lt; DTYPE &gt; vals)']]]
+  ['vptree_50',['VpTree',['../classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186',1,'knncolle::VpTree']]]
 ];

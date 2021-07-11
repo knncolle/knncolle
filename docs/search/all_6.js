@@ -1,7 +1,7 @@
 var searchData=
 [
   ['hnsw_2ehpp_12',['Hnsw.hpp',['../Hnsw_8hpp.html',1,'']]],
-  ['hnsweuclidean_13',['HnswEuclidean',['../Hnsw_8hpp.html#a0522165545273e6f0fba90817ce8eb5f',1,'knncolle']]],
-  ['hnswmanhattan_14',['HnswManhattan',['../Hnsw_8hpp.html#a3a0e8d0d13259c2abfad24a693457124',1,'knncolle']]],
-  ['hnswsearch_15',['HnswSearch',['../classknncolle_1_1HnswSearch.html#a403a2ff534cdbc41ea4fef396a6c090d',1,'knncolle::HnswSearch::HnswSearch()'],['../classknncolle_1_1HnswSearch.html',1,'knncolle::HnswSearch&lt; SPACE, ITYPE, DTYPE &gt;']]]
+  ['hnsweuclidean_13',['HnswEuclidean',['../Hnsw_8hpp.html#a0e2f1a48e5ca3f549b48b71f279f8bac',1,'knncolle']]],
+  ['hnswmanhattan_14',['HnswManhattan',['../Hnsw_8hpp.html#ab9a421c6c912026f5d01d155279eeccb',1,'knncolle']]],
+  ['hnswsearch_15',['HnswSearch',['../classknncolle_1_1HnswSearch.html#ae41378d31272f74847aaad18f413e6b5',1,'knncolle::HnswSearch::HnswSearch()'],['../classknncolle_1_1HnswSearch.html',1,'knncolle::HnswSearch&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;']]]
 ];

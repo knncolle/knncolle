@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hnswsearch_45',['HnswSearch',['../classknncolle_1_1HnswSearch.html#a403a2ff534cdbc41ea4fef396a6c090d',1,'knncolle::HnswSearch']]]
+  ['hnswsearch_45',['HnswSearch',['../classknncolle_1_1HnswSearch.html#ae41378d31272f74847aaad18f413e6b5',1,'knncolle::HnswSearch']]]
 ];
