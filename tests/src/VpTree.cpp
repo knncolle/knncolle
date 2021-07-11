@@ -56,6 +56,24 @@ TEST_P(VpTreeTest, QueryEuclidean) {
     }
 }
 
+TEST_P(VpTreeTest, Getters) {
+    auto param = GetParam();
+    assemble(param);
+
+    knncolle::VpTreeEuclidean<> vp(ndim, nobs, data.data());
+
+    EXPECT_EQ(ndim, vp.ndim());
+
+    EXPECT_EQ(nobs, vp.nobs());
+
+    std::vector<double> buffer(ndim);
+    auto ptr = vp.observation(2, buffer.data());
+    compare_data(2, ptr);
+
+    std::vector<double> buffer2 = vp.observation(5);
+    compare_data(5, buffer2.data());
+}
+
 INSTANTIATE_TEST_CASE_P(
     VpTree,
     VpTreeTest,

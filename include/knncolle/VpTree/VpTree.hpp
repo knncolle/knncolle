@@ -4,7 +4,7 @@
 #include "../utils/distances.hpp"
 #include "../utils/NeighborQueue.hpp"
 #include "../utils/MatrixStore.hpp"
-#include "../utils/knn_base.hpp"
+#include "../utils/Base.hpp"
 
 #include <vector>
 #include <random>
@@ -49,7 +49,7 @@ namespace knncolle {
  * http://stevehanov.ca/blog/index.php?id=130
  */
 template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
-class VpTree : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+class VpTree : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
 private:
@@ -172,6 +172,18 @@ public:
         search_nn(0, query, tau, nearest);
         return nearest.template report<DISTANCE_t>();
     }
+
+    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
+        auto candidate = store.reference + num_dim * index;
+        if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
+            return candidate;
+        } else {
+            std::copy(candidate, candidate + num_dim, buffer);
+            return buffer;
+        }
+    }
+
+    using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
 
 private:
     void search_nn(NodeIndex_t curnode_index, const INTERNAL_t* target, INTERNAL_t& tau, NeighborQueue<INDEX_t, DISTANCE_t>& nearest) const { 

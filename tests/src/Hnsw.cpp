@@ -51,6 +51,24 @@ TEST_P(HnswTest, QueryEuclidean) {
     }
 }
 
+TEST_P(HnswTest, Getters) {
+    auto param = GetParam();
+    assemble(param);
+
+    knncolle::HnswEuclidean<> nsw(ndim, nobs, data.data());
+
+    EXPECT_EQ(ndim, nsw.ndim());
+
+    EXPECT_EQ(nobs, nsw.nobs());
+
+    std::vector<double> buffer(ndim);
+    auto ptr = nsw.observation(2, buffer.data());
+    compare_data(2, ptr);
+
+    std::vector<double> buffer2 = nsw.observation(5);
+    compare_data(5, buffer2.data());
+}
+
 INSTANTIATE_TEST_CASE_P(
     Hnsw,
     HnswTest,

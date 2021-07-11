@@ -47,6 +47,24 @@ TEST_P(AnnoyTest, QueryEuclidean) {
     }
 }
 
+TEST_P(AnnoyTest, Getters) {
+    auto param = GetParam();
+    assemble(param);
+
+    knncolle::AnnoyEuclidean<> ann(ndim, nobs, data.data());
+
+    EXPECT_EQ(ndim, ann.ndim());
+
+    EXPECT_EQ(nobs, ann.nobs());
+
+    std::vector<double> buffer(ndim);
+    auto ptr = ann.observation(2, buffer.data());
+    compare_data(2, ptr);
+
+    std::vector<double> buffer2 = ann.observation(5);
+    compare_data(5, buffer2.data());
+}
+
 INSTANTIATE_TEST_CASE_P(
     Annoy,
     AnnoyTest,

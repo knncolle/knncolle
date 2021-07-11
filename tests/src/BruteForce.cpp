@@ -54,6 +54,24 @@ TEST_P(BruteForceTest, QueryEuclidean) {
     }
 }
 
+TEST_P(BruteForceTest, Getters) {
+    auto param = GetParam();
+    assemble(param);
+
+    knncolle::BruteForceEuclidean<> bf(ndim, nobs, data.data());
+
+    EXPECT_EQ(ndim, bf.ndim());
+
+    EXPECT_EQ(nobs, bf.nobs());
+
+    std::vector<double> buffer(ndim);
+    auto ptr = bf.observation(2, buffer.data());
+    compare_data(2, ptr);
+
+    std::vector<double> buffer2 = bf.observation(5);
+    compare_data(5, buffer2.data());
+}
+
 INSTANTIATE_TEST_CASE_P(
     BruteForce,
     BruteForceTest,

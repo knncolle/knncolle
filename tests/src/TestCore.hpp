@@ -44,6 +44,12 @@ protected:
             EXPECT_TRUE(res.first != index);
         }
     }
+
+    void compare_data(int index, const double* candidate) {
+        for (size_t i = 0; i < ndim; ++i) {
+            EXPECT_FLOAT_EQ(candidate[i], data[i + index * ndim]);
+        }
+    }
 };
 
 #endif

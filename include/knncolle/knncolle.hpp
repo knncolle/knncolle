@@ -39,7 +39,7 @@ enum DispatchAlgorithm { BRUTEFORCE, VPTREE, ANNOY, HNSW };
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
 class Dispatch {
 public:
-    using BASE = knn_base<INDEX_t, DISTANCE_t, QUERY_t>;
+    using BASE = Base<INDEX_t, DISTANCE_t, QUERY_t>;
 
     /**
      * Type of distance metric to use.
@@ -111,7 +111,7 @@ public:
      *
      * @tparam INPUT Floating-point type of the input data.
      *
-     * @return A pointer to a `knn_base` subclass, which can be used to identify nearest neighbors using the `knn_base::find_nearest_neighbors()` method.
+     * @return A pointer to a `Base` subclass, which can be used to identify nearest neighbors using the `Base::find_nearest_neighbors()` method.
      * The exact algorithm used depends on the choice of algorithm in `algorithm`.
      */
     template<class INPUT> 

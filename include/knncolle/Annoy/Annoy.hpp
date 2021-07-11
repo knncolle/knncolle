@@ -2,7 +2,9 @@
 #define KNNCOLLE_ANNOYBASE_HPP
 
 #include <cstdint>
-#include "../utils/knn_base.hpp"
+
+#include "../utils/Base.hpp"
+
 #include "annoy/annoylib.h"
 #include "annoy/kissrandom.h"
 
@@ -51,7 +53,7 @@ const double search_mult = -1;
  * This uses a `float` instead of a `double` to sacrifice some accuracy for performance.
  */
 template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
-class AnnoySearch : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+class AnnoySearch : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 public:
     INDEX_t nobs() const {
         return annoy_index.get_n_items();
@@ -109,6 +111,19 @@ public:
             return reformat(pairs);
         }
     }
+
+    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
+        if constexpr(std::is_same<QUERY_t, INTERNAL_DATA_t>::value) {
+            annoy_index.get_item(index, buffer);
+        } else {
+            std::vector<INTERNAL_DATA_t> tmp(num_dim);
+            annoy_index.get_item(index, tmp.data());
+            std::copy(tmp.begin(), tmp.end(), buffer);
+        }
+        return buffer;
+    }
+
+    using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
 
 private:
     Annoy::AnnoyIndex<INTERNAL_INDEX_t, INTERNAL_DATA_t, DISTANCE, Annoy::Kiss64Random, Annoy::AnnoyIndexSingleThreadedBuildPolicy> annoy_index;

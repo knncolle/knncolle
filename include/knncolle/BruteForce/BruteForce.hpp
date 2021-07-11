@@ -4,9 +4,10 @@
 #include "../utils/distances.hpp"
 #include "../utils/NeighborQueue.hpp"
 #include "../utils/MatrixStore.hpp"
-#include "../utils/knn_base.hpp"
+#include "../utils/Base.hpp"
 
 #include <vector>
+#include <type_traits>
 
 /**
  * @file BruteForce.hpp
@@ -31,7 +32,7 @@ namespace knncolle {
  * @tparam INTERNAL_t Floating point type for the internal calculations.
  */
 template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
-class BruteForce : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+class BruteForce : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 private:
     INDEX_t num_dim;
     INDEX_t num_obs;
@@ -75,6 +76,18 @@ public:
         normalize(output);
         return output;
     }
+
+    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
+        auto candidate = store.reference + num_dim * index;
+        if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
+            return candidate;
+        } else {
+            std::copy(candidate, candidate + num_dim, buffer);
+            return buffer;
+        }
+    }
+
+    using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
 
 private:
     template<class QUEUE>

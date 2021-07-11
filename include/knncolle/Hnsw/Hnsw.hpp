@@ -1,7 +1,7 @@
 #ifndef KNNCOLLE_HNSW_HPP
 #define KNNCOLLE_HNSW_HPP
 
-#include "../utils/knn_base.hpp"
+#include "../utils/Base.hpp"
 #include "../utils/NeighborQueue.hpp"
 
 #include "hnswlib/hnswalg.h"
@@ -57,7 +57,7 @@ static constexpr int ef_search = 10;
  * @tparam DISTANCE_t Floating point type for the distances.
  */
 template<class SPACE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
-class Hnsw : public knn_base<INDEX_t, DISTANCE_t, QUERY_t> {
+class Hnsw : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
     typedef float INTERNAL_DATA_t; // floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.
 
 public:
@@ -125,6 +125,21 @@ public:
             auto output = harvest_queue<INDEX_t, DISTANCE_t>(Q);
             normalize(output);
             return output;
+        }
+    }
+
+    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
+        auto V = hnsw_index.getDataByLabel<INTERNAL_DATA_t>(index);
+        std::copy(V.begin(), V.begin() + num_dim, buffer);
+        return buffer;
+    }
+
+    std::vector<QUERY_t> observation(INDEX_t index) const {
+        if constexpr(std::is_same<QUERY_t, INTERNAL_DATA_t>::value) {
+            return hnsw_index.getDataByLabel<QUERY_t>(index);
+        } else {
+            auto V = hnsw_index.getDataByLabel<INTERNAL_DATA_t>(index);
+            return std::vector<QUERY_t>(V.begin(), V.end());
         }
     }
 
