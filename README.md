@@ -43,7 +43,7 @@ auto results2 = searcher->find_nearest_neighbors(query, 10); // 10 nearest neigh
 The `find_nearest_neighbors()` call will return a vector of (index, distance) pairs,
 containing the requested number of neighbors in order of increasing distance from the query point.
 (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)
-For some algorithms, we can modify the parameters of the search like so:
+For some algorithms, we can modify the parameters of the search by setting the relevant members of the `Dispatch` class:
 
 ```cpp
 dispatcher.Annoy.ntrees = 100;
@@ -53,7 +53,7 @@ auto searcher_annoy = dispatcher.build(ndim, nobs, matrix.data(), knncolle::ANNO
 If the desired algorithm is known at compile time, we can be more specific:
 
 ```cpp
-knncolle::AnnoyEuclidean searcher(ndim, nobs, matrix.data());
+knncolle::AnnoyEuclidean<> searcher(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
 ```
 
 Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details.
@@ -90,4 +90,3 @@ Note that this will require the manual inclusion of all dependencies, namely the
 # TODO:
 
 - Add KMKNN as another exact method.
-- Add methods to extract the original data vector for observations of interest.
