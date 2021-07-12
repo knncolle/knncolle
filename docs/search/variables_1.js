@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bruteforce_78',['BruteForce',['../classknncolle_1_1Dispatch.html#a5e1df9bd50508ed63554a7dac468e861',1,'knncolle::Dispatch']]]
+  ['distance_5ftype_77',['distance_type',['../classknncolle_1_1Dispatch.html#a7d584be5acf281b9efbe13be0ebd0801',1,'knncolle::Dispatch']]]
 ];

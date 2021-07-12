@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classknncolle_1_1Dispatch-members.html">List of all members</a>  </div>
@@ -87,53 +88,63 @@ Collaboration diagram for knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &g
 <div class="center"><img src="classknncolle_1_1Dispatch__coll__graph.png" border="0" usemap="#aknncolle_1_1Dispatch_3_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aknncolle_1_1Dispatch_3_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_01_4_coll__map" id="aknncolle_1_1Dispatch_3_01INDEX__t_00_01DISTANCE__t_00_01QUERY__t_01_4_coll__map">
 <area shape="rect" title="Top&#45;level helper class to run any available search algorithms." alt="" coords="343,125,500,181"/>
-<area shape="rect" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html" title="Parameter store for the HNSW search." alt="" coords="21,5,211,61"/>
-<area shape="rect" href="structknncolle_1_1Dispatch_1_1VpTree__param.html" title="Parameter store for the vantage point tree search." alt="" coords="17,85,215,141"/>
-<area shape="rect" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html" title="Parameter store for the brute&#45;force search." alt="" coords="5,165,227,221"/>
-<area shape="rect" href="structknncolle_1_1Dispatch_1_1Annoy__param.html" title="Parameter store for the Annoy search." alt="" coords="19,245,213,301"/>
+<area shape="rect" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html" title="Parameters for the HNSW search in the Hnsw class." alt="" coords="21,5,211,61"/>
+<area shape="rect" href="structknncolle_1_1Dispatch_1_1VpTree__param.html" title="Parameters for the vantage point tree search in the VpTree class." alt="" coords="17,85,215,141"/>
+<area shape="rect" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html" title="Parameters for the brute&#45;force search in the BruteForce class." alt="" coords="5,165,227,221"/>
+<area shape="rect" href="structknncolle_1_1Dispatch_1_1Annoy__param.html" title="Parameters for the Annoy search in the AnnoySearch class." alt="" coords="19,245,213,301"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1Annoy__param.html">Annoy_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the Annoy search.  <a href="structknncolle_1_1Dispatch_1_1Annoy__param.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the Annoy search in the <code><a class="el" href="classknncolle_1_1AnnoySearch.html" title="Perform an approximate nearest neighbor search with Annoy.">AnnoySearch</a></code> class.  <a href="structknncolle_1_1Dispatch_1_1Annoy__param.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html">BruteForce_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the brute-force search.  <a href="structknncolle_1_1Dispatch_1_1BruteForce__param.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the brute-force search in the <code><a class="el" href="classknncolle_1_1BruteForce.html" title="Perform a brute-force nearest neighbor search.">BruteForce</a></code> class.  <a href="structknncolle_1_1Dispatch_1_1BruteForce__param.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html">Hnsw_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the HNSW search.  <a href="structknncolle_1_1Dispatch_1_1Hnsw__param.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the HNSW search in the <code><a class="el" href="classknncolle_1_1Hnsw.html" title="Perform an approximate nearest neighbor search with HNSW.">Hnsw</a></code> class.  <a href="structknncolle_1_1Dispatch_1_1Hnsw__param.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1VpTree__param.html">VpTree_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the vantage point tree search.  <a href="structknncolle_1_1Dispatch_1_1VpTree__param.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the vantage point tree search in the <code><a class="el" href="classknncolle_1_1VpTree.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree.">VpTree</a></code> class.  <a href="structknncolle_1_1Dispatch_1_1VpTree__param.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:adc469caa2cb1a10d42ab72a698c4809f"><td class="memItemLeft" align="right" valign="top"><a id="adc469caa2cb1a10d42ab72a698c4809f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>BASE</b> = <a class="el" href="classknncolle_1_1Base.html">Base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</td></tr>
+<tr class="separator:adc469caa2cb1a10d42ab72a698c4809f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a03ab914b4f36aad8791b84cf84859db0"><td class="memTemplParams" colspan="2">template&lt;class INPUT &gt; </td></tr>
-<tr class="memitem:a03ab914b4f36aad8791b84cf84859db0"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Base.html">Base</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a03ab914b4f36aad8791b84cf84859db0">build</a> (INDEX_t ndim, INDEX_t nobs, const INPUT *vals, <a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">DispatchAlgorithm</a> algorithm)</td></tr>
-<tr class="separator:a03ab914b4f36aad8791b84cf84859db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memTemplParams" colspan="2">template&lt;class INPUT &gt; </td></tr>
+<tr class="memitem:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Base.html">BASE</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a130b6bbfc9d882763ea17b9e6df1305c">build</a> (INDEX_t ndim, INDEX_t nobs, const INPUT *vals, <a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">DispatchAlgorithm</a> algorithm)</td></tr>
+<tr class="separator:a130b6bbfc9d882763ea17b9e6df1305c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7d584be5acf281b9efbe13be0ebd0801"><td class="memItemLeft" align="right" valign="top"><a class="el" href="knncolle_8hpp.html#aa24e24c3b4ce1523c860dc5686694a5b">DispatchDistance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a7d584be5acf281b9efbe13be0ebd0801">distance_type</a> = EUCLIDEAN</td></tr>
 <tr class="separator:a7d584be5acf281b9efbe13be0ebd0801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e1df9bd50508ed63554a7dac468e861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html">BruteForce_param</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a5e1df9bd50508ed63554a7dac468e861">BruteForce</a></td></tr>
-<tr class="separator:a5e1df9bd50508ed63554a7dac468e861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60e6fec1c32f906f602885b3e6020ef8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1Dispatch_1_1VpTree__param.html">VpTree_param</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a60e6fec1c32f906f602885b3e6020ef8">VpTree</a></td></tr>
-<tr class="separator:a60e6fec1c32f906f602885b3e6020ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e5377e9ff61374aee3f23d7d2b559cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1Dispatch_1_1Annoy__param.html">Annoy_param</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a9e5377e9ff61374aee3f23d7d2b559cc">Annoy</a></td></tr>
-<tr class="separator:a9e5377e9ff61374aee3f23d7d2b559cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7395ead15c32d375ad88f0ce4fc72b38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html">Hnsw_param</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html#a7395ead15c32d375ad88f0ce4fc72b38">Hnsw</a></td></tr>
-<tr class="separator:a7395ead15c32d375ad88f0ce4fc72b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a041ca3b32217ce969bafc9464e9750c2"><td class="memItemLeft" align="right" valign="top"><a id="a041ca3b32217ce969bafc9464e9750c2"></a>
+struct <a class="el" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html">knncolle::Dispatch::BruteForce_param</a>&#160;</td><td class="memItemRight" valign="bottom"><b>BruteForce</b></td></tr>
+<tr class="separator:a041ca3b32217ce969bafc9464e9750c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6630f9e64f15548ee49000ae0436c265"><td class="memItemLeft" align="right" valign="top"><a id="a6630f9e64f15548ee49000ae0436c265"></a>
+struct <a class="el" href="structknncolle_1_1Dispatch_1_1VpTree__param.html">knncolle::Dispatch::VpTree_param</a>&#160;</td><td class="memItemRight" valign="bottom"><b>VpTree</b></td></tr>
+<tr class="separator:a6630f9e64f15548ee49000ae0436c265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584e46047bb2d7a22e97bec6215fc3da"><td class="memItemLeft" align="right" valign="top"><a id="a584e46047bb2d7a22e97bec6215fc3da"></a>
+struct <a class="el" href="structknncolle_1_1Dispatch_1_1Annoy__param.html">knncolle::Dispatch::Annoy_param</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Annoy</b></td></tr>
+<tr class="separator:a584e46047bb2d7a22e97bec6215fc3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157b0012fcae19084b7ae98679c534ba"><td class="memItemLeft" align="right" valign="top"><a id="a157b0012fcae19084b7ae98679c534ba"></a>
+struct <a class="el" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html">knncolle::Dispatch::Hnsw_param</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Hnsw</b></td></tr>
+<tr class="separator:a157b0012fcae19084b7ae98679c534ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double&gt;<br />
 class knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</h3>
 
 <p>Top-level helper class to run any available search algorithms. </p>
-<p>With an instance of a <code><a class="el" href="classknncolle_1_1Dispatch.html" title="Top-level helper class to run any available search algorithms.">Dispatch</a></code> class, clients can run any KNN search algorithm via <code><a class="el" href="classknncolle_1_1Dispatch.html#a03ab914b4f36aad8791b84cf84859db0">Dispatch::build()</a></code>. Optional parameters can be set by modifying the public members of <code><a class="el" href="classknncolle_1_1Dispatch.html" title="Top-level helper class to run any available search algorithms.">Dispatch</a></code>'s internal structures, e.g., we can control the parameters used in the <b>Annoy</b> search by modifying the <code><a class="el" href="classknncolle_1_1Dispatch.html#a9e5377e9ff61374aee3f23d7d2b559cc">Dispatch::Annoy</a></code> members.</p>
+<p>With an instance of a <code><a class="el" href="classknncolle_1_1Dispatch.html" title="Top-level helper class to run any available search algorithms.">Dispatch</a></code> class, clients can run any KNN search algorithm via <code><a class="el" href="classknncolle_1_1Dispatch.html#a130b6bbfc9d882763ea17b9e6df1305c">Dispatch::build()</a></code>. Optional parameters can be set by modifying the public members of <code><a class="el" href="classknncolle_1_1Dispatch.html" title="Top-level helper class to run any available search algorithms.">Dispatch</a></code>'s internal structures, e.g., we can control the parameters used in the <b>Annoy</b> search by modifying the <code>Dispatch::Annoy</code> members.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">INDEX_t</td><td>Integer type for the indices. </td></tr>
@@ -143,8 +154,8 @@ class knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a03ab914b4f36aad8791b84cf84859db0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03ab914b4f36aad8791b84cf84859db0">&#9670;&nbsp;</a></span>build()</h2>
+<a id="a130b6bbfc9d882763ea17b9e6df1305c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a130b6bbfc9d882763ea17b9e6df1305c">&#9670;&nbsp;</a></span>build()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -157,7 +168,7 @@ template&lt;class INPUT &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; &gt; <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::build </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classknncolle_1_1Base.html">BASE</a>&gt; <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::build </td>
           <td>(</td>
           <td class="paramtype">INDEX_t&#160;</td>
           <td class="paramname"><em>ndim</em>, </td>
@@ -212,40 +223,6 @@ template&lt;class INPUT &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9e5377e9ff61374aee3f23d7d2b559cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e5377e9ff61374aee3f23d7d2b559cc">&#9670;&nbsp;</a></span>Annoy</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structknncolle_1_1Dispatch_1_1Annoy__param.html">Annoy_param</a> <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::Annoy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters to be passed to the <code><a class="el" href="classknncolle_1_1AnnoySearch.html" title="Perform an approximate nearest neighbor search with Annoy.">AnnoySearch</a></code> constructor. </p>
-
-</div>
-</div>
-<a id="a5e1df9bd50508ed63554a7dac468e861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e1df9bd50508ed63554a7dac468e861">&#9670;&nbsp;</a></span>BruteForce</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html">BruteForce_param</a> <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::<a class="el" href="classknncolle_1_1BruteForce.html">BruteForce</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters to be passed to the <code><a class="el" href="classknncolle_1_1BruteForce.html" title="Perform a brute-force nearest neighbor search.">BruteForce</a></code> constructor. </p>
-
-</div>
-</div>
 <a id="a7d584be5acf281b9efbe13be0ebd0801"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d584be5acf281b9efbe13be0ebd0801">&#9670;&nbsp;</a></span>distance_type</h2>
 
@@ -260,40 +237,6 @@ template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUE
       </table>
 </div><div class="memdoc">
 <p>Type of distance metric to use. </p>
-
-</div>
-</div>
-<a id="a7395ead15c32d375ad88f0ce4fc72b38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7395ead15c32d375ad88f0ce4fc72b38">&#9670;&nbsp;</a></span>Hnsw</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html">Hnsw_param</a> <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::<a class="el" href="classknncolle_1_1Hnsw.html">Hnsw</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters to be passed to the <code><a class="el" href="classknncolle_1_1Hnsw.html" title="Perform an approximate nearest neighbor search with HNSW.">Hnsw</a></code> constructor. </p>
-
-</div>
-</div>
-<a id="a60e6fec1c32f906f602885b3e6020ef8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60e6fec1c32f906f602885b3e6020ef8">&#9670;&nbsp;</a></span>VpTree</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structknncolle_1_1Dispatch_1_1VpTree__param.html">VpTree_param</a> <a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch</a>&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::<a class="el" href="classknncolle_1_1VpTree.html">VpTree</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters to be passed to the <code><a class="el" href="classknncolle_1_1VpTree.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree.">VpTree</a></code> constructor. </p>
 
 </div>
 </div>
