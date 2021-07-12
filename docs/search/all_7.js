@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['knncolle_2ehpp_30',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]]
+  ['knncolle_2ehpp_31',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]]
 ];
