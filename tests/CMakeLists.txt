@@ -14,6 +14,7 @@ add_executable(
     libtest
     src/BruteForce.cpp
     src/VpTree.cpp
+    src/Kmknn.cpp
     src/Annoy.cpp
     src/Hnsw.cpp
     src/Dispatch.cpp
