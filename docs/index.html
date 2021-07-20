@@ -80,6 +80,7 @@ $(function() {
 <li><a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
 <li>Brute force search.</li>
 </ul>
+<p>Most of the code in this library is derived from the <a href="https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html"><b>BiocNeighbors</b> R package</a>.</p>
 <h1>Quick start</h1>
 <p>Given a matrix with dimensions in the rows and observations in the columns, we can do:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="knncolle_8hpp.html">knncolle/knncolle.hpp</a>&quot;</span></div>
@@ -123,10 +124,12 @@ $(function() {
 <div class="line"># For libaries</div>
 <div class="line">target_link_libraries(mylib INTERFACE knncolle)</div>
 </div><!-- fragment --><p>If you're not using CMake, the simple approach is to just copy the files - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. Note that this will require the manual inclusion of all dependencies, namely the <a href="https://github.com/spotify/annoy">Annoy</a> and <a href="https://github.com/nmslib/hsnwlib">HNSW</a> libraries.</p>
-<h1>TODO:</h1>
-<ul>
-<li>Add KMKNN as another exact method. </li>
-</ul>
+<h1>References</h1>
+<p>Wang X (2012). A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. <em>Proc Int Jt Conf Neural Netw</em>, 43, 6:2351-2358.</p>
+<p>Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a></p>
+<p>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321.</p>
+<p>Bernhardsson E (2018). Annoy. <a href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></p>
+<p>Malkov YA, Yashunin DA (2016). Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs. <em>arXiv</em>, <a href="https://arxiv.org/abs/1603.09320">https://arxiv.org/abs/1603.09320</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
