@@ -17,6 +17,10 @@ TEST_P(DispatchTest, FindEuclidean) {
     auto bfptr = dispatch.build(ndim, nobs, data.data(), knncolle::BRUTEFORCE);
     auto bfres = bfptr->find_nearest_neighbors(0, k);
 
+    auto kmptr = dispatch.build(ndim, nobs, data.data(), knncolle::KMKNN);
+    auto kmres = kmptr->find_nearest_neighbors(0, k);
+    EXPECT_EQ(bfres, kmres);
+
     auto vpptr = dispatch.build(ndim, nobs, data.data(), knncolle::VPTREE);
     auto vpres = vpptr->find_nearest_neighbors(0, k);
     EXPECT_EQ(bfres, vpres);
@@ -40,6 +44,10 @@ TEST_P(DispatchTest, FindManhattan) {
 
     auto bfptr = dispatch.build(ndim, nobs, data.data(), knncolle::BRUTEFORCE);
     auto bfres = bfptr->find_nearest_neighbors(1, k);
+
+    auto kmptr = dispatch.build(ndim, nobs, data.data(), knncolle::KMKNN);
+    auto kmres = kmptr->find_nearest_neighbors(1, k);
+    EXPECT_EQ(bfres, kmres);
 
     auto vpptr = dispatch.build(ndim, nobs, data.data(), knncolle::VPTREE);
     auto vpres = vpptr->find_nearest_neighbors(1, k);

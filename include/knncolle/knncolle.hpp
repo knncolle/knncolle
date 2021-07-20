@@ -2,6 +2,7 @@
 #define KNNCOLLE_HPP
 
 #include "BruteForce/BruteForce.hpp"
+#include "Kmknn/Kmknn.hpp"
 #include "VpTree/VpTree.hpp"
 #include "Annoy/Annoy.hpp"
 #include "Hnsw/Hnsw.hpp"
@@ -23,7 +24,7 @@ enum DispatchDistance { EUCLIDEAN, MANHATTAN };
 /**
  * Choice of available KNN algorithms. 
  */
-enum DispatchAlgorithm { BRUTEFORCE, VPTREE, ANNOY, HNSW };
+enum DispatchAlgorithm { BRUTEFORCE, KMKNN, VPTREE, ANNOY, HNSW };
 
 /**
  * @brief Top-level helper class to run any available search algorithms.
@@ -73,6 +74,21 @@ public:
      * Parameters to be passed to the `VpTree` constructor.
      */
     VpTree_param VpTree;
+
+    /**
+     * @brief Parameter store for the k-means-based search.
+     */
+    struct Kmknn_param {
+        /** 
+         * See the `Kmknn::Kmknn()` constructor.
+         */
+        double power = 0.5;
+    };
+    
+    /**
+     * Parameters to be passed to the `Kmknn` constructor.
+     */
+    Kmknn_param Kmknn;
 
     /**
      * @brief Parameter store for the Annoy search.
@@ -137,6 +153,8 @@ public:
         typedef Base<INDEX_t, DISTANCE_t, QUERY_t> BASE;
         if (distance_type == EUCLIDEAN) {
             switch(algorithm) {
+                case KMKNN:
+                    return std::shared_ptr<BASE>(new KmknnEuclidean<INDEX_t, DISTANCE_t, QUERY_t>(ndim, nobs, vals, Kmknn.power));
                 case VPTREE:
                     return std::shared_ptr<BASE>(new VpTreeEuclidean<INDEX_t, DISTANCE_t, QUERY_t>(ndim, nobs, vals, VpTree.copy));
                 case ANNOY:
@@ -148,6 +166,8 @@ public:
             }
         } else {
             switch(algorithm) {
+                case KMKNN:
+                    return std::shared_ptr<BASE>(new KmknnManhattan<INDEX_t, DISTANCE_t, QUERY_t>(ndim, nobs, vals, Kmknn.power));
                 case VPTREE:
                     return std::shared_ptr<BASE>(new VpTreeManhattan<INDEX_t, DISTANCE_t, QUERY_t>(ndim, nobs, vals, VpTree.copy));
                 case ANNOY:
