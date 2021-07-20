@@ -91,10 +91,10 @@ public:
 
 private:
     template<class QUEUE>
-    void search_nn(const DISTANCE_t* query, QUEUE& nearest) const {
+    void search_nn(const QUERY_t* query, QUEUE& nearest) const {
         auto copy = store.reference;
         for (INDEX_t i = 0; i < num_obs; ++i, copy += num_dim) {
-            nearest.add(i, DISTANCE::raw_distance(query, copy, num_dim));
+            nearest.add(i, DISTANCE::template raw_distance<INTERNAL_t>(query, copy, num_dim));
         }
         return;
     }

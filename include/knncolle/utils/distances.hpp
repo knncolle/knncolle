@@ -22,7 +22,9 @@ struct Euclidean {
      * @param n Length of both vectors.
      *
      * @tparam ITYPE Integer type for the vector length.
-     * @tparam DTYPE Floating point type for the data.
+     * @tparam DTYPE Floating point type for the output distance.
+     * @tparam XTYPE Floating point type for the first data vector.
+     * @tparam YTYPE Floating point type for the second data vector.
      *
      * @return The squared Euclidean distance between vectors.
      *
@@ -30,8 +32,8 @@ struct Euclidean {
      * This should be passed through `normalize()` to obtain the actual Euclidean distance.
      * We separate out these two steps to avoid the costly root operation when only the relative values are of interest.
      */
-    template<typename ITYPE = int, typename DTYPE = double>
-    static DTYPE raw_distance(const DTYPE* x, const DTYPE* y, ITYPE n) {
+    template<typename ITYPE = int, typename DTYPE = double, typename XTYPE = DTYPE, typename YTYPE = DTYPE>
+    static DTYPE raw_distance(const XTYPE* x, const YTYPE* y, ITYPE n) {
         double output = 0;
         for (ITYPE i = 0; i < n; ++i, ++x, ++y) {
             output += ((*x) - (*y)) * ((*x) - (*y));
@@ -58,7 +60,9 @@ struct Euclidean {
 struct Manhattan {
     /**
      * @tparam ITYPE Integer type for the vector length.
-     * @tparam DTYPE Floating point type for the data.
+     * @tparam DTYPE Floating point type for the output distance.
+     * @tparam XTYPE Floating point type for the first data vector.
+     * @tparam YTYPE Floating point type for the second data vector.
      *
      * @param x Pointer to the array containing the first vector.
      * @param y Pointer to the array containing the second vector.
@@ -66,9 +70,9 @@ struct Manhattan {
      *
      * @return The Manhattan distance between vectors.
      */
-    template<typename ITYPE = int, typename DTYPE = double>
-    static double raw_distance(const DTYPE* x, const DTYPE* y, ITYPE n) {
-        double output = 0;
+    template<typename ITYPE = int, typename DTYPE = double, typename XTYPE = DTYPE, typename YTYPE = DTYPE>
+    static DTYPE raw_distance(const XTYPE* x, const YTYPE* y, ITYPE n) {
+        DTYPE output = 0;
         for (ITYPE i = 0; i < n; ++i, ++x, ++y) {
             output += std::abs(*x - *y);
         }
@@ -82,7 +86,7 @@ struct Manhattan {
      * @return `raw` with no modification.
      */
     template<typename DTYPE = double>
-    static double normalize(double raw) {
+    static DTYPE normalize(DTYPE raw) {
         return raw;
     }
 };

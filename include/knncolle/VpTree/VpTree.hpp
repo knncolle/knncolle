@@ -36,7 +36,7 @@ namespace knncolle {
  * @tparam INDEX_t Integer type for the indices.
  * @tparam DISTANCE_t Floating point type for the distances.
  * @tparam QUERY_t Floating point type for the query data.
- * @tparam INTERNAL_t Floating point type for the data.
+ * @tparam INTERNAL_t Floating point type for the internal data store.
  *
  * @see
  * Yianilos PN (1993).
@@ -104,7 +104,7 @@ private:
             const INTERNAL_t* ref = std::get<1>(vantage);
             for (size_t i = lower + 1; i < upper; ++i) {
                 const INTERNAL_t* loc = std::get<1>(items[i]);
-                std::get<2>(items[i]) = DISTANCE::raw_distance(ref, loc, num_dim);
+                std::get<2>(items[i]) = DISTANCE::template raw_distance<INTERNAL_t>(ref, loc, num_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -141,10 +141,10 @@ public:
      * @param copy Whether the data in `vals` should be copied to an internal store.
      * By default, no copy is performed under the assumption that the array in `vals` lives longer than the constructed `VpTree` instance.
      *
-     * @tparam INPUT Floating-point type of the input data.
+     * @tparam INPUT_t Floating-point type of the input data.
      */
-    template<typename INPUT>
-    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) { 
+    template<typename INPUT_t>
+    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) { 
         std::vector<DataPoint> items;
         items.reserve(num_obs);
         auto ptr = store.reference;
@@ -186,14 +186,15 @@ public:
     using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
 
 private:
-    void search_nn(NodeIndex_t curnode_index, const INTERNAL_t* target, INTERNAL_t& tau, NeighborQueue<INDEX_t, DISTANCE_t>& nearest) const { 
+    template<typename INPUT_t>
+    void search_nn(NodeIndex_t curnode_index, const INPUT_t* target, INTERNAL_t& tau, NeighborQueue<INDEX_t, INTERNAL_t>& nearest) const { 
         if (curnode_index == LEAF_MARKER) { // indicates that we're done here
             return;
         }
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::raw_distance(store.reference + curnode.index * num_dim, target, num_dim));
+        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(store.reference + curnode.index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {
