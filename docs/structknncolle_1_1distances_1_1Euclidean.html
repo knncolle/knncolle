@@ -82,9 +82,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:afbef590827a96afdbf7285da2fddc64b"><td class="memTemplParams" colspan="2">template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </td></tr>
-<tr class="memitem:afbef590827a96afdbf7285da2fddc64b"><td class="memTemplItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">raw_distance</a> (const DTYPE *x, const DTYPE *y, ITYPE n)</td></tr>
-<tr class="separator:afbef590827a96afdbf7285da2fddc64b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57bf54ad8dea48145ce64d1b25813acf"><td class="memTemplParams" colspan="2">template&lt;typename ITYPE  = int, typename DTYPE  = double, typename XTYPE  = DTYPE, typename YTYPE  = DTYPE&gt; </td></tr>
+<tr class="memitem:a57bf54ad8dea48145ce64d1b25813acf"><td class="memTemplItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a57bf54ad8dea48145ce64d1b25813acf">raw_distance</a> (const XTYPE *x, const YTYPE *y, ITYPE n)</td></tr>
+<tr class="separator:a57bf54ad8dea48145ce64d1b25813acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memTemplParams" colspan="2">template&lt;typename DTYPE  = double&gt; </td></tr>
 <tr class="memitem:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memTemplItemLeft" align="right" valign="top">static DTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a3841fb6e1d1bfc16e840eda7409ee162">normalize</a> (DTYPE raw)</td></tr>
 <tr class="separator:a3841fb6e1d1bfc16e840eda7409ee162"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,7 +125,7 @@ template&lt;typename DTYPE  = double&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">raw</td><td>The value produced by <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#afbef590827a96afdbf7285da2fddc64b">raw_distance()</a></code>.</td></tr>
+    <tr><td class="paramname">raw</td><td>The value produced by <code><a class="el" href="structknncolle_1_1distances_1_1Euclidean.html#a57bf54ad8dea48145ce64d1b25813acf">raw_distance()</a></code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -133,13 +133,13 @@ template&lt;typename DTYPE  = double&gt; </div>
 
 </div>
 </div>
-<a id="afbef590827a96afdbf7285da2fddc64b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbef590827a96afdbf7285da2fddc64b">&#9670;&nbsp;</a></span>raw_distance()</h2>
+<a id="a57bf54ad8dea48145ce64d1b25813acf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57bf54ad8dea48145ce64d1b25813acf">&#9670;&nbsp;</a></span>raw_distance()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
+template&lt;typename ITYPE  = int, typename DTYPE  = double, typename XTYPE  = DTYPE, typename YTYPE  = DTYPE&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -147,13 +147,13 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
         <tr>
           <td class="memname">static DTYPE knncolle::distances::Euclidean::raw_distance </td>
           <td>(</td>
-          <td class="paramtype">const DTYPE *&#160;</td>
+          <td class="paramtype">const XTYPE *&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const DTYPE *&#160;</td>
+          <td class="paramtype">const YTYPE *&#160;</td>
           <td class="paramname"><em>y</em>, </td>
         </tr>
         <tr>
@@ -185,7 +185,9 @@ template&lt;typename ITYPE  = int, typename DTYPE  = double&gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">ITYPE</td><td>Integer type for the vector length. </td></tr>
-    <tr><td class="paramname">DTYPE</td><td>Floating point type for the data.</td></tr>
+    <tr><td class="paramname">DTYPE</td><td>Floating point type for the output distance. </td></tr>
+    <tr><td class="paramname">XTYPE</td><td>Floating point type for the first data vector. </td></tr>
+    <tr><td class="paramname">YTYPE</td><td>Floating point type for the second data vector.</td></tr>
   </table>
   </dd>
 </dl>

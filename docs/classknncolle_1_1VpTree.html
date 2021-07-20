@@ -104,9 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8869f31b0220424c7318b86709bbf69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a912697b91cd4f8a9458bd3b988dadf6f"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a> () const</td></tr>
 <tr class="separator:a912697b91cd4f8a9458bd3b988dadf6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9287df6e4a53fff160376be1b28b9186"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
-<tr class="memitem:a9287df6e4a53fff160376be1b28b9186"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1VpTree.html#a9287df6e4a53fff160376be1b28b9186">VpTree</a> (INDEX_t <a class="el" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, const INPUT *vals, bool copy=false)</td></tr>
-<tr class="separator:a9287df6e4a53fff160376be1b28b9186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98952a5b50af74ad295dbae5a56d5de6"><td class="memTemplParams" colspan="2">template&lt;typename INPUT_t &gt; </td></tr>
+<tr class="memitem:a98952a5b50af74ad295dbae5a56d5de6"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6">VpTree</a> (INDEX_t <a class="el" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, const INPUT_t *vals, bool copy=false)</td></tr>
+<tr class="separator:a98952a5b50af74ad295dbae5a56d5de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af693fb4cbbea759292204d79b668f832"><td class="memItemLeft" align="right" valign="top"><a id="af693fb4cbbea759292204d79b668f832"></a>
 std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (INDEX_t index, int k) const</td></tr>
 <tr class="separator:af693fb4cbbea759292204d79b668f832"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,7 +139,7 @@ class knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &g
     <tr><td class="paramname">INDEX_t</td><td>Integer type for the indices. </td></tr>
     <tr><td class="paramname">DISTANCE_t</td><td>Floating point type for the distances. </td></tr>
     <tr><td class="paramname">QUERY_t</td><td>Floating point type for the query data. </td></tr>
-    <tr><td class="paramname">INTERNAL_t</td><td>Floating point type for the data.</td></tr>
+    <tr><td class="paramname">INTERNAL_t</td><td>Floating point type for the internal data store.</td></tr>
   </table>
   </dd>
 </dl>
@@ -147,15 +147,15 @@ class knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &g
 <dd>
 Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9287df6e4a53fff160376be1b28b9186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9287df6e4a53fff160376be1b28b9186">&#9670;&nbsp;</a></span>VpTree()</h2>
+<a id="a98952a5b50af74ad295dbae5a56d5de6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98952a5b50af74ad295dbae5a56d5de6">&#9670;&nbsp;</a></span>VpTree()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_t  = double&gt; </div>
 <div class="memtemplate">
-template&lt;typename INPUT &gt; </div>
+template&lt;typename INPUT_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -175,7 +175,7 @@ template&lt;typename INPUT &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const INPUT *&#160;</td>
+          <td class="paramtype">const INPUT_t *&#160;</td>
           <td class="paramname"><em>vals</em>, </td>
         </tr>
         <tr>
@@ -207,7 +207,7 @@ template&lt;typename INPUT &gt; </div>
 </dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">INPUT</td><td>Floating-point type of the input data. </td></tr>
+    <tr><td class="paramname">INPUT_t</td><td>Floating-point type of the input data. </td></tr>
   </table>
   </dd>
 </dl>

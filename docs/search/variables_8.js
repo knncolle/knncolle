@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vptree_87',['VpTree',['../classknncolle_1_1Dispatch.html#a60e6fec1c32f906f602885b3e6020ef8',1,'knncolle::Dispatch']]]
+  ['power_97',['power',['../structknncolle_1_1Dispatch_1_1Kmknn__param.html#ae5a36cb2cea2d7c5491aa3ef39a4b1e8',1,'knncolle::Dispatch::Kmknn_param']]]
 ];

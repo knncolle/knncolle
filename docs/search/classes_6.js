@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['vptree_57',['VpTree',['../classknncolle_1_1VpTree.html',1,'knncolle']]],
-  ['vptree_5fparam_58',['VpTree_param',['../structknncolle_1_1Dispatch_1_1VpTree__param.html',1,'knncolle::Dispatch']]]
+  ['manhattan_64',['Manhattan',['../structknncolle_1_1distances_1_1Manhattan.html',1,'knncolle::distances']]]
 ];

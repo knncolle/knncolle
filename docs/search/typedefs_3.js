@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vptreeeuclidean_94',['VpTreeEuclidean',['../VpTree_8hpp.html#ad59adacb1e7692963f1a9b00ff49e054',1,'knncolle']]],
-  ['vptreemanhattan_95',['VpTreeManhattan',['../VpTree_8hpp.html#aad5d0c75f7f1362785ca361ea7cca5e1',1,'knncolle']]]
+  ['kmknneuclidean_106',['KmknnEuclidean',['../Kmknn_8hpp.html#ab26f43d83cb224a818aaf03e4a78f461',1,'knncolle']]],
+  ['kmknnmanhattan_107',['KmknnManhattan',['../Kmknn_8hpp.html#aac1a6633adeb4d9720cb8abe7866e125',1,'knncolle']]]
 ];
