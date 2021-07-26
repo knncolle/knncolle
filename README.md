@@ -2,6 +2,7 @@
 
 ![Unit tests](https://github.com/LTLA/knncolle/actions/workflows/run-tests.yaml/badge.svg)
 ![Documentation](https://github.com/LTLA/knncolle/actions/workflows/doxygenate.yaml/badge.svg)
+[![Codecov](https://codecov.io/gh/LTLA/knncolle/branch/master/graph/badge.svg?token=PPKVZ1QEXR)](https://codecov.io/gh/LTLA/knncolle)
 
 ## Overview
 
