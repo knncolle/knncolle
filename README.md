@@ -49,7 +49,7 @@ Each call is `const` and can be performed simultaneously in multiple threads, e.
 For some algorithms, we can modify the parameters of the search by passing our desired values in the constructor:
 
 ```cpp
-knncolle::Annoy<> searcher2(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
+knncolle::AnnoyEuclidean<> searcher2(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
 ```
 
 All algorithms derive from a common base class, so it is possible to swap algorithms at run-time:
