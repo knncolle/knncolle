@@ -39,7 +39,7 @@ namespace knncolle {
  * This uses a `float` instead of a `double` to sacrifice some accuracy for performance.
  */
 template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
-class AnnoySearch : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
+class Annoy : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 public:
     INDEX_t nobs() const {
         return annoy_index.get_n_items();
@@ -81,7 +81,7 @@ public:
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = Defaults::ntrees, double search_mult = Defaults::search_mult) : 
+    Annoy(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = Defaults::ntrees, double search_mult = Defaults::search_mult) : 
         annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) 
     {
         if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {
@@ -129,7 +129,7 @@ public:
     using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
 
 private:
-    Annoy::AnnoyIndex<INTERNAL_INDEX_t, INTERNAL_DATA_t, DISTANCE, Annoy::Kiss64Random, Annoy::AnnoyIndexSingleThreadedBuildPolicy> annoy_index;
+    ::Annoy::AnnoyIndex<INTERNAL_INDEX_t, INTERNAL_DATA_t, DISTANCE, ::Annoy::Kiss64Random, ::Annoy::AnnoyIndexSingleThreadedBuildPolicy> annoy_index;
     INDEX_t num_dim;
     double search_k_mult;
 
@@ -173,13 +173,13 @@ private:
  * Perform an Annoy search with Euclidean distances.
  */
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
-using AnnoyEuclidean = AnnoySearch<Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
+using AnnoyEuclidean = Annoy<::Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
 
 /**
  * Perform an Annoy search with Manhattan distances.
  */
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
-using AnnoyManhattan = AnnoySearch<Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
+using AnnoyManhattan = Annoy<::Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
 
 }
 
