@@ -15,25 +15,6 @@
 
 namespace knncolle {
 
-namespace HnswDefaults {
-
-/**
- * Default value for `nlinks` in the `Hnsw()` constructor.
- */
-static constexpr int nlinks = 16;
-
-/**
- * Default value for `ef_construction` in the `Hnsw()` constructor.
- */
-static constexpr int ef_construction = 200;
-
-/**
- * Default value for `ef_search` in the `Hnsw()` constructor.
- */
-static constexpr int ef_search = 10;
-
-};
-
 /**
  * @brief Perform an approximate nearest neighbor search with HNSW.
  *
@@ -71,6 +52,27 @@ public:
 
 public:
     /**
+     * Defaults for the constructor parameters.
+     */
+    struct Defaults {
+        /**
+         * See `nlinks` in the `Hnsw()` constructor.
+         */
+        static constexpr int nlinks = 16;
+
+        /**
+         * See `ef_construction` in the `Hnsw()` constructor.
+         */
+        static constexpr int ef_construction = 200;
+
+        /**
+         * See `ef_search` in the `Hnsw()` constructor.
+         */
+        static constexpr int ef_search = 10;
+    };
+
+public:
+    /**
      * @param ndim Number of dimensions.
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
@@ -87,7 +89,7 @@ public:
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    Hnsw(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int nlinks = HnswDefaults::nlinks, int ef_construction = HnswDefaults::ef_construction, int ef_search = HnswDefaults::ef_search) : 
+    Hnsw(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int nlinks = Defaults::nlinks, int ef_construction = Defaults::ef_construction, int ef_search = Defaults::ef_search) : 
         space(ndim), hnsw_index(&space, nobs, nlinks, ef_construction), num_dim(ndim), num_obs(nobs)
     {
         if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {

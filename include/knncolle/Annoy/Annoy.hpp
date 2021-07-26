@@ -16,20 +16,6 @@
 
 namespace knncolle {
 
-namespace AnnoyDefaults {
-
-/**
- * Default value for `ntrees` in the `Annoy` constructor.
- */
-const int ntrees = 50;
-
-/**
- * Default value for `search_mult` in the `Annoy` constructor.
- */
-const double search_mult = -1;
-
-}
-
 /**
  * @brief Perform an approximate nearest neighbor search with Annoy.
  *
@@ -63,6 +49,23 @@ public:
         return num_dim;
     }
 
+
+public:
+    /**
+     * Defaults for the constructor parameters.
+     */
+    struct Defaults {
+        /**
+         * See `ntrees` in the `Annoy()` constructor.
+         */
+        static constexpr int ntrees = 50;
+
+        /**
+         * See `search_mult` in the `Annoy()` constructor.
+         */
+        static constexpr double search_mult = -1;
+    };
+
 public:
     /**
      * @param ndim Number of dimensions.
@@ -78,7 +81,7 @@ public:
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = AnnoyDefaults::ntrees, double search_mult = AnnoyDefaults::search_mult) : 
+    AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, int ntrees = Defaults::ntrees, double search_mult = Defaults::search_mult) : 
         annoy_index(ndim), num_dim(ndim), search_k_mult(search_mult) 
     {
         if constexpr(std::is_same<INPUT, INTERNAL_DATA_t>::value) {
