@@ -95,7 +95,7 @@ $(function() {
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="knncolle_8hpp.html">knncolle.hpp</a></div><div class="ttdoc">Umbrella header to include all algorithms.</div></div>
 </div><!-- fragment --><p>The <code>find_nearest_neighbors()</code> call will return a vector of (index, distance) pairs, containing the requested number of neighbors in order of increasing distance from the query point. (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.) Each call is <code>const</code> and can be performed simultaneously in multiple threads, e.g., via OpenMP.</p>
 <p>For some algorithms, we can modify the parameters of the search by passing our desired values in the constructor:</p>
-<div class="fragment"><div class="line"><a class="code" href="classknncolle_1_1Annoy.html">knncolle::Annoy&lt;&gt;</a> searcher2(ndim, nobs, matrix.data(), <span class="comment">/* ntrees = */</span> 100); </div>
+<div class="fragment"><div class="line"><a class="code" href="classknncolle_1_1Annoy.html">knncolle::AnnoyEuclidean&lt;&gt;</a> searcher2(ndim, nobs, matrix.data(), <span class="comment">/* ntrees = */</span> 100); </div>
 <div class="ttc" id="aclassknncolle_1_1Annoy_html"><div class="ttname"><a href="classknncolle_1_1Annoy.html">knncolle::Annoy</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with Annoy.</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:42</div></div>
 </div><!-- fragment --><p>All algorithms derive from a common base class, so it is possible to swap algorithms at run-time:</p>
 <div class="fragment"><div class="line">std::unique_ptr&lt;knncolle::Base&lt;&gt; &gt; ptr;</div>
