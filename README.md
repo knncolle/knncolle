@@ -36,29 +36,38 @@ Given a matrix with dimensions in the rows and observations in the columns, we c
 
 /* ... boilerplate... */
 
-knncolle::Dispatch<> dispatcher;
-knncolle::DispatchAlgorithm algo_choice = knncolle::VPTREE; // or ANNOY, or HNSW...
-auto searcher = dispatcher.build(ndim, nobs, matrix.data(), algo_choice);
-
-auto results1 = searcher->find_nearest_neighbors(0, 10); // 10 nearest neighbors of the first element.
-auto results2 = searcher->find_nearest_neighbors(query, 10); // 10 nearest neighbors of a query vector.
+knncolle::VpTree<> searcher(ndim, nobs, matrix.data()); 
+auto results1 = searcher.find_nearest_neighbors(0, 10); // 10 nearest neighbors of the first element.
+auto results2 = searcher.find_nearest_neighbors(query, 10); // 10 nearest neighbors of a query vector.
 ```
 
 The `find_nearest_neighbors()` call will return a vector of (index, distance) pairs,
 containing the requested number of neighbors in order of increasing distance from the query point.
 (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)
-For some algorithms, we can modify the parameters of the search by setting the relevant members of the `Dispatch` class:
+Each call is `const` and can be performed simultaneously in multiple threads, e.g., via OpenMP.
+
+For some algorithms, we can modify the parameters of the search by passing our desired values in the constructor:
 
 ```cpp
-dispatcher.Annoy.ntrees = 100;
-auto searcher_annoy = dispatcher.build(ndim, nobs, matrix.data(), knncolle::ANNOY);
+knncolle::Annoy<> searcher2(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
 ```
 
-If the desired algorithm is known at compile time, we can be more specific:
+All algorithms derive from a common base class, so it is possible to swap algorithms at run-time:
 
 ```cpp
-knncolle::AnnoyEuclidean<> searcher(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
+std::unique_ptr<knncolle::Base<> > ptr;
+if (algorithm == "Annoy") {
+    ptr.reset(new knncolle::Annoy<>(ndim, nobs, matrix.data()));
+} else if (algorithm == "Hnsw") {
+    ptr.reset(new knncolle::Hnsw<>(ndim, nobs, matrix.data()));
+} else {
+    ptr.reset(new knncolle::Kmknn<>(ndim, nobs, matrix.data()));
+}
+auto res = ptr->find_nearest_neighbors(1, 10);
 ```
+
+Each class is also templated, defaulting to `int`s for the indices and `double`s for the distances.
+If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
 
 Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details.
 

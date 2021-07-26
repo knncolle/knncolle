@@ -17,7 +17,6 @@ add_executable(
     src/Kmknn.cpp
     src/Annoy.cpp
     src/Hnsw.cpp
-    src/Dispatch.cpp
 )
 
 target_link_libraries(
