@@ -67,9 +67,6 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">knncolle.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -115,79 +112,9 @@ Include dependency graph for knncolle.hpp:</div>
 </div>
 </div>
 <p><a href="knncolle_8hpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Dispatch.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Top-level helper class to run any available search algorithms.  <a href="classknncolle_1_1Dispatch.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1BruteForce__param.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::BruteForce_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the brute-force search.  <a href="structknncolle_1_1Dispatch_1_1BruteForce__param.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1VpTree__param.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::VpTree_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the vantage point tree search.  <a href="structknncolle_1_1Dispatch_1_1VpTree__param.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1Kmknn__param.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::Kmknn_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the k-means-based search.  <a href="structknncolle_1_1Dispatch_1_1Kmknn__param.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1Annoy__param.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::Annoy_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the Annoy search.  <a href="structknncolle_1_1Dispatch_1_1Annoy__param.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Dispatch_1_1Hnsw__param.html">knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;::Hnsw_param</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter store for the HNSW search.  <a href="structknncolle_1_1Dispatch_1_1Hnsw__param.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:aa24e24c3b4ce1523c860dc5686694a5b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="knncolle_8hpp.html#aa24e24c3b4ce1523c860dc5686694a5b">knncolle::DispatchDistance</a> { <b>EUCLIDEAN</b>
-, <b>MANHATTAN</b>
- }</td></tr>
-<tr class="separator:aa24e24c3b4ce1523c860dc5686694a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3e4a6ff9f871a52a999276b90ec691e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">knncolle::DispatchAlgorithm</a> { <br />
-&#160;&#160;<b>BRUTEFORCE</b>
-, <b>KMKNN</b>
-, <b>VPTREE</b>
-, <b>ANNOY</b>
-, <br />
-&#160;&#160;<b>HNSW</b>
-<br />
- }</td></tr>
-<tr class="separator:ac3e4a6ff9f871a52a999276b90ec691e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Umbrella header to include all algorithms. </p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ac3e4a6ff9f871a52a999276b90ec691e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3e4a6ff9f871a52a999276b90ec691e">&#9670;&nbsp;</a></span>DispatchAlgorithm</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="knncolle_8hpp.html#ac3e4a6ff9f871a52a999276b90ec691e">knncolle::DispatchAlgorithm</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Choice of available KNN algorithms. </p>
-
-</div>
-</div>
-<a id="aa24e24c3b4ce1523c860dc5686694a5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa24e24c3b4ce1523c860dc5686694a5b">&#9670;&nbsp;</a></span>DispatchDistance</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="knncolle_8hpp.html#aa24e24c3b4ce1523c860dc5686694a5b">knncolle::DispatchDistance</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Distance metrics to use for searching. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1

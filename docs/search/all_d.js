@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['search_5fmult_46',['search_mult',['../structknncolle_1_1Dispatch_1_1Annoy__param.html#a59ed3776f1b3a69488a59fa332dfeb8f',1,'knncolle::Dispatch::Annoy_param::search_mult()'],['../Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1',1,'knncolle::AnnoyDefaults::search_mult()']]]
+  ['vptree_36',['VpTree',['../classknncolle_1_1VpTree.html',1,'knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;'],['../classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6',1,'knncolle::VpTree::VpTree()']]],
+  ['vptree_2ehpp_37',['VpTree.hpp',['../VpTree_8hpp.html',1,'']]],
+  ['vptreeeuclidean_38',['VpTreeEuclidean',['../VpTree_8hpp.html#ad59adacb1e7692963f1a9b00ff49e054',1,'knncolle']]],
+  ['vptreemanhattan_39',['VpTreeManhattan',['../VpTree_8hpp.html#aad5d0c75f7f1362785ca361ea7cca5e1',1,'knncolle']]]
 ];

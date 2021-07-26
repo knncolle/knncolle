@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['annoy_87',['Annoy',['../classknncolle_1_1Dispatch.html#a9e5377e9ff61374aee3f23d7d2b559cc',1,'knncolle::Dispatch']]]
+  ['ef_5fconstruction_69',['ef_construction',['../structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856',1,'knncolle::Hnsw::Defaults']]],
+  ['ef_5fsearch_70',['ef_search',['../structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044',1,'knncolle::Hnsw::Defaults']]]
 ];

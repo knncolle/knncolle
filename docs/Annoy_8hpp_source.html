@@ -83,132 +83,133 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>AnnoyDefaults {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#a9802be3629e344a4b2da00a6f42f5f28">   24</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="Annoy_8hpp.html#a9802be3629e344a4b2da00a6f42f5f28">ntrees</a> = 50;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1">   29</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code" href="Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1">search_mult</a> = -1;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classknncolle_1_1AnnoySearch.html">   56</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1AnnoySearch.html">AnnoySearch</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">   58</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">return</span> annoy_index.get_n_items();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">   62</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> num_dim;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classknncolle_1_1AnnoySearch.html#aa141cd7397624e9740e2a0cbf993a74c">   81</a></span>&#160;    <a class="code" href="classknncolle_1_1AnnoySearch.html#aa141cd7397624e9740e2a0cbf993a74c">AnnoySearch</a>(INDEX_t <a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">int</span> ntrees = AnnoyDefaults::ntrees, <span class="keywordtype">double</span> search_mult = AnnoyDefaults::search_mult) : </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        annoy_index(<a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>), num_dim(<a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>), search_k_mult(search_mult) </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INPUT, INTERNAL_DATA_t&gt;::value) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                annoy_index.add_item(i, vals);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; incoming(<a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                std::copy(vals, vals + <a class="code" href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">ndim</a>, incoming.begin());</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                annoy_index.add_item(i, incoming.data());</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        annoy_index.build(ntrees);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_item(index, k + 1, get_search_k(k + 1), <span class="keyword">true</span>); <span class="comment">// +1, as it forgets to discard &#39;self&#39;.</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> reformat(pairs, <span class="keyword">true</span>, index);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INTERNAL_DATA_t, QUERY_t&gt;::value) {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_vector(query, k, get_search_k(k), <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">return</span> reformat(pairs);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; tmp(query, query + num_dim);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_vector(tmp.data(), k, get_search_k(k), <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">return</span> reformat(pairs);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            annoy_index.get_item(index, buffer);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; tmp(num_dim);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            annoy_index.get_item(index, tmp.data());</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            std::copy(tmp.begin(), tmp.end(), buffer);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        }</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">return</span> buffer;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">using</span> <a class="code" href="classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de">Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation</a>;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    Annoy::AnnoyIndex&lt;INTERNAL_INDEX_t, INTERNAL_DATA_t, DISTANCE, Annoy::Kiss64Random, Annoy::AnnoyIndexSingleThreadedBuildPolicy&gt; annoy_index;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    INDEX_t num_dim;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">double</span> search_k_mult;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">int</span> get_search_k(<span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">if</span> (search_k_mult &lt; 0) {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            <span class="keywordflow">return</span> search_k_mult * k + 0.5; <span class="comment">// rounded up.</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        }</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    }</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> PAIRED&gt; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; reformat(<span class="keyword">const</span> PAIRED&amp; results, <span class="keywordtype">bool</span> check_self = <span class="keyword">false</span>, INDEX_t self_index = 0) {</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="comment">// If check_self=false, then we pretend that the self is already</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="comment">// found, in which case the two clauses below are just skipped.</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordtype">bool</span> self_found = !check_self;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; output;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; current : results) {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordflow">if</span> (!self_found &amp;&amp; current.second == self_index) {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                self_found=<span class="keyword">true</span>;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                output.push_back(std::pair&lt;INDEX_t, DISTANCE_t&gt;(current.second, current.first));</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="comment">// Just in case we&#39;re full of ties at duplicate points, such that &#39;c&#39;</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="comment">// is not in the set.  Note that, if self_found=false, we must have at</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="comment">// least &#39;K+2&#39; points for &#39;c&#39; to not be detected as its own neighbor.</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="comment">// Thus there is no need to worry whether we are popping off a non-&#39;c&#39;</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="comment">// element at the end of the vector.</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">if</span> (!self_found) {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            output.pop_back();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;};</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#a5248f23fbf2ee782c1d1183200127a35">  173</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1AnnoySearch.html">AnnoyEuclidean</a> = <a class="code" href="classknncolle_1_1AnnoySearch.html">AnnoySearch&lt;Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</a>;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
-<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#a3968927b78cc0faa38498e4169ebe17c">  179</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1AnnoySearch.html">AnnoyManhattan</a> = <a class="code" href="classknncolle_1_1AnnoySearch.html">AnnoySearch&lt;Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</a>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aAnnoy_8hpp_html_a7e5c0692a51f2cfe1f6554c559e3c6c1"><div class="ttname"><a href="Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1">knncolle::AnnoyDefaults::search_mult</a></div><div class="ttdeci">const double search_mult</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:29</div></div>
-<div class="ttc" id="aAnnoy_8hpp_html_a9802be3629e344a4b2da00a6f42f5f28"><div class="ttname"><a href="Annoy_8hpp.html#a9802be3629e344a4b2da00a6f42f5f28">knncolle::AnnoyDefaults::ntrees</a></div><div class="ttdeci">const int ntrees</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:24</div></div>
-<div class="ttc" id="aclassknncolle_1_1AnnoySearch_html"><div class="ttname"><a href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with Annoy.</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:56</div></div>
-<div class="ttc" id="aclassknncolle_1_1AnnoySearch_html_a5199d712d2312a5300f455093b0643d5"><div class="ttname"><a href="classknncolle_1_1AnnoySearch.html#a5199d712d2312a5300f455093b0643d5">knncolle::AnnoySearch::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:62</div></div>
-<div class="ttc" id="aclassknncolle_1_1AnnoySearch_html_aa141cd7397624e9740e2a0cbf993a74c"><div class="ttname"><a href="classknncolle_1_1AnnoySearch.html#aa141cd7397624e9740e2a0cbf993a74c">knncolle::AnnoySearch::AnnoySearch</a></div><div class="ttdeci">AnnoySearch(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, int ntrees=AnnoyDefaults::ntrees, double search_mult=AnnoyDefaults::search_mult)</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:81</div></div>
-<div class="ttc" id="aclassknncolle_1_1AnnoySearch_html_ae2e8616ee4f969c6b0cba2ad044df8c2"><div class="ttname"><a href="classknncolle_1_1AnnoySearch.html#ae2e8616ee4f969c6b0cba2ad044df8c2">knncolle::AnnoySearch::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:58</div></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classknncolle_1_1Annoy.html">   42</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1Annoy.html">Annoy</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">   44</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">nobs</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span> annoy_index.get_n_items();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">   48</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> num_dim;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structknncolle_1_1Annoy_1_1Defaults.html">   57</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structknncolle_1_1Annoy_1_1Defaults.html">Defaults</a> {</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structknncolle_1_1Annoy_1_1Defaults.html#a053f73012079ecad4de0e4c8b9b526c7">   61</a></span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> <a class="code" href="structknncolle_1_1Annoy_1_1Defaults.html#a053f73012079ecad4de0e4c8b9b526c7">ntrees</a> = 50;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee">   66</a></span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">double</span> <a class="code" href="structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee">search_mult</a> = -1;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    };</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classknncolle_1_1Annoy.html#ad1e50c3c409d9a68936e13ade5c168d0">   84</a></span>&#160;    <a class="code" href="classknncolle_1_1Annoy.html#ad1e50c3c409d9a68936e13ade5c168d0">Annoy</a>(INDEX_t <a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">int</span> ntrees = <a class="code" href="structknncolle_1_1Annoy_1_1Defaults.html#a053f73012079ecad4de0e4c8b9b526c7">Defaults::ntrees</a>, <span class="keywordtype">double</span> search_mult = <a class="code" href="structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee">Defaults::search_mult</a>) : </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        annoy_index(<a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>), num_dim(<a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>), search_k_mult(search_mult) </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INPUT, INTERNAL_DATA_t&gt;::value) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                annoy_index.add_item(i, vals);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; incoming(<a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                std::copy(vals, vals + <a class="code" href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">ndim</a>, incoming.begin());</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                annoy_index.add_item(i, incoming.data());</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        annoy_index.build(ntrees);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_item(index, k + 1, get_search_k(k + 1), <span class="keyword">true</span>); <span class="comment">// +1, as it forgets to discard &#39;self&#39;.</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">return</span> reformat(pairs, <span class="keyword">true</span>, index);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INTERNAL_DATA_t, QUERY_t&gt;::value) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_vector(query, k, get_search_k(k), <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">return</span> reformat(pairs);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; tmp(query, query + num_dim);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keyword">auto</span> pairs = annoy_index.get_nns_by_vector(tmp.data(), k, get_search_k(k), <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">return</span> reformat(pairs);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            annoy_index.get_item(index, buffer);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; tmp(num_dim);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            annoy_index.get_item(index, tmp.data());</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            std::copy(tmp.begin(), tmp.end(), buffer);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">using</span> <a class="code" href="classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de">Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation</a>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    ::Annoy::AnnoyIndex&lt;INTERNAL_INDEX_t, INTERNAL_DATA_t, DISTANCE, ::Annoy::Kiss64Random, ::Annoy::AnnoyIndexSingleThreadedBuildPolicy&gt; annoy_index;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    INDEX_t num_dim;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordtype">double</span> search_k_mult;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordtype">int</span> get_search_k(<span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keywordflow">if</span> (search_k_mult &lt; 0) {</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;            <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            <span class="keywordflow">return</span> search_k_mult * k + 0.5; <span class="comment">// rounded up.</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        }</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> PAIRED&gt; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">static</span> std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; reformat(<span class="keyword">const</span> PAIRED&amp; results, <span class="keywordtype">bool</span> check_self = <span class="keyword">false</span>, INDEX_t self_index = 0) {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="comment">// If check_self=false, then we pretend that the self is already</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="comment">// found, in which case the two clauses below are just skipped.</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">bool</span> self_found = !check_self;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; output;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; current : results) {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            <span class="keywordflow">if</span> (!self_found &amp;&amp; current.second == self_index) {</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                self_found=<span class="keyword">true</span>;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                output.push_back(std::pair&lt;INDEX_t, DISTANCE_t&gt;(current.second, current.first));</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            }</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="comment">// Just in case we&#39;re full of ties at duplicate points, such that &#39;c&#39;</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="comment">// is not in the set.  Note that, if self_found=false, we must have at</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="comment">// least &#39;K+2&#39; points for &#39;c&#39; to not be detected as its own neighbor.</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="comment">// Thus there is no need to worry whether we are popping off a non-&#39;c&#39;</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="comment">// element at the end of the vector.</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">if</span> (!self_found) {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            output.pop_back();</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    }</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;};</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#aebb722fc041625766d43a4c9ce6e31f9">  176</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Annoy.html">AnnoyEuclidean</a> = <a class="code" href="classknncolle_1_1Annoy.html">Annoy&lt;::Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</a>;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_INDEX_t = <span class="keywordtype">int</span>32_t, <span class="keyword">typename</span> INTERNAL_DATA_t = <span class="keywordtype">float</span>&gt;</div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="Annoy_8hpp.html#abdc297b9942e43f3832135618a22ead0">  182</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Annoy.html">AnnoyManhattan</a> = <a class="code" href="classknncolle_1_1Annoy.html">Annoy&lt;::Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</a>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassknncolle_1_1Annoy_html"><div class="ttname"><a href="classknncolle_1_1Annoy.html">knncolle::Annoy</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with Annoy.</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:42</div></div>
+<div class="ttc" id="aclassknncolle_1_1Annoy_html_a1c400d8bd832853b5455a9061966c751"><div class="ttname"><a href="classknncolle_1_1Annoy.html#a1c400d8bd832853b5455a9061966c751">knncolle::Annoy::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:48</div></div>
+<div class="ttc" id="aclassknncolle_1_1Annoy_html_ad1e50c3c409d9a68936e13ade5c168d0"><div class="ttname"><a href="classknncolle_1_1Annoy.html#ad1e50c3c409d9a68936e13ade5c168d0">knncolle::Annoy::Annoy</a></div><div class="ttdeci">Annoy(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, int ntrees=Defaults::ntrees, double search_mult=Defaults::search_mult)</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:84</div></div>
+<div class="ttc" id="aclassknncolle_1_1Annoy_html_afe5eb74c2542015d85943a286d4222ff"><div class="ttname"><a href="classknncolle_1_1Annoy.html#afe5eb74c2542015d85943a286d4222ff">knncolle::Annoy::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:44</div></div>
 <div class="ttc" id="aclassknncolle_1_1Base_html"><div class="ttname"><a href="classknncolle_1_1Base.html">knncolle::Base</a></div><div class="ttdoc">Virtual base class defining the knncolle interface.</div><div class="ttdef"><b>Definition:</b> Base.hpp:24</div></div>
 <div class="ttc" id="aclassknncolle_1_1Base_html_abe1f8bfc6f37fd0c98ec75fe1fdc67de"><div class="ttname"><a href="classknncolle_1_1Base.html#abe1f8bfc6f37fd0c98ec75fe1fdc67de">knncolle::Base::observation</a></div><div class="ttdeci">virtual const QUERY_t * observation(INDEX_t index, QUERY_t *buffer) const =0</div></div>
+<div class="ttc" id="astructknncolle_1_1Annoy_1_1Defaults_html"><div class="ttname"><a href="structknncolle_1_1Annoy_1_1Defaults.html">knncolle::Annoy::Defaults</a></div><div class="ttdef"><b>Definition:</b> Annoy.hpp:57</div></div>
+<div class="ttc" id="astructknncolle_1_1Annoy_1_1Defaults_html_a053f73012079ecad4de0e4c8b9b526c7"><div class="ttname"><a href="structknncolle_1_1Annoy_1_1Defaults.html#a053f73012079ecad4de0e4c8b9b526c7">knncolle::Annoy::Defaults::ntrees</a></div><div class="ttdeci">static constexpr int ntrees</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:61</div></div>
+<div class="ttc" id="astructknncolle_1_1Annoy_1_1Defaults_html_aef5775a1bd6490f05178b4f88d017dee"><div class="ttname"><a href="structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee">knncolle::Annoy::Defaults::search_mult</a></div><div class="ttdeci">static constexpr double search_mult</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:66</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

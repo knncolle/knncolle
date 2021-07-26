@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bruteforce_88',['BruteForce',['../classknncolle_1_1Dispatch.html#a5e1df9bd50508ed63554a7dac468e861',1,'knncolle::Dispatch']]]
+  ['nlinks_71',['nlinks',['../structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449',1,'knncolle::Hnsw::Defaults']]],
+  ['ntrees_72',['ntrees',['../structknncolle_1_1Annoy_1_1Defaults.html#a053f73012079ecad4de0e4c8b9b526c7',1,'knncolle::Annoy::Defaults']]]
 ];

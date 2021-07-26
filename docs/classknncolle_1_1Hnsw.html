@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1Hnsw-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -98,15 +99,20 @@ Collaboration diagram for knncolle::Hnsw&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html">Defaults</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a47ebc6910b2e7eedb442b95124365e44"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a> () const</td></tr>
 <tr class="separator:a47ebc6910b2e7eedb442b95124365e44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a669e7734e90da6fe0d11d485bd6abaef"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a> () const</td></tr>
 <tr class="separator:a669e7734e90da6fe0d11d485bd6abaef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d8a1e355acb6e81a6262a243c72455f"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
-<tr class="memitem:a0d8a1e355acb6e81a6262a243c72455f"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Hnsw.html#a0d8a1e355acb6e81a6262a243c72455f">Hnsw</a> (INDEX_t <a class="el" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, const INPUT *vals, int nlinks=HnswDefaults::nlinks, int ef_construction=HnswDefaults::ef_construction, int ef_search=HnswDefaults::ef_search)</td></tr>
-<tr class="separator:a0d8a1e355acb6e81a6262a243c72455f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636c453927fa8b4d8260e754d548ccf1"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
+<tr class="memitem:a636c453927fa8b4d8260e754d548ccf1"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Hnsw.html#a636c453927fa8b4d8260e754d548ccf1">Hnsw</a> (INDEX_t <a class="el" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, const INPUT *vals, int nlinks=<a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">Defaults::nlinks</a>, int ef_construction=<a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">Defaults::ef_construction</a>, int ef_search=<a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">Defaults::ef_search</a>)</td></tr>
+<tr class="separator:a636c453927fa8b4d8260e754d548ccf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eb38437c13393d526240667df709333"><td class="memItemLeft" align="right" valign="top"><a id="a4eb38437c13393d526240667df709333"></a>
 std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (INDEX_t index, int k) const</td></tr>
 <tr class="separator:a4eb38437c13393d526240667df709333"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,8 +151,8 @@ class knncolle::Hnsw&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0d8a1e355acb6e81a6262a243c72455f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d8a1e355acb6e81a6262a243c72455f">&#9670;&nbsp;</a></span>Hnsw()</h2>
+<a id="a636c453927fa8b4d8260e754d548ccf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a636c453927fa8b4d8260e754d548ccf1">&#9670;&nbsp;</a></span>Hnsw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,19 +186,19 @@ template&lt;typename INPUT &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nlinks</em> = <code>HnswDefaults::nlinks</code>, </td>
+          <td class="paramname"><em>nlinks</em> = <code><a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">Defaults::nlinks</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>ef_construction</em> = <code>HnswDefaults::ef_construction</code>, </td>
+          <td class="paramname"><em>ef_construction</em> = <code><a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">Defaults::ef_construction</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>ef_search</em> = <code>HnswDefaults::ef_search</code>&#160;</td>
+          <td class="paramname"><em>ef_search</em> = <code><a class="el" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">Defaults::ef_search</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>

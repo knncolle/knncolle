@@ -69,8 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">Annoy.hpp File Reference</div>  </div>
 </div><!--header-->
@@ -109,31 +108,26 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1AnnoySearch.html">knncolle::AnnoySearch&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an approximate nearest neighbor search with Annoy.  <a href="classknncolle_1_1AnnoySearch.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Annoy.html">knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an approximate nearest neighbor search with <a class="el" href="classknncolle_1_1Annoy.html" title="Perform an approximate nearest neighbor search with Annoy.">Annoy</a>.  <a href="classknncolle_1_1Annoy.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1Annoy_1_1Defaults.html">knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;::Defaults</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a5248f23fbf2ee782c1d1183200127a35"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </td></tr>
-<tr class="memitem:a5248f23fbf2ee782c1d1183200127a35"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a5248f23fbf2ee782c1d1183200127a35">knncolle::AnnoyEuclidean</a> = AnnoySearch&lt; Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</td></tr>
-<tr class="separator:a5248f23fbf2ee782c1d1183200127a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3968927b78cc0faa38498e4169ebe17c"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </td></tr>
-<tr class="memitem:a3968927b78cc0faa38498e4169ebe17c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a3968927b78cc0faa38498e4169ebe17c">knncolle::AnnoyManhattan</a> = AnnoySearch&lt; Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</td></tr>
-<tr class="separator:a3968927b78cc0faa38498e4169ebe17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a9802be3629e344a4b2da00a6f42f5f28"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a9802be3629e344a4b2da00a6f42f5f28">knncolle::AnnoyDefaults::ntrees</a> = 50</td></tr>
-<tr class="separator:a9802be3629e344a4b2da00a6f42f5f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e5c0692a51f2cfe1f6554c559e3c6c1"><td class="memItemLeft" align="right" valign="top">const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#a7e5c0692a51f2cfe1f6554c559e3c6c1">knncolle::AnnoyDefaults::search_mult</a> = -1</td></tr>
-<tr class="separator:a7e5c0692a51f2cfe1f6554c559e3c6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb722fc041625766d43a4c9ce6e31f9"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </td></tr>
+<tr class="memitem:aebb722fc041625766d43a4c9ce6e31f9"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#aebb722fc041625766d43a4c9ce6e31f9">knncolle::AnnoyEuclidean</a> = Annoy&lt;::Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</td></tr>
+<tr class="separator:aebb722fc041625766d43a4c9ce6e31f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc297b9942e43f3832135618a22ead0"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </td></tr>
+<tr class="memitem:abdc297b9942e43f3832135618a22ead0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="Annoy_8hpp.html#abdc297b9942e43f3832135618a22ead0">knncolle::AnnoyManhattan</a> = Annoy&lt;::Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</td></tr>
+<tr class="separator:abdc297b9942e43f3832135618a22ead0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements an approximate nearest neighbor search with Annoy. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a5248f23fbf2ee782c1d1183200127a35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5248f23fbf2ee782c1d1183200127a35">&#9670;&nbsp;</a></span>AnnoyEuclidean</h2>
+<a id="aebb722fc041625766d43a4c9ce6e31f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebb722fc041625766d43a4c9ce6e31f9">&#9670;&nbsp;</a></span>AnnoyEuclidean</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +135,7 @@ Variables</h2></td></tr>
 template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="Annoy_8hpp.html#a5248f23fbf2ee782c1d1183200127a35">knncolle::AnnoyEuclidean</a> = typedef AnnoySearch&lt;Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</td>
+          <td class="memname">using <a class="el" href="Annoy_8hpp.html#aebb722fc041625766d43a4c9ce6e31f9">knncolle::AnnoyEuclidean</a> = typedef Annoy&lt;::Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -149,8 +143,8 @@ template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUE
 
 </div>
 </div>
-<a id="a3968927b78cc0faa38498e4169ebe17c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3968927b78cc0faa38498e4169ebe17c">&#9670;&nbsp;</a></span>AnnoyManhattan</h2>
+<a id="abdc297b9942e43f3832135618a22ead0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdc297b9942e43f3832135618a22ead0">&#9670;&nbsp;</a></span>AnnoyManhattan</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,42 +152,11 @@ template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUE
 template&lt;typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="Annoy_8hpp.html#a3968927b78cc0faa38498e4169ebe17c">knncolle::AnnoyManhattan</a> = typedef AnnoySearch&lt;Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</td>
+          <td class="memname">using <a class="el" href="Annoy_8hpp.html#abdc297b9942e43f3832135618a22ead0">knncolle::AnnoyManhattan</a> = typedef Annoy&lt;::Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Perform an Annoy search with Manhattan distances. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a9802be3629e344a4b2da00a6f42f5f28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9802be3629e344a4b2da00a6f42f5f28">&#9670;&nbsp;</a></span>ntrees</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const int knncolle::AnnoyDefaults::ntrees = 50</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Default value for <code>ntrees</code> in the <code>Annoy</code> constructor. </p>
-
-</div>
-</div>
-<a id="a7e5c0692a51f2cfe1f6554c559e3c6c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e5c0692a51f2cfe1f6554c559e3c6c1">&#9670;&nbsp;</a></span>search_mult</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const double knncolle::AnnoyDefaults::search_mult = -1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Default value for <code>search_mult</code> in the <code>Annoy</code> constructor. </p>
 
 </div>
 </div>

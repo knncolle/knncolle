@@ -1,8 +1,0 @@
-<map id="knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;" name="knncolle::Dispatch&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;">
-<area shape="rect" id="node1" title="Top&#45;level helper class to run any available search algorithms." alt="" coords="343,165,500,221"/>
-<area shape="rect" id="node2" href="$structknncolle_1_1Dispatch_1_1Hnsw__param.html" title="Parameter store for the HNSW search." alt="" coords="21,5,211,61"/>
-<area shape="rect" id="node3" href="$structknncolle_1_1Dispatch_1_1Kmknn__param.html" title="Parameter store for the k&#45;means&#45;based search." alt="" coords="17,85,215,141"/>
-<area shape="rect" id="node4" href="$structknncolle_1_1Dispatch_1_1VpTree__param.html" title="Parameter store for the vantage point tree search." alt="" coords="17,165,215,221"/>
-<area shape="rect" id="node5" href="$structknncolle_1_1Dispatch_1_1BruteForce__param.html" title="Parameter store for the brute&#45;force search." alt="" coords="5,245,227,301"/>
-<area shape="rect" id="node6" href="$structknncolle_1_1Dispatch_1_1Annoy__param.html" title="Parameter store for the Annoy search." alt="" coords="19,325,213,381"/>
-</map>

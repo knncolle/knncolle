@@ -82,164 +82,167 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>HnswDefaults {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> constexpr <span class="keywordtype">int</span> nlinks = 16;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">static</span> constexpr <span class="keywordtype">int</span> ef_construction = 200;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">static</span> constexpr <span class="keywordtype">int</span> ef_search = 10;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> SPACE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html">   60</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1Hnsw.html">Hnsw</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">float</span> INTERNAL_DATA_t; <span class="comment">// floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">class</span> SPACE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="classknncolle_1_1Hnsw.html">Hnsw</a> : <span class="keyword">public</span> <a class="code" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">float</span> INTERNAL_DATA_t; <span class="comment">// floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">   45</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> num_obs;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">   49</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">return</span> num_dim;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structknncolle_1_1Hnsw_1_1Defaults.html">   57</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html">Defaults</a> {</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">   61</a></span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">nlinks</a> = 16;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">   64</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">return</span> num_obs;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">   68</a></span>&#160;    INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> num_dim;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a0d8a1e355acb6e81a6262a243c72455f">   90</a></span>&#160;    <a class="code" href="classknncolle_1_1Hnsw.html#a0d8a1e355acb6e81a6262a243c72455f">Hnsw</a>(INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">int</span> nlinks = HnswDefaults::nlinks, <span class="keywordtype">int</span> ef_construction = HnswDefaults::ef_construction, <span class="keywordtype">int</span> ef_search = HnswDefaults::ef_search) : </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        space(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>), hnsw_index(&amp;space, <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, nlinks, ef_construction), num_dim(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>), num_obs(<a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>)</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INPUT, INTERNAL_DATA_t&gt;::value) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                hnsw_index.addPoint(vals, i);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; copy(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                std::copy(vals, vals + <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, copy.begin());</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                hnsw_index.addPoint(copy.data(), i);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        hnsw_index.setEf(ef_search);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keyword">auto</span> Q = hnsw_index.searchKnn(V.data(), k+1);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q, <span class="keyword">true</span>, index);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        normalize(output);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keyword">auto</span> Q = hnsw_index.searchKnn(query, k);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            normalize(output);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; copy(query, query + num_dim);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keyword">auto</span> Q = hnsw_index.searchKnn(copy.data(), k);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            normalize(output);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keywordflow">return</span> output;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        std::copy(V.begin(), V.begin() + num_dim, buffer);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> buffer;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    std::vector&lt;QUERY_t&gt; observation(INDEX_t index)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            <span class="keywordflow">return</span> hnsw_index.getDataByLabel&lt;QUERY_t&gt;(index);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;QUERY_t&gt;(V.begin(), V.end());</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        }</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    }</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    SPACE space;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    hnswlib::HierarchicalNSW&lt;INTERNAL_DATA_t&gt; hnsw_index;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    INDEX_t num_dim, num_obs;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> normalize(std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt;&amp; results) {</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : results) {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            d.second = SPACE::normalize(d.second);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;};</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keyword">namespace </span>hnsw_distances {</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">   66</a></span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">ef_construction</a> = 200;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">   71</a></span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">ef_search</a> = 10;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    };</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT&gt;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classknncolle_1_1Hnsw.html#a636c453927fa8b4d8260e754d548ccf1">   92</a></span>&#160;    <a class="code" href="classknncolle_1_1Hnsw.html#a636c453927fa8b4d8260e754d548ccf1">Hnsw</a>(INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, INDEX_t <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, <span class="keyword">const</span> INPUT* vals, <span class="keywordtype">int</span> nlinks = <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">Defaults::nlinks</a>, <span class="keywordtype">int</span> ef_construction = <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">Defaults::ef_construction</a>, <span class="keywordtype">int</span> ef_search = <a class="code" href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">Defaults::ef_search</a>) : </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        space(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>), hnsw_index(&amp;space, <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>, nlinks, ef_construction), num_dim(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>), num_obs(<a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;INPUT, INTERNAL_DATA_t&gt;::value) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                hnsw_index.addPoint(vals, i);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; copy(<a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">for</span> (INDEX_t i=0; i &lt; <a class="code" href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">nobs</a>; ++i, vals += <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>) {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                std::copy(vals, vals + <a class="code" href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">ndim</a>, copy.begin());</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                hnsw_index.addPoint(copy.data(), i);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        hnsw_index.setEf(ef_search);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">auto</span> Q = hnsw_index.searchKnn(V.data(), k+1);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q, <span class="keyword">true</span>, index);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        normalize(output);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keyword">auto</span> Q = hnsw_index.searchKnn(query, k);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            normalize(output);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            std::vector&lt;INTERNAL_DATA_t&gt; copy(query, query + num_dim);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keyword">auto</span> Q = hnsw_index.searchKnn(copy.data(), k);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keyword">auto</span> output = harvest_queue&lt;INDEX_t, DISTANCE_t&gt;(Q);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            normalize(output);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            <span class="keywordflow">return</span> output;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        std::copy(V.begin(), V.begin() + num_dim, buffer);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    std::vector&lt;QUERY_t&gt; observation(INDEX_t index)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keywordflow">if</span> constexpr(std::is_same&lt;QUERY_t, INTERNAL_DATA_t&gt;::value) {</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            <span class="keywordflow">return</span> hnsw_index.getDataByLabel&lt;QUERY_t&gt;(index);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            <span class="keyword">auto</span> V = hnsw_index.getDataByLabel&lt;INTERNAL_DATA_t&gt;(index);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordflow">return</span> std::vector&lt;QUERY_t&gt;(V.begin(), V.end());</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    SPACE space;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    hnswlib::HierarchicalNSW&lt;INTERNAL_DATA_t&gt; hnsw_index;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    INDEX_t num_dim, num_obs;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> normalize(std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt;&amp; results) {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : results) {</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            d.second = SPACE::normalize(d.second);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        }</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;};</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keyword">class </span>Manhattan : <span class="keyword">public</span> hnswlib::SpaceInterface&lt;float&gt; {</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">size_t</span> data_size_;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">size_t</span> dim_;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    Manhattan(<span class="keywordtype">size_t</span> ndim) : data_size_(ndim * sizeof(float)), dim_(ndim) {}</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    ~Manhattan() {}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keyword">namespace </span>hnsw_distances {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="keyword">class </span>Manhattan : <span class="keyword">public</span> hnswlib::SpaceInterface&lt;float&gt; {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">size_t</span> data_size_;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">size_t</span> dim_;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    Manhattan(<span class="keywordtype">size_t</span> ndim) : data_size_(ndim * sizeof(float)), dim_(ndim) {}</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">size_t</span> get_data_size() {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordflow">return</span> data_size_;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    hnswlib::DISTFUNC&lt;float&gt; get_dist_func() {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordflow">return</span> L1;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordtype">void</span> * get_dist_func_param() {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="keywordflow">return</span> &amp;dim_;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> L1(<span class="keyword">const</span> <span class="keywordtype">void</span> *pVect1v, <span class="keyword">const</span> <span class="keywordtype">void</span> *pVect2v, <span class="keyword">const</span> <span class="keywordtype">void</span> *qty_ptr) {</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <span class="comment">//return *((float*)pVect2);</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span>* pVect1=<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span>*<span class="keyword">&gt;</span>(pVect1v);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span>* pVect2=<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span>*<span class="keyword">&gt;</span>(pVect2v);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordtype">size_t</span> qty = *((<span class="keywordtype">size_t</span> *) qty_ptr);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordtype">float</span> res = 0;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordflow">for</span> (; qty &gt; 0; --qty, ++pVect1, ++pVect2) {</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;            res += std::fabs(*pVect1 - *pVect2);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    }</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> normalize(<span class="keywordtype">float</span> raw) {</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordflow">return</span> raw;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    }</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;};</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="keyword">class </span>Euclidean : <span class="keyword">public</span> hnswlib::L2Space {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    Euclidean(<span class="keywordtype">size_t</span> ndim) : hnswlib::L2Space(ndim) {}</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> normalize(<span class="keywordtype">float</span> raw) {</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <span class="keywordflow">return</span> std::sqrt(raw);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;};</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    ~Manhattan() {}</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">size_t</span> get_data_size() {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordflow">return</span> data_size_;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    hnswlib::DISTFUNC&lt;float&gt; get_dist_func() {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordflow">return</span> L1;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">void</span> * get_dist_func_param() {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">return</span> &amp;dim_;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> L1(<span class="keyword">const</span> <span class="keywordtype">void</span> *pVect1v, <span class="keyword">const</span> <span class="keywordtype">void</span> *pVect2v, <span class="keyword">const</span> <span class="keywordtype">void</span> *qty_ptr) {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="comment">//return *((float*)pVect2);</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span>* pVect1=<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span>*<span class="keyword">&gt;</span>(pVect1v);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">float</span>* pVect2=<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span>*<span class="keyword">&gt;</span>(pVect2v);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        <span class="keywordtype">size_t</span> qty = *((<span class="keywordtype">size_t</span> *) qty_ptr);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        <span class="keywordtype">float</span> res = 0;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keywordflow">for</span> (; qty &gt; 0; --qty, ++pVect1, ++pVect2) {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            res += std::fabs(*pVect1 - *pVect2);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    }</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> normalize(<span class="keywordtype">float</span> raw) {</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordflow">return</span> raw;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    }</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;};</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keyword">class </span>Euclidean : <span class="keyword">public</span> hnswlib::L2Space {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    Euclidean(<span class="keywordtype">size_t</span> ndim) : hnswlib::L2Space(ndim) {}</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">float</span> normalize(<span class="keywordtype">float</span> raw) {</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">return</span> std::sqrt(raw);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;};</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="Hnsw_8hpp.html#ad69434af85fbf8c3e97562e6ea2749eb">  213</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Hnsw.html">HnswEuclidean</a> = <a class="code" href="classknncolle_1_1Hnsw.html">Hnsw&lt;hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t&gt;</a>;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="Hnsw_8hpp.html#a1043fa719cf20d0c964973a661d7efbf">  219</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Hnsw.html">HnswManhattan</a> = <a class="code" href="classknncolle_1_1Hnsw.html">Hnsw&lt;hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t&gt;</a>;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;}</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="Hnsw_8hpp.html#ad69434af85fbf8c3e97562e6ea2749eb">  215</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Hnsw.html">HnswEuclidean</a> = <a class="code" href="classknncolle_1_1Hnsw.html">Hnsw&lt;hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t&gt;</a>;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="Hnsw_8hpp.html#a1043fa719cf20d0c964973a661d7efbf">  221</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classknncolle_1_1Hnsw.html">HnswManhattan</a> = <a class="code" href="classknncolle_1_1Hnsw.html">Hnsw&lt;hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t&gt;</a>;</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassknncolle_1_1Base_html"><div class="ttname"><a href="classknncolle_1_1Base.html">knncolle::Base</a></div><div class="ttdoc">Virtual base class defining the knncolle interface.</div><div class="ttdef"><b>Definition:</b> Base.hpp:24</div></div>
-<div class="ttc" id="aclassknncolle_1_1Hnsw_html"><div class="ttname"><a href="classknncolle_1_1Hnsw.html">knncolle::Hnsw</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with HNSW.</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:60</div></div>
-<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a0d8a1e355acb6e81a6262a243c72455f"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a0d8a1e355acb6e81a6262a243c72455f">knncolle::Hnsw::Hnsw</a></div><div class="ttdeci">Hnsw(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, int nlinks=HnswDefaults::nlinks, int ef_construction=HnswDefaults::ef_construction, int ef_search=HnswDefaults::ef_search)</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:90</div></div>
-<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a47ebc6910b2e7eedb442b95124365e44"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">knncolle::Hnsw::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:64</div></div>
-<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a669e7734e90da6fe0d11d485bd6abaef"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">knncolle::Hnsw::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:68</div></div>
+<div class="ttc" id="aclassknncolle_1_1Hnsw_html"><div class="ttname"><a href="classknncolle_1_1Hnsw.html">knncolle::Hnsw</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with HNSW.</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:41</div></div>
+<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a47ebc6910b2e7eedb442b95124365e44"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a47ebc6910b2e7eedb442b95124365e44">knncolle::Hnsw::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:45</div></div>
+<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a636c453927fa8b4d8260e754d548ccf1"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a636c453927fa8b4d8260e754d548ccf1">knncolle::Hnsw::Hnsw</a></div><div class="ttdeci">Hnsw(INDEX_t ndim, INDEX_t nobs, const INPUT *vals, int nlinks=Defaults::nlinks, int ef_construction=Defaults::ef_construction, int ef_search=Defaults::ef_search)</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:92</div></div>
+<div class="ttc" id="aclassknncolle_1_1Hnsw_html_a669e7734e90da6fe0d11d485bd6abaef"><div class="ttname"><a href="classknncolle_1_1Hnsw.html#a669e7734e90da6fe0d11d485bd6abaef">knncolle::Hnsw::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:49</div></div>
+<div class="ttc" id="astructknncolle_1_1Hnsw_1_1Defaults_html"><div class="ttname"><a href="structknncolle_1_1Hnsw_1_1Defaults.html">knncolle::Hnsw::Defaults</a></div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:57</div></div>
+<div class="ttc" id="astructknncolle_1_1Hnsw_1_1Defaults_html_ac2a05b9b95f3355dbcf166cdb306f449"><div class="ttname"><a href="structknncolle_1_1Hnsw_1_1Defaults.html#ac2a05b9b95f3355dbcf166cdb306f449">knncolle::Hnsw::Defaults::nlinks</a></div><div class="ttdeci">static constexpr int nlinks</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:61</div></div>
+<div class="ttc" id="astructknncolle_1_1Hnsw_1_1Defaults_html_ac443aa1067f75bc4e7e20c2d6366e044"><div class="ttname"><a href="structknncolle_1_1Hnsw_1_1Defaults.html#ac443aa1067f75bc4e7e20c2d6366e044">knncolle::Hnsw::Defaults::ef_search</a></div><div class="ttdeci">static constexpr int ef_search</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:71</div></div>
+<div class="ttc" id="astructknncolle_1_1Hnsw_1_1Defaults_html_ad0a1e554102c0a56e912439e3e078856"><div class="ttname"><a href="structknncolle_1_1Hnsw_1_1Defaults.html#ad0a1e554102c0a56e912439e3e078856">knncolle::Hnsw::Defaults::ef_construction</a></div><div class="ttdeci">static constexpr int ef_construction</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:66</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
