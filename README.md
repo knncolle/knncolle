@@ -36,7 +36,7 @@ Given a matrix with dimensions in the rows and observations in the columns, we c
 
 /* ... boilerplate... */
 
-knncolle::VpTree<> searcher(ndim, nobs, matrix.data()); 
+knncolle::VpTreeEuclidean<> searcher(ndim, nobs, matrix.data()); 
 auto results1 = searcher.find_nearest_neighbors(0, 10); // 10 nearest neighbors of the first element.
 auto results2 = searcher.find_nearest_neighbors(query, 10); // 10 nearest neighbors of a query vector.
 ```
@@ -57,11 +57,11 @@ All algorithms derive from a common base class, so it is possible to swap algori
 ```cpp
 std::unique_ptr<knncolle::Base<> > ptr;
 if (algorithm == "Annoy") {
-    ptr.reset(new knncolle::Annoy<>(ndim, nobs, matrix.data()));
+    ptr.reset(new knncolle::AnnoyEuclidean<>(ndim, nobs, matrix.data()));
 } else if (algorithm == "Hnsw") {
-    ptr.reset(new knncolle::Hnsw<>(ndim, nobs, matrix.data()));
+    ptr.reset(new knncolle::HnswEuclidean<>(ndim, nobs, matrix.data()));
 } else {
-    ptr.reset(new knncolle::Kmknn<>(ndim, nobs, matrix.data()));
+    ptr.reset(new knncolle::KmknnEuclidean<>(ndim, nobs, matrix.data()));
 }
 auto res = ptr->find_nearest_neighbors(1, 10);
 ```
