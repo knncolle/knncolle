@@ -160,7 +160,6 @@ public:
     }
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        assert(index < num_obs);
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
         INTERNAL_t tau = std::numeric_limits<INTERNAL_t>::max();
         search_nn(0, store.reference + index * num_dim, tau, nearest);
