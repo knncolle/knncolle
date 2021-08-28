@@ -9,6 +9,7 @@
 #include <vector>
 #include <random>
 #include <limits>
+#include <tuple>
 
 /**
  * @file VpTree.hpp
