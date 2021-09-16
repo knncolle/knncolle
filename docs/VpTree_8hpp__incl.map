@@ -1,5 +1,5 @@
 <map id="knncolle/VpTree/VpTree.hpp" name="knncolle/VpTree/VpTree.hpp">
-<area shape="rect" id="node1" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="383,5,570,32"/>
+<area shape="rect" id="node1" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="462,5,649,32"/>
 <area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,80,145,107"/>
 <area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="169,80,344,107"/>
 <area shape="rect" id="node6" title=" " alt="" coords="382,155,441,181"/>
@@ -7,6 +7,7 @@
 <area shape="rect" id="node10" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="419,80,534,107"/>
 <area shape="rect" id="node11" title=" " alt="" coords="733,80,799,107"/>
 <area shape="rect" id="node12" title=" " alt="" coords="823,80,877,107"/>
+<area shape="rect" id="node13" title=" " alt="" coords="901,80,951,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="46,155,105,181"/>
 <area shape="rect" id="node5" title=" " alt="" coords="228,155,285,181"/>
 <area shape="rect" id="node8" title=" " alt="" coords="545,155,619,181"/>
