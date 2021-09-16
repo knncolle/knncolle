@@ -100,19 +100,53 @@ public:
     }
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        auto pairs = annoy_index.get_nns_by_item(index, k + 1, get_search_k(k + 1), true); // +1, as it forgets to discard 'self'.
-        return reformat(pairs, true, index);
+        std::vector<INTERNAL_INDEX_t> indices;
+        std::vector<INTERNAL_DATA_t> distances;
+        annoy_index.get_nns_by_item(index, k + 1, get_search_k(k + 1), &indices, &distances); // +1, as it forgets to discard 'self'.
+
+        bool self_found = false;
+        const INTERNAL_INDEX_t self = index;
+        std::vector<std::pair<INDEX_t, DISTANCE_t> > output;
+        output.reserve(k);
+        for (size_t i = 0; i < indices.size(); ++i) {
+            if (!self_found && indices[i] == self) {
+                self_found=true;
+            } else {
+                output.emplace_back(indices[i], distances[i]);
+            }
+        }
+
+        // Just in case we're full of ties at duplicate points, such that 'c'
+        // is not in the set.  Note that, if self_found=false, we must have at
+        // least 'K+2' points for 'c' to not be detected as its own neighbor.
+        // Thus there is no need to worry whether we are popping off a non-'c'
+        // element at the end of the vector.
+        if (!self_found) {
+            output.pop_back();
+        }
+
+        return output;
     }
         
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
+        std::vector<INTERNAL_INDEX_t> indices;
+        indices.reserve(k);
+        std::vector<INTERNAL_DATA_t> distances;
+        distances.reserve(k);
+
         if constexpr(std::is_same<INTERNAL_DATA_t, QUERY_t>::value) {
-            auto pairs = annoy_index.get_nns_by_vector(query, k, get_search_k(k), true);
-            return reformat(pairs);
+            annoy_index.get_nns_by_vector(query, k, get_search_k(k), &indices, &distances);
         } else {
             std::vector<INTERNAL_DATA_t> tmp(query, query + num_dim);
-            auto pairs = annoy_index.get_nns_by_vector(tmp.data(), k, get_search_k(k), true);
-            return reformat(pairs);
+            annoy_index.get_nns_by_vector(tmp.data(), k, get_search_k(k), &indices, &distances);
         }
+
+        std::vector<std::pair<INDEX_t, DISTANCE_t> > output;
+        output.reserve(k);
+        for (size_t i = 0; i < indices.size(); ++i) {
+            output.emplace_back(indices[i], distances[i]);
+        }
+        return output;
     }
 
     const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
@@ -139,33 +173,6 @@ private:
         } else {
             return search_k_mult * k + 0.5; // rounded up.
         }
-    }
-
-    template<class PAIRED> 
-    static std::vector<std::pair<INDEX_t, DISTANCE_t> > reformat(const PAIRED& results, bool check_self = false, INDEX_t self_index = 0) {
-        // If check_self=false, then we pretend that the self is already
-        // found, in which case the two clauses below are just skipped.
-        bool self_found = !check_self;
-
-        std::vector<std::pair<INDEX_t, DISTANCE_t> > output;
-        for (const auto& current : results) {
-            if (!self_found && current.second == self_index) {
-                self_found=true;
-                continue;
-            } else {
-                output.push_back(std::pair<INDEX_t, DISTANCE_t>(current.second, current.first));
-            }
-        }
-
-        // Just in case we're full of ties at duplicate points, such that 'c'
-        // is not in the set.  Note that, if self_found=false, we must have at
-        // least 'K+2' points for 'c' to not be detected as its own neighbor.
-        // Thus there is no need to worry whether we are popping off a non-'c'
-        // element at the end of the vector.
-        if (!self_found) {
-            output.pop_back();
-        }
-        return output;
     }
 };
 

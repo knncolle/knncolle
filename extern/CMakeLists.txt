@@ -2,8 +2,8 @@ include(FetchContent)
 
 FetchContent_Declare(
   Annoy 
-  GIT_REPOSITORY https://github.com/LTLA/Annoy
-  GIT_TAG direct_access
+  GIT_REPOSITORY https://github.com/spotify/Annoy
+  GIT_TAG 02e6de1c40dfe78a984e5a6f0611d0c6513ff875
 )
 
 FetchContent_MakeAvailable(Annoy)
