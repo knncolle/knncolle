@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(Annoy)
 FetchContent_Declare(
   hnswlib
   GIT_REPOSITORY https://github.com/LTLA/hnswlib
-  GIT_TAG master
+  GIT_TAG d6c8e3a3896129a7f642bc23cdce4536e8b45a65
 )
 
 FetchContent_MakeAvailable(hnswlib)
@@ -19,7 +19,7 @@ FetchContent_MakeAvailable(hnswlib)
 FetchContent_Declare(
   kmeans
   GIT_REPOSITORY https://github.com/LTLA/CppKmeans
-  GIT_TAG master
+  GIT_TAG e4e4abce1a8dad55091aaa2c4f1d42c40babe470
 )
 
 FetchContent_MakeAvailable(kmeans)
