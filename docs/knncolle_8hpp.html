@@ -75,23 +75,21 @@ $(function() {
 <p>Umbrella header to include all algorithms.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="BruteForce_8hpp_source.html">BruteForce/BruteForce.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Kmknn_8hpp_source.html">Kmknn/Kmknn.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="VpTree_8hpp_source.html">VpTree/VpTree.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Kmknn_8hpp_source.html">Kmknn/Kmknn.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Annoy_8hpp_source.html">Annoy/Annoy.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Hnsw_8hpp_source.html">Hnsw/Hnsw.hpp</a>&quot;</code><br />
-<code>#include &lt;memory&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for knncolle.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="knncolle_8hpp__incl.png" border="0" usemap="#aknncolle_2knncolle_8hpp" alt=""/></div>
 <map name="aknncolle_2knncolle_8hpp" id="aknncolle_2knncolle_8hpp">
-<area shape="rect" title="Umbrella header to include all algorithms." alt="" coords="1003,5,1149,32"/>
-<area shape="rect" href="BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="432,80,611,107"/>
-<area shape="rect" href="Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="1105,80,1237,107"/>
-<area shape="rect" href="VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="914,80,1049,107"/>
-<area shape="rect" href="Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="1403,80,1525,107"/>
-<area shape="rect" href="Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="635,80,754,107"/>
-<area shape="rect" title=" " alt="" coords="1550,80,1618,107"/>
+<area shape="rect" title="Umbrella header to include all algorithms." alt="" coords="777,5,924,32"/>
+<area shape="rect" href="BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="433,80,612,107"/>
+<area shape="rect" href="VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="783,80,918,107"/>
+<area shape="rect" href="Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="1098,80,1230,107"/>
+<area shape="rect" href="Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="1544,80,1667,107"/>
+<area shape="rect" href="Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="637,80,755,107"/>
 <area shape="rect" href="distances_8hpp.html" title="Classes for distance calculations." alt="" coords="759,155,899,181"/>
 <area shape="rect" href="NeighborQueue_8hpp_source.html" title=" " alt="" coords="458,155,633,181"/>
 <area shape="rect" title=" " alt="" coords="645,229,704,256"/>
@@ -101,10 +99,10 @@ Include dependency graph for knncolle.hpp:</div>
 <area shape="rect" title=" " alt="" coords="800,229,859,256"/>
 <area shape="rect" title=" " alt="" coords="517,229,574,256"/>
 <area shape="rect" title=" " alt="" coords="117,229,192,256"/>
-<area shape="rect" title=" " alt="" coords="1356,155,1500,181"/>
-<area shape="rect" title=" " alt="" coords="1138,155,1203,181"/>
-<area shape="rect" title=" " alt="" coords="1228,155,1281,181"/>
+<area shape="rect" title=" " alt="" coords="1215,155,1281,181"/>
+<area shape="rect" title=" " alt="" coords="1137,155,1191,181"/>
 <area shape="rect" title=" " alt="" coords="1063,155,1113,181"/>
+<area shape="rect" title=" " alt="" coords="1356,155,1500,181"/>
 <area shape="rect" title=" " alt="" coords="1575,155,1636,181"/>
 <area shape="rect" title=" " alt="" coords="1660,155,1777,181"/>
 <area shape="rect" title=" " alt="" coords="1802,155,1939,181"/>
@@ -115,6 +113,12 @@ Include dependency graph for knncolle.hpp:</div>
 <p><a href="knncolle_8hpp_source.html">Go to the source code of this file.</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Umbrella header to include all algorithms. </p>
+<p >Developers can avoid the inclusion of unnecessary dependencies by setting:</p>
+<ul>
+<li><code>KNNCOLLE_NO_KMKNN</code>, to avoid including the <code><a class="el" href="Kmknn_8hpp.html" title="Implements the k-means with k-nearest neighbors (KMKNN) algorithm.">Kmknn.hpp</a></code> header (which requires the <b>kmeans</b> library).</li>
+<li><code>KNNCOLLE_NO_ANNOY</code>, to avoid including the <code><a class="el" href="Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy.">Annoy.hpp</a></code> header (which requires the <b>Annoy</b> library).</li>
+<li><code>KNNCOLLE_NO_HNSW</code>, to avoid including the <code><a class="el" href="Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW.">Hnsw.hpp</a></code> header (which requires the <b>Hnsw</b> library). </li>
+</ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
