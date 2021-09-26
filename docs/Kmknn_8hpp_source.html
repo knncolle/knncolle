@@ -90,7 +90,7 @@ $(function() {
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span>knncolle {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = DISTANCE_t&gt;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classknncolle_1_1Kmknn.html">   48</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1Kmknn.html">Kmknn</a> : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    INDEX_t num_dim;</div>
@@ -223,12 +223,12 @@ $(function() {
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            <span class="keyword">const</span> INTERNAL_t dist2center = DISTANCE::normalize(curcent.first);</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keyword">const</span> <span class="keyword">auto</span> cur_nobs = sizes[center];</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keyword">const</span> <span class="keywordtype">double</span>* dIt = dist_to_centroid.data() + offsets[center];</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> maxdist = *(dIt + cur_nobs - 1);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>            <span class="keyword">const</span> DISTANCE_t* dIt = dist_to_centroid.data() + offsets[center];</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keyword">const</span> DISTANCE_t maxdist = *(dIt + cur_nobs - 1);</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            INDEX_t firstcell=0;</div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">#if USE_UPPER</span></div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            <span class="keywordtype">double</span> upper_bd = std::numeric_limits&lt;INTERNAL_t&gt;::max();</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            INTERNAL_t upper_bd = std::numeric_limits&lt;INTERNAL_t&gt;::max();</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            </div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">if</span> (threshold_raw &gt;= 0) {</div>
@@ -238,7 +238,7 @@ $(function() {
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="comment">                 *     threshold + maxdist &lt; dist2center</span></div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment">                 * All points (if any) within this cluster with distances above &#39;lower_bd&#39; are potentially countable.</span></div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment">                 */</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> lower_bd = dist2center - threshold;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                <span class="keyword">const</span> DISTANCE_t lower_bd = dist2center - threshold;</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                <span class="keywordflow">if</span> (maxdist &lt; lower_bd) {</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                    <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                }</div>
@@ -252,7 +252,7 @@ $(function() {
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            }</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keyword">const</span> <span class="keyword">auto</span> cur_start = offsets[center];</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            <span class="keyword">const</span> <span class="keywordtype">double</span>* other_cell = data.data() + num_dim * (cur_start + firstcell);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            <span class="keyword">const</span> INTERNAL_t * other_cell = data.data() + num_dim * (cur_start + firstcell);</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> celldex = firstcell; celldex &lt; cur_nobs; ++celldex, other_cell += num_dim) {</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="preprocessor">#if USE_UPPER</span></div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                <span class="keywordflow">if</span> (*(dIt + celldex) &gt; upper_bd) {</div>
@@ -293,10 +293,10 @@ $(function() {
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>};</div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = DISTANCE_t&gt;</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="Kmknn_8hpp.html#ab26f43d83cb224a818aaf03e4a78f461">  264</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1Kmknn.html">KmknnEuclidean</a> = <a class="code hl_class" href="classknncolle_1_1Kmknn.html">Kmknn&lt;distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = DISTANCE_t&gt;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="Kmknn_8hpp.html#aac1a6633adeb4d9720cb8abe7866e125">  271</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1Kmknn.html">KmknnManhattan</a> = <a class="code hl_class" href="classknncolle_1_1Kmknn.html">Kmknn&lt;distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>};</div>
