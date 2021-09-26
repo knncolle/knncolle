@@ -44,7 +44,7 @@ namespace knncolle {
  * A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. 
  * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
 class Kmknn : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 private:
     INDEX_t num_dim;
@@ -187,12 +187,12 @@ private:
             const INTERNAL_t dist2center = DISTANCE::normalize(curcent.first);
 
             const auto cur_nobs = sizes[center];
-            const double* dIt = dist_to_centroid.data() + offsets[center];
-            const double maxdist = *(dIt + cur_nobs - 1);
+            const DISTANCE_t* dIt = dist_to_centroid.data() + offsets[center];
+            const DISTANCE_t maxdist = *(dIt + cur_nobs - 1);
 
             INDEX_t firstcell=0;
 #if USE_UPPER
-            double upper_bd = std::numeric_limits<INTERNAL_t>::max();
+            INTERNAL_t upper_bd = std::numeric_limits<INTERNAL_t>::max();
 #endif
             
             if (threshold_raw >= 0) {
@@ -202,7 +202,7 @@ private:
                  *     threshold + maxdist < dist2center
                  * All points (if any) within this cluster with distances above 'lower_bd' are potentially countable.
                  */
-                const double lower_bd = dist2center - threshold;
+                const DISTANCE_t lower_bd = dist2center - threshold;
                 if (maxdist < lower_bd) {
                     continue;
                 }
@@ -216,7 +216,7 @@ private:
             }
 
             const auto cur_start = offsets[center];
-            const double* other_cell = data.data() + num_dim * (cur_start + firstcell);
+            const INTERNAL_t * other_cell = data.data() + num_dim * (cur_start + firstcell);
             for (auto celldex = firstcell; celldex < cur_nobs; ++celldex, other_cell += num_dim) {
 #if USE_UPPER
                 if (*(dIt + celldex) > upper_bd) {
@@ -260,14 +260,14 @@ private:
 /**
  * Perform a KMKNN search with Euclidean distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
 using KmknnEuclidean = Kmknn<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 /**
  * Perform a KMKNN search with Manhattan distances.
  * Note that k-means clustering may not provide a particularly good indexing structure for Manhattan distances, so your mileage may vary.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
 using KmknnManhattan = Kmknn<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 };
