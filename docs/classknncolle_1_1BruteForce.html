@@ -127,7 +127,7 @@ const QUERY_t *&#160;</td><td class="memItemRight" valign="bottom"><b>observatio
 <tr class="separator:a1a21b15908c0c80094402cce2e496626 inherit pub_methods_classknncolle_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double&gt;<br />
 class knncolle::BruteForce&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</div><p >Perform a brute-force nearest neighbor search. </p>
 <p >The brute-force search computes all pairwise distances between data and query points to identify nearest neighbors of the latter. It has quadratic complexity and is theoretically the worst-performing method; however, it has effectively no overhead from constructing or querying indexing structures, potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -147,7 +147,7 @@ class knncolle::BruteForce&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
 <div class="memtemplate">
 template&lt;typename INPUT &gt; </div>
 <table class="mlabels">
@@ -215,7 +215,7 @@ template&lt;typename INPUT &gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -245,7 +245,7 @@ template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = dou
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

@@ -133,7 +133,7 @@ const QUERY_t *&#160;</td><td class="memItemRight" valign="bottom"><b>observatio
 <tr class="separator:a1a21b15908c0c80094402cce2e496626 inherit pub_methods_classknncolle_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float&gt;<br />
 class knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;</div><p >Perform an approximate nearest neighbor search with <a class="el" href="classknncolle_1_1Annoy.html" title="Perform an approximate nearest neighbor search with Annoy.">Annoy</a>. </p>
 <p >In the Approximate Nearest Neighbors Oh Yeah (<a class="el" href="classknncolle_1_1Annoy.html" title="Perform an approximate nearest neighbor search with Annoy.">Annoy</a>) algorithm, a tree is constructed where a random hyperplane splits the points into two subsets at each internal node. Leaf nodes are defined when the number of points in a subset falls below a threshold (close to twice the number of dimensions for the settings used here). Multiple trees are constructed in this manner, each of which is different due to the random choice of hyperplanes. For a given query point, each tree is searched to identify the subset of all points in the same leaf node as the query point. The union of these subsets across all trees is exhaustively searched to identify the actual nearest neighbors to the query.</p>
 <dl class="section see"><dt>See also</dt><dd>Bernhardsson E (2018). <a class="el" href="classknncolle_1_1Annoy.html" title="Perform an approximate nearest neighbor search with Annoy.">Annoy</a>. <a href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></dd></dl>
@@ -154,7 +154,7 @@ class knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
 <div class="memtemplate">
 template&lt;typename INPUT &gt; </div>
 <table class="mlabels">
@@ -229,7 +229,7 @@ template&lt;typename INPUT &gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -259,7 +259,7 @@ template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = dou
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = double, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_INDEX_t  = int32_t, typename INTERNAL_DATA_t  = float&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
