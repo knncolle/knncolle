@@ -38,7 +38,7 @@ namespace knncolle {
  * @tparam INTERNAL_DATA_t Floating point type for the internal data store.
  * This uses a `float` instead of a `double` to sacrifice some accuracy for performance.
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
 class Annoy : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 public:
     INDEX_t nobs() const {
@@ -179,13 +179,13 @@ private:
 /**
  * Perform an Annoy search with Euclidean distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
 using AnnoyEuclidean = Annoy<::Annoy::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
 
 /**
  * Perform an Annoy search with Manhattan distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_INDEX_t = int32_t, typename INTERNAL_DATA_t = float>
 using AnnoyManhattan = Annoy<::Annoy::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t>;
 
 }

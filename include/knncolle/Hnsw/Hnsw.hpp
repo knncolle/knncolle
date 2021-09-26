@@ -37,7 +37,7 @@ namespace knncolle {
  * @tparam INDEX_t Integer type for the indices.
  * @tparam DISTANCE_t Floating point type for the distances.
  */
-template<class SPACE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+template<class SPACE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t>
 class Hnsw : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
     typedef float INTERNAL_DATA_t; // floats are effectively hard-coded into hnswlib, given that L2Space only uses floats.
 
@@ -211,13 +211,13 @@ public:
 /**
  * Perform an Hnsw search with Euclidean distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t>
 using HnswEuclidean = Hnsw<hnsw_distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t>;
 
 /**
  * Perform an Hnsw search with Manhattan distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t>
 using HnswManhattan = Hnsw<hnsw_distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t>;
 
 }

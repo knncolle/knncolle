@@ -31,7 +31,7 @@ namespace knncolle {
  * @tparam QUERY_t Floating point type for the query data.
  * @tparam INTERNAL_t Floating point type for the internal calculations.
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 class BruteForce : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
 private:
     INDEX_t num_dim;
@@ -110,13 +110,13 @@ private:
 /**
  * Perform a brute-force search with Euclidean distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 using BruteForceEuclidean = BruteForce<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 /**
  * Perform a brute-force search with Manhattan distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 using BruteForceManhattan = BruteForce<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 }

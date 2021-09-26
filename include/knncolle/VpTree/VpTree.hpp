@@ -49,7 +49,7 @@ namespace knncolle {
  * VP trees: A data structure for finding stuff fast.
  * http://stevehanov.ca/blog/index.php?id=130
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 class VpTree : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
@@ -235,13 +235,13 @@ private:
 /**
  * Perform a VP tree search with Euclidean distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 using VpTreeEuclidean = VpTree<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 /**
  * Perform a VP tree search with Manhattan distances.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double, typename INTERNAL_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
 using VpTreeManhattan = VpTree<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 };

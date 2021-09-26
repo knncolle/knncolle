@@ -20,7 +20,7 @@ namespace knncolle {
  * @tparam DISTANCE_t Floating point type for the distances.
  * @tparam QUERY_t Floating point type for the query data.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = double>
+template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t>
 class Base {
 public:
     /**
