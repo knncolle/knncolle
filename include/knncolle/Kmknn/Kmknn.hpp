@@ -91,7 +91,18 @@ public:
     { 
         std::vector<int> clusters(num_obs);
         auto ncenters = sizes.size();
-        auto output = kmeans::Kmeans<INTERNAL_t, int>().run(ndim, nobs, vals, ncenters, centers.data(), clusters.data());
+
+        // Try to avoid a copy if we're dealing with the same type;
+        // otherwise, we just dump it into 'data', given that we 
+        // won't be rewriting it for a while anyway.
+        const INTERNAL_t* host;
+        if constexpr(std::is_same<INPUT_t, INTERNAL_t>::value) {
+            host = vals;
+        } else {
+            std::copy(vals, vals + data.size(), data.data());
+            host = data.data();
+        }
+        auto output = kmeans::Kmeans<INTERNAL_t, int>().run(ndim, nobs, host, ncenters, centers.data(), clusters.data());
         std::swap(sizes, output.sizes);
 
         // In case there were some duplicate points, we just resize this a bit.
@@ -113,7 +124,7 @@ public:
                 const auto& clustid = clusters[o];
                 auto& counter = sofar[clustid];
                 auto& current = by_distance[counter];
-                current.first = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(vals + o * num_dim, centers.data() + clustid * num_dim, num_dim));
+                current.first = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(host + o * num_dim, centers.data() + clustid * num_dim, num_dim));
                 current.second = o;
                 ++counter;
             }
@@ -124,12 +135,12 @@ public:
             }
         }
 
-        // Now, copying this over.
+        // Now, copying this over. 
         {
             auto store = data.data();
             for (INDEX_t o = 0; o < nobs; ++o, store += num_dim) {
                 const auto& current = by_distance[o];
-                auto source = vals + ndim * current.second;
+                auto source = vals + ndim * current.second; // must use 'vals' here, as 'host' might alias 'data'!
                 std::copy(source, source + ndim, store);
                 observation_id[o] = current.second;
                 new_location[current.second] = o;

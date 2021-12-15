@@ -22,6 +22,20 @@ TEST_P(KmknnTest, FindEuclidean) {
         auto bfres = bf.find_nearest_neighbors(x, k);
         EXPECT_EQ(kmres, bfres);
     }
+
+    // Testing the float inputs.
+    std::vector<float> fdata(data.begin(), data.end());
+    knncolle::KmknnEuclidean<int, float> fkm(ndim, nobs, fdata.data());
+
+    for (size_t x = 0; x < nobs; ++x) {
+        auto kmres = km.find_nearest_neighbors(x, k);
+        auto fkmres = fkm.find_nearest_neighbors(x, k);
+        EXPECT_EQ(kmres.size(), fkmres.size());
+
+        for (size_t j = 0; j < kmres.size(); ++j) {
+            EXPECT_EQ(kmres[j].first, fkmres[j].first);
+        }
+    }
 }
 
 TEST_P(KmknnTest, FindManhattan) {
