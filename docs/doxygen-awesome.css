@@ -199,7 +199,7 @@ html {
         --warning-color-darker: #f5b1aa;
         --note-color: rgb(255, 183, 0);
         --note-color-dark: #9f7300;
-        --note-color-darker: #fff6df;
+        --note-color-darker: #645b39;
         --deprecated-color: rgb(88, 90, 96);
         --deprecated-color-dark: #262e37;
         --deprecated-color-darker: #a0a5b0;
@@ -245,7 +245,7 @@ html.dark-mode {
     --warning-color-darker: #f5b1aa;
     --note-color: rgb(255, 183, 0);
     --note-color-dark: #9f7300;
-    --note-color-darker: #fff6df;
+    --note-color-darker: #645b39;
     --deprecated-color: rgb(88, 90, 96);
     --deprecated-color-dark: #262e37;
     --deprecated-color-darker: #a0a5b0;
@@ -581,6 +581,10 @@ iframe#MSearchResults {
     margin: 4px;
 }
 
+iframe {
+    color-scheme: normal;
+}
+
 @media (prefers-color-scheme: dark) {
     html:not(.light-mode) iframe#MSearchResults {
         filter: invert() hue-rotate(180deg);
@@ -645,6 +649,23 @@ html.dark-mode iframe#MSearchResults {
         overflow: auto;
         transform: translate(0, 20px);
         animation: ease-out 280ms slideInSearchResultsMobile;
+    }
+
+    /* 
+     * Overwrites for fixing the searchbox on mobile in doxygen 1.9.2 
+     */
+    label.main-menu-btn ~ #searchBoxPos1 {
+        top: 3px !important;
+        right: 6px !important;
+        left: 45px;
+        display: flex;
+    }
+
+    label.main-menu-btn ~ #searchBoxPos1 > #MSearchBox {
+        margin-top: 0;
+        margin-bottom: 0;
+        flex-grow: 2;
+        float: left;
     }
 }
 
@@ -1287,8 +1308,9 @@ hr {
     box-shadow: var(--content-maxwidth) 0 0 0 var(--separator-color), calc(0px - var(--content-maxwidth)) 0 0 0 var(--separator-color);
 }
 
-.contents img {
+.contents img, .contents .center, .contents center {
     max-width: 100%;
+    overflow: scroll;
 }
 
 /*
@@ -1460,6 +1482,7 @@ li.navelem:first-child:before {
 */
 
 doxygen-awesome-dark-mode-toggle {
+    display: inline-block;
     margin: 0 0 0 var(--spacing-small);
     padding: 0;
     width: var(--searchbar-height);
