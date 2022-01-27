@@ -209,7 +209,7 @@ template&lt;typename INPUT &gt; </div>
     <tr><td class="paramname">nobs</td><td>Number of observations. </td></tr>
     <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation. </td></tr>
     <tr><td class="paramname">ntrees</td><td>Number of trees to construct. Larger values improve accuracy at the cost of index size (i.e., memory usage), see <a href="https://github.com/spotify/annoy#tradeoffs">here</a> for details. </td></tr>
-    <tr><td class="paramname">search_mult</td><td>Factor that is multiplied by the number of neighbors <code>k</code> to determine the number of nodes to search in <code>find_nearest_neighbors()</code>. Larger values improve accuracy at the cost of runtime, see <a href="https://github.com/spotify/annoy#tradeoffs">here</a> for details. If set to -1, it defaults to <code>ntrees</code>.</td></tr>
+    <tr><td class="paramname">search_mult</td><td>Factor that is multiplied by the number of neighbors <code>k</code> to determine the number of nodes to search in <code><a class="el" href="find__nearest__neighbors_8hpp.html#aedb02c3ca6a5695dac87b1d26862ca16">find_nearest_neighbors()</a></code>. Larger values improve accuracy at the cost of runtime, see <a href="https://github.com/spotify/annoy#tradeoffs">here</a> for details. If set to -1, it defaults to <code>ntrees</code>.</td></tr>
   </table>
   </dd>
 </dl>
