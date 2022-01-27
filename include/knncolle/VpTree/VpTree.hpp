@@ -49,7 +49,7 @@ namespace knncolle {
  * VP trees: A data structure for finding stuff fast.
  * http://stevehanov.ca/blog/index.php?id=130
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
+template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
 class VpTree : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
@@ -131,7 +131,7 @@ private:
     }
 
 private:
-    MatrixStore<DISTANCE_t> store;
+    MatrixStore<INTERNAL_t> store;
 
 public:
     /**
