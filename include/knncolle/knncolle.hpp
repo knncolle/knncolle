@@ -16,6 +16,8 @@
 #include "Hnsw/Hnsw.hpp"
 #endif
 
+#include "utils/find_nearest_neighbors.hpp"
+
 /**
  * @file knncolle.hpp
  *

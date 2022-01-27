@@ -17,6 +17,7 @@ add_executable(
     src/Kmknn.cpp
     src/Annoy.cpp
     src/Hnsw.cpp
+    src/find_nearest_neighbors.cpp
 )
 
 target_link_libraries(
@@ -31,7 +32,39 @@ if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_link_options(libtest PRIVATE --coverage)
 endif()
 
+# Adding checks for parallelization.
+add_executable(
+    omp_test
+    src/find_nearest_neighbors.cpp
+) 
+
+target_link_libraries(
+    omp_test
+    gtest_main
+    knncolle
+)
+
+set(USE_OPENMP OFF CACHE BOOL "Compile with OpenMP support")
+if (USE_OPENMP)
+    find_package(OpenMP)
+    target_link_libraries(omp_test OpenMP::OpenMP_CXX)
+endif()
+
+add_executable(
+    custom_parallel 
+    src/find_nearest_neighbors.cpp
+) 
+
+target_link_libraries(
+    custom_parallel 
+    gtest_main
+    knncolle
+)
+
+set_target_properties(custom_parallel PROPERTIES COMPILE_DEFINITIONS "TEST_KNNCOLLE_CUSTOM_PARALLEL")
+
+# Discovering all tests.
 include(GoogleTest)
 gtest_discover_tests(libtest)
-
-add_test(NAME knncolle_tests COMMAND libtest)
+gtest_discover_tests(omp_test)
+gtest_discover_tests(custom_parallel)
