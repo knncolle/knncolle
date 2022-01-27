@@ -127,7 +127,7 @@ const QUERY_t *&#160;</td><td class="memItemRight" valign="bottom"><b>observatio
 <tr class="separator:a1a21b15908c0c80094402cce2e496626 inherit pub_methods_classknncolle_1_1Base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t&gt;<br />
 class knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;</div><p >Perform a nearest neighbor search based on a vantage point (VP) tree. </p>
 <p >In a vantage point tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions. The split is determined by picking an arbitrary point inside that subset as the node center, computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere. The left child of this node contains all points within that hypersphere while the right child contains the remaining points. This procedure is applied recursively until all points resolve to individual nodes, thus yielding a VP tree. Upon searching, the algorithm traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.</p>
 <p >The major advantage of VP trees over more conventional KD-trees or ball trees is that the former does not need to construct intermediate nodes, instead using the data points themselves at the nodes. This reduces the memory usage of the tree and total number of distance calculations for any search. It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for <b>knncolle</b>.</p>
@@ -151,7 +151,7 @@ Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = DISTANCE_t&gt; </div>
 <div class="memtemplate">
 template&lt;typename INPUT_t &gt; </div>
 <table class="mlabels">
@@ -219,7 +219,7 @@ template&lt;typename INPUT_t &gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = DISTANCE_t&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -249,7 +249,7 @@ template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = dou
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = double&gt; </div>
+template&lt;class DISTANCE , typename INDEX_t  = int, typename DISTANCE_t  = double, typename QUERY_t  = DISTANCE_t, typename INTERNAL_t  = DISTANCE_t&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
