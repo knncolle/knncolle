@@ -1,12 +1,13 @@
 <map id="knncolle/Kmknn/Kmknn.hpp" name="knncolle/Kmknn/Kmknn.hpp">
-<area shape="rect" id="node1" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="389,5,573,32"/>
+<area shape="rect" id="node1" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="437,5,621,32"/>
 <area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,80,145,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="101,155,159,181"/>
 <area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="221,80,396,107"/>
 <area shape="rect" id="node6" title=" " alt="" coords="405,155,463,181"/>
 <area shape="rect" id="node7" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="471,80,586,107"/>
 <area shape="rect" id="node8" title=" " alt="" coords="610,80,754,107"/>
-<area shape="rect" id="node9" title=" " alt="" coords="779,80,844,107"/>
-<area shape="rect" id="node10" title=" " alt="" coords="869,80,922,107"/>
+<area shape="rect" id="node9" title=" " alt="" coords="778,80,853,107"/>
+<area shape="rect" id="node10" title=" " alt="" coords="877,80,943,107"/>
+<area shape="rect" id="node11" title=" " alt="" coords="967,80,1021,107"/>
 <area shape="rect" id="node5" title=" " alt="" coords="280,155,337,181"/>
 </map>
