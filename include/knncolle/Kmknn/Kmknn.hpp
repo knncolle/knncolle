@@ -6,6 +6,7 @@
 #include "../utils/Base.hpp"
 #include "kmeans/Kmeans.hpp"
 
+#include <algorithm>
 #include <vector>
 #include <random>
 #include <limits>
