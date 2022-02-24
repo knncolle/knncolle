@@ -44,6 +44,7 @@ public:
      * This can be assumed to be the case if the return address is not the same as `buffer`.
      *
      * @param index Index of the observation.
+     * This should be non-negative and less than the total number of observations in `nobs()`.
      * @param buffer Buffer to store the coordinates.
      *
      * @return A pointer to an array containing the coordinate vector.
@@ -74,6 +75,7 @@ public:
      * Find the nearest neighbors of the `index`-th observation in the dataset.
      *
      * @param index The index of the observation of interest.
+     * This should be non-negative and less than the total number of observations in `nobs()`.
      * @param k The number of neighbors to identify.
      *
      * @return A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.

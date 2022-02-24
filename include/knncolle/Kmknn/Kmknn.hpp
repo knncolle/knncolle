@@ -152,7 +152,6 @@ public:
     }
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        assert(index < num_obs);
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, new_location[index]);
         search_nn(data.data() + new_location[index] * num_dim, nearest);
         return report(nearest);

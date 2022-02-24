@@ -60,7 +60,6 @@ public:
     BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) {}
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        assert(index < num_obs);
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
         search_nn(store.reference + index * num_dim, nearest);
 
