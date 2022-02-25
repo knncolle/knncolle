@@ -3,7 +3,6 @@
 
 #include "../utils/distances.hpp"
 #include "../utils/NeighborQueue.hpp"
-#include "../utils/MatrixStore.hpp"
 #include "../utils/Base.hpp"
 
 #include <vector>
@@ -43,7 +42,7 @@ public:
     INDEX_t ndim() const { return num_dim; }
 
 private:
-    MatrixStore<INTERNAL_t> store;
+    std::vector<INTERNAL_t> store;
 
 public:
     /**
@@ -51,17 +50,15 @@ public:
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
-     * @param copy Whether the data in `vals` should be copied to an internal store.
-     * By default, no copy is performed under the assumption that the array in `vals` lives longer than the constructed `BruteForce` instance.
      *
      * @tparam INPUT Floating-point type of the input data.
      */
     template<typename INPUT>
-    BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) {}
+    BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT* vals) : num_dim(ndim), num_obs(nobs), store(vals, vals + ndim * nobs) {}
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
-        search_nn(store.reference + index * num_dim, nearest);
+        search_nn(store.data() + index * num_dim, nearest);
 
         auto output = nearest.template report<DISTANCE_t>();
         normalize(output);
@@ -77,7 +74,7 @@ public:
     }
 
     const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
-        auto candidate = store.reference + num_dim * index;
+        auto candidate = store.data() + num_dim * index;
         if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
             return candidate;
         } else {
@@ -91,7 +88,7 @@ public:
 private:
     template<class QUEUE>
     void search_nn(const QUERY_t* query, QUEUE& nearest) const {
-        auto copy = store.reference;
+        auto copy = store.data();
         for (INDEX_t i = 0; i < num_obs; ++i, copy += num_dim) {
             nearest.add(i, DISTANCE::template raw_distance<INTERNAL_t>(query, copy, num_dim));
         }
