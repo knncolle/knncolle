@@ -3,7 +3,6 @@
 
 #include "../utils/distances.hpp"
 #include "../utils/NeighborQueue.hpp"
-#include "../utils/MatrixStore.hpp"
 #include "../utils/Base.hpp"
 
 #include <vector>
@@ -131,7 +130,29 @@ private:
     }
 
 private:
-    MatrixStore<INTERNAL_t> store;
+    template<typename INPUT_t>
+    void populateStore(NodeIndex_t curnode_index, const INPUT_t* source, size_t& offset) {
+        auto& curnode=nodes[curnode_index];
+        auto start = source + curnode.index * num_dim;
+        std::copy(start, start + num_dim, store.data() + offset * num_dim);
+        curnode.index = offset;
+        ++offset;
+
+        // This doesn't exactly match the actual traversal order, as the choice
+        // of left/right child is dependent on the data. I don't want to change
+        // that choice, so we'll just have to pick one and stick with it. 
+        if (curnode.left != LEAF_MARKER) {
+            populateStore(curnode.left, source, offset);
+        }
+        if (curnode.right != LEAF_MARKER) {
+            populateStore(curnode.right, source, offset);
+        }
+
+        return;
+    }
+
+private:
+    std::vector<INTERNAL_t> store;
 
 public:
     /**
@@ -139,30 +160,34 @@ public:
      * @param nobs Number of observations.
      * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
      * i.e., contiguous elements belong to the same observation.
-     * @param copy Whether the data in `vals` should be copied to an internal store.
-     * By default, no copy is performed under the assumption that the array in `vals` lives longer than the constructed `VpTree` instance.
      *
      * @tparam INPUT_t Floating-point type of the input data.
      */
     template<typename INPUT_t>
-    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals, bool copy = false) : num_dim(ndim), num_obs(nobs), store(vals, ndim * nobs, copy) { 
+    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals) : num_dim(ndim), num_obs(nobs), store(ndim * nobs) { 
         std::vector<DataPoint> items;
         items.reserve(num_obs);
-        auto ptr = store.reference;
-        for (INDEX_t i = 0; i < num_obs; ++i, ptr += num_dim) {
-            items.push_back(DataPoint(i, ptr, 0));
+        for (INDEX_t i = 0; i < num_obs; ++i) {
+            items.push_back(DataPoint(i, vals + i * num_dim, 0));
         }
 
         nodes.reserve(num_obs);
         std::mt19937_64 rand(1234567890); // seed doesn't really matter, we don't need statistical correctness here.
         buildFromPoints(0, num_obs, items, rand);
+
+        // Actually populating the store based on the traversal order of the nodes.
+        // This should be more cache efficient than an arbitrary input order.
+        if (num_obs) {
+            size_t offset = 0;
+            populateStore(0, vals, offset);
+        }
         return;
     }
 
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
         INTERNAL_t tau = std::numeric_limits<INTERNAL_t>::max();
-        search_nn(0, store.reference + index * num_dim, tau, nearest);
+        search_nn(0, store.data() + index * num_dim, tau, nearest);
         return nearest.template report<DISTANCE_t>();
     }
 
@@ -174,7 +199,7 @@ public:
     }
 
     const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
-        auto candidate = store.reference + num_dim * index;
+        auto candidate = store.data() + num_dim * index;
         if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
             return candidate;
         } else {
@@ -194,7 +219,7 @@ private:
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(store.reference + curnode.index * num_dim, target, num_dim));
+        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(store.data() + curnode.index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {
