@@ -130,28 +130,7 @@ private:
     }
 
 private:
-    template<typename INPUT_t>
-    void populateStore(NodeIndex_t curnode_index, const INPUT_t* source, size_t& offset) {
-        auto& curnode=nodes[curnode_index];
-        auto start = source + curnode.index * num_dim;
-        std::copy(start, start + num_dim, store.data() + offset * num_dim);
-        curnode.index = offset;
-        ++offset;
-
-        // This doesn't exactly match the actual traversal order, as the choice
-        // of left/right child is dependent on the data. I don't want to change
-        // that choice, so we'll just have to pick one and stick with it. 
-        if (curnode.left != LEAF_MARKER) {
-            populateStore(curnode.left, source, offset);
-        }
-        if (curnode.right != LEAF_MARKER) {
-            populateStore(curnode.right, source, offset);
-        }
-
-        return;
-    }
-
-private:
+    std::vector<INDEX_t> new_location;
     std::vector<INTERNAL_t> store;
 
 public:
@@ -164,7 +143,7 @@ public:
      * @tparam INPUT_t Floating-point type of the input data.
      */
     template<typename INPUT_t>
-    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals) : num_dim(ndim), num_obs(nobs), store(ndim * nobs) { 
+    VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals) : num_dim(ndim), num_obs(nobs), new_location(nobs), store(ndim * nobs) { 
         std::vector<DataPoint> items;
         items.reserve(num_obs);
         for (INDEX_t i = 0; i < num_obs; ++i) {
@@ -177,9 +156,12 @@ public:
 
         // Actually populating the store based on the traversal order of the nodes.
         // This should be more cache efficient than an arbitrary input order.
-        if (num_obs) {
-            size_t offset = 0;
-            populateStore(0, vals, offset);
+        auto sIt = store.begin();
+        for (size_t i = 0; i < num_obs; ++i, sIt += num_dim) {
+            const auto& curnode = nodes[i];
+            new_location[curnode.index] = i;
+            auto start = vals + num_dim * curnode.index;
+            std::copy(start, start + num_dim, sIt);
         }
         return;
     }
@@ -187,7 +169,7 @@ public:
     std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
         NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
         INTERNAL_t tau = std::numeric_limits<INTERNAL_t>::max();
-        search_nn(0, store.data() + index * num_dim, tau, nearest);
+        search_nn(0, store.data() + new_location[index] * num_dim, tau, nearest);
         return nearest.template report<DISTANCE_t>();
     }
 
@@ -199,7 +181,7 @@ public:
     }
 
     const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
-        auto candidate = store.data() + num_dim * index;
+        auto candidate = store.data() + num_dim * new_location[index];
         if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
             return candidate;
         } else {
@@ -219,7 +201,7 @@ private:
         
         // Compute distance between target and current node
         const auto& curnode=nodes[curnode_index];
-        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(store.data() + curnode.index * num_dim, target, num_dim));
+        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(store.data() + curnode_index * num_dim, target, num_dim));
 
         // If current node within radius tau
         if (dist < tau) {
@@ -228,7 +210,7 @@ private:
                 tau = nearest.limit(); // update value of tau (farthest point in result list)
             }
         }
-        
+
         // Return if we arrived at a leaf
         if (curnode.left == LEAF_MARKER && curnode.right == LEAF_MARKER) {
             return;
