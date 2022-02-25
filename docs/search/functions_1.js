@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bruteforce_0',['BruteForce',['../classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688',1,'knncolle::BruteForce']]]
+  ['bruteforce_0',['BruteForce',['../classknncolle_1_1BruteForce.html#a655c56526b892db92377cfc52fb029c7',1,'knncolle::BruteForce']]]
 ];

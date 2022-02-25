@@ -76,204 +76,213 @@ $(function() {
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../utils/distances.hpp&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;../utils/NeighborQueue.hpp&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;../utils/MatrixStore.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;../utils/Base.hpp&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;random&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">namespace </span>knncolle {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = DISTANCE_t&gt;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html">   53</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree</a> : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">/* Adapted from http://stevehanov.ca/blog/index.php?id=130 */</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    INDEX_t num_dim;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    INDEX_t num_obs;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">   60</a></span>    INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">   62</a></span>    INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">typedef</span> <span class="keywordtype">int</span> NodeIndex_t;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">static</span> <span class="keyword">const</span> NodeIndex_t LEAF_MARKER=-1;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">// Single node of a VP tree (has a point and radius; left children are closer to point than the radius)</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">struct </span>Node {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        INTERNAL_t threshold;  <span class="comment">// radius </span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        INDEX_t index; <span class="comment">// original index of current vantage point </span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        NodeIndex_t left;  <span class="comment">// node index of the next vantage point for all children closer than &#39;threshold&#39; from the current vantage point</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        NodeIndex_t right; <span class="comment">// node index of the next vantage point for all children further than &#39;threshold&#39; from the current vantage point</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        Node(NodeIndex_t i=0) : threshold(0), index(i), left(LEAF_MARKER), right(LEAF_MARKER) {}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    };</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    std::vector&lt;Node&gt; nodes;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">typedef</span> std::tuple&lt;INDEX_t, const INTERNAL_t*, INTERNAL_t&gt; DataPoint; <span class="comment">// internal distances computed using &quot;INTERNAL_t&quot; type, even if output is returned with DISTANCE_t.</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> SAMPLER&gt;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    NodeIndex_t buildFromPoints(NodeIndex_t lower, NodeIndex_t upper, std::vector&lt;DataPoint&gt;&amp; items, SAMPLER&amp; rng) {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">if</span> (upper == lower) {     <span class="comment">// indicates that we&#39;re done here!</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="keywordflow">return</span> LEAF_MARKER;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        }</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        NodeIndex_t pos = nodes.size();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        nodes.resize(pos + 1);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        Node&amp; node=nodes.back();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordtype">int</span> gap = upper - lower;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keywordflow">if</span> (gap &gt; 1) {      <span class="comment">// if we did not arrive at leaf yet</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="comment">/* Choose an arbitrary point and move it to the start of the [lower, upper)</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">             * interval in &#39;items&#39;; this is our new vantage point.</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment">             * </span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment">             * Yes, I know that the modulo method does not provide strictly</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment">             * uniform values but statistical correctness doesn&#39;t really matter</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">             * here... but reproducibility across platforms does matter, and</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">             * std::uniform_int_distribution is implementation-dependent!</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment">             */</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            NodeIndex_t i = <span class="keyword">static_cast&lt;</span>NodeIndex_t<span class="keyword">&gt;</span>(rng() % gap + lower);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            std::swap(items[lower], items[i]);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; vantage = items[lower];</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="comment">// Compute distances to the new vantage point.</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keyword">const</span> INTERNAL_t* ref = std::get&lt;1&gt;(vantage);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = lower + 1; i &lt; upper; ++i) {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                <span class="keyword">const</span> INTERNAL_t* loc = std::get&lt;1&gt;(items[i]);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                std::get&lt;2&gt;(items[i]) = DISTANCE::template raw_distance&lt;INTERNAL_t&gt;(ref, loc, num_dim);</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="comment">// Partition around the median distance from the vantage point.</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            NodeIndex_t median = lower + gap/2;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            std::nth_element(items.begin() + lower + 1, items.begin() + median, items.begin() + upper,</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                [&amp;](<span class="keyword">const</span> DataPoint&amp; left, <span class="keyword">const</span> DataPoint&amp; right) -&gt; <span class="keywordtype">bool</span> {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                    return std::get&lt;2&gt;(left) &lt; std::get&lt;2&gt;(right);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                }</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            );</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>           </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="comment">// Threshold of the new node will be the distance to the median</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            node.threshold = DISTANCE::normalize(std::get&lt;2&gt;(items[median]));</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="comment">// Recursively build tree</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            node.index = std::get&lt;0&gt;(vantage);</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            node.left = buildFromPoints(lower + 1, median, items, rng);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            node.right = buildFromPoints(median, upper, items, rng);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            node.index = std::get&lt;0&gt;(items[lower]);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        }</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keywordflow">return</span> pos;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    }</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    MatrixStore&lt;INTERNAL_t&gt; store;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;../utils/Base.hpp&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span>knncolle {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">template</span>&lt;<span class="keyword">class</span> DISTANCE, <span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = DISTANCE_t&gt;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html">   52</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree</a> : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Base.html">Base</a>&lt;INDEX_t, DISTANCE_t, QUERY_t&gt; {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">/* Adapted from http://stevehanov.ca/blog/index.php?id=130 */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    INDEX_t num_dim;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    INDEX_t num_obs;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">   59</a></span>    INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_obs; } </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">   61</a></span>    INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_dim; }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">typedef</span> <span class="keywordtype">int</span> NodeIndex_t;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">static</span> <span class="keyword">const</span> NodeIndex_t LEAF_MARKER=-1;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// Single node of a VP tree (has a point and radius; left children are closer to point than the radius)</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">struct </span>Node {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        INTERNAL_t threshold;  <span class="comment">// radius </span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        INDEX_t index; <span class="comment">// original index of current vantage point </span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        NodeIndex_t left;  <span class="comment">// node index of the next vantage point for all children closer than &#39;threshold&#39; from the current vantage point</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        NodeIndex_t right; <span class="comment">// node index of the next vantage point for all children further than &#39;threshold&#39; from the current vantage point</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        Node(NodeIndex_t i=0) : threshold(0), index(i), left(LEAF_MARKER), right(LEAF_MARKER) {}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    };</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    std::vector&lt;Node&gt; nodes;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">typedef</span> std::tuple&lt;INDEX_t, const INTERNAL_t*, INTERNAL_t&gt; DataPoint; <span class="comment">// internal distances computed using &quot;INTERNAL_t&quot; type, even if output is returned with DISTANCE_t.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> SAMPLER&gt;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    NodeIndex_t buildFromPoints(NodeIndex_t lower, NodeIndex_t upper, std::vector&lt;DataPoint&gt;&amp; items, SAMPLER&amp; rng) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">if</span> (upper == lower) {     <span class="comment">// indicates that we&#39;re done here!</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">return</span> LEAF_MARKER;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        NodeIndex_t pos = nodes.size();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        nodes.resize(pos + 1);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        Node&amp; node=nodes.back();</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordtype">int</span> gap = upper - lower;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">if</span> (gap &gt; 1) {      <span class="comment">// if we did not arrive at leaf yet</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="comment">/* Choose an arbitrary point and move it to the start of the [lower, upper)</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">             * interval in &#39;items&#39;; this is our new vantage point.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">             * </span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment">             * Yes, I know that the modulo method does not provide strictly</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment">             * uniform values but statistical correctness doesn&#39;t really matter</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment">             * here... but reproducibility across platforms does matter, and</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">             * std::uniform_int_distribution is implementation-dependent!</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">             */</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            NodeIndex_t i = <span class="keyword">static_cast&lt;</span>NodeIndex_t<span class="keyword">&gt;</span>(rng() % gap + lower);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            std::swap(items[lower], items[i]);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; vantage = items[lower];</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="comment">// Compute distances to the new vantage point.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keyword">const</span> INTERNAL_t* ref = std::get&lt;1&gt;(vantage);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = lower + 1; i &lt; upper; ++i) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="keyword">const</span> INTERNAL_t* loc = std::get&lt;1&gt;(items[i]);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                std::get&lt;2&gt;(items[i]) = DISTANCE::template raw_distance&lt;INTERNAL_t&gt;(ref, loc, num_dim);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// Partition around the median distance from the vantage point.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            NodeIndex_t median = lower + gap/2;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            std::nth_element(items.begin() + lower + 1, items.begin() + median, items.begin() + upper,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                [&amp;](<span class="keyword">const</span> DataPoint&amp; left, <span class="keyword">const</span> DataPoint&amp; right) -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                    return std::get&lt;2&gt;(left) &lt; std::get&lt;2&gt;(right);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            );</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>           </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="comment">// Threshold of the new node will be the distance to the median</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            node.threshold = DISTANCE::normalize(std::get&lt;2&gt;(items[median]));</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="comment">// Recursively build tree</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            node.index = std::get&lt;0&gt;(vantage);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            node.left = buildFromPoints(lower + 1, median, items, rng);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            node.right = buildFromPoints(median, upper, items, rng);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            node.index = std::get&lt;0&gt;(items[lower]);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">return</span> pos;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    }</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::vector&lt;INDEX_t&gt; new_location;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    std::vector&lt;INTERNAL_t&gt; store;</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT_t&gt;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6">  148</a></span>    <a class="code hl_function" href="classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6">VpTree</a>(INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>, INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, <span class="keyword">const</span> INPUT_t* vals, <span class="keywordtype">bool</span> copy = <span class="keyword">false</span>) : num_dim(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>), num_obs(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>), store(vals, <a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a> * <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, copy) { </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        std::vector&lt;DataPoint&gt; items;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        items.reserve(num_obs);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keyword">auto</span> ptr = store.reference;</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keywordflow">for</span> (INDEX_t i = 0; i &lt; num_obs; ++i, ptr += num_dim) {</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            items.push_back(DataPoint(i, ptr, 0));</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        }</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        nodes.reserve(num_obs);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        std::mt19937_64 rand(1234567890); <span class="comment">// seed doesn&#39;t really matter, we don&#39;t need statistical correctness here.</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        buildFromPoints(0, num_obs, items, rand);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k, index);</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        INTERNAL_t tau = std::numeric_limits&lt;INTERNAL_t&gt;::max();</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        search_nn(0, store.reference + index * num_dim, tau, nearest);</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keywordflow">return</span> nearest.template report&lt;DISTANCE_t&gt;();</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT_t&gt;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classknncolle_1_1VpTree.html#aca1b408fa65305107cfc7fb49d5b9f84">  146</a></span>    <a class="code hl_function" href="classknncolle_1_1VpTree.html#aca1b408fa65305107cfc7fb49d5b9f84">VpTree</a>(INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>, INDEX_t <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>, <span class="keyword">const</span> INPUT_t* vals) : num_dim(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a>), num_obs(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>), new_location(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>), store(<a class="code hl_function" href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">ndim</a> * <a class="code hl_function" href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">nobs</a>) { </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        std::vector&lt;DataPoint&gt; items;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        items.reserve(num_obs);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="keywordflow">for</span> (INDEX_t i = 0; i &lt; num_obs; ++i) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            items.push_back(DataPoint(i, vals + i * num_dim, 0));</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        }</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        nodes.reserve(num_obs);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        std::mt19937_64 rand(1234567890); <span class="comment">// seed doesn&#39;t really matter, we don&#39;t need statistical correctness here.</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        buildFromPoints(0, num_obs, items, rand);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="comment">// Actually populating the store based on the traversal order of the nodes.</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="comment">// This should be more cache efficient than an arbitrary input order.</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keyword">auto</span> sIt = store.begin();</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; num_obs; ++i, sIt += num_dim) {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; curnode = nodes[i];</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            new_location[curnode.index] = i;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            <span class="keyword">auto</span> start = vals + num_dim * curnode.index;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            std::copy(start, start + num_dim, sIt);</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    }</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(INDEX_t index, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k, index);</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        INTERNAL_t tau = std::numeric_limits&lt;INTERNAL_t&gt;::max();</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        search_nn(0, query, tau, nearest);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        search_nn(0, store.data() + new_location[index] * num_dim, tau, nearest);</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordflow">return</span> nearest.template report&lt;DISTANCE_t&gt;();</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    }</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keyword">auto</span> candidate = store.reference + num_dim * index;</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(std::is_same&lt;QUERY_t, INTERNAL_t&gt;::value) {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            <span class="keywordflow">return</span> candidate;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            std::copy(candidate, candidate + num_dim, buffer);</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            <span class="keywordflow">return</span> buffer;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        }</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    }</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keyword">using</span> <a class="code hl_function" href="classknncolle_1_1Base.html#a2a58c1e4d737ce01515129c5b5257327">Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation</a>;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT_t&gt;</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">void</span> search_nn(NodeIndex_t curnode_index, <span class="keyword">const</span> INPUT_t* target, INTERNAL_t&amp; tau, NeighborQueue&lt;INDEX_t, INTERNAL_t&gt;&amp; nearest)<span class="keyword"> const </span>{ </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keywordflow">if</span> (curnode_index == LEAF_MARKER) { <span class="comment">// indicates that we&#39;re done here</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment">// Compute distance between target and current node</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; curnode=nodes[curnode_index];</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance&lt;INTERNAL_t&gt;(store.reference + curnode.index * num_dim, target, num_dim));</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="comment">// If current node within radius tau</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="keywordflow">if</span> (dist &lt; tau) {</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            nearest.add(curnode.index, dist);</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            <span class="keywordflow">if</span> (nearest.is_full()) {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                tau = nearest.limit(); <span class="comment">// update value of tau (farthest point in result list)</span></div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        }</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="comment">// Return if we arrived at a leaf</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keywordflow">if</span> (curnode.left == LEAF_MARKER &amp;&amp; curnode.right == LEAF_MARKER) {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="comment">// If the target lies within the radius of ball</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordflow">if</span> (dist &lt; curnode.threshold) {</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            <span class="keywordflow">if</span> (dist - tau &lt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors inside the ball, recursively search left child first</span></div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                search_nn(curnode.left, target, tau, nearest);</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            }</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <span class="keywordflow">if</span> (dist + tau &gt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors outside the ball, recursively search right child</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                search_nn(curnode.right, target, tau, nearest);</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            }</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="comment">// If the target lies outsize the radius of the ball</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            <span class="keywordflow">if</span> (dist + tau &gt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors outside the ball, recursively search right child first</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                search_nn(curnode.right, target, tau, nearest);</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            }</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            <span class="keywordflow">if</span> (dist - tau &lt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors inside the ball, recursively search left child</span></div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                search_nn(curnode.left, target, tau, nearest);</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>            }</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        }</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    }</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>};</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="VpTree_8hpp.html#ad59adacb1e7692963f1a9b00ff49e054">  239</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTreeEuclidean</a> = <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree&lt;distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="VpTree_8hpp.html#aad5d0c75f7f1362785ca361ea7cca5e1">  245</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTreeManhattan</a> = <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree&lt;distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>};</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    std::vector&lt;std::pair&lt;INDEX_t, DISTANCE_t&gt; &gt; find_nearest_neighbors(<span class="keyword">const</span> QUERY_t* query, <span class="keywordtype">int</span> k)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        NeighborQueue&lt;INDEX_t, INTERNAL_t&gt; nearest(k);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        INTERNAL_t tau = std::numeric_limits&lt;INTERNAL_t&gt;::max();</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        search_nn(0, query, tau, nearest);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="keywordflow">return</span> nearest.template report&lt;DISTANCE_t&gt;();</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">const</span> QUERY_t* observation(INDEX_t index, QUERY_t* buffer)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keyword">auto</span> candidate = store.data() + num_dim * new_location[index];</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(std::is_same&lt;QUERY_t, INTERNAL_t&gt;::value) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            <span class="keywordflow">return</span> candidate;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            std::copy(candidate, candidate + num_dim, buffer);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keyword">using</span> <a class="code hl_function" href="classknncolle_1_1Base.html#a2a58c1e4d737ce01515129c5b5257327">Base&lt;INDEX_t, DISTANCE_t, QUERY_t&gt;::observation</a>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> INPUT_t&gt;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keywordtype">void</span> search_nn(NodeIndex_t curnode_index, <span class="keyword">const</span> INPUT_t* target, INTERNAL_t&amp; tau, NeighborQueue&lt;INDEX_t, INTERNAL_t&gt;&amp; nearest)<span class="keyword"> const </span>{ </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">if</span> (curnode_index == LEAF_MARKER) { <span class="comment">// indicates that we&#39;re done here</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="comment">// Compute distance between target and current node</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; curnode=nodes[curnode_index];</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        INTERNAL_t dist = DISTANCE::normalize(DISTANCE::template raw_distance&lt;INTERNAL_t&gt;(store.data() + curnode_index * num_dim, target, num_dim));</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="comment">// If current node within radius tau</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">if</span> (dist &lt; tau) {</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            nearest.add(curnode.index, dist);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            <span class="keywordflow">if</span> (nearest.is_full()) {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                tau = nearest.limit(); <span class="comment">// update value of tau (farthest point in result list)</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        }</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <span class="comment">// Return if we arrived at a leaf</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <span class="keywordflow">if</span> (curnode.left == LEAF_MARKER &amp;&amp; curnode.right == LEAF_MARKER) {</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="comment">// If the target lies within the radius of ball</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">if</span> (dist &lt; curnode.threshold) {</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            <span class="keywordflow">if</span> (dist - tau &lt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors inside the ball, recursively search left child first</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                search_nn(curnode.left, target, tau, nearest);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            }</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            <span class="keywordflow">if</span> (dist + tau &gt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors outside the ball, recursively search right child</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                search_nn(curnode.right, target, tau, nearest);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            }</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="comment">// If the target lies outsize the radius of the ball</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            <span class="keywordflow">if</span> (dist + tau &gt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors outside the ball, recursively search right child first</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                search_nn(curnode.right, target, tau, nearest);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            }</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            <span class="keywordflow">if</span> (dist - tau &lt;= curnode.threshold) {         <span class="comment">// if there can still be neighbors inside the ball, recursively search left child</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                search_nn(curnode.left, target, tau, nearest);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            }</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        }</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    }</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>};</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno"><a class="line" href="VpTree_8hpp.html#ad59adacb1e7692963f1a9b00ff49e054">  246</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTreeEuclidean</a> = <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree&lt;distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> INDEX_t = <span class="keywordtype">int</span>, <span class="keyword">typename</span> DISTANCE_t = <span class="keywordtype">double</span>, <span class="keyword">typename</span> QUERY_t = DISTANCE_t, <span class="keyword">typename</span> INTERNAL_t = <span class="keywordtype">double</span>&gt;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="VpTree_8hpp.html#aad5d0c75f7f1362785ca361ea7cca5e1">  252</a></span><span class="keyword">using</span> <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTreeManhattan</a> = <a class="code hl_class" href="classknncolle_1_1VpTree.html">VpTree&lt;distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t&gt;</a>;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>};</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassknncolle_1_1Base_html"><div class="ttname"><a href="classknncolle_1_1Base.html">knncolle::Base</a></div><div class="ttdoc">Virtual base class defining the knncolle interface.</div><div class="ttdef"><b>Definition:</b> Base.hpp:24</div></div>
 <div class="ttc" id="aclassknncolle_1_1Base_html_a2a58c1e4d737ce01515129c5b5257327"><div class="ttname"><a href="classknncolle_1_1Base.html#a2a58c1e4d737ce01515129c5b5257327">knncolle::Base::observation</a></div><div class="ttdeci">virtual const QUERY_t * observation(INDEX_t index, QUERY_t *buffer) const =0</div></div>
-<div class="ttc" id="aclassknncolle_1_1VpTree_html"><div class="ttname"><a href="classknncolle_1_1VpTree.html">knncolle::VpTree</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:53</div></div>
-<div class="ttc" id="aclassknncolle_1_1VpTree_html_a8869f31b0220424c7318b86709bbf69e"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">knncolle::VpTree::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:60</div></div>
-<div class="ttc" id="aclassknncolle_1_1VpTree_html_a912697b91cd4f8a9458bd3b988dadf6f"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">knncolle::VpTree::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:62</div></div>
-<div class="ttc" id="aclassknncolle_1_1VpTree_html_a98952a5b50af74ad295dbae5a56d5de6"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6">knncolle::VpTree::VpTree</a></div><div class="ttdeci">VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t *vals, bool copy=false)</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:148</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html"><div class="ttname"><a href="classknncolle_1_1VpTree.html">knncolle::VpTree</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:52</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html_a8869f31b0220424c7318b86709bbf69e"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a8869f31b0220424c7318b86709bbf69e">knncolle::VpTree::nobs</a></div><div class="ttdeci">INDEX_t nobs() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:59</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html_a912697b91cd4f8a9458bd3b988dadf6f"><div class="ttname"><a href="classknncolle_1_1VpTree.html#a912697b91cd4f8a9458bd3b988dadf6f">knncolle::VpTree::ndim</a></div><div class="ttdeci">INDEX_t ndim() const</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:61</div></div>
+<div class="ttc" id="aclassknncolle_1_1VpTree_html_aca1b408fa65305107cfc7fb49d5b9f84"><div class="ttname"><a href="classknncolle_1_1VpTree.html#aca1b408fa65305107cfc7fb49d5b9f84">knncolle::VpTree::VpTree</a></div><div class="ttdeci">VpTree(INDEX_t ndim, INDEX_t nobs, const INPUT_t *vals)</div><div class="ttdef"><b>Definition:</b> VpTree.hpp:146</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

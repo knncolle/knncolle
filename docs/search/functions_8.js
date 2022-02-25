@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vptree_0',['VpTree',['../classknncolle_1_1VpTree.html#a98952a5b50af74ad295dbae5a56d5de6',1,'knncolle::VpTree']]]
+  ['vptree_0',['VpTree',['../classknncolle_1_1VpTree.html#aca1b408fa65305107cfc7fb49d5b9f84',1,'knncolle::VpTree']]]
 ];

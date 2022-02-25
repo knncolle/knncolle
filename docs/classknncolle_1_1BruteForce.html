@@ -104,9 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af66908b1bb475bdfbb998f57d33032d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a924ec3901151266eb87c3b69ab9308ed"><td class="memItemLeft" align="right" valign="top">INDEX_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a> () const</td></tr>
 <tr class="separator:a924ec3901151266eb87c3b69ab9308ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad27741895978d99d69a7a5dc0737f688"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
-<tr class="memitem:ad27741895978d99d69a7a5dc0737f688"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteForce.html#ad27741895978d99d69a7a5dc0737f688">BruteForce</a> (INDEX_t <a class="el" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>, const INPUT *vals, bool copy=false)</td></tr>
-<tr class="separator:ad27741895978d99d69a7a5dc0737f688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a655c56526b892db92377cfc52fb029c7"><td class="memTemplParams" colspan="2">template&lt;typename INPUT &gt; </td></tr>
+<tr class="memitem:a655c56526b892db92377cfc52fb029c7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteForce.html#a655c56526b892db92377cfc52fb029c7">BruteForce</a> (INDEX_t <a class="el" href="classknncolle_1_1BruteForce.html#a924ec3901151266eb87c3b69ab9308ed">ndim</a>, INDEX_t <a class="el" href="classknncolle_1_1BruteForce.html#af66908b1bb475bdfbb998f57d33032d0">nobs</a>, const INPUT *vals)</td></tr>
+<tr class="separator:a655c56526b892db92377cfc52fb029c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d9420e91ac19457cb67de5e5220b360"><td class="memItemLeft" align="right" valign="top"><a id="a4d9420e91ac19457cb67de5e5220b360" name="a4d9420e91ac19457cb67de5e5220b360"></a>
 std::vector&lt; std::pair&lt; INDEX_t, DISTANCE_t &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>find_nearest_neighbors</b> (INDEX_t index, int k) const</td></tr>
 <tr class="separator:a4d9420e91ac19457cb67de5e5220b360"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,8 +145,8 @@ class knncolle::BruteForce&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad27741895978d99d69a7a5dc0737f688" name="ad27741895978d99d69a7a5dc0737f688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad27741895978d99d69a7a5dc0737f688">&#9670;&nbsp;</a></span>BruteForce()</h2>
+<a id="a655c56526b892db92377cfc52fb029c7" name="a655c56526b892db92377cfc52fb029c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a655c56526b892db92377cfc52fb029c7">&#9670;&nbsp;</a></span>BruteForce()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,13 +174,7 @@ template&lt;typename INPUT &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const INPUT *&#160;</td>
-          <td class="paramname"><em>vals</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>copy</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>vals</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -198,8 +192,7 @@ template&lt;typename INPUT &gt; </div>
   <table class="params">
     <tr><td class="paramname">ndim</td><td>Number of dimensions. </td></tr>
     <tr><td class="paramname">nobs</td><td>Number of observations. </td></tr>
-    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation. </td></tr>
-    <tr><td class="paramname">copy</td><td>Whether the data in <code>vals</code> should be copied to an internal store. By default, no copy is performed under the assumption that the array in <code>vals</code> lives longer than the constructed <code><a class="el" href="classknncolle_1_1BruteForce.html" title="Perform a brute-force nearest neighbor search.">BruteForce</a></code> instance.</td></tr>
+    <tr><td class="paramname">vals</td><td>Pointer to an array of length <code>ndim * nobs</code>, corresponding to a dimension-by-observation matrix in column-major format, i.e., contiguous elements belong to the same observation.</td></tr>
   </table>
   </dd>
 </dl>
