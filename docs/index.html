@@ -103,7 +103,7 @@ $(function() {
 </div><!-- fragment --><p >The <code>find_nearest_neighbors()</code> call will return a vector of (index, distance) pairs, containing the requested number of neighbors in order of increasing distance from the query point. (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.) Each call is <code>const</code> and can be performed simultaneously in multiple threads, e.g., via OpenMP.</p>
 <p >For some algorithms, we can modify the parameters of the search by passing our desired values in the constructor:</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classknncolle_1_1Annoy.html">knncolle::AnnoyEuclidean&lt;&gt;</a> searcher2(ndim, nobs, matrix.data(), <span class="comment">/* ntrees = */</span> 100); </div>
-<div class="ttc" id="aclassknncolle_1_1Annoy_html"><div class="ttname"><a href="classknncolle_1_1Annoy.html">knncolle::Annoy</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with Annoy.</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:42</div></div>
+<div class="ttc" id="aclassknncolle_1_1Annoy_html"><div class="ttname"><a href="classknncolle_1_1Annoy.html">knncolle::Annoy</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with Annoy.</div><div class="ttdef"><b>Definition:</b> Annoy.hpp:51</div></div>
 </div><!-- fragment --><p >All algorithms derive from a common base class, so it is possible to swap algorithms at run-time:</p>
 <div class="fragment"><div class="line">std::unique_ptr&lt;knncolle::Base&lt;&gt; &gt; ptr;</div>
 <div class="line"><span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;Annoy&quot;</span>) {</div>
@@ -114,7 +114,7 @@ $(function() {
 <div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1Kmknn.html">knncolle::KmknnEuclidean&lt;&gt;</a>(ndim, nobs, matrix.data()));</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">auto</span> res = ptr-&gt;find_nearest_neighbors(1, 10);</div>
-<div class="ttc" id="aclassknncolle_1_1Hnsw_html"><div class="ttname"><a href="classknncolle_1_1Hnsw.html">knncolle::Hnsw</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with HNSW.</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:41</div></div>
+<div class="ttc" id="aclassknncolle_1_1Hnsw_html"><div class="ttname"><a href="classknncolle_1_1Hnsw.html">knncolle::Hnsw</a></div><div class="ttdoc">Perform an approximate nearest neighbor search with HNSW.</div><div class="ttdef"><b>Definition:</b> Hnsw.hpp:50</div></div>
 <div class="ttc" id="aclassknncolle_1_1Kmknn_html"><div class="ttname"><a href="classknncolle_1_1Kmknn.html">knncolle::Kmknn</a></div><div class="ttdoc">Perform a nearest neighbor search based on k-means clustering.</div><div class="ttdef"><b>Definition:</b> Kmknn.hpp:55</div></div>
 </div><!-- fragment --><p >Each class is also templated, defaulting to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s.</p>
 <p >Check out the <a href="https://ltla.github.io/knncolle/">reference documentation</a> for more details.</p>
@@ -136,6 +136,8 @@ $(function() {
 <div class="line"># For libaries</div>
 <div class="line">target_link_libraries(mylib INTERFACE knncolle)</div>
 </div><!-- fragment --><p >If you're not using CMake, the simple approach is to just copy the files - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. Note that this will require the manual inclusion of all dependencies, namely the <a href="https://github.com/spotify/annoy">Annoy</a> and <a href="https://github.com/nmslib/hsnwlib">HNSW</a> libraries.</p>
+<h1>Further comments</h1>
+<p >By default, we have disabled manual vectorization for both Annoy and HNSW-based searches. This aims to avoid differences in the results due to numeric precision across architectures with varying support for SSE/AVX intrinsics. Our philosophy here is to favor reproducibility over speed; nonetheless, users can choose the latter by defining the <code>KNNCOLLE_MANUAL_VECTORIZATION</code> macro.</p>
 <h1>References</h1>
 <p >Wang X (2012). A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. <em>Proc Int Jt Conf Neural Netw</em>, 43, 6:2351-2358.</p>
 <p >Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a></p>
