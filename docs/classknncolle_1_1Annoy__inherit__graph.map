@@ -1,4 +1,4 @@
 <map id="knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;" name="knncolle::Annoy&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_INDEX_t, INTERNAL_DATA_t &gt;">
-<area shape="rect" id="node1" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,95,243,165"/>
-<area shape="rect" id="node2" href="$classknncolle_1_1Base.html" title=" " alt="" coords="57,5,191,47"/>
+<area shape="rect" id="node1" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="5,93,243,163"/>
+<area shape="rect" id="node2" href="$classknncolle_1_1Base.html" title="Virtual base class defining the knncolle interface." alt="" coords="28,5,220,45"/>
 </map>

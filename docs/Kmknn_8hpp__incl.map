@@ -1,13 +1,13 @@
 <map id="knncolle/Kmknn/Kmknn.hpp" name="knncolle/Kmknn/Kmknn.hpp">
-<area shape="rect" id="node1" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="376,5,560,32"/>
-<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="26,80,166,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="13,155,72,181"/>
-<area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="380,80,555,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="269,155,328,181"/>
-<area shape="rect" id="node7" title=" " alt="" coords="538,155,613,181"/>
-<area shape="rect" id="node8" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="241,80,356,107"/>
-<area shape="rect" id="node9" title=" " alt="" coords="630,80,774,107"/>
-<area shape="rect" id="node10" title=" " alt="" coords="799,80,864,107"/>
-<area shape="rect" id="node11" title=" " alt="" coords="889,80,942,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="439,155,496,181"/>
+<area shape="rect" id="node1" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="375,5,559,31"/>
+<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="25,79,165,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="13,152,71,177"/>
+<area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="380,79,555,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="269,152,327,177"/>
+<area shape="rect" id="node7" title=" " alt="" coords="538,152,613,177"/>
+<area shape="rect" id="node8" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="241,79,355,104"/>
+<area shape="rect" id="node9" title=" " alt="" coords="630,79,774,104"/>
+<area shape="rect" id="node10" title=" " alt="" coords="799,79,864,104"/>
+<area shape="rect" id="node11" title=" " alt="" coords="889,79,942,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="439,152,496,177"/>
 </map>

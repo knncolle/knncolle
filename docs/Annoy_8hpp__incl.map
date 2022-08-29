@@ -1,8 +1,8 @@
 <map id="knncolle/Annoy/Annoy.hpp" name="knncolle/Annoy/Annoy.hpp">
-<area shape="rect" id="node1" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="130,5,305,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,67,107"/>
-<area shape="rect" id="node3" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="91,80,205,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="229,80,347,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="371,80,509,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="119,155,177,181"/>
+<area shape="rect" id="node1" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="130,5,305,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,79,67,104"/>
+<area shape="rect" id="node3" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="91,79,205,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="229,79,347,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="371,79,509,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="119,152,177,177"/>
 </map>

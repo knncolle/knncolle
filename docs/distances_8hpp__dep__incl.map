@@ -1,7 +1,7 @@
 <map id="knncolle/utils/distances.hpp" name="knncolle/utils/distances.hpp">
-<area shape="rect" id="node1" title="Classes for distance calculations." alt="" coords="169,5,351,32"/>
-<area shape="rect" id="node2" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="5,80,144,121"/>
-<area shape="rect" id="node4" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="168,87,352,114"/>
-<area shape="rect" id="node5" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="376,87,563,114"/>
-<area shape="rect" id="node3" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="187,169,333,196"/>
+<area shape="rect" id="node1" title="Classes for distance calculations." alt="" coords="169,5,351,31"/>
+<area shape="rect" id="node2" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="5,79,144,119"/>
+<area shape="rect" id="node4" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="168,86,352,111"/>
+<area shape="rect" id="node5" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="376,86,563,111"/>
+<area shape="rect" id="node3" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="187,167,333,192"/>
 </map>
