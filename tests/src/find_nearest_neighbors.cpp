@@ -7,12 +7,12 @@
 #include <iostream>
 
 template<class Function>
-void parallelize(size_t n, Function f) {
-    size_t jobs_per_worker = std::ceil(static_cast<double>(n) / 3);
+void parallelize(size_t n, Function f, size_t nthreads) {
+    size_t jobs_per_worker = std::ceil(static_cast<double>(n) / nthreads);
     size_t start = 0;
     std::vector<std::thread> jobs;
 
-    for (size_t w = 0; w < 3; ++w) {
+    for (size_t w = 0; w < nthreads; ++w) {
         size_t end = std::min(n, start + jobs_per_worker);
         if (start >= end) {
             break;
@@ -43,7 +43,7 @@ TEST_P(FindNearestNeighborsTest, Basic) {
     int k = std::get<2>(param);    
 
     auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto out = knncolle::find_nearest_neighbors<>(&base, k);
+    auto out = knncolle::find_nearest_neighbors<>(&base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
     for (size_t i = 0; i < nobs; ++i) {
@@ -57,6 +57,13 @@ TEST_P(FindNearestNeighborsTest, Basic) {
             last = y.second;
         }
     }
+
+    // Same results in parallel.
+    auto par = knncolle::find_nearest_neighbors<>(&base, k, 3);
+    ASSERT_EQ(par.size(), out.size());
+    for (size_t i = 0; i < nobs; ++i) {
+        EXPECT_EQ(out[i], par[i]);
+    }
 }
 
 TEST_P(FindNearestNeighborsTest, DifferentType) {
@@ -65,8 +72,8 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
     int k = std::get<2>(param);    
 
     auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto ref = knncolle::find_nearest_neighbors<>(&base, k);
-    auto out = knncolle::find_nearest_neighbors<size_t, float>(&base, k);
+    auto ref = knncolle::find_nearest_neighbors<>(&base, k, 1);
+    auto out = knncolle::find_nearest_neighbors<size_t, float>(&base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
     for (size_t i = 0; i < nobs; ++i) {
@@ -87,8 +94,8 @@ TEST_P(FindNearestNeighborsTest, IndexOnly) {
     int k = std::get<2>(param);    
 
     auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto ref = knncolle::find_nearest_neighbors<>(&base, k);
-    auto out = knncolle::find_nearest_neighbors_index_only<>(&base, k);
+    auto ref = knncolle::find_nearest_neighbors<>(&base, k, 1);
+    auto out = knncolle::find_nearest_neighbors_index_only<>(&base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
     for (size_t i = 0; i < nobs; ++i) {
@@ -99,6 +106,13 @@ TEST_P(FindNearestNeighborsTest, IndexOnly) {
         for (size_t j = 0; j < k; ++j) {
             EXPECT_EQ(left[j].first, right[j]);
         }
+    }
+
+    // Same results in parallel.
+    auto par = knncolle::find_nearest_neighbors_index_only<>(&base, k, 3);
+    ASSERT_EQ(par.size(), out.size());
+    for (size_t i = 0; i < nobs; ++i) {
+        EXPECT_EQ(out[i], par[i]);
     }
 }
 

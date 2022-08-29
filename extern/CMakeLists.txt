@@ -19,7 +19,7 @@ FetchContent_MakeAvailable(hnswlib)
 FetchContent_Declare(
   kmeans
   GIT_REPOSITORY https://github.com/LTLA/CppKmeans
-  GIT_TAG 4397a8d576cf0b657fd9012c049e05727c45796d
+  GIT_TAG 4a6f1257fe5f3c7f1675f8b92251c9950134efea
 )
 
 FetchContent_MakeAvailable(kmeans)

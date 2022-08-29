@@ -36,17 +36,18 @@ using NeighborList = std::vector<std::vector<std::pair<INDEX_t, DISTANCE_t> > >;
  *
  * @param ptr Pointer to a `Base` index.
  * @param k Number of nearest neighbors. 
+ * @param nthreads Number of threads to use.
  *
  * @return A `NeighborList` of length equal to the number of observations in `ptr->nobs()`.
  * Each entry contains the `k` nearest neighbors for each observation, sorted by increasing distance.
  */
 template<typename INDEX_t = int, typename DISTANCE_t = double, typename InputINDEX_t, typename InputDISTANCE_t, typename InputQUERY_t> 
-NeighborList<INDEX_t, DISTANCE_t> find_nearest_neighbors(const Base<InputINDEX_t, InputDISTANCE_t, InputQUERY_t>* ptr, int k) {
+NeighborList<INDEX_t, DISTANCE_t> find_nearest_neighbors(const Base<InputINDEX_t, InputDISTANCE_t, InputQUERY_t>* ptr, int k, int nthreads) {
     auto n = ptr->nobs();
     NeighborList<INDEX_t, DISTANCE_t> output(n);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL
-    #pragma omp parallel for
+    #pragma omp parallel for num_threads(nthreads)
     for (size_t i = 0; i < n; ++i) {
 #else
     KNNCOLLE_CUSTOM_PARALLEL(n, [&](size_t first, size_t last) -> void {
@@ -62,7 +63,7 @@ NeighborList<INDEX_t, DISTANCE_t> find_nearest_neighbors(const Base<InputINDEX_t
         }
     }
 #ifdef KNNCOLLE_CUSTOM_PARALLEL    
-    });
+    }, nthreads);
 #endif
 
     return output;
@@ -79,17 +80,18 @@ NeighborList<INDEX_t, DISTANCE_t> find_nearest_neighbors(const Base<InputINDEX_t
  *
  * @param ptr Pointer to a `Base` index.
  * @param k Number of nearest neighbors. 
+ * @param nthreads Number of threads to use.
  *
  * @return A vector of vectors of length equal to the number of observations in `ptr->nobs()`.
  * Each vector contains the indices of the `k` nearest neighbors for each observation, sorted by increasing distance.
  */
 template<typename INDEX_t = int, typename InputINDEX_t, typename InputDISTANCE_t, typename InputQUERY_t> 
-std::vector<std::vector<INDEX_t> > find_nearest_neighbors_index_only(const Base<InputINDEX_t, InputDISTANCE_t, InputQUERY_t>* ptr, int k) {
+std::vector<std::vector<INDEX_t> > find_nearest_neighbors_index_only(const Base<InputINDEX_t, InputDISTANCE_t, InputQUERY_t>* ptr, int k, int nthreads) {
     auto n = ptr->nobs();
     std::vector<std::vector<INDEX_t> > output(n);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL
-    #pragma omp parallel for
+    #pragma omp parallel for num_threads(nthreads)
     for (size_t i = 0; i < n; ++i) {
 #else
     KNNCOLLE_CUSTOM_PARALLEL(n, [&](size_t first, size_t last) -> void {
@@ -101,7 +103,7 @@ std::vector<std::vector<INDEX_t> > find_nearest_neighbors_index_only(const Base<
         }
     }
 #ifdef KNNCOLLE_CUSTOM_PARALLEL    
-    });
+    }, nthreads);
 #endif
 
     return output;
