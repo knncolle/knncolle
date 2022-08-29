@@ -25,6 +25,9 @@ namespace knncolle {
  * The HNSW algorithm extends this idea by using a hierarchy of such graphs containing links of different lengths, 
  * which avoids wasting time on small steps in the early stages of the search where the current node position is far from the query.
  *
+ * Note that, to improve reproducibility across architectures, we have disabled manual vectorization of the distance calculations by default.
+ * This can be restored by defining the `KNNCOLLE_MANUAL_VECTORIZATION` macro.
+ *
  * @see
  * Malkov YA, Yashunin DA (2016).
  * Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs.
