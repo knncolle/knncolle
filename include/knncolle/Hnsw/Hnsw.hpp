@@ -7,6 +7,12 @@
 #include "hnswlib/hnswalg.h"
 #include <cmath>
 
+#ifndef KNNCOLLE_MANUAL_VECTORIZATION
+#ifndef NO_MANUAL_VECTORIZATION
+#define NO_MANUAL_VECTORIZATION
+#endif
+#endif
+
 /**
  * @file Hnsw.hpp
  *
@@ -24,6 +30,9 @@ namespace knncolle {
  * This speeds up the search by ensuring that the algorithm does not need to take many small steps to move from one cluster to another.
  * The HNSW algorithm extends this idea by using a hierarchy of such graphs containing links of different lengths, 
  * which avoids wasting time on small steps in the early stages of the search where the current node position is far from the query.
+ *
+ * Note that, to improve reproducibility across architectures, we have disabled manual vectorization of the distance calculations by default.
+ * This can be restored by defining the `KNNCOLLE_MANUAL_VECTORIZATION` macro.
  *
  * @see
  * Malkov YA, Yashunin DA (2016).

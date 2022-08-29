@@ -8,6 +8,12 @@
 #include "annoy/annoylib.h"
 #include "annoy/kissrandom.h"
 
+#ifndef KNNCOLLE_MANUAL_VECTORIZATION
+#ifndef NO_MANUAL_VECTORIZATION
+#define NO_MANUAL_VECTORIZATION
+#endif
+#endif
+
 /**
  * @file Annoy.hpp
  *
@@ -24,6 +30,9 @@ namespace knncolle {
  * Multiple trees are constructed in this manner, each of which is different due to the random choice of hyperplanes.
  * For a given query point, each tree is searched to identify the subset of all points in the same leaf node as the query point. 
  * The union of these subsets across all trees is exhaustively searched to identify the actual nearest neighbors to the query.
+ *
+ * Note that, to improve reproducibility across architectures, we have disabled manual vectorization of the distance calculations by default.
+ * This can be restored by defining the `KNNCOLLE_MANUAL_VECTORIZATION` macro.
  *
  * @see
  * Bernhardsson E (2018).

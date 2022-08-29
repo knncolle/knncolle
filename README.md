@@ -101,6 +101,13 @@ target_link_libraries(mylib INTERFACE knncolle)
 If you're not using CMake, the simple approach is to just copy the files - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's `-I`.
 Note that this will require the manual inclusion of all dependencies, namely the [Annoy](https://github.com/spotify/annoy) and [HNSW](https://github.com/nmslib/hsnwlib) libraries.
 
+## Further comments
+
+By default, we have disabled manual vectorization for both Annoy and HNSW-based searches.
+This aims to avoid differences in the results due to numeric precision across architectures with varying support for SSE/AVX intrinsics.
+Our philosophy here is to favor reproducibility over speed;
+nonetheless, users can choose the latter by defining the `KNNCOLLE_MANUAL_VECTORIZATION` macro.
+
 ## References
 
 Wang X (2012). 
