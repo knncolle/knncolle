@@ -58,6 +58,5 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
 
-install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
