@@ -1,15 +1,8 @@
 @PACKAGE_INIT@
 
-set(KNNCOLLE_OLD_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
-
 include(CMakeFindDependencyMacro)
 find_dependency(ltla_kmeans CONFIG REQUIRED)
 find_dependency(Annoy CONFIG REQUIRED)
-find_dependency(hnswlib REQUIRED)
+find_dependency(hnswlib CONFIG REQUIRED)
 
 include("${CMAKE_CURRENT_LIST_DIR}/ltla_knncolleTargets.cmake")
-
-# Restore CMAKE_MODULE_PATH
-set(CMAKE_MODULE_PATH ${KNNCOLLE_OLD_CMAKE_MODULE_PATH})
-unset(KNNCOLLE_OLD_CMAKE_MODULE_PATH)

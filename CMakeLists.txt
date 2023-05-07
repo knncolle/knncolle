@@ -18,17 +18,16 @@ target_include_directories(knncolle INTERFACE
 target_compile_features(knncolle INTERFACE cxx_std_17)
 
 # Dependencies
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 option(KNNCOLLE_FETCH_EXTERN "Automatically fetch knncolle's external dependencies." ON)
 if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
     find_package(ltla_kmeans CONFIG REQUIRED)
     find_package(Annoy CONFIG REQUIRED)
-    find_package(hnswlib REQUIRED)
+    find_package(hnswlib CONFIG REQUIRED)
 endif()
 
-target_link_libraries(knncolle INTERFACE ltla::kmeans Annoy::Annoy hnswlib)
+target_link_libraries(knncolle INTERFACE ltla::kmeans Annoy::Annoy hnswlib::hnswlib)
 
 # Tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
@@ -61,5 +60,4 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
 
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Findhnswlib.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
