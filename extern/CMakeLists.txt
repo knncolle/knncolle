@@ -3,7 +3,7 @@ include(FetchContent)
 FetchContent_Declare(
   Annoy 
   GIT_REPOSITORY https://github.com/spotify/Annoy
-  GIT_TAG v1.17.2
+  GIT_TAG 8795f360bb8e125b895c721cb71a37e588527fbd # v1.17.2
 )
 
 FetchContent_MakeAvailable(Annoy)
