@@ -1,10 +1,10 @@
 <map id="knncolle/utils/Base.hpp" name="knncolle/utils/Base.hpp">
-<area shape="rect" id="node1" title="Defines the virtual base class for all knncolle methods." alt="" coords="475,5,631,31"/>
-<area shape="rect" id="node2" href="$Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="5,86,180,111"/>
-<area shape="rect" id="node4" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="205,79,343,119"/>
-<area shape="rect" id="node5" href="$Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="367,86,538,111"/>
-<area shape="rect" id="node6" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="562,86,746,111"/>
-<area shape="rect" id="node7" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="770,86,957,111"/>
-<area shape="rect" id="node8" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="981,79,1140,119"/>
-<area shape="rect" id="node3" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="479,167,626,192"/>
+<area shape="rect" id="node1" title="Defines the virtual base class for all knncolle methods." alt="" coords="472,5,627,31"/>
+<area shape="rect" id="node2" href="$Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="5,87,179,112"/>
+<area shape="rect" id="node4" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="203,79,341,120"/>
+<area shape="rect" id="node5" href="$Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="365,87,534,112"/>
+<area shape="rect" id="node6" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="558,87,741,112"/>
+<area shape="rect" id="node7" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="765,87,950,112"/>
+<area shape="rect" id="node8" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="974,79,1133,120"/>
+<area shape="rect" id="node3" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="477,168,622,193"/>
 </map>

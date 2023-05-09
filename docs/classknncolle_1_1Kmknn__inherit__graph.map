@@ -1,4 +1,4 @@
 <map id="knncolle::Kmknn&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;" name="knncolle::Kmknn&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;">
-<area shape="rect" id="node1" title="Perform a nearest neighbor search based on k&#45;means clustering." alt="" coords="5,93,219,148"/>
-<area shape="rect" id="node2" href="$classknncolle_1_1Base.html" title="Virtual base class defining the knncolle interface." alt="" coords="16,5,208,45"/>
+<area shape="rect" id="node1" title="Perform a nearest neighbor search based on k&#45;means clustering." alt="" coords="5,94,218,150"/>
+<area shape="rect" id="node2" href="$classknncolle_1_1Base.html" title="Virtual base class defining the knncolle interface." alt="" coords="16,5,207,46"/>
 </map>

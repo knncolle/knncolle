@@ -119,6 +119,7 @@ $(function() {
 </div><!-- fragment --><p>Each class is also templated, defaulting to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s.</p>
 <p>Check out the <a href="https://ltla.github.io/knncolle/">reference documentation</a> for more details.</p>
 <h1>Building projects with <b>knncolle</b></h1>
+<h2>CMake with <code>FetchContent</code></h2>
 <p>If you're using CMake, you just need to add something like this to your <code>CMakeLists.txt</code>:</p>
 <div class="fragment"><div class="line">include(FetchContent)</div>
 <div class="line"> </div>
@@ -131,11 +132,20 @@ $(function() {
 <div class="line">FetchContent_MakeAvailable(knncolle)</div>
 </div><!-- fragment --><p>Then you can link to <b>knncolle</b> to make the headers available during compilation:</p>
 <div class="fragment"><div class="line"># For executables:</div>
-<div class="line">target_link_libraries(myexe knncolle)</div>
+<div class="line">target_link_libraries(myexe ltla::knncolle)</div>
 <div class="line"> </div>
 <div class="line"># For libaries</div>
-<div class="line">target_link_libraries(mylib INTERFACE knncolle)</div>
-</div><!-- fragment --><p>If you're not using CMake, the simple approach is to just copy the files - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. Note that this will require the manual inclusion of all dependencies, namely the <a href="https://github.com/spotify/annoy">Annoy</a> and <a href="https://github.com/nmslib/hsnwlib">HNSW</a> libraries.</p>
+<div class="line">target_link_libraries(mylib INTERFACE ltla::knncolle)</div>
+</div><!-- fragment --><h2>CMake with <code>find_package()</code></h2>
+<div class="fragment"><div class="line">find_package(ltla_knncolle CONFIG REQUIRED)</div>
+<div class="line">target_link_libraries(mylib INTERFACE ltla::knncolle)</div>
+</div><!-- fragment --><p>To install the library, use:</p>
+<div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line">cmake .. -DKNNCOLLE_TESTS=OFF</div>
+<div class="line">cmake --build . --target install</div>
+</div><!-- fragment --><p>By default, this will use <code>FetchContent</code> to fetch all external dependencies. If you want to install them manually, use <code>-DKNNCOLLE_FETCH_EXTERN=OFF</code>. See the commit hashes in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> to find compatible versions of each dependency.</p>
+<h2>Manual</h2>
+<p>If you're not using CMake, the simple approach is to just copy the files in <code>include/</code> - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. This requires the external dependencies listed in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a>, which also need to be made available during compilation.</p>
 <h1>Further comments</h1>
 <p>Both Annoy and HNSW will attempt to perform manual vectorization based on SSE and/or AVX instructions. This may result in differences in the results across machines due to changes in numeric precision across architectures with varying support for SSE/AVX intrinsics. For the most part, such differences can be avoided by consistently compiling for the "near-lowest common denominator" (such as the typical <code>x86-64</code> default for GCC and Clang) and ensuring that the more specific instruction subsets like SSE3 and AVX are not enabled (which are typically off by default anyway). Nonetheless, if reproducibility across architectures is important, it can be achieved at the cost of some speed by defining the <code>NO_MANUAL_VECTORIZATION</code> macro, which will instruct both Annoy and HNSW to disable their vectorized optimizations.</p>
 <h1>References</h1>

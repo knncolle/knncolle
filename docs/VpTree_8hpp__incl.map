@@ -1,13 +1,13 @@
 <map id="knncolle/VpTree/VpTree.hpp" name="knncolle/VpTree/VpTree.hpp">
-<area shape="rect" id="node1" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="383,5,570,31"/>
-<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,79,145,104"/>
-<area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="169,79,344,104"/>
-<area shape="rect" id="node6" title=" " alt="" coords="353,152,411,177"/>
-<area shape="rect" id="node8" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="419,79,534,104"/>
-<area shape="rect" id="node9" title=" " alt="" coords="559,79,624,104"/>
-<area shape="rect" id="node10" title=" " alt="" coords="649,79,702,104"/>
-<area shape="rect" id="node11" title=" " alt="" coords="726,79,777,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="46,152,105,177"/>
-<area shape="rect" id="node5" title=" " alt="" coords="155,152,212,177"/>
-<area shape="rect" id="node7" title=" " alt="" coords="237,152,311,177"/>
+<area shape="rect" id="node1" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="381,5,566,31"/>
+<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,79,145,105"/>
+<area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="168,79,342,105"/>
+<area shape="rect" id="node6" title=" " alt="" coords="350,153,408,178"/>
+<area shape="rect" id="node8" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="417,79,530,105"/>
+<area shape="rect" id="node9" title=" " alt="" coords="555,79,619,105"/>
+<area shape="rect" id="node10" title=" " alt="" coords="644,79,696,105"/>
+<area shape="rect" id="node11" title=" " alt="" coords="720,79,769,105"/>
+<area shape="rect" id="node3" title=" " alt="" coords="46,153,104,178"/>
+<area shape="rect" id="node5" title=" " alt="" coords="155,153,211,178"/>
+<area shape="rect" id="node7" title=" " alt="" coords="235,153,310,178"/>
 </map>

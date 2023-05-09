@@ -1,7 +1,7 @@
 <map id="knncolle/utils/find_nearest_neighbors.hpp" name="knncolle/utils/find_nearest_neighbors.hpp">
-<area shape="rect" id="node1" title="Find nearest neighbors from an existing index." alt="" coords="15,5,173,45"/>
-<area shape="rect" id="node2" title=" " alt="" coords="85,167,143,192"/>
-<area shape="rect" id="node3" title=" " alt="" coords="23,93,75,119"/>
-<area shape="rect" id="node4" title=" " alt="" coords="99,93,182,119"/>
-<area shape="rect" id="node5" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="207,93,283,119"/>
+<area shape="rect" id="node1" title="Find nearest neighbors from an existing index." alt="" coords="13,5,172,46"/>
+<area shape="rect" id="node2" title=" " alt="" coords="84,168,141,193"/>
+<area shape="rect" id="node3" title=" " alt="" coords="22,94,73,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="97,94,179,120"/>
+<area shape="rect" id="node5" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="203,94,278,120"/>
 </map>

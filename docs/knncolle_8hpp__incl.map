@@ -1,26 +1,26 @@
 <map id="knncolle/knncolle.hpp" name="knncolle/knncolle.hpp">
-<area shape="rect" id="node1" title="Umbrella header to include all algorithms." alt="" coords="1083,5,1229,31"/>
-<area shape="rect" id="node2" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="1153,86,1332,111"/>
-<area shape="rect" id="node11" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="238,86,373,111"/>
-<area shape="rect" id="node15" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="599,86,731,111"/>
-<area shape="rect" id="node17" href="$Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="1607,86,1729,111"/>
-<area shape="rect" id="node21" href="$Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="1010,86,1129,111"/>
-<area shape="rect" id="node23" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="1356,79,1476,119"/>
-<area shape="rect" id="node3" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="298,167,438,192"/>
-<area shape="rect" id="node5" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="783,167,958,192"/>
-<area shape="rect" id="node7" title=" " alt="" coords="1089,240,1148,265"/>
-<area shape="rect" id="node9" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="1185,167,1300,192"/>
-<area shape="rect" id="node10" title=" " alt="" coords="1375,167,1457,192"/>
-<area shape="rect" id="node4" title=" " alt="" coords="447,240,505,265"/>
-<area shape="rect" id="node6" title=" " alt="" coords="842,240,899,265"/>
-<area shape="rect" id="node8" title=" " alt="" coords="725,240,800,265"/>
-<area shape="rect" id="node12" title=" " alt="" coords="209,167,274,192"/>
-<area shape="rect" id="node13" title=" " alt="" coords="131,167,184,192"/>
-<area shape="rect" id="node14" title=" " alt="" coords="5,167,56,192"/>
-<area shape="rect" id="node16" title=" " alt="" coords="513,167,657,192"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1913,167,1975,192"/>
-<area shape="rect" id="node19" title=" " alt="" coords="1609,167,1727,192"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1751,167,1889,192"/>
-<area shape="rect" id="node22" title=" " alt="" coords="1033,167,1161,192"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1533,167,1585,192"/>
+<area shape="rect" id="node1" title="Umbrella header to include all algorithms." alt="" coords="1075,5,1220,31"/>
+<area shape="rect" id="node2" href="$BruteForce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="1145,87,1323,112"/>
+<area shape="rect" id="node11" href="$VpTree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="235,87,369,112"/>
+<area shape="rect" id="node15" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="595,87,726,112"/>
+<area shape="rect" id="node17" href="$Annoy_8hpp.html" title="Implements an approximate nearest neighbor search with Annoy." alt="" coords="1596,87,1717,112"/>
+<area shape="rect" id="node21" href="$Hnsw_8hpp.html" title="Implements an approximate nearest neighbor search with HNSW." alt="" coords="1003,87,1121,112"/>
+<area shape="rect" id="node23" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="1348,79,1467,120"/>
+<area shape="rect" id="node3" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="295,168,434,193"/>
+<area shape="rect" id="node5" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="778,168,951,193"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1083,241,1140,267"/>
+<area shape="rect" id="node9" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="1177,168,1291,193"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1367,168,1448,193"/>
+<area shape="rect" id="node4" title=" " alt="" coords="443,241,500,267"/>
+<area shape="rect" id="node6" title=" " alt="" coords="837,241,893,267"/>
+<area shape="rect" id="node8" title=" " alt="" coords="721,241,795,267"/>
+<area shape="rect" id="node12" title=" " alt="" coords="207,168,272,193"/>
+<area shape="rect" id="node13" title=" " alt="" coords="131,168,183,193"/>
+<area shape="rect" id="node14" title=" " alt="" coords="5,168,55,193"/>
+<area shape="rect" id="node16" title=" " alt="" coords="509,168,652,193"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1900,168,1960,193"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1599,168,1715,193"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1739,168,1876,193"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1026,168,1154,193"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1523,168,1574,193"/>
 </map>
