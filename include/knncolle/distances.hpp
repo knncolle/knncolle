@@ -10,46 +10,81 @@
 
 namespace knncolle {
 
-namespace distances {
+/**
+ * @brief Expectations for a distance calculation class.
+ */
+struct MockDistance {
+    /**
+     * The raw distance `r` for a distance `d` is defined so that `r(x, y) > r(x, z)` iff `d(x, y) > d(x, z)`.
+     * `r(x, y)` is converted to `d(x, z)` via a monotonic transform in `normalize()`.
+     * We separate out these two steps to avoid, e.g., a costly root operation for a Euclidean distance when only the relative values are of interest.
+     *
+     * @param x Pointer to the array containing the first vector.
+     * @param y Pointer to the array containing the second vector.
+     * @param num_dimensions Length of both vectors.
+     *
+     * @tparam Output_ Floating point type for the output distance.
+     * @tparam DataX_ Floating point type for the first data vector.
+     * @tparam DataY_ Floating point type for the second data vector.
+     * @tparam Dim_ Integer type for the vector length.
+     *
+     * @return The raw distance between `x` and `y`.
+     */
+    template<typename Output_, typename DataX_, typename DataY_, typename Dim_>
+    static Output_ raw_distance(const DataX_* x, const DataY_* y, Dim_ num_dimensions) {
+        Output_ output = 0;
+        for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
+            auto delta = *x - *y;
+            output += delta * delta;
+        }
+        return output;
+    }
+
+    /**
+     * @tparam Output_ Floating point type for the output distance.
+     * @param raw Raw distance.
+     * @return The normalized distance.
+     */
+    template<typename Output_>
+    static Output_ normalize(Output_ raw) {
+        return raw;
+    }
+};
 
 /**
  * @brief Compute Euclidean distances between two input vectors.
  */
 struct Euclidean {
     /**
+     *
      * @param x Pointer to the array containing the first vector.
      * @param y Pointer to the array containing the second vector.
-     * @param n Length of both vectors.
+     * @param num_dimensions Length of both vectors.
      *
-     * @tparam ITYPE Integer type for the vector length.
-     * @tparam DTYPE Floating point type for the output distance.
-     * @tparam XTYPE Floating point type for the first data vector.
-     * @tparam YTYPE Floating point type for the second data vector.
+     * @tparam Output_ Floating point type for the output distance.
+     * @tparam DataX_ Floating point type for the first data vector.
+     * @tparam DataY_ Floating point type for the second data vector.
+     * @tparam Dim_ Integer type for the vector length.
      *
-     * @return The squared Euclidean distance between vectors.
-     *
-     * @note 
-     * This should be passed through `normalize()` to obtain the actual Euclidean distance.
-     * We separate out these two steps to avoid the costly root operation when only the relative values are of interest.
+     * @return The squared Euclidean distance between `x` and `y`.
      */
-    template<typename ITYPE = int, typename DTYPE = double, typename XTYPE = DTYPE, typename YTYPE = DTYPE>
-    static DTYPE raw_distance(const XTYPE* x, const YTYPE* y, ITYPE n) {
-        double output = 0;
-        for (ITYPE i = 0; i < n; ++i, ++x, ++y) {
-            output += ((*x) - (*y)) * ((*x) - (*y));
+    template<typename Output_, typename DataX_, typename DataY_, typename Dim_>
+    static Output_ raw_distance(const Data_* x, const DataY_* y, Dim_ num_dimensions) {
+        Output_ output = 0;
+        for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
+            auto delta = *x - *y;
+            output += delta * delta;
         }
         return output;
     }
 
     /**
-     * @tparam DTYPE Floating point type for the distance.
-     *
-     * @param raw The value produced by `raw_distance()`.
-     *
-     * @return The square root of `raw`.
+     * @tparam Output_ Floating point type for the output distance.
+     * @param raw Squared Euclidean distance.
+     * @return Euclidean distance.
      */
-    template<typename DTYPE = double>
-    static DTYPE normalize(DTYPE raw) {
+    template<typename Output_>
+    static Output_ normalize(Output_ raw) {
         return std::sqrt(raw);
     }
 };
@@ -59,34 +94,34 @@ struct Euclidean {
  */
 struct Manhattan {
     /**
-     * @tparam ITYPE Integer type for the vector length.
-     * @tparam DTYPE Floating point type for the output distance.
-     * @tparam XTYPE Floating point type for the first data vector.
-     * @tparam YTYPE Floating point type for the second data vector.
      *
      * @param x Pointer to the array containing the first vector.
      * @param y Pointer to the array containing the second vector.
-     * @param n Length of both vectors.
+     * @param num_dimensions Length of both vectors.
      *
-     * @return The Manhattan distance between vectors.
+     * @tparam Output_ Floating point type for the output distance.
+     * @tparam DataX_ Floating point type for the first data vector.
+     * @tparam DataY_ Floating point type for the second data vector.
+     * @tparam Dim_ Integer type for the vector length.
+     *
+     * @return The Manhattan distance between `x` and `y`.
      */
-    template<typename ITYPE = int, typename DTYPE = double, typename XTYPE = DTYPE, typename YTYPE = DTYPE>
-    static DTYPE raw_distance(const XTYPE* x, const YTYPE* y, ITYPE n) {
-        DTYPE output = 0;
-        for (ITYPE i = 0; i < n; ++i, ++x, ++y) {
+    template<typename Output_, typename DataX_, typename DataY_, typename Dim_>
+    static Output_ raw_distance(const Data_* x, const DataY_* y, Dim_ num_dimensions) {
+        Output_ output = 0;
+        for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
             output += std::abs(*x - *y);
         }
         return output;
     }
 
     /**
-     * @tparam DTYPE Floating point type for the distance.
-     * @param raw The value produced by `raw_distance()`.
-     *
+     * @tparam Output_ Floating point type for the distance.
+     * @param raw Manhattan distance.
      * @return `raw` with no modification.
      */
-    template<typename DTYPE = double>
-    static DTYPE normalize(DTYPE raw) {
+    template<typename Output_>
+    static Output_ normalize(Output_ raw) {
         return raw;
     }
 };

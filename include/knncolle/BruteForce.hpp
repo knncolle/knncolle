@@ -66,11 +66,11 @@ public:
 
         auto copy = my_store.data();
         for (Index_ x = 0; x < i; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
         }
         copy += my_dim; // skip 'i' itself.
         for (Index_ x = i + 1; x < my_obs; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
         }
 
         auto results = nearest.report();
@@ -83,7 +83,7 @@ public:
 
         auto copy = my_store.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
         }
 
         auto results = nearest.report();
