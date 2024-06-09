@@ -15,6 +15,8 @@ target_include_directories(knncolle INTERFACE include/)
 target_link_libraries(knncolle INTERFACE kmeans Annoy hnswlib)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    add_subdirectory(gallery)
+
     include(CTest)
     if(BUILD_TESTING)
         add_subdirectory(tests)

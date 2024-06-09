@@ -15,8 +15,6 @@ add_executable(
     src/BruteForce.cpp
     src/VpTree.cpp
     src/Kmknn.cpp
-    src/Annoy.cpp
-    src/Hnsw.cpp
     src/find_nearest_neighbors.cpp
 )
 
@@ -25,6 +23,8 @@ target_link_libraries(
     gtest_main
     knncolle
 )
+
+target_compile_options(libtest PRIVATE -Wall -Werror -Wextra -Wpedantic)
 
 set(CODE_COVERAGE "Enable coverage testing" OFF)
 if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
