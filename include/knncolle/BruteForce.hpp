@@ -1,9 +1,10 @@
 #ifndef KNNCOLLE_BRUTEFORCE_HPP
 #define KNNCOLLE_BRUTEFORCE_HPP
 
-#include "../utils/distances.hpp"
-#include "../utils/NeighborQueue.hpp"
-#include "../utils/Base.hpp"
+#include "distances.hpp"
+#include "NeighborQueue.hpp"
+#include "Builder.hpp"
+#include "Prebuilt.hpp"
 
 #include <vector>
 #include <type_traits>
@@ -17,6 +18,81 @@
 namespace knncolle {
 
 /**
+ * @brief Index for a brute-force nearest neighbor search.
+ *
+ * Instances of this class are usually constructed using `BruteForceBuilder`.
+ *
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Store_ Floating point type for the stored data. 
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Float_ Floating point type for the query data and output distances.
+ */
+template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
+class BruteForcePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+private:
+    Dim_ my_dim;
+    Index_ my_obs;
+    std::vector<Store_> my_data;
+
+public:
+    /**
+     * @param num_dim Number of dimensions.
+     * @param num_obs Number of observations.
+     * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
+     */
+    BruteForcePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)) {}
+
+public:
+    Dim_ num_dimensions() const {
+        return my_dim;
+    }
+
+    Index_ num_observations() const {
+        return my_obs;
+    }
+
+private:
+    static void normalize(std::vector<std::pair<Index_, Float_> >& results) const {
+        for (auto& d : results) {
+            d.second = Distance_::normalize(d.second);
+        }
+        return;
+    } 
+
+public:
+    std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(Index_ i, int k) const {
+        NeighborQueue<Index_, Float_> nearest(k);
+
+        auto copy = my_store.data();
+        for (Index_ x = 0; x < i; ++x, copy += my_dim) {
+            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+        }
+        copy += my_dim; // skip 'i' itself.
+        for (Index_ x = i + 1; x < my_obs; ++x, copy += my_dim) {
+            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+        }
+
+        auto results = nearest.report();
+        normalize(results);
+        return results;
+    }
+
+    std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(const Float_* query, int k) const {
+        NeighborQueue<Index_, Float_> nearest(k);
+
+        auto copy = my_store.data();
+        for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
+            nearest.add(x, Distance_::raw_distance(query, copy, my_dim));
+        }
+
+        auto results = nearest.report();
+        normalize(results);
+        return results;
+    }
+};
+
+/**
  * @brief Perform a brute-force nearest neighbor search.
  *
  * The brute-force search computes all pairwise distances between data and query points to identify nearest neighbors of the latter.
@@ -24,96 +100,36 @@ namespace knncolle {
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
- * @tparam INDEX_t Integer type for the indices.
- * @tparam DISTANCE_t Floating point type for the distances.
- * @tparam QUERY_t Floating point type for the query data.
- * @tparam INTERNAL_t Floating point type for the internal calculations.
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
+ * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
-class BruteForce : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
-private:
-    INDEX_t num_dim;
-    INDEX_t num_obs;
-
-public:
-    INDEX_t nobs() const { return num_obs; } 
-    
-    INDEX_t ndim() const { return num_dim; }
-
-private:
-    std::vector<INTERNAL_t> store;
-
+template<class Distance_ = EuclideanDistance, class MockMatrix_ = SimpleMatrix<double, int>, typename Float_ = double>
+class BruteForceBuilder : public Builder<MockMatrix_, Float> {
 public:
     /**
-     * @param ndim Number of dimensions.
-     * @param nobs Number of observations.
-     * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
-     * i.e., contiguous elements belong to the same observation.
-     *
-     * @tparam INPUT Floating-point type of the input data.
+     * @param data A matrix-like object containing the data to be searched.
+     * @return Pointer to a `BruteForcePrebuilt` object.
      */
-    template<typename INPUT>
-    BruteForce(INDEX_t ndim, INDEX_t nobs, const INPUT* vals) : num_dim(ndim), num_obs(nobs), store(vals, vals + ndim * nobs) {}
+    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const MockMatrix_& data) const {
+        auto ndim = data.num_dimensions();
+        auto nobs = data.num_observations();
 
-    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, index);
-        search_nn(store.data() + index * num_dim, nearest);
+        typedef decltype(ndim) Dim_;
+        typedef decltype(nobs) Index_;
+        typedef typename Matrix_::data_type Store_;
+        std::vector<typename Matrix::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
 
-        auto output = nearest.template report<DISTANCE_t>();
-        normalize(output);
-        return output;
-    }
-
-    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
-        search_nn(query, nearest);
-        auto output = nearest.template report<DISTANCE_t>();
-        normalize(output);
-        return output;
-    }
-
-    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
-        auto candidate = store.data() + num_dim * index;
-        if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
-            return candidate;
-        } else {
-            std::copy(candidate, candidate + num_dim, buffer);
-            return buffer;
+        auto work = data.create_workspace();
+        auto sIt = store.begin();
+        for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
+            auto ptr = data.get_observation(obs);
+            std::copy(ptr, ptr + ndim, sIt);
         }
+
+        return new BruteForcePrebuilt<Distance_, Store_, Dim_, Index_, Float_>(ndim, nobs, std::move(store));
     }
-
-    using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
-
-private:
-    template<class QUEUE>
-    void search_nn(const QUERY_t* query, QUEUE& nearest) const {
-        auto copy = store.data();
-        for (INDEX_t i = 0; i < num_obs; ++i, copy += num_dim) {
-            nearest.add(i, DISTANCE::template raw_distance<INTERNAL_t>(query, copy, num_dim));
-        }
-        return;
-    }
-
-    void normalize(std::vector<std::pair<INDEX_t, DISTANCE_t> >& results) const {
-        for (auto& d : results) {
-            d.second = DISTANCE::normalize(d.second);
-        }
-        return;
-    } 
 };
-
-/**
- * Perform a brute-force search with Euclidean distances.
- */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
-using BruteForceEuclidean = BruteForce<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
-
-/**
- * Perform a brute-force search with Manhattan distances.
- */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = double>
-using BruteForceManhattan = BruteForce<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
 
 }
 

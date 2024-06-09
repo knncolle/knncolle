@@ -18,7 +18,7 @@ namespace knncolle {
  * @tparam Index_ Integer type for the indices.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<typename Dim_, typename Index_, typename Query_>
+template<typename Dim_, typename Index_, typename Float_>
 class Prebuilt {
 public:
     /**
@@ -38,22 +38,6 @@ public:
     /**
      * @endcond
      */
-
-public:
-    /**
-     * Get the vector of coordinates for a given observation in the dataset. 
-     *
-     * `buffer` may not be filled if a pointer to the internal data store can be returned directly.
-     * This can be assumed to be the case if the return address is not the same as `buffer`.
-     *
-     * @param i Index of the observation.
-     * This should be non-negative and less than the total number of observations in `num_observations()`.
-     * @param[out] buffer Buffer of length `num_dimensions()` to store the coordinates.
-     *
-     * @return A pointer to an array containing the coordinate vector.
-     *
-     */
-    virtual const Float_* observation(Index_ i, Float_* buffer) const = 0;
 
 public:
     /** 
