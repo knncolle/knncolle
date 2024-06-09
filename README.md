@@ -74,9 +74,11 @@ Check out the [reference documentation](https://ltla.github.io/knncolle/) for mo
 
 ## Building projects with **knncolle**
 
+### CMake with `FetchContent`
+
 If you're using CMake, you just need to add something like this to your `CMakeLists.txt`:
 
-```
+```cmake
 include(FetchContent)
 
 FetchContent_Declare(
@@ -90,16 +92,46 @@ FetchContent_MakeAvailable(knncolle)
 
 Then you can link to **knncolle** to make the headers available during compilation:
 
-```
+```cmake
 # For executables:
-target_link_libraries(myexe knncolle)
+target_link_libraries(myexe ltla::knncolle)
 
 # For libaries
-target_link_libraries(mylib INTERFACE knncolle)
+target_link_libraries(mylib INTERFACE ltla::knncolle)
 ```
 
-If you're not using CMake, the simple approach is to just copy the files - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's `-I`.
-Note that this will require the manual inclusion of all dependencies, namely the [Annoy](https://github.com/spotify/annoy) and [HNSW](https://github.com/nmslib/hsnwlib) libraries.
+### CMake with `find_package()`
+
+```cmake
+find_package(ltla_knncolle CONFIG REQUIRED)
+target_link_libraries(mylib INTERFACE ltla::knncolle)
+```
+
+To install the library, use:
+
+```sh
+mkdir build && cd build
+cmake .. -DKNNCOLLE_TESTS=OFF
+cmake --build . --target install
+```
+
+By default, this will use `FetchContent` to fetch all external dependencies.
+If you want to install them manually, use `-DKNNCOLLE_FETCH_EXTERN=OFF`.
+See the commit hashes in [`extern/CMakeLists.txt`](extern/CMakeLists.txt) to find compatible versions of each dependency.
+
+### Manual
+
+If you're not using CMake, the simple approach is to just copy the files in `include/` - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's `-I`.
+This requires the external dependencies listed in [`extern/CMakeLists.txt`](extern/CMakeLists.txt), which also need to be made available during compilation.
+
+## Further comments
+
+Both Annoy and HNSW will attempt to perform manual vectorization based on SSE and/or AVX instructions.
+This may result in differences in the results across machines due to changes in numeric precision across architectures with varying support for SSE/AVX intrinsics.
+For the most part, such differences can be avoided by consistently compiling for the "near-lowest common denominator" (such as the typical `x86-64` default for GCC and Clang) 
+and ensuring that the more specific instruction subsets like SSE3 and AVX are not enabled (which are typically off by default anyway).
+Nonetheless, if reproducibility across architectures is important, it can be achieved at the cost of some speed by defining the `NO_MANUAL_VECTORIZATION` macro,
+which will instruct both Annoy and HNSW to disable their vectorized optimizations.
 
 ## Further comments
 
