@@ -26,16 +26,16 @@ namespace knncolle {
  * Instances of this class are usually constructed using `VptreeBuilder`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * @tparam Store_ Floating point type for the stored data. 
- * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::data_type`.
- * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
  * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
  * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::index_type`.
+ * @tparam Store_ Floating point type for the stored data. 
+ * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::data_type`.
+ * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and distances.
  */
-template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
 class VptreePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
@@ -287,7 +287,7 @@ public:
  * VP trees: A data structure for finding stuff fast.
  * http://stevehanov.ca/blog/index.php?id=130
  */
-template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int, int>, typename Float_ = double>
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class VptreeBuilder : public Builder<Matrix_, Float_> {
 public:
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
@@ -304,7 +304,7 @@ public:
             std::copy_n(ptr, ndim, sIt);
         }
 
-        return new VptreePrebuilt<Distance_, Store_, decltype(ndim), decltype(nobs), Float_>(ndim, nobs, std::move(store));
+        return new VptreePrebuilt<Distance_, decltype(ndim), decltype(nobs), Store_, Float_>(ndim, nobs, std::move(store));
     }
 };
 

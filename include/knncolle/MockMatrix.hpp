@@ -108,11 +108,11 @@ public:
  * This defines a simple column-major matrix of observations where the columns are observations and the rows are dimensions.
  * It is compatible with the compile-time interface described in `MockMatrix`.
  *
- * @tparam Data_ Floating-point type for the data.
- * @tparam Index_ Integer type for the observation indices.
  * @tparam Dim_ Integer type for the dimensions.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Data_ Floating-point type for the data.
  */
-template<typename Data_, typename Index_, typename Dim_>
+template<typename Dim_, typename Index_, typename Data_>
 class SimpleMatrix {
 public:
     /**

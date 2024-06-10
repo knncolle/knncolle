@@ -24,14 +24,14 @@ namespace knncolle {
 
 /** 
  * @brief Options for `KmknnBuilder` and `KmknnPrebuilt` construction. 
- * @tparam Store_ Floating point type for the stored data. 
- * For `KmknnBuilder`, this should be the same as `MockMatrix::data_type`.
- * @tparam Index_ Integer type for the indices.
- * For `KmknnBuilder`, this should be the same as `MockMatrix::index_type`.
  * @tparam Dim_ Integer type for the number of dimensions.
  * For `KmknnBuilder`, this should be the same as `MockMatrix::dimension_type`.
+ * @tparam Index_ Integer type for the indices.
+ * For `KmknnBuilder`, this should be the same as `MockMatrix::index_type`.
+ * @tparam Store_ Floating point type for the stored data. 
+ * For `KmknnBuilder`, this should be the same as `MockMatrix::data_type`.
  */
-template<typename Store_ = double, typename Index_ = int, typename Dim_ = int> 
+template<typename Dim_ = int, typename Index_ = int, typename Store_ = double>
 struct KmknnOptions {
     /**
      * Power of the number of observations, to define the number of cluster centers.
@@ -61,16 +61,16 @@ struct KmknnOptions {
  * Instances of this class are usually constructed using `KmknnBuilder`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * @tparam Store_ Floating point type for the stored data. 
- * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::data_type`.
- * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
  * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
  * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::index_type`.
+ * @tparam Store_ Floating point type for the stored data. 
+ * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::data_type`.
+ * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and distances.
  */
-template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
 class KmknnPrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
@@ -103,7 +103,7 @@ public:
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      * @param options Options for constructing the k-means index.
      */
-    KmknnPrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, const KmknnOptions<Store_, Index_, Dim_>& options) :
+    KmknnPrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, const KmknnOptions<Dim_, Index_, Store_>& options) :
         my_dim(num_dim),
         my_obs(num_obs),
         my_long_ndim(my_dim),
@@ -348,16 +348,16 @@ public:
  * A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. 
  * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
  */
-template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int, int>, typename Float_ = double>
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class KmknnBuilder : public Builder<Matrix_, Float_> {
 private:
-    KmknnOptions<typename Matrix_::data_type, typename Matrix_::index_type, typename Matrix_::dimension_type> my_options;
+    KmknnOptions<typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type> my_options;
 
 public:
     /**
      * @param options Further options for the KMKNN algorithm.
      */
-    KmknnBuilder(const KmknnOptions<typename Matrix_::data_type, typename Matrix_::index_type, typename Matrix_::dimension_type>& options) : 
+    KmknnBuilder(const KmknnOptions<typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type>& options) :
         my_options(std::move(options)) {}
 
     /**
@@ -380,7 +380,7 @@ public:
             std::copy_n(ptr, ndim, sIt);
         }
 
-        return new KmknnPrebuilt<Distance_, Store_, decltype(ndim), decltype(nobs), Float_>(ndim, nobs, std::move(store), my_options);
+        return new KmknnPrebuilt<Distance_, decltype(ndim), decltype(nobs), Store_, Float_>(ndim, nobs, std::move(store), my_options);
     }
 };
 

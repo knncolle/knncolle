@@ -28,7 +28,7 @@ TEST_P(VptreeTest, FindEuclidean) {
     auto bptr = bb.build_unique(mat);
 
     // Testing other types. 
-    knncolle::SimpleMatrix<double, size_t, int> mat2(ndim, nobs, data.data());
+    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
     knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float> vb2;
     auto vptr2 = vb2.build_unique(mat2);
 

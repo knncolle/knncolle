@@ -20,7 +20,7 @@ namespace knncolle {
  * For the output of `Builder::build`, this is set to `MockMatrix::index_type`.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<typename Dim_ = int, typename Index_ = int, typename Float_ = double>
+template<typename Dim_, typename Index_, typename Float_>
 class Prebuilt {
 public:
     /**

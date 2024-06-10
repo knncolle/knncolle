@@ -24,16 +24,16 @@ namespace knncolle {
  * Instances of this class are usually constructed using `BruteforceBuilder`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * @tparam Store_ Floating point type for the stored data. 
- * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::data_type`.
  * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
  * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
  * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::index_type`.
+ * @tparam Store_ Floating point type for the stored data. 
+ * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::data_type`.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
 class BruteforcePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
@@ -104,7 +104,7 @@ public:
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int, int>, typename Float_ = double>
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class BruteforceBuilder : public Builder<Matrix_, Float_> {
 public:
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
@@ -123,7 +123,7 @@ public:
             std::copy(ptr, ptr + ndim, sIt);
         }
 
-        return new BruteforcePrebuilt<Distance_, Store_, Dim_, Index_, Float_>(ndim, nobs, std::move(store));
+        return new BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>(ndim, nobs, std::move(store));
     }
 };
 

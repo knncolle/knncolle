@@ -21,7 +21,7 @@ TEST_P(BruteforceTest, FindEuclidean) {
     EXPECT_EQ(nobs, bptr->num_observations());
 
     // Testing other types. 
-    knncolle::SimpleMatrix<double, size_t, int> mat2(ndim, nobs, data.data());
+    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
     knncolle::BruteforceBuilder<knncolle::EuclideanDistance, decltype(mat2), float> bb2;
     auto bptr2 = bb2.build_unique(mat2);
 

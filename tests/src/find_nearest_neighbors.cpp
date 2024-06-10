@@ -76,7 +76,7 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
     auto base = knncolle::VptreeBuilder<>().build_unique(mat);
     auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
-    knncolle::SimpleMatrix<double, size_t, int> mat2(ndim, nobs, data.data());
+    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
     auto base2 = knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float>().build_unique(mat2);
     auto out2 = knncolle::find_nearest_neighbors(*base2, k, 1);
 
