@@ -19,7 +19,7 @@ add_executable(
     src/Bruteforce.cpp
     src/Vptree.cpp
     src/Kmknn.cpp
-    #    src/find_nearest_neighbors.cpp
+    src/find_nearest_neighbors.cpp
 )
 
 target_link_libraries(

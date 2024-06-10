@@ -31,29 +31,29 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
  * @tparam Index_ Integer type for the indices.
  * @tparam Float_ Floating point type for the query data and output distances.
  *
- * @param index Pointer to a `Prebuilt` index.
+ * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
- * @param nthreads Number of threads to use.
+ * @param num_threads Number of threads to use.
  *
- * @return A `NeighborList` of length equal to the number of observations in `ptr->nobs()`.
+ * @return A `NeighborList` of length equal to the number of observations in `index`.
  * Each entry contains the `k` nearest neighbors for each observation, sorted by increasing distance.
  */
 template<typename Dim_, typename Index_, typename Float_>
-NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Input_, Float_>* index, int k, int nthreads) {
-    Index_ nobs = ptr->nobs();
-    NeighborList<INDEX_t, Float_> output(nobs);
+NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads) {
+    Index_ nobs = index.num_observations();
+    NeighborList<Index_, Float_> output(nobs);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(nthreads)
+    #pragma omp parallel for num_threads(num_threads)
 #endif
     for (Index_ i = 0; i < nobs; ++i) {
 #else
-    KNNCOLLE_CUSTOM_PARALLEL(nobs, nthreads, [&](Index_ start, Index_ length) -> void {
+    KNNCOLLE_CUSTOM_PARALLEL(nobs, num_threads, [&](Index_ start, Index_ length) -> void {
     for (Index_ i = start, end = start + length; i < end; ++i) {
 #endif        
 
-        ptr->search(i, k, output[i]);
+        index.search(i, k, output[i]);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL    
     }
@@ -73,21 +73,21 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Input_,
  * @tparam Index_ Integer type for the indices.
  * @tparam Float_ Floating point type for the query data and output distances.
  *
- * @param index Pointer to a `Prebuilt` index.
+ * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
- * @param nthreads Number of threads to use.
+ * @param num_threads Number of threads to use.
  *
- * @return A vector of vectors of length equal to the number of observations in `ptr->nobs()`.
+ * @return A vector of vectors of length equal to the number of observations in `index`.
  * Each vector contains the indices of the `k` nearest neighbors for each observation, sorted by increasing distance.
  */
 template<typename Dim_, typename Index_, typename Float_>
-std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>* index, int k, int nthreads) {
-    Index_ nobs = ptr->nobs();
-    std::vector<std::vector<INDEX_t> > output(nobs);
+std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads) {
+    Index_ nobs = index.num_observations();
+    std::vector<std::vector<Index_> > output(nobs);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL
 #ifdef _OPENMP
-    #pragma omp parallel num_threads(nthreads)
+    #pragma omp parallel num_threads(num_threads)
     {
     std::vector<std::pair<Index_, Float_> > tmp;
     #pragma omp for
@@ -97,12 +97,12 @@ std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebui
     for (Index_ i = 0; i < nobs; ++i) {
 #endif
 #else
-    KNNCOLLE_CUSTOM_PARALLEL(nobs, nthreads, [&](Index_ start, Index_ length) -> void {
+    KNNCOLLE_CUSTOM_PARALLEL(nobs, num_threads, [&](Index_ start, Index_ length) -> void {
     std::vector<std::pair<Index_, Float_> > tmp;
     for (Index_ i = start, end = start + length; i < end; ++i) {
 #endif        
 
-        ptr->search(i, k, tmp);
+        index.search(i, k, tmp);
         for (const auto& x : tmp) {
             output[i].push_back(x.first);
         }
