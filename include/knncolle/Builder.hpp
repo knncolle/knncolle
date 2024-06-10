@@ -1,6 +1,8 @@
 #ifndef KNNCOLLE_BUILDER_HPP
 #define KNNCOLLE_BUILDER_HPP
 
+#include "Prebuilt.hpp"
+
 /**
  * @file Builder.hpp
  *
@@ -30,7 +32,7 @@ public:
      * @param data Matrix-like object (see `MockMatrix`) containing observations in columns and dimensions in rows.
      * @return Pointer to a pre-built search index.
      */
-    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const MockMatrix_& input) const = default;
+    virtual Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const = 0;
 };
 
 }

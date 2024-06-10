@@ -73,14 +73,14 @@ private:
     } 
 
 public:
-    void search(Index_ i, int k, std::vector<std::pair<Index_, Float_> >& output) const {
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
         NeighborQueue<Index_, Float_> nearest(k + 1);
         search(query, nearest);
         nearest.report(output, i);
         normalize(output);
     }
 
-    void search(const Float_* query, int k, std::vector<std::pair<Index_, Float_> >& output) const {
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
         NeighborQueue<Index_, Float_> nearest(k);
         search(query, nearest);
         nearest.report(output);
@@ -101,7 +101,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
-class BruteforceBuilder : public Builder<Matrix_, Float> {
+class BruteforceBuilder : public Builder<Matrix_, Float_> {
 public:
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const {
         auto ndim = data.num_dimensions();

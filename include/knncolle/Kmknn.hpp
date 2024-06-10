@@ -98,6 +98,7 @@ public:
      * @param num_dim Number of dimensions.
      * @param num_obs Number of observations.
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
+     * @param options Options for constructing the k-means index.
      */
     KmknnPrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, const KmknnOptions<Index_, Store_>& options) :
         my_dim(num_dim),

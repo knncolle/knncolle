@@ -251,7 +251,7 @@ public:
         nearest.report(output, new_i);
     }
 
-    std::vector<std::pair<INDEX_t, Distance__t> > find_nearest_neighbors(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
         NeighborQueue<Index_, Float_> nearest(k);
         Float_ max_dist = std::numeric_limits<Float_>::max();
         search_nn(0, query, max_dist, nearest);
