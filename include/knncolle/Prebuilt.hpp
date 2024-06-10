@@ -46,23 +46,21 @@ public:
      * @param i The index of the observation of interest.
      * This should be non-negative and less than the total number of observations in `num_observations()`.
      * @param k The number of neighbors to identify.
-     *
-     * @return A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
+     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
      * Length is at most `k` but may be shorter if the total number of observations is less than `k + 1`.
      * This vector is guaranteed to not contain `i` itself.
      */
-    virtual std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(Index_ i, Index_ k) const = 0;
+    virtual void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
      *
      * @param query Pointer to an array of length equal to `num_dimensions()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
-     *
-     * @return A vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
+     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
      * Length is at most `k` but may be shorter if the total number of observations is less than `k`.
      */
-    virtual std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(const Float_* query, Index_ k) const = 0;
+    virtual void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const = 0;
 };
 
 }

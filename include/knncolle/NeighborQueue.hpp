@@ -45,8 +45,35 @@ public:
         return;
     }
 
-    std::vector<std::pair<Index_, Distance_> > report() {
-        std::vector<std::pair<INDEX_t, DISTANCE_t> > output;
+    void report(std::vector<std::pair<Index_, Distance_> >& output, Index_ self) {
+        output.clear();
+        output.reserve(my_nearest.size() - 1);
+
+        bool found_self = false;
+        while (!my_nearest.empty()) {
+            const auto& top = my_nearest.top();
+            if (!found_self && top.second == self) {
+                found_self = true;
+            } else {
+                output.push_back(std::pair<INDEX_t, DISTANCE_t>(top.second, top.first));
+                my_nearest.pop();
+            }
+        }
+
+        // We use push_back + reverse to give us sorting in increasing order;
+        // this is nicer than push_front() for std::vectors.
+        std::reverse(output.begin(), output.end());
+
+        // Removing the most distance element if we couldn't find ourselves,
+        // e.g., because there are too many duplicates.
+        if (!found_self) {
+            output.pop_back();
+        }
+    } 
+
+    void report(std::vector<std::pair<Index_, Distance_> >& output) {
+        output.clear();
+        output.reserve(my_nearest.size());
 
         while (!my_nearest.empty()) {
             const auto& top = my_nearest.top();
@@ -57,7 +84,6 @@ public:
         // We use push_back + reverse to give us sorting in increasing order;
         // this is nicer than push_front() for std::vectors.
         std::reverse(output.begin(), output.end());
-        return output;
     } 
 
 private:

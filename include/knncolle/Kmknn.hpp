@@ -1,26 +1,17 @@
 #ifndef KNNCOLLE_KMKNN_HPP
 #define KNNCOLLE_KMKNN_HPP
 
-#include "../utils/distances.hpp"
-#include "../utils/NeighborQueue.hpp"
-#include "../utils/Base.hpp"
-#include "kmeans/Kmeans.hpp"
+#include "distances.hpp"
+#include "NeighborQueue.hpp"
+#include "Prebuilt.hpp"
+#include "Builder.hpp"
+#include "kmeans/kmeans.hpp"
 
 #include <algorithm>
 #include <vector>
 #include <random>
 #include <limits>
 #include <cmath>
-
-#ifdef DEBUG
-#include <iostream>
-#endif
-
-#ifndef KMEANS_CUSTOM_PARALLEL
-#ifdef KNNCOLLE_CUSTOM_PARALLEL
-#define KMEANS_CUSTOM_PARALLEL KNNCOLLE_CUSTOM_PARALLEL
-#endif
-#endif
 
 /**
  * @file Kmknn.hpp
@@ -30,200 +21,225 @@
 
 namespace knncolle {
 
+template<typename Index_, typename Store_> 
+struct KmknnOptions {
+    /**
+     * Power of the number of observations, to define the number of cluster centers.
+     * By default, a square root is performed.
+     */
+    double power = 0.5;
+
+    /**
+     * Initialization method for the k-means clustering.
+     * If NULL, defaults to `kmeans::InitializeKmeanspp`.
+     */
+    std::shared_ptr<kmeans::Initialize<kmeans::SimpleMatrix<Store_, Index_>, Index_, Store_> > initialize_algorithm;
+
+    /**
+     * Refinement method for the k-means clustering.
+     * If NULL, defaults to `kmeans::RefineHartiganWong`.
+     */
+    std::shared_ptr<kmeans::Refine<kmeans::SimpleMatrix<Store_, Index_>, Index_, Store_> > refine_algorithm;
+};
+
 /**
- * @brief Perform a nearest neighbor search based on k-means clustering.
+ * @brief Index for a KMKNN search.
  *
- * In the k-means with k-nearest neighbors (KMKNN) algorithm (Wang, 2012), k-means clustering is first applied to the data points,
- * with the number of cluster centers defined as the square root of the number of points.
- * The cluster assignment and distance to the assigned cluster center for each point represent the KMKNN indexing information, 
- * allowing us to speed up the nearest neighbor search by exploiting the triangle inequality between cluster centers, the query point and each point in the cluster to narrow the search space.
- * The advantage of the KMKNN approach is its simplicity and minimal overhead,
- * resulting in performance improvements over conventional tree-based methods for high-dimensional data where most points need to be searched anyway.
+ * Instances of this class are usually constructed using `KmknnBuilder`.
  *
- * @tparam DISTANCE Class to compute the distance between vectors, see `distance::Euclidean` for an example.
- * @tparam INDEX_t Integer type for the indices.
- * @tparam DISTANCE_t Floating point type for the distances.
- * @tparam QUERY_t Floating point type for the query data.
- * @tparam INTERNAL_t Floating point type for the data.
- *
- * @see
- * Wang X (2012). 
- * A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. 
- * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Store_ Floating point type for the stored data. 
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class DISTANCE, typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
-class Kmknn : public Base<INDEX_t, DISTANCE_t, QUERY_t> {
+template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
+class KmknnPrebuilt {
 private:
-    INDEX_t num_dim;
-    INDEX_t num_obs;
+    Dim_ my_dim;
+    Index_ my_obs;
+    size_t long_ndim;
 
 public:
-    INDEX_t nobs() const { return num_obs; } 
+    Index_ num_observations() const { return num_obs; } 
     
-    INDEX_t ndim() const { return num_dim; }
+    Dim_ num_dimensions() const { return my_dim; }
 
 private:
-    std::vector<INTERNAL_t> data;
+    std::vector<Store_> my_data;
     
-    std::vector<INDEX_t> sizes;
-    std::vector<INDEX_t> offsets;
+    std::vector<Index_> my_sizes;
+    std::vector<Index_> my_offsets;
+    std::vector<Store_> my_centers;
 
-    std::vector<INTERNAL_t> centers;
-
-    std::vector<INDEX_t> observation_id, new_location;
-    std::vector<DISTANCE_t> dist_to_centroid;
+    std::vector<Index_> my_observation_id, my_new_location;
+    std::vector<Float_> my_dist_to_centroid;
 
 public:
     /**
-     * @param ndim Number of dimensions.
-     * @param nobs Number of observations.
-     * @param vals Pointer to an array of length `ndim * nobs`, corresponding to a dimension-by-observation matrix in column-major format, 
-     * i.e., contiguous elements belong to the same observation.
-     * @param power Power of `nobs` to define the number of cluster centers.
-     * By default, a square root is performed.
-     * @param nthreads Number of threads to use for the k-means clustering.
-     *
-     * @tparam INPUT_t Floating-point type of the input data.
+     * @param num_dim Number of dimensions.
+     * @param num_obs Number of observations.
+     * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
-    template<typename INPUT_t>
-    Kmknn(INDEX_t ndim, INDEX_t nobs, const INPUT_t* vals, double power = 0.5, int nthreads = 1) : 
-            num_dim(ndim), 
-            num_obs(nobs), 
-            data(ndim * nobs), 
-            sizes(std::ceil(std::pow(num_obs, power))), 
-            offsets(sizes.size()),
-            centers(sizes.size() * ndim),
-            observation_id(nobs),
-            new_location(nobs),
-            dist_to_centroid(nobs)
+    KmknnPrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, const KmknnOptions<Index_, Store_>& options) :
+        my_dim(num_dim), my_obs(num_obs), long_ndim(my_dim) my_data(std::move(data))
     { 
-        std::vector<int> clusters(num_obs);
-        auto ncenters = sizes.size();
-
-        // Try to avoid a copy if we're dealing with the same type;
-        // otherwise, we just dump it into 'data', given that we 
-        // won't be rewriting it for a while anyway.
-        const INTERNAL_t* host;
-        if constexpr(std::is_same<INPUT_t, INTERNAL_t>::value) {
-            host = vals;
-        } else {
-            std::copy(vals, vals + data.size(), data.data());
-            host = data.data();
+        auto init = my_options.initialize_algorithm;
+        if (init == nullptr_t) {
+            init.reset(new kmeans::InitializeKmeanspp);
+        }
+        auto refine = my_options.refine_algorithm;
+        if (refine == nullptr_t) {
+            refine.reset(new kmeans::RefineHartiganWong);
         }
 
-        kmeans::Kmeans<INTERNAL_t, int> krunner;
-        krunner.set_num_threads(nthreads);
-        auto output = kmeans::Kmeans<INTERNAL_t, int>().run(ndim, nobs, host, ncenters, centers.data(), clusters.data());
-        std::swap(sizes, output.sizes);
+        Index_ ncenters = std::ceil(std::pow(my_obs, options.power));
+        my_centers.resize(static_cast<size_t>(ncenters) * long_ndim); // cast to avoid overflow problems.
 
-        // In case there were some duplicate points, we just resize this a bit.
-        if (ncenters != sizes.size()) {
-            ncenters = sizes.size();
-            offsets.resize(ncenters);
-            centers.resize(ncenters * ndim);
+        kmeans::SimpleMatrix<Store_, Index_> mat(my_dim, my_obs, data.data());
+        std::vector<Index_> clusters(my_obs);
+        auto output = kmeans::compute(mat, init.get(), refine.get(), ncenters, my_centers.data(), clusters.data());
+
+        // Removing empty clusters, e.g., due to duplicate points.
+        {
+            my_sizes.resize(ncenters);
+            std::vector<Index_> remap(ncenters);
+            Index_ survivors = 0;
+            for (Index_ c = 0; c < ncenters; ++c) {
+                if (output.sizes[c]) {
+                    if (c > survivors) {
+                        auto src = my_centers.begin() + static_cast<size_t>(c) * long_ndim; // cast to avoid overflow.
+                        auto dest = my_centers.begin() + static_cast<size_t>(survivors) * long_ndim;
+                        std::copy_n(src, my_dim, dest);
+                    }
+                    remap[c] = survivors;
+                    my_sizes[survivors] = output.sizes[c];
+                    ++survivors;
+                }
+            }
+
+            if (survivors < ncenters) {
+                for (auto& c : clusters) {
+                    c = remap[c];
+                }
+                ncenters = survivors;
+                my_centers.resize(static_cast<size_t>(ncenters) * long_ndim);
+            }
         }
 
-        for (INDEX_t i = 1; i < ncenters; ++i) {
-            offsets[i] = offsets[i - 1] + sizes[i - 1];
+        my_offsets.resize(ncenters);
+        for (Index_ i = 1; i < ncenters; ++i) {
+            my_offsets[i] = my_offsets[i - 1] + my_sizes[i - 1];
         }
 
         // Organize points correctly; firstly, sorting by distance from the assigned center.
-        std::vector<std::pair<INTERNAL_t, INDEX_t> > by_distance(nobs);
+        std::vector<std::pair<Store_, Index_> > by_distance(my_obs);
         {
             auto sofar = offsets;
-            for (INDEX_t o = 0; o < nobs; ++o) {
-                const auto& clustid = clusters[o];
-                auto& counter = sofar[clustid];
+            auto host = data.data();
+            for (Index_ o = 0; o < my_obs; ++o) {
+                auto optr = host + static_cast<size_t>(o) * long_ndim;
+                auto clustid = clusters[o];
+                auto cptr = centers.data() + static_cast<size_t>(clustid) * long_ndim;
+
                 auto& current = by_distance[counter];
-                current.first = DISTANCE::normalize(DISTANCE::template raw_distance<INTERNAL_t>(host + o * num_dim, centers.data() + clustid * num_dim, num_dim));
+                current.first = Distance_::normalize(Distance_::template raw_distance<Store_>(optr, cptr, my_dim));
                 current.second = o;
+
+                auto& counter = sofar[clustid];
                 ++counter;
             }
 
-            for (INDEX_t c = 0; c < ncenters; ++c) {
-                auto begin = by_distance.begin() + offsets[c];
-                std::sort(begin, begin + sizes[c]);
+            for (Index_ c = 0; c < ncenters; ++c) {
+                auto begin = by_distance.begin() + my_offsets[c];
+                std::sort(begin, begin + my_sizes[c]);
             }
         }
 
-        // Now, copying this over. 
+        // Permuting in-place to mirror the reordered distances, so that the search is more cache-friendly.
         {
-            auto store = data.data();
-            for (INDEX_t o = 0; o < nobs; ++o, store += num_dim) {
+            auto host = data.data();
+            std::vector<uint8_t> used(my_obs);
+            std::vector<Store_> buffer(my_dim);
+            my_observation_id.resize(my_obs);
+            my_dist_to_centroid.resize(my_obs);
+            my_new_location.resize(my_obs);
+
+            for (Index_ o = 0; o < my_obs; ++o) {
+                if (used[o]) {
+                    continue;
+                }
+
                 const auto& current = by_distance[o];
-                auto source = vals + ndim * current.second; // must use 'vals' here, as 'host' might alias 'data'!
-                std::copy(source, source + ndim, store);
-                observation_id[o] = current.second;
-                new_location[current.second] = o;
-                dist_to_centroid[o] = current.first;
+                my_observation_id[o] = current.second;
+                my_dist_to_centroid[o] = current.first;
+                my_new_location[current.second] = o;
+                if (current.second == o) {
+                    continue;
+                }
+
+                auto optr = host + static_cast<size_t>(o) * long_ndim;
+                std::copy_n(optr, my_dim, buffer.begin());
+                Index_ replacement = current.second;
+                do {
+                    auto rptr = host + static_cast<size_t>(replacement) * long_ndim;
+                    std::copy_n(rptr, my_dim, optr);
+                    used[replacement] = 1;
+
+                    const auto& next = by_distance[replacement];
+                    my_observation_id[replacement] = next.second;
+                    my_dist_to_centroid[replacement] = next.first;
+                    my_new_location[next.second] = replacement;
+
+                    optr = rptr;
+                    replacement = next.second;
+                } while (replacement != o);
+
+                std::copy(buffer.begin(), buffer.end(), optr);
             }
         }
 
         return;
     }
 
-    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(INDEX_t index, int k) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k, new_location[index]);
-        search_nn(data.data() + new_location[index] * num_dim, nearest);
-        return report(nearest);
-    }
-
-    std::vector<std::pair<INDEX_t, DISTANCE_t> > find_nearest_neighbors(const QUERY_t* query, int k) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
-        search_nn(query, nearest);
-        return report(nearest);
-    }
-
-    const QUERY_t* observation(INDEX_t index, QUERY_t* buffer) const {
-        auto candidate = data.data() + num_dim * new_location[index];
-        if constexpr(std::is_same<QUERY_t, INTERNAL_t>::value) {
-            return candidate;
-        } else {
-            std::copy(candidate, candidate + num_dim, buffer);
-            return buffer;
-        }
-    }
-
-    using Base<INDEX_t, DISTANCE_t, QUERY_t>::observation;
-
 private:
-    template<typename INPUT_t>
-    void search_nn(INPUT_t* target, NeighborQueue<INDEX_t, INTERNAL_t>& nearest) const { 
+    template<typename Query_>
+    void search_nn(const Query_* target, NeighborQueue<Index_, Float_>& nearest) const { 
         /* Computing distances to all centers and sorting them. The aim is to
          * go through the nearest centers first, to get the shortest
          * 'threshold' possible through the rest of the search.
          */
-        std::vector<std::pair<INTERNAL_t, INDEX_t> > center_order(sizes.size());
+        std::vector<std::pair<Float_, Index_> > center_order;
+        center_order.reserve(my_sizes.size());
         auto clust_ptr = centers.data();
-        for (size_t c = 0; c < sizes.size(); ++c, clust_ptr += num_dim) {
-            center_order[c].first = DISTANCE::template raw_distance<INTERNAL_t>(target, clust_ptr, num_dim);
-            center_order[c].second = c;
+        for (size_t c = 0; c < my_sizes.size(); ++c, clust_ptr += my_dim) {
+            center_order.emplace_back(Distance_::template raw_distance<Float_>(target, clust_ptr, my_dim), c);
         }
         std::sort(center_order.begin(), center_order.end());
-        INTERNAL_t threshold_raw = -1;
+        Store_ threshold_raw = -1;
 
         // Computing the distance to each center, and deciding whether to proceed for each cluster.
         for (const auto& curcent : center_order) {
-            const INDEX_t center = curcent.second;
-            const INTERNAL_t dist2center = DISTANCE::normalize(curcent.first);
+            const Index_ center = curcent.second;
+            const Store_ dist2center = Distance_::normalize(curcent.first);
 
-            const auto cur_nobs = sizes[center];
-            const DISTANCE_t* dIt = dist_to_centroid.data() + offsets[center];
-            const DISTANCE_t maxdist = *(dIt + cur_nobs - 1);
+            const auto cur_nobs = my_sizes[center];
+            const Float_* dIt = my_dist_to_centroid.data() + my_offsets[center];
+            const Float_ maxdist = *(dIt + cur_nobs - 1);
 
-            INDEX_t firstcell=0;
+            Index_ firstcell=0;
 #if USE_UPPER
-            INTERNAL_t upper_bd = std::numeric_limits<INTERNAL_t>::max();
+            Store_ upper_bd = std::numeric_limits<Store_>::max();
 #endif
             
             if (threshold_raw >= 0) {
-                const INTERNAL_t threshold = DISTANCE::normalize(threshold_raw);
+                const Store_ threshold = Distance_::normalize(threshold_raw);
 
                 /* The conditional expression below exploits the triangle inequality; it is equivalent to asking whether:
                  *     threshold + maxdist < dist2center
                  * All points (if any) within this cluster with distances above 'lower_bd' are potentially countable.
                  */
-                const DISTANCE_t lower_bd = dist2center - threshold;
+                const Float_ lower_bd = dist2center - threshold;
                 if (maxdist < lower_bd) {
                     continue;
                 }
@@ -236,60 +252,102 @@ private:
 #endif
             }
 
-            const auto cur_start = offsets[center];
-            const INTERNAL_t * other_cell = data.data() + num_dim * (cur_start + firstcell);
-            for (auto celldex = firstcell; celldex < cur_nobs; ++celldex, other_cell += num_dim) {
+            const auto cur_start = my_offsets[center];
+            const Store_ * other_cell = my_data.data() + long_ndim * static_cast<size_t>(cur_start + firstcell); // cast to avoid overflow issues.
+            for (auto celldex = firstcell; celldex < cur_nobs; ++celldex, other_cell += my_dim) {
 #if USE_UPPER
                 if (*(dIt + celldex) > upper_bd) {
                     break;
                 }
 #endif
-                const auto dist2cell_raw = DISTANCE::template raw_distance<INTERNAL_t>(target, other_cell, num_dim);
+                auto dist2cell_raw = Distance_::template raw_distance<Float_>(target, other_cell, my_dim);
                 nearest.add(cur_start + celldex, dist2cell_raw);
                 if (nearest.is_full()) {
                     threshold_raw = nearest.limit(); // Shrinking the threshold, if an earlier NN has been found.
 #if USE_UPPER
-                    upper_bd = DISTANCE::normalize(threshold_raw) + dist2center; 
+                    upper_bd = Distance_::normalize(threshold_raw) + dist2center; 
 #endif
                 }
             }
         }
     }
 
-    template<class QUEUE>
-    auto report(QUEUE& nearest) const {
-        auto output = nearest.template report<DISTANCE_t>();
+    void normalize(std::vector<std::pair<Index_, Float_> >& nearest) const {
         for (auto& s : output) {
             s.first = observation_id[s.first];
-            s.second = DISTANCE::normalize(s.second);
+            s.second = Distance_::normalize(s.second);
         }
         return output;
     }
 
-#ifdef DEBUG
-    template<class V>
-    void print_vector(const V& input, const char* msg) const {
-        std::cout << msg << ": ";
-        for (auto v : input) {
-            std::cout << v << " ";
-        }
-        std::cout << std::endl;
+public:
+    void search(Index_ index, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k + 1);
+        search_nn(data.data() + new_location[index] * num_dim, nearest);
+        nearest.report(output, new_location[index]);
+        normalize(output);
     }
-#endif
+
+    void search(Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
+        search_nn(query, nearest);
+        nearest.report(output);
+        normalize(output);
+    }
 };
 
 /**
- * Perform a KMKNN search with Euclidean distances.
+ * @brief Perform a nearest neighbor search based on k-means clustering.
+ *
+ * In the k-means with k-nearest neighbors (KMKNN) algorithm (Wang, 2012), k-means clustering is first applied to the data points,
+ * with the number of cluster centers defined as the square root of the number of points.
+ * The cluster assignment and distance to the assigned cluster center for each point represent the KMKNN indexing information, 
+ * allowing us to speed up the nearest neighbor search by exploiting the triangle inequality between cluster centers, the query point and each point in the cluster to narrow the search space.
+ * The advantage of the KMKNN approach is its simplicity and minimal overhead,
+ * resulting in performance improvements over conventional tree-based methods for high-dimensional data where most points need to be searched anyway.
+ *
+ * @tparam Distance_ Class to compute the distance between vectors, see `distance::Euclidean` for an example.
+ * @tparam INDEX_t Integer type for the indices.
+ * @tparam Float_ Floating point type for the distances.
+ * @tparam QUERY_t Floating point type for the query data.
+ * @tparam INTERNAL_t Floating point type for the data.
+ *
+ * @see
+ * Wang X (2012). 
+ * A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. 
+ * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
  */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
-using KmknnEuclidean = Kmknn<distances::Euclidean, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
+class KmknnBuilder {
+private:
+    KmknnOptions<typename Matrix_::index_type, typename Matrix_::data_type> my_options;
 
-/**
- * Perform a KMKNN search with Manhattan distances.
- * Note that k-means clustering may not provide a particularly good indexing structure for Manhattan distances, so your mileage may vary.
- */
-template<typename INDEX_t = int, typename DISTANCE_t = double, typename QUERY_t = DISTANCE_t, typename INTERNAL_t = DISTANCE_t>
-using KmknnManhattan = Kmknn<distances::Manhattan, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t>;
+public:
+    /**
+     * @param options Further options for the KMKNN algorithm.
+     */
+    KmknnBuilder(const KmknnOptions<typename Matrix_::index_type, typename Matrix_::data_type>& options) : my_options(std::move(options)) {}
+
+public:
+    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const {
+        auto ndim = data.num_dimensions();
+        auto nobs = data.num_observations();
+
+        typedef decltype(ndim) Dim_;
+        typedef decltype(nobs) Index_;
+        typedef typename Matrix_::data_type Store_;
+        std::vector<typename Matrix::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
+
+        auto work = data.create_workspace();
+        auto sIt = store.begin();
+        for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
+            auto ptr = data.get_observation(obs);
+            std::copy(ptr, ptr + ndim, sIt);
+        }
+
+        return new KmknnPrebuilt<Distance, Store_, decltype(ndim), decltype(nobs), Float_>(ndim, nobs, std::move(store), my_options);
+    }
+};
 
 };
 

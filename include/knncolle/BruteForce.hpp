@@ -53,6 +53,13 @@ public:
     }
 
 private:
+    void search(const Query_* query, NeighborQueue<Index_, Store_>& nearest) {
+        auto copy = my_store.data();
+        for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
+            nearest.add(x, Distance_::template raw_distance<Store_>(query, copy, my_dim));
+        }
+    }
+
     static void normalize(std::vector<std::pair<Index_, Float_> >& results) const {
         for (auto& d : results) {
             d.second = Distance_::normalize(d.second);
@@ -61,34 +68,18 @@ private:
     } 
 
 public:
-    std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(Index_ i, int k) const {
-        NeighborQueue<Index_, Float_> nearest(k);
-
-        auto copy = my_store.data();
-        for (Index_ x = 0; x < i; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
-        }
-        copy += my_dim; // skip 'i' itself.
-        for (Index_ x = i + 1; x < my_obs; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
-        }
-
-        auto results = nearest.report();
-        normalize(results);
-        return results;
+    void search(Index_ i, int k, std::vector<std::pair<Index_, Float_> >& output) const {
+        NeighborQueue<Index_, Float_> nearest(k + 1);
+        search(query, nearest);
+        nearest.report(output, i);
+        normalize(output);
     }
 
-    std::vector<std::pair<Index_, Float_> > find_nearest_neighbors(const Float_* query, int k) const {
+    void search(const Float_* query, int k, std::vector<std::pair<Index_, Float_> >& output) const {
         NeighborQueue<Index_, Float_> nearest(k);
-
-        auto copy = my_store.data();
-        for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
-        }
-
-        auto results = nearest.report();
-        normalize(results);
-        return results;
+        search(query, nearest);
+        nearest.report(output);
+        normalize(output);
     }
 };
 
@@ -104,14 +95,10 @@ public:
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class Distance_ = EuclideanDistance, class MockMatrix_ = SimpleMatrix<double, int>, typename Float_ = double>
-class BruteForceBuilder : public Builder<MockMatrix_, Float> {
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
+class BruteForceBuilder : public Builder<Matrix_, Float> {
 public:
-    /**
-     * @param data A matrix-like object containing the data to be searched.
-     * @return Pointer to a `BruteForcePrebuilt` object.
-     */
-    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const MockMatrix_& data) const {
+    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const {
         auto ndim = data.num_dimensions();
         auto nobs = data.num_observations();
 
