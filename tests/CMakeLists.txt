@@ -22,53 +22,42 @@ add_executable(
     src/find_nearest_neighbors.cpp
 )
 
-target_link_libraries(
-    libtest
-    gtest_main
-    knncolle
-)
+include(GoogleTest)
 
-target_compile_options(libtest PRIVATE -Wall -Werror -Wextra -Wpedantic)
+macro(decorate_test name)
+    target_link_libraries(
+        ${name}
+        gtest_main
+        knncolle
+    )
 
-set(CODE_COVERAGE "Enable coverage testing" OFF)
-if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(libtest PRIVATE -O0 -g --coverage)
-    target_link_options(libtest PRIVATE --coverage)
-endif()
+    target_compile_options(${name} PRIVATE -Wall -Werror -Wextra -Wpedantic)
+
+    set(CODE_COVERAGE "Enable coverage testing" OFF)
+    if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(${name} PRIVATE -O0 -g --coverage)
+        target_link_options(${name} PRIVATE --coverage)
+    endif()
+
+    gtest_discover_tests(${name})
+endmacro()
+
+decorate_test(libtest)
 
 # Adding checks for parallelization.
-add_executable(
-    omp_test
-    src/find_nearest_neighbors.cpp
-) 
-
-target_link_libraries(
-    omp_test
-    gtest_main
-    knncolle
-)
-
-set(USE_OPENMP OFF CACHE BOOL "Compile with OpenMP support")
-if (USE_OPENMP)
-    find_package(OpenMP)
+find_package(OpenMP)
+if (OpenMP_FOUND)
+    add_executable(
+        omp_test
+        src/find_nearest_neighbors.cpp
+    )
     target_link_libraries(omp_test OpenMP::OpenMP_CXX)
+    decorate_test(libtest)
 endif()
 
 add_executable(
     custom_parallel 
     src/find_nearest_neighbors.cpp
 ) 
-
-target_link_libraries(
-    custom_parallel 
-    gtest_main
-    knncolle
-)
-
-set_target_properties(custom_parallel PROPERTIES COMPILE_DEFINITIONS "TEST_KNNCOLLE_CUSTOM_PARALLEL")
-
-# Discovering all tests.
-include(GoogleTest)
-gtest_discover_tests(libtest)
-gtest_discover_tests(omp_test)
-gtest_discover_tests(custom_parallel)
+decorate_test(custom_parallel)
+target_compile_definitions(custom_parallel PRIVATE TEST_KNNCOLLE_CUSTOM_PARALLEL=1)
