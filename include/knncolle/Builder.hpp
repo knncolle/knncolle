@@ -15,7 +15,7 @@ namespace knncolle {
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class MockMatrix_, typename Float_>
+template<class Matrix_, typename Float_>
 class Builder {
 public:
     /**

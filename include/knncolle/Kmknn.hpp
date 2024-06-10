@@ -5,13 +5,14 @@
 #include "NeighborQueue.hpp"
 #include "Prebuilt.hpp"
 #include "Builder.hpp"
+#include "MockMatrix.hpp"
+
 #include "kmeans/kmeans.hpp"
 
 #include <algorithm>
 #include <vector>
-#include <random>
+#include <memory>
 #include <limits>
-#include <cmath>
 
 /**
  * @file Kmknn.hpp
@@ -21,7 +22,16 @@
 
 namespace knncolle {
 
-template<typename Index_, typename Store_> 
+/** 
+ * @brief Options for `KmknnBuilder` and `KmknnPrebuilt` construction. 
+ * @tparam Store_ Floating point type for the stored data. 
+ * For `KmknnBuilder`, this should be the same as `MockMatrix::data_type`.
+ * @tparam Index_ Integer type for the indices.
+ * For `KmknnBuilder`, this should be the same as `MockMatrix::index_type`.
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * For `KmknnBuilder`, this should be the same as `MockMatrix::dimension_type`.
+ */
+template<typename Store_, typename Index_, typename Dim_> 
 struct KmknnOptions {
     /**
      * Power of the number of observations, to define the number of cluster centers.
@@ -49,21 +59,29 @@ struct KmknnOptions {
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Store_ Floating point type for the stored data. 
+ * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::data_type`.
+ * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
+ * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * For the output of `KmknnBuilder::build`, this is set to `MockMatrix::index_type`.
+ * @tparam Float_ Floating point type for the query data and distances.
  */
 template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
-class KmknnPrebuilt {
+class KmknnPrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
-    size_t long_ndim;
+    size_t my_long_ndim;
 
 public:
-    Index_ num_observations() const { return num_obs; } 
+    Index_ num_observations() const {
+        return num_obs;
+    }
     
-    Dim_ num_dimensions() const { return my_dim; }
+    Dim_ num_dimensions() const {
+        return my_dim;
+    }
 
 private:
     std::vector<Store_> my_data;
@@ -82,7 +100,10 @@ public:
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
     KmknnPrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, const KmknnOptions<Index_, Store_>& options) :
-        my_dim(num_dim), my_obs(num_obs), long_ndim(my_dim) my_data(std::move(data))
+        my_dim(num_dim),
+        my_obs(num_obs),
+        my_long_ndim(my_dim),
+        my_data(std::move(data))
     { 
         auto init = my_options.initialize_algorithm;
         if (init == nullptr_t) {
@@ -94,7 +115,7 @@ public:
         }
 
         Index_ ncenters = std::ceil(std::pow(my_obs, options.power));
-        my_centers.resize(static_cast<size_t>(ncenters) * long_ndim); // cast to avoid overflow problems.
+        my_centers.resize(static_cast<size_t>(ncenters) * my_long_ndim); // cast to avoid overflow problems.
 
         kmeans::SimpleMatrix<Store_, Index_> mat(my_dim, my_obs, data.data());
         std::vector<Index_> clusters(my_obs);
@@ -108,8 +129,8 @@ public:
             for (Index_ c = 0; c < ncenters; ++c) {
                 if (output.sizes[c]) {
                     if (c > survivors) {
-                        auto src = my_centers.begin() + static_cast<size_t>(c) * long_ndim; // cast to avoid overflow.
-                        auto dest = my_centers.begin() + static_cast<size_t>(survivors) * long_ndim;
+                        auto src = my_centers.begin() + static_cast<size_t>(c) * my_long_ndim; // cast to avoid overflow.
+                        auto dest = my_centers.begin() + static_cast<size_t>(survivors) * my_long_ndim;
                         std::copy_n(src, my_dim, dest);
                     }
                     remap[c] = survivors;
@@ -123,7 +144,7 @@ public:
                     c = remap[c];
                 }
                 ncenters = survivors;
-                my_centers.resize(static_cast<size_t>(ncenters) * long_ndim);
+                my_centers.resize(static_cast<size_t>(ncenters) * my_long_ndim);
             }
         }
 
@@ -138,9 +159,9 @@ public:
             auto sofar = offsets;
             auto host = data.data();
             for (Index_ o = 0; o < my_obs; ++o) {
-                auto optr = host + static_cast<size_t>(o) * long_ndim;
+                auto optr = host + static_cast<size_t>(o) * my_long_ndim;
                 auto clustid = clusters[o];
-                auto cptr = centers.data() + static_cast<size_t>(clustid) * long_ndim;
+                auto cptr = centers.data() + static_cast<size_t>(clustid) * my_long_ndim;
 
                 auto& current = by_distance[counter];
                 current.first = Distance_::normalize(Distance_::template raw_distance<Store_>(optr, cptr, my_dim));
@@ -178,11 +199,13 @@ public:
                     continue;
                 }
 
-                auto optr = host + static_cast<size_t>(o) * long_ndim;
+                // We recursively perform a "thread" of replacements until we
+                // are able to find the home of the originally replaced 'o'.
+                auto optr = host + static_cast<size_t>(o) * my_long_ndim;
                 std::copy_n(optr, my_dim, buffer.begin());
                 Index_ replacement = current.second;
                 do {
-                    auto rptr = host + static_cast<size_t>(replacement) * long_ndim;
+                    auto rptr = host + static_cast<size_t>(replacement) * my_long_ndim;
                     std::copy_n(rptr, my_dim, optr);
                     used[replacement] = 1;
 
@@ -210,15 +233,17 @@ private:
          * 'threshold' possible through the rest of the search.
          */
         std::vector<std::pair<Float_, Index_> > center_order;
-        center_order.reserve(my_sizes.size());
-        auto clust_ptr = centers.data();
-        for (size_t c = 0; c < my_sizes.size(); ++c, clust_ptr += my_dim) {
-            center_order.emplace_back(Distance_::template raw_distance<Float_>(target, clust_ptr, my_dim), c);
+        {
+            center_order.reserve(my_sizes.size());
+            auto clust_ptr = centers.data();
+            for (size_t c = 0; c < my_sizes.size(); ++c, clust_ptr += my_dim) {
+                center_order.emplace_back(Distance_::template raw_distance<Float_>(target, clust_ptr, my_dim), c);
+            }
+            std::sort(center_order.begin(), center_order.end());
         }
-        std::sort(center_order.begin(), center_order.end());
-        Store_ threshold_raw = -1;
 
         // Computing the distance to each center, and deciding whether to proceed for each cluster.
+        Store_ threshold_raw = -1;
         for (const auto& curcent : center_order) {
             const Index_ center = curcent.second;
             const Store_ dist2center = Distance_::normalize(curcent.first);
@@ -227,8 +252,8 @@ private:
             const Float_* dIt = my_dist_to_centroid.data() + my_offsets[center];
             const Float_ maxdist = *(dIt + cur_nobs - 1);
 
-            Index_ firstcell=0;
-#if USE_UPPER
+            Index_ firstcell = 0;
+#if KNNCOLLE_KMKNN_USE_UPPER
             Store_ upper_bd = std::numeric_limits<Store_>::max();
 #endif
             
@@ -243,8 +268,10 @@ private:
                 if (maxdist < lower_bd) {
                     continue;
                 }
-                firstcell=std::lower_bound(dIt, dIt + cur_nobs, lower_bd) - dIt;
-#if USE_UPPER
+
+                firstcell = std::lower_bound(dIt, dIt + cur_nobs, lower_bd) - dIt;
+
+#if KNNCOLLE_KMKNN_USE_UPPER
                 /* This exploits the reverse triangle inequality, to ignore points where:
                  *     threshold + dist2center < point-to-center distance
                  */
@@ -253,18 +280,19 @@ private:
             }
 
             const auto cur_start = my_offsets[center];
-            const Store_ * other_cell = my_data.data() + long_ndim * static_cast<size_t>(cur_start + firstcell); // cast to avoid overflow issues.
+            const Store_ * other_cell = my_data.data() + my_long_ndim * static_cast<size_t>(cur_start + firstcell); // cast to avoid overflow issues.
             for (auto celldex = firstcell; celldex < cur_nobs; ++celldex, other_cell += my_dim) {
-#if USE_UPPER
+#if KNNCOLLE_KMKNN_USE_UPPER
                 if (*(dIt + celldex) > upper_bd) {
                     break;
                 }
 #endif
+
                 auto dist2cell_raw = Distance_::template raw_distance<Float_>(target, other_cell, my_dim);
                 nearest.add(cur_start + celldex, dist2cell_raw);
                 if (nearest.is_full()) {
                     threshold_raw = nearest.limit(); // Shrinking the threshold, if an earlier NN has been found.
-#if USE_UPPER
+#if KNNCOLLE_KMKNN_USE_UPPER
                     upper_bd = Distance_::normalize(threshold_raw) + dist2center; 
 #endif
                 }
@@ -281,15 +309,17 @@ private:
     }
 
 public:
-    void search(Index_ index, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k + 1);
-        search_nn(data.data() + new_location[index] * num_dim, nearest);
-        nearest.report(output, new_location[index]);
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+        NeighborQueue<Index_, Float_> nearest(k + 1);
+        auto new_i = my_new_location[index];
+        auto iptr = my_data.data() + static_cast<size_t>(new_i) * my_long_ndim; // cast to avoid overflow.
+        search_nn(iptr, nearest);
+        nearest.report(output, new_i);
         normalize(output);
     }
 
-    void search(Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        NeighborQueue<INDEX_t, INTERNAL_t> nearest(k);
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+        NeighborQueue<Index_, Float_> nearest(k);
         search_nn(query, nearest);
         nearest.report(output);
         normalize(output);
@@ -307,10 +337,8 @@ public:
  * resulting in performance improvements over conventional tree-based methods for high-dimensional data where most points need to be searched anyway.
  *
  * @tparam Distance_ Class to compute the distance between vectors, see `distance::Euclidean` for an example.
- * @tparam INDEX_t Integer type for the indices.
- * @tparam Float_ Floating point type for the distances.
- * @tparam QUERY_t Floating point type for the query data.
- * @tparam INTERNAL_t Floating point type for the data.
+ * @tparam Matrix_ Matrix-like object satisfying the `MockMatrix` contract.
+ * @tparam Float_ Floating point type for the query data and output distances.
  *
  * @see
  * Wang X (2012). 
@@ -318,7 +346,7 @@ public:
  * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
-class KmknnBuilder {
+class KmknnBuilder : public Builder<Matrix_, Float_> {
 private:
     KmknnOptions<typename Matrix_::index_type, typename Matrix_::data_type> my_options;
 

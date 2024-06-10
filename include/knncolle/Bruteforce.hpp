@@ -5,12 +5,13 @@
 #include "NeighborQueue.hpp"
 #include "Builder.hpp"
 #include "Prebuilt.hpp"
+#include "MockMatrix.hpp"
 
 #include <vector>
 #include <type_traits>
 
 /**
- * @file BruteForce.hpp
+ * @file Bruteforce.hpp
  *
  * @brief Implements a brute-force search for nearest neighbors.
  */
@@ -20,16 +21,20 @@ namespace knncolle {
 /**
  * @brief Index for a brute-force nearest neighbor search.
  *
- * Instances of this class are usually constructed using `BruteForceBuilder`.
+ * Instances of this class are usually constructed using `BruteforceBuilder`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Store_ Floating point type for the stored data. 
+ * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::data_type`.
+ * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
+ * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
+ * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::index_type`.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Store_, typename Dim_, typename Index_, typename Float_>
-class BruteForcePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+class BruteforcePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
@@ -41,7 +46,7 @@ public:
      * @param num_obs Number of observations.
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
-    BruteForcePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)) {}
+    BruteforcePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)) {}
 
 public:
     Dim_ num_dimensions() const {
@@ -96,7 +101,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
-class BruteForceBuilder : public Builder<Matrix_, Float> {
+class BruteforceBuilder : public Builder<Matrix_, Float> {
 public:
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const {
         auto ndim = data.num_dimensions();
@@ -114,7 +119,7 @@ public:
             std::copy(ptr, ptr + ndim, sIt);
         }
 
-        return new BruteForcePrebuilt<Distance_, Store_, Dim_, Index_, Float_>(ndim, nobs, std::move(store));
+        return new BruteforcePrebuilt<Distance_, Store_, Dim_, Index_, Float_>(ndim, nobs, std::move(store));
     }
 };
 

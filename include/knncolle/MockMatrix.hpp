@@ -91,7 +91,6 @@ public:
         return Workspace();
     }
 
-public:
     /**
      * @param workspace Workspace for consecutive access.
      * @return Pointer to an array of length equal to `num_dimensions()`, containing the coordinates for the next observation.
@@ -104,6 +103,70 @@ public:
         return my_data + static_cast<size_t>(workspace.at++) * my_long_num_dim; // avoid overflow during multiplication.
     } 
 };
+
+/**
+ * @brief Simple wrapper for an in-memory matrix.
+ *
+ * This defines a simple column-major matrix of observations where the columns are observations and the rows are dimensions.
+ * It is compatible with the compile-time interface described in `MockMatrix`.
+ *
+ * @tparam Data_ Floating-point type for the data.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Dim_ Integer type for the dimensions.
+ */
+template<typename Data_, typename Index_, typename Dim_>
+class SimpleMatrix {
+public:
+    /**
+     * @param num_dimensions Number of dimensions.
+     * @param num_observations Number of observations.
+     * @param[in] data Pointer to an array of length `num_dim * num_obs`, containing a column-major matrix of observation data.
+     * It is expected that the array will not be deallocated during the lifetime of this `SimpleMatrix` instance.
+     */
+    SimpleMatrix(Dim_ num_dimensions, Index_ num_observations, const Data_* data) : 
+        my_num_dim(num_dimensions), my_num_obs(num_observations), my_data(data), my_long_num_dim(num_dimensions) {}
+
+private:
+    Dim_ my_num_dim;
+    Index_ my_num_obs;
+    const Data_* my_data;
+    size_t my_long_num_dim;
+
+public:
+    /**
+     * @cond
+     */
+    typedef Data_ data_type;
+
+    typedef Index_ index_type;
+
+    typedef Dim_ dimension_type;
+
+    struct Workspace{
+        index_type at = 0;
+    };
+
+public:
+    Index_ num_observations() const {
+        return my_num_obs;
+    }
+
+    dimension_type num_dimensions() const {
+        return my_num_dim;
+    }
+
+    Workspace& const {
+        return Workspace();
+    }
+
+    const data_type* get_observation(Workspace& workspace) const {
+        return my_data + static_cast<size_t>(workspace.at++) * my_long_num_dim; // avoid overflow during multiplication.
+    } 
+    /**
+     * @endcond
+     */
+};
+
 
 }
 

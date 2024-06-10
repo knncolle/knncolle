@@ -1,5 +1,6 @@
 #ifndef KNNCOLLE_DISTANCES_HPP
 #define KNNCOLLE_DISTANCES_HPP
+
 #include <cmath>
 
 /**
