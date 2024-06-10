@@ -1,14 +1,12 @@
 #ifndef KNNCOLLE_MOCK_MATRIX_HPP
 #define KNNCOLLE_MOCK_MATRIX_HPP
 
-namespace knncolle {
-
 /**
  * @file MockMatrix.hpp
  * @brief Expectations for matrix inputs.
  */
 
-namespace kmeans {
+namespace knncolle {
 
 /**
  * @brief Compile-time interface for matrix data.
@@ -78,7 +76,7 @@ public:
         /**
          * @cond
          */
-        Index_ at = 0;
+        size_t at = 0;
         /**
          * @endcond
          */
@@ -100,7 +98,7 @@ public:
      * and so on, for up to `num_observations()` calls, after which the `Workspace` should no longer be used.
      */
     const data_type* get_observation(Workspace& workspace) const {
-        return my_data + static_cast<size_t>(workspace.at++) * my_long_num_dim; // avoid overflow during multiplication.
+        return my_data + (workspace.at++) * my_long_num_dim; // already size_t to avoid overflow during multiplication.
     } 
 };
 
@@ -143,7 +141,7 @@ public:
     typedef Dim_ dimension_type;
 
     struct Workspace{
-        index_type at = 0;
+        size_t at = 0;
     };
 
 public:
@@ -155,18 +153,17 @@ public:
         return my_num_dim;
     }
 
-    Workspace& const {
+    Workspace create_workspace() const {
         return Workspace();
     }
 
     const data_type* get_observation(Workspace& workspace) const {
-        return my_data + static_cast<size_t>(workspace.at++) * my_long_num_dim; // avoid overflow during multiplication.
+        return my_data + (workspace.at++) * my_long_num_dim; // already size_t's to avoid overflow during multiplication.
     } 
     /**
      * @endcond
      */
 };
-
 
 }
 

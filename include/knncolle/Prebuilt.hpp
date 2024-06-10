@@ -15,10 +15,12 @@ namespace knncolle {
  * @brief Interface for prebuilt nearest-neighbor search indices.
  *
  * @tparam Dim_ Integer type for the number of dimensions.
+ * For the output of `Builder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
+ * For the output of `Builder::build`, this is set to `MockMatrix::index_type`.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<typename Dim_, typename Index_, typename Float_>
+template<typename Dim_ = int, typename Index_ = int, typename Float_ = double>
 class Prebuilt {
 public:
     /**

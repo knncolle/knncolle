@@ -23,15 +23,12 @@ if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
     find_package(ltla_kmeans CONFIG REQUIRED)
-    find_package(Annoy CONFIG REQUIRED)
-    find_package(hnswlib CONFIG REQUIRED)
 endif()
 
-target_link_libraries(knncolle INTERFACE ltla::kmeans Annoy::Annoy hnswlib::hnswlib)
+target_link_libraries(knncolle INTERFACE ltla::kmeans)
 
 # Tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    add_subdirectory(gallery)
     option(KNNCOLLE_TESTS "Build knncolle's test suite." ON)
 else()
     option(KNNCOLLE_TESTS "Build knncolle's test suite." OFF)

@@ -19,15 +19,16 @@ class NeighborQueue {
 public:
     NeighborQueue(Index_ k) : my_neighbors(k), my_full(my_neighbors == 0) {
         if (my_full) {
-            nearest.emplace(0, 0); // avoid crashing if 'limit()' is called.
+            my_nearest.emplace(0, 0); // avoid crashing if 'limit()' is called.
         }
     }
 
+public:
     bool is_full() const {
         return my_full;
     }
 
-    Data_ limit() const { // this should only be called if 'is_full()' returns true.
+    Distance_ limit() const { // this should only be called if 'is_full()' returns true.
         return my_nearest.top().first;
    }
 
@@ -39,8 +40,8 @@ public:
                 my_full = true;
             }
         } else if (d < limit()) {
-            nearest.emplace(d, i);
-            nearest.pop();
+            my_nearest.emplace(d, i);
+            my_nearest.pop();
         }
         return;
     }
@@ -55,9 +56,9 @@ public:
             if (!found_self && top.second == self) {
                 found_self = true;
             } else {
-                output.push_back(std::pair<INDEX_t, DISTANCE_t>(top.second, top.first));
-                my_nearest.pop();
+                output.emplace_back(top.second, top.first);
             }
+            my_nearest.pop();
         }
 
         // We use push_back + reverse to give us sorting in increasing order;
@@ -77,7 +78,7 @@ public:
 
         while (!my_nearest.empty()) {
             const auto& top = my_nearest.top();
-            output.push_back(std::pair<INDEX_t, DISTANCE_t>(top.second, top.first));
+            output.emplace_back(top.second, top.first);
             my_nearest.pop();
         }
 
@@ -88,8 +89,8 @@ public:
 
 private:
     size_t my_neighbors;
-    bool my_full = false;
-    std::priority_queue<std::pair<Data_, Index_> > my_nearest;
+    bool my_full;
+    std::priority_queue<std::pair<Distance_, Index_> > my_nearest;
 };
 
 }

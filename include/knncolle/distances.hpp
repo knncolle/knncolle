@@ -35,7 +35,7 @@ struct MockDistance {
     static Output_ raw_distance(const DataX_* x, const DataY_* y, Dim_ num_dimensions) {
         Output_ output = 0;
         for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
-            auto delta = *x - *y;
+            auto delta = static_cast<Output_>(*x) - *y; // see below for comments.
             output += delta * delta;
         }
         return output;
@@ -55,7 +55,7 @@ struct MockDistance {
 /**
  * @brief Compute Euclidean distances between two input vectors.
  */
-struct Euclidean {
+struct EuclideanDistance {
     /**
      *
      * @param x Pointer to the array containing the first vector.
@@ -70,10 +70,10 @@ struct Euclidean {
      * @return The squared Euclidean distance between `x` and `y`.
      */
     template<typename Output_, typename DataX_, typename DataY_, typename Dim_>
-    static Output_ raw_distance(const Data_* x, const DataY_* y, Dim_ num_dimensions) {
+    static Output_ raw_distance(const DataX_* x, const DataY_* y, Dim_ num_dimensions) {
         Output_ output = 0;
         for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
-            auto delta = *x - *y;
+            auto delta = static_cast<Output_>(*x) - static_cast<Output_>(*y); // casting to ensure consistent precision regardless of DataX_, DataY_.
             output += delta * delta;
         }
         return output;
@@ -93,7 +93,7 @@ struct Euclidean {
 /**
  * @brief Compute Manhattan distances between two input vectors.
  */
-struct Manhattan {
+struct ManhattanDistance {
     /**
      *
      * @param x Pointer to the array containing the first vector.
@@ -108,10 +108,10 @@ struct Manhattan {
      * @return The Manhattan distance between `x` and `y`.
      */
     template<typename Output_, typename DataX_, typename DataY_, typename Dim_>
-    static Output_ raw_distance(const Data_* x, const DataY_* y, Dim_ num_dimensions) {
+    static Output_ raw_distance(const DataX_* x, const DataY_* y, Dim_ num_dimensions) {
         Output_ output = 0;
         for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
-            output += std::abs(*x - *y);
+            output += std::abs(static_cast<Output_>(*x) - static_cast<Output_>(*y)); // casting to ensure consistent precision regardless of DataX_, DataY_.
         }
         return output;
     }
@@ -126,8 +126,6 @@ struct Manhattan {
         return raw;
     }
 };
-
-}
 
 }
 

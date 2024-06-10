@@ -16,10 +16,10 @@ enable_testing()
 
 add_executable(
     libtest
-    src/BruteForce.cpp
-    src/VpTree.cpp
+    src/Bruteforce.cpp
+    #    src/Vptree.cpp
     src/Kmknn.cpp
-    src/find_nearest_neighbors.cpp
+    #    src/find_nearest_neighbors.cpp
 )
 
 target_link_libraries(
