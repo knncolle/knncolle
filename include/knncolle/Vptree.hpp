@@ -20,6 +20,53 @@
 
 namespace knncolle {
 
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class VptreePrebuilt;
+
+/**
+ * @brief VP-tree searcher.
+ *
+ * Instances of this class are usually constructed using `VptreePrebuilt::initialize`.
+ *
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Store_ Floating point type for the stored data. 
+ * @tparam Float_ Floating point type for the query data and output distances.
+ */
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class VptreeSearcher : public Searcher<Index_, Float_> {
+public:
+    /**
+     * @cond
+     */
+    VptreeSearcher(const VptreePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* parent) : my_parent(parent) {}
+    /**
+     * @endcond
+     */
+
+private:                
+    const VptreePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* my_parent;
+    internal::NeighborQueue<Index_, Float_> my_nearest;
+    std::vector<std::pair<Float_, Index_> > center_order;
+
+public:
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k + 1);
+        auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
+        Float_ max_dist = std::numeric_limits<Float_>::max();
+        my_parent->search_nn(0, iptr, max_dist, my_nearest);
+        my_nearest.report(output, i);
+    }
+
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k);
+        Float_ max_dist = std::numeric_limits<Float_>::max();
+        my_parent->search_nn(0, query, max_dist, my_nearest);
+        my_nearest.report(output);
+    }
+};
+
 /**
  * @brief Index for a VP-tree search.
  *
@@ -242,20 +289,11 @@ private:
         }
     }
 
-public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k + 1);
-        auto iptr = my_data.data() + static_cast<size_t>(my_new_locations[i]) * my_long_ndim; // cast to avoid overflow.
-        Float_ max_dist = std::numeric_limits<Float_>::max();
-        search_nn(0, iptr, max_dist, nearest);
-        nearest.report(output, i);
-    }
+    friend class VptreeSearcher<Distance_, Dim_, Index_, Store_, Float_>;
 
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k);
-        Float_ max_dist = std::numeric_limits<Float_>::max();
-        search_nn(0, query, max_dist, nearest);
-        nearest.report(output);
+public:
+    std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
+        return std::make_unique<VptreeSearcher<Distance_, Dim_, Index_, Store_, Float_> >(this);
     }
 };
 

@@ -25,13 +25,16 @@ TEST_P(BruteforceTest, FindEuclidean) {
     knncolle::BruteforceBuilder<knncolle::EuclideanDistance, decltype(mat2), float> bb2;
     auto bptr2 = bb2.build_unique(mat2);
 
+    auto bsptr = bptr->initialize();
     std::vector<std::pair<int, double> > output;
+    auto bsptr2 = bptr2->initialize();
     std::vector<std::pair<size_t, float> > output2;
+
     for (int x = 0; x < nobs; ++x) {
-        bptr->search(x, k, output);
+        bsptr->search(x, k, output);
         sanity_checks(output, k, x);
 
-        bptr2->search(x, k, output2);
+        bsptr2->search(x, k, output2);
         EXPECT_EQ(output.size(), output2.size());
         for (size_t i = 0; i < output.size(); ++i) {
             EXPECT_EQ(output2[i].first, output[i].first);
@@ -46,9 +49,11 @@ TEST_P(BruteforceTest, FindManhattan) {
     knncolle::BruteforceBuilder<knncolle::ManhattanDistance> bb;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
 
+    auto bsptr = bptr->initialize();
     std::vector<std::pair<int, double> > results;
+
     for (int x = 0; x < nobs; ++x) {
-        bptr->search(x, k, results);
+        bsptr->search(x, k, results);
         sanity_checks(results, k, x);
     }
 }
@@ -59,12 +64,14 @@ TEST_P(BruteforceTest, QueryEuclidean) {
     knncolle::BruteforceBuilder<> bb;
     auto bptr = bb.build_shared(knncolle::SimpleMatrix(ndim, nobs, data.data())); // building a shared one for some variety.
 
+    auto bsptr = bptr->initialize();
     std::vector<std::pair<int, double> > results1, results2;
+
     for (int x = 0; x < nobs; ++x) {
-        bptr->search(x, k, results1);
+        bsptr->search(x, k, results1);
         EXPECT_EQ(results1.size(), std::min(k, nobs - 1));
 
-        bptr->search(data.data() + x * ndim, k + 1, results2);
+        bsptr->search(data.data() + x * ndim, k + 1, results2);
         EXPECT_EQ(results2[0].first, x);
         EXPECT_EQ(results2[0].second, 0);
 

@@ -45,18 +45,30 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL
 #ifdef _OPENMP
-    #pragma omp parallel for num_threads(num_threads)
-#endif
+    #pragma omp parallel num_threads(num_threads)
+    {
+    auto sptr = index.initialize();
+    #pragma omp for
     for (Index_ i = 0; i < nobs; ++i) {
 #else
+    auto sptr = index.initialize();
+    for (Index_ i = 0; i < nobs; ++i) {
+#endif
+#else
     KNNCOLLE_CUSTOM_PARALLEL(nobs, num_threads, [&](Index_ start, Index_ length) -> void {
+    auto sptr = index.initialize();
     for (Index_ i = start, end = start + length; i < end; ++i) {
 #endif        
 
-        index.search(i, k, output[i]);
+        sptr->search(i, k, output[i]);
 
 #ifndef KNNCOLLE_CUSTOM_PARALLEL    
+#ifdef _OPENMP
     }
+    }
+#else
+    }
+#endif
 #else
     }
     });
@@ -89,20 +101,23 @@ std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebui
 #ifdef _OPENMP
     #pragma omp parallel num_threads(num_threads)
     {
+    auto sptr = index.initialize();
     std::vector<std::pair<Index_, Float_> > tmp;
     #pragma omp for
     for (Index_ i = 0; i < nobs; ++i) {
 #else
+    auto sptr = index.initialize();
     std::vector<std::pair<Index_, Float_> > tmp;
     for (Index_ i = 0; i < nobs; ++i) {
 #endif
 #else
     KNNCOLLE_CUSTOM_PARALLEL(nobs, num_threads, [&](Index_ start, Index_ length) -> void {
+    auto sptr = index.initialize();
     std::vector<std::pair<Index_, Float_> > tmp;
     for (Index_ i = start, end = start + length; i < end; ++i) {
 #endif        
 
-        index.search(i, k, tmp);
+        sptr->search(i, k, tmp);
         for (const auto& x : tmp) {
             output[i].push_back(x.first);
         }

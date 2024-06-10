@@ -25,11 +25,11 @@ namespace knncolle {
 /** 
  * @brief Options for `KmknnBuilder` and `KmknnPrebuilt` construction. 
  * @tparam Dim_ Integer type for the number of dimensions.
- * For `KmknnBuilder`, this should be the same as `MockMatrix::dimension_type`.
+ * When constructing a `KmknnBuilder`, this should be the same as `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * For `KmknnBuilder`, this should be the same as `MockMatrix::index_type`.
+ * When constructing a `KmknnBuilder`, this should be the same as `MockMatrix::index_type`.
  * @tparam Store_ Floating point type for the stored data. 
- * For `KmknnBuilder`, this should be the same as `MockMatrix::data_type`.
+ * When constructing a `KmknnBuilder`, this should be the same as `MockMatrix::data_type`.
  */
 template<typename Dim_ = int, typename Index_ = int, typename Store_ = double>
 struct KmknnOptions {
@@ -53,6 +53,57 @@ struct KmknnOptions {
      * If NULL, defaults to `kmeans::RefineHartiganWong`.
      */
     std::shared_ptr<kmeans::Refine<kmeans::SimpleMatrix<Store_, Index_, Dim_>, Index_, Store_> > refine_algorithm;
+};
+
+
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class KmknnPrebuilt;
+
+/**
+ * @brief KMKNN searcher.
+ *
+ * Instances of this class are usually constructed using `KmknnPrebuilt::initialize`.
+ *
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Store_ Floating point type for the stored data. 
+ * @tparam Float_ Floating point type for the query data and output distances.
+ */
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class KmknnSearcher : public Searcher<Index_, Float_> {
+public:
+    /**
+     * @cond
+     */
+    KmknnSearcher(const KmknnPrebuilt<Distance_, Dim_, Index_, Store_, Float_>* parent) : my_parent(parent) {
+        center_order.reserve(my_parent->my_sizes.size());
+    }
+    /**
+     * @endcond
+     */
+
+private:                
+    const KmknnPrebuilt<Distance_, Dim_, Index_, Store_, Float_>* my_parent;
+    internal::NeighborQueue<Index_, Float_> my_nearest;
+    std::vector<std::pair<Float_, Index_> > center_order;
+
+public:
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k + 1);
+        auto new_i = my_parent->my_new_location[i];
+        auto iptr = my_parent->my_data.data() + static_cast<size_t>(new_i) * my_parent->my_long_ndim; // cast to avoid overflow.
+        my_parent->search_nn(iptr, my_nearest, center_order);
+        my_nearest.report(output, new_i);
+        my_parent->normalize(output);
+    }
+
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k);
+        my_parent->search_nn(query, my_nearest, center_order);
+        my_nearest.report(output);
+        my_parent->normalize(output);
+    }
 };
 
 /**
@@ -231,20 +282,19 @@ public:
 
 private:
     template<typename Query_>
-    void search_nn(const Query_* target, internal::NeighborQueue<Index_, Float_>& nearest) const { 
+    void search_nn(const Query_* target, internal::NeighborQueue<Index_, Float_>& nearest, std::vector<std::pair<Float_, Index_> >& center_order) const { 
         /* Computing distances to all centers and sorting them. The aim is to
          * go through the nearest centers first, to get the shortest
          * 'threshold' possible through the rest of the search.
          */
-        std::vector<std::pair<Float_, Index_> > center_order;
-        {
-            center_order.reserve(my_sizes.size());
-            auto clust_ptr = my_centers.data();
-            for (size_t c = 0; c < my_sizes.size(); ++c, clust_ptr += my_dim) {
-                center_order.emplace_back(Distance_::template raw_distance<Float_>(target, clust_ptr, my_dim), c);
-            }
-            std::sort(center_order.begin(), center_order.end());
+        center_order.clear();
+        size_t ncenters = my_sizes.size();
+        center_order.reserve(ncenters);
+        auto clust_ptr = my_centers.data();
+        for (size_t c = 0; c < ncenters; ++c, clust_ptr += my_dim) {
+            center_order.emplace_back(Distance_::template raw_distance<Float_>(target, clust_ptr, my_dim), c);
         }
+        std::sort(center_order.begin(), center_order.end());
 
         // Computing the distance to each center, and deciding whether to proceed for each cluster.
         Float_ threshold_raw = -1;
@@ -311,21 +361,11 @@ private:
         }
     }
 
-public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k + 1);
-        auto new_i = my_new_location[i];
-        auto iptr = my_data.data() + static_cast<size_t>(new_i) * my_long_ndim; // cast to avoid overflow.
-        search_nn(iptr, nearest);
-        nearest.report(output, new_i);
-        normalize(output);
-    }
+    friend class KmknnSearcher<Distance_, Dim_, Index_, Store_, Float_>;
 
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k);
-        search_nn(query, nearest);
-        nearest.report(output);
-        normalize(output);
+public:
+    std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
+        return std::make_unique<KmknnSearcher<Distance_, Dim_, Index_, Store_, Float_> >(this);
     }
 };
 

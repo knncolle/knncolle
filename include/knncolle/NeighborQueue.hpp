@@ -17,9 +17,23 @@ namespace internal {
 template<typename Index_, typename Distance_>
 class NeighborQueue {
 public:
-    NeighborQueue(Index_ k) : my_neighbors(k), my_full(my_neighbors == 0) {
+    NeighborQueue() = default;
+
+public:    
+    void reset(Index_ k) {
+        my_neighbors = k;
+        my_full = (my_neighbors = 0);
+
+        // Popping any existing elements out, just in case. This shouldn't
+        // usually be necessary if report() was called as the queue should
+        // already be copletely exhausted.
+        while (!my_nearest.empty()) {
+            my_nearest.pop();
+        }
+
+        // Avoid crashing if 'limit()' is called on an always-empty queue.
         if (my_full) {
-            my_nearest.emplace(0, 0); // avoid crashing if 'limit()' is called.
+            my_nearest.emplace(0, 0); 
         }
     }
 
@@ -88,8 +102,8 @@ public:
     } 
 
 private:
-    size_t my_neighbors;
-    bool my_full;
+    size_t my_neighbors = 0;
+    bool my_full = true;
     std::priority_queue<std::pair<Distance_, Index_> > my_nearest;
 };
 

@@ -1,7 +1,7 @@
 #ifndef KNNCOLLE_PREBUILT_HPP
 #define KNNCOLLE_PREBUILT_HPP
 
-#include <vector>
+#include "Searcher.hpp"
 
 /**
  * @file Prebuilt.hpp
@@ -42,27 +42,11 @@ public:
      */
 
 public:
-    /** 
-     * Find the nearest neighbors of the `i`-th observation in the dataset.
-     *
-     * @param i The index of the observation of interest.
-     * This should be non-negative and less than the total number of observations in `num_observations()`.
-     * @param k The number of neighbors to identify.
-     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
-     * Length is at most `k` but may be shorter if the total number of observations is less than `k + 1`.
-     * This vector is guaranteed to not contain `i` itself.
+    /**
+     * Create a `Searcher` for searching the index.
+     * @return Pointer to a `Searcher` instance.
      */
-    virtual void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const = 0;
-
-    /** 
-     * Find the nearest neighbors of a new observation.
-     *
-     * @param query Pointer to an array of length equal to `num_dimensions()`, containing the coordinates of the query point.
-     * @param k The number of neighbors to identify.
-     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
-     * Length is at most `k` but may be shorter if the total number of observations is less than `k`.
-     */
-    virtual void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const = 0;
+    virtual std::unique_ptr<Searcher<Index_, Float_> > initialize() const = 0;
 };
 
 }

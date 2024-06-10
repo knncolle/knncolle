@@ -15,6 +15,9 @@ namespace knncolle {
 /**
  * @brief Interface to build nearest-neighbor search indices.
  *
+ * Instances of `Prebuilt` subclasses are typically constructed with `Builder::build()`.
+ * Note that a `Prebuilt` instance may outlive the `Builder` object used to generate it, so the former should not hold any references to the latter.
+ *
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
  */

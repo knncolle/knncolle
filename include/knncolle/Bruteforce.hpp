@@ -3,6 +3,7 @@
 
 #include "distances.hpp"
 #include "NeighborQueue.hpp"
+#include "Searcher.hpp"
 #include "Builder.hpp"
 #include "Prebuilt.hpp"
 #include "MockMatrix.hpp"
@@ -18,19 +19,73 @@
 
 namespace knncolle {
 
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class BruteforcePrebuilt;
+
+/**
+ * @brief Brute-force nearest neighbor searcher.
+ *
+ * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize`.
+ *
+ * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Store_ Floating point type for the stored data. 
+ * @tparam Float_ Floating point type for the query data and output distances.
+ */
+template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+class BruteforceSearcher : public Searcher<Index_, Float_> {
+public:
+    /**
+     * @cond
+     */
+    BruteforceSearcher(const BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* parent) : my_parent(parent) {}
+    /**
+     * @endcond
+     */
+
+private:                
+    const BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* my_parent;
+    internal::NeighborQueue<Index_, Float_> my_nearest;
+
+private:
+    static void normalize(std::vector<std::pair<Index_, Float_> >& results) {
+        for (auto& d : results) {
+            d.second = Distance_::normalize(d.second);
+        }
+        return;
+    } 
+
+public:
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k + 1);
+        auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
+        my_parent->search(ptr, my_nearest);
+        my_nearest.report(output, i);
+        normalize(output);
+    }
+
+    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+        my_nearest.reset(k);
+        my_parent->search(query, my_nearest);
+        my_nearest.report(output);
+        normalize(output);
+    }
+};
+
 /**
  * @brief Index for a brute-force nearest neighbor search.
  *
- * Instances of this class are usually constructed using `BruteforceBuilder`.
+ * Instances of this class are usually constructed using `BruteforceBuilder::build`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Dim_ Integer type for the number of dimensions.
  * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::dimension_type`.
  * @tparam Index_ Integer type for the indices.
  * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::index_type`.
  * @tparam Store_ Floating point type for the stored data. 
  * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::data_type`.
+ * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
@@ -43,12 +98,13 @@ private:
 
 public:
     /**
-     * @param num_dim Number of dimensions.
-     * @param num_obs Number of observations.
-     * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
+     * @cond
      */
     BruteforcePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : 
         my_dim(num_dim), my_obs(num_obs), my_long_ndim(num_dim), my_data(std::move(data)) {}
+    /**
+     * @endcond
+     */
 
 public:
     Dim_ num_dimensions() const {
@@ -68,27 +124,11 @@ private:
         }
     }
 
-    static void normalize(std::vector<std::pair<Index_, Float_> >& results) {
-        for (auto& d : results) {
-            d.second = Distance_::normalize(d.second);
-        }
-        return;
-    } 
+    friend class BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_>;
 
 public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k + 1);
-        auto ptr = my_data.data() + static_cast<size_t>(i) * my_long_ndim; // cast to avoid overflow.
-        search(ptr, nearest);
-        nearest.report(output, i);
-        normalize(output);
-    }
-
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        internal::NeighborQueue<Index_, Float_> nearest(k);
-        search(query, nearest);
-        nearest.report(output);
-        normalize(output);
+    std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
+        return std::make_unique<BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_> >(this);
     }
 };
 

@@ -33,13 +33,17 @@ TEST_P(KmknnTest, FindEuclidean) {
     auto kptr2 = kb2.build_unique(mat2);
 
     std::vector<std::pair<int, double> > kresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto ksptr = kptr->initialize();
     std::vector<std::pair<size_t, float> > kresults2;
+    auto ksptr2 = kptr2->initialize();
+
     for (int x = 0; x < nobs; ++x) {
-        kptr->search(x, k, kresults);
-        bptr->search(x, k, bresults);
+        ksptr->search(x, k, kresults);
+        bsptr->search(x, k, bresults);
         EXPECT_EQ(kresults, bresults);
 
-        kptr2->search(x, k, kresults2);
+        ksptr2->search(x, k, kresults2);
         EXPECT_EQ(kresults.size(), kresults2.size());
         for (size_t i = 0; i < kresults.size(); ++i) {
             EXPECT_EQ(kresults[i].first, kresults2[i].first);
@@ -63,9 +67,12 @@ TEST_P(KmknnTest, FindManhattan) {
     auto kptr = kb.build_unique(mat);
 
     std::vector<std::pair<int, double> > kresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto ksptr = kptr->initialize();
+
     for (int x = 0; x < nobs; ++x) {
-        kptr->search(x, k, kresults);
-        bptr->search(x, k, bresults);
+        ksptr->search(x, k, kresults);
+        bsptr->search(x, k, bresults);
         EXPECT_EQ(kresults, bresults);
     }
 }
@@ -80,13 +87,16 @@ TEST_P(KmknnTest, QueryEuclidean) {
     auto bptr = bb.build_unique(mat);
 
     std::vector<std::pair<int, double> > kresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto ksptr = kptr->initialize();
+
     std::mt19937_64 rng(ndim * 10 + nobs - k);
     std::vector<double> buffer(ndim);
 
     for (int x = 0; x < nobs; ++x) {
         fill_random(buffer.begin(), buffer.end(), rng);
-        kptr->search(buffer.data(), k, kresults);
-        bptr->search(buffer.data(), k, bresults);
+        ksptr->search(buffer.data(), k, kresults);
+        bsptr->search(buffer.data(), k, bresults);
         EXPECT_EQ(bresults, kresults);
     }
 }

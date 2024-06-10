@@ -33,13 +33,17 @@ TEST_P(VptreeTest, FindEuclidean) {
     auto vptr2 = vb2.build_unique(mat2);
 
     std::vector<std::pair<int, double> > vresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto vsptr = vptr->initialize();
     std::vector<std::pair<size_t, float> > vresults2;
+    auto vsptr2 = vptr2->initialize();
+
     for (int x = 0; x < nobs; ++x) {
-        vptr->search(x, k, vresults);
-        bptr->search(x, k, bresults);
+        vsptr->search(x, k, vresults);
+        bsptr->search(x, k, bresults);
         EXPECT_EQ(vresults, bresults);
 
-        vptr2->search(x, k, vresults2);
+        vsptr2->search(x, k, vresults2);
         EXPECT_EQ(vresults.size(), vresults2.size());
         for (size_t i = 0; i < vresults.size(); ++i) {
             EXPECT_EQ(vresults[i].first, vresults2[i].first);
@@ -60,9 +64,12 @@ TEST_P(VptreeTest, FindManhattan) {
     auto vptr = vb.build_unique(mat);
 
     std::vector<std::pair<int, double> > vresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto vsptr = vptr->initialize();
+
     for (int x = 0; x < nobs; ++x) {
-        vptr->search(x, k, vresults);
-        bptr->search(x, k, bresults);
+        vsptr->search(x, k, vresults);
+        bsptr->search(x, k, bresults);
         EXPECT_EQ(vresults, bresults);
     }
 }
@@ -77,13 +84,16 @@ TEST_P(VptreeTest, QueryEuclidean) {
     auto bptr = bb.build_unique(mat);
 
     std::vector<std::pair<int, double> > vresults, bresults;
+    auto bsptr = bptr->initialize();
+    auto vsptr = vptr->initialize();
+
     std::mt19937_64 rng(ndim * 10 + nobs - k);
     std::vector<double> buffer(ndim);
 
     for (int x = 0; x < nobs; ++x) {
         fill_random(buffer.begin(), buffer.end(), rng);
-        vptr->search(buffer.data(), k, vresults);
-        bptr->search(buffer.data(), k, bresults);
+        vsptr->search(buffer.data(), k, vresults);
+        bsptr->search(buffer.data(), k, bresults);
         EXPECT_EQ(bresults, vresults);
     }
 }
