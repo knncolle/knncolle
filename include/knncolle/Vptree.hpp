@@ -41,14 +41,15 @@ private:
     Dim_ my_dim;
     Index_ my_obs;
     size_t my_long_ndim;
+    std::vector<Store_> my_data;
 
 public:
     Index_ num_observations() const {
-        return num_obs;
+        return my_obs;
     } 
 
     Dim_ num_dimensions() const {
-        return num_dim;
+        return my_dim;
     }
 
 private:
@@ -76,7 +77,7 @@ private:
     typedef std::pair<Float_, Index_> DataPoint; 
 
     template<class Rng_>
-    Index_ build(Index_ lower, Index_ upper, const Store_* coords, std::vector<DataPoint>& items, Rng& rng) {
+    Index_ build(Index_ lower, Index_ upper, const Store_* coords, std::vector<DataPoint>& items, Rng_& rng) {
         /* 
          * We're assuming that lower < upper at each point within this
          * recursion. This requires some protection at the call site
@@ -102,12 +103,12 @@ private:
             std::swap(items[lower], items[i]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
-            const Data_* vantage_ptr = coords + static_cast<size_t>(vantage.second) * long_num_dim; // cast to avoid overflow.
+            const Store_* vantage_ptr = coords + static_cast<size_t>(vantage.second) * my_long_ndim; // cast to avoid overflow.
 
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
-                const Data_* loc = coords + static_cast<size_t>(items[i].second) * long_num_dim; // cast to avoid overflow.
-                items[i].first = Distance_::template raw_distance<Float_>(vantage_ptr, loc, num_dim);
+                const Store_* loc = coords + static_cast<size_t>(items[i].second) * my_long_ndim; // cast to avoid overflow.
+                items[i].first = Distance_::template raw_distance<Float_>(vantage_ptr, loc, my_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -120,10 +121,10 @@ private:
 
             // Recursively build tree.
             if (lower_p1 < median) {
-                node.left = build(lower_p1, median, coords, rng);
+                node.left = build(lower_p1, median, coords, items, rng);
             }
             if (median < upper) {
-                node.right = build(median, upper, coords, rng);
+                node.right = build(median, upper, coords, items, rng);
             }
 
         } else {
@@ -135,7 +136,7 @@ private:
     }
 
 private:
-    std::vector<Index_> my_new_location;
+    std::vector<Index_> my_new_locations;
 
 public:
     /**
@@ -143,7 +144,7 @@ public:
      * @param num_obs Number of observations.
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
-    VptreePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Data_> data) : 
+    VptreePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : 
         my_dim(num_dim),
         my_obs(num_obs),
         my_long_ndim(my_dim),
@@ -151,12 +152,12 @@ public:
     {
         if (num_obs) {
             std::vector<DataPoint> items;
-            items.reserve(nobs);
-            for (Index_ i = 0; i < nobs; ++i) {
+            items.reserve(my_obs);
+            for (Index_ i = 0; i < my_obs; ++i) {
                 items.emplace_back(0, i);
             }
 
-            nodes.reserve(nobs);
+            my_nodes.reserve(my_obs);
 
             // Statistical correctness doesn't matter (aside from tie breaking)
             // so we'll just use a deterministically 'random' number to ensure
@@ -165,14 +166,14 @@ public:
             uint64_t base = 1234567890, m1 = my_obs, m2 = my_dim;
             std::mt19937_64 rand(base * m1 +  m2);
 
-            build(0, my_obs, data.data(), items, rand);
+            build(0, my_obs, my_data.data(), items, rand);
 
             // Resorting data in place to match order of occurrence within
             // 'nodes', for better cache locality.
             std::vector<uint8_t> used(my_obs);
             std::vector<Store_> buffer(my_dim);
             my_new_locations.resize(my_obs);
-            auto host = data.data();
+            auto host = my_data.data();
 
             for (Index_ o = 0; o < num_obs; ++o) {
                 if (used[o]) {
@@ -194,11 +195,11 @@ public:
                     std::copy_n(rptr, my_dim, optr);
                     used[replacement] = 1;
 
-                    const auto& next = nodes[replacement];
+                    const auto& next = my_nodes[replacement];
                     my_new_locations[next.index] = replacement;
 
                     optr = rptr;
-                    replacement = next.second;
+                    replacement = next.index;
                 } while (replacement != o);
 
                 std::copy(buffer.begin(), buffer.end(), optr);
@@ -208,12 +209,12 @@ public:
 
 private:
     template<typename Query_>
-    void search_nn(Index_ curnode_index, const Query_* target, Float_& max_dist, NeighborQueue<Index_, Float_>& nearest) const { 
-        auto nptr = store.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
-        Float_ dist = Distance_::normalize(Distance_::template raw_distance<Float_>(nptr, target, num_dim));
+    void search_nn(Index_ curnode_index, const Query_* target, Float_& max_dist, internal::NeighborQueue<Index_, Float_>& nearest) const { 
+        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
+        Float_ dist = Distance_::normalize(Distance_::template raw_distance<Float_>(nptr, target, my_dim));
 
         // If current node is within the maximum distance:
-        const auto& curnode = nodes[curnode_index];
+        const auto& curnode = my_nodes[curnode_index];
         if (dist < max_dist) {
             nearest.add(curnode.index, dist);
             if (nearest.is_full()) {
@@ -242,17 +243,16 @@ private:
     }
 
 public:
-    void search(Index_ index, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        NeighborQueue<Index_, Float_> nearest(k + 1);
-        auto new_i = my_new_location[index];
-        auto iptr = my_data.data() + static_cast<size_t>(new_i) * my_long_ndim; // cast to avoid overflow.
+    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
+        internal::NeighborQueue<Index_, Float_> nearest(k + 1);
+        auto iptr = my_data.data() + static_cast<size_t>(my_new_locations[i]) * my_long_ndim; // cast to avoid overflow.
         Float_ max_dist = std::numeric_limits<Float_>::max();
         search_nn(0, iptr, max_dist, nearest);
-        nearest.report(output, new_i);
+        nearest.report(output, i);
     }
 
     void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) const {
-        NeighborQueue<Index_, Float_> nearest(k);
+        internal::NeighborQueue<Index_, Float_> nearest(k);
         Float_ max_dist = std::numeric_limits<Float_>::max();
         search_nn(0, query, max_dist, nearest);
         nearest.report(output);
@@ -287,26 +287,24 @@ public:
  * VP trees: A data structure for finding stuff fast.
  * http://stevehanov.ca/blog/index.php?id=130
  */
-template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int>, typename Float_ = double>
+template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<double, int, int>, typename Float_ = double>
 class VptreeBuilder : public Builder<Matrix_, Float_> {
 public:
-    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build(const Matrix_& data) const {
+    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
         auto ndim = data.num_dimensions();
         auto nobs = data.num_observations();
 
-        typedef decltype(ndim) Dim_;
-        typedef decltype(nobs) Index_;
         typedef typename Matrix_::data_type Store_;
-        std::vector<typename Matrix::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
+        std::vector<typename Matrix_::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
 
         auto work = data.create_workspace();
         auto sIt = store.begin();
         for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
-            auto ptr = data.get_observation(obs);
-            std::copy(ptr, ptr + ndim, sIt);
+            auto ptr = data.get_observation(work);
+            std::copy_n(ptr, ndim, sIt);
         }
 
-        return new VptreePrebuilt<Distance, Store_, decltype(ndim), decltype(nobs), Float_>(ndim, nobs, std::move(store));
+        return new VptreePrebuilt<Distance_, Store_, decltype(ndim), decltype(nobs), Float_>(ndim, nobs, std::move(store));
     }
 };
 

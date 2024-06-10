@@ -25,7 +25,7 @@ TEST_P(KmknnTest, FindEuclidean) {
 
     // Building a brute-force reference.
     knncolle::BruteforceBuilder<> bb;
-    auto bptr = kb.build_unique(mat);
+    auto bptr = bb.build_unique(mat);
 
     // Testing other types. 
     knncolle::SimpleMatrix<double, size_t, int> mat2(ndim, nobs, data.data());
