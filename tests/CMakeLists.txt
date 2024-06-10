@@ -52,7 +52,7 @@ if (OpenMP_FOUND)
         src/find_nearest_neighbors.cpp
     )
     target_link_libraries(omp_test OpenMP::OpenMP_CXX)
-    decorate_test(libtest)
+    decorate_test(omp_test)
 endif()
 
 add_executable(
