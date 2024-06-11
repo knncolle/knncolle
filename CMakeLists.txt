@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.14...3.25)
+cmake_minimum_required(VERSION 3.14)
 
 project(knncolle
-    VERSION 1.0.0
+    VERSION 2.0.0
     DESCRIPTION "Collection of k-nearest neighbors algorithms in C++"
     LANGUAGES CXX)
 
@@ -57,5 +57,10 @@ configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfig.cmake"
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/knncolle_knncolle)
 
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfigVersion.cmake"
+    COMPATIBILITY SameMajorVersion)
+
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfigVersion.cmake"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/knncolle_knncolle)
