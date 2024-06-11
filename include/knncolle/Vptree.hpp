@@ -13,7 +13,7 @@
 #include <tuple>
 
 /**
- * @file VpTree.hpp
+ * @file Vptree.hpp
  *
  * @brief Implements a vantage point (VP) tree to search for nearest neighbors.
  */

@@ -37,9 +37,10 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
  *
  * @return A `NeighborList` of length equal to the number of observations in `index`.
  * Each entry contains the `k` nearest neighbors for each observation, sorted by increasing distance.
+ * The `i`-th entry is guaranteed to not contain `i` itself.
  */
 template<typename Dim_, typename Index_, typename Float_>
-NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads) {
+NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads = 1) {
     Index_ nobs = index.num_observations();
     NeighborList<Index_, Float_> output(nobs);
 
@@ -91,9 +92,10 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
  *
  * @return A vector of vectors of length equal to the number of observations in `index`.
  * Each vector contains the indices of the `k` nearest neighbors for each observation, sorted by increasing distance.
+ * The `i`-th entry is guaranteed to not contain `i` itself.
  */
 template<typename Dim_, typename Index_, typename Float_>
-std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads) {
+std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>& index, int k, [[maybe_unused]] int num_threads = 1) {
     Index_ nobs = index.num_observations();
     std::vector<std::vector<Index_> > output(nobs);
 

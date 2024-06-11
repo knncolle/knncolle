@@ -20,14 +20,6 @@ Currently, we support the following methods:
 
 Most of the code in this library is derived from the [**BiocNeighbors** R package](https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html).
 
-As one might expect, the name is not an accident.
-
-<p float="left">
-  <img src="https://i.makeagif.com/media/2-26-2015/JDQzgr.gif" width="32%" />
-  <img src="https://thumbs.gfycat.com/SneakyPracticalIndianringneckparakeet-max-1mb.gif" width="32%" />
-  <img src="https://media.tenor.com/images/2b3d5c70f6f4919320480f13427d881c/tenor.gif" width="32%" />
-</p>
-
 ## Quick start
 
 Given a matrix with dimensions in the rows and observations in the columns, we can do:
@@ -35,42 +27,124 @@ Given a matrix with dimensions in the rows and observations in the columns, we c
 ```cpp
 #include "knncolle/knncolle.hpp"
 
-/* ... boilerplate... */
+// Wrap our data in a light SimpleMatrix.
+knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, matrix.data());
 
-knncolle::VpTreeEuclidean<> searcher(ndim, nobs, matrix.data()); 
-auto results1 = searcher.find_nearest_neighbors(0, 10); // 10 nearest neighbors of the first element.
-auto results2 = searcher.find_nearest_neighbors(query, 10); // 10 nearest neighbors of a query vector.
+// Build a VP-tree index. 
+knncolle::VptreeBuilder<> vp_builder;
+auto vp_index = vp_builder.build(mat);
+
+// Find 10 nearest neighbors of every element.
+auto results = knncolle::find_nearest_neighbors(*vp_index, 10); 
 ```
 
 The `find_nearest_neighbors()` call will return a vector of (index, distance) pairs,
 containing the requested number of neighbors in order of increasing distance from the query point.
 (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)
-Each call is `const` and can be performed simultaneously in multiple threads, e.g., via OpenMP.
-
-For some algorithms, we can modify the parameters of the search by passing our desired values in the constructor:
-
-```cpp
-knncolle::AnnoyEuclidean<> searcher2(ndim, nobs, matrix.data(), /* ntrees = */ 100); 
-```
-
-All algorithms derive from a common base class, so it is possible to swap algorithms at run-time:
-
-```cpp
-std::unique_ptr<knncolle::Base<> > ptr;
-if (algorithm == "Annoy") {
-    ptr.reset(new knncolle::AnnoyEuclidean<>(ndim, nobs, matrix.data()));
-} else if (algorithm == "Hnsw") {
-    ptr.reset(new knncolle::HnswEuclidean<>(ndim, nobs, matrix.data()));
-} else {
-    ptr.reset(new knncolle::KmknnEuclidean<>(ndim, nobs, matrix.data()));
-}
-auto res = ptr->find_nearest_neighbors(1, 10);
-```
-
-Each class is also templated, defaulting to `int`s for the indices and `double`s for the distances.
-If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
 
 Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details.
+
+## Searching in more detail
+
+We can perform the search manually by constructing a `Searcher` instance and looping over the elements of interest.
+Continuing with the same variables defined in the previous section, we could replace the `find_nearest_neighbors()` call with:
+
+```cpp
+auto searcher = vp_index->initialize();
+std::vector<std::pair<int, double> > results;
+for (int o = 0; o < nobs; ++o) {
+    searcher->search(o, 10, results);
+    // Do something with the search 'results' for 'o'.
+}
+```
+
+Similarly, we can query the prebuilt index for the neighbors of an arbitrary vector.
+The code below searches for the nearest 5 neighbors to a query vector at the origin:
+
+```cpp
+std::vector<double> query(ndim);
+searcher->search(query.data(), 5, results);
+```
+
+To parallelize the loop, we just need to construct a separate `Searcher` (and the result vector) for each thread.
+This is already implemented in `find_nearest_neighbors()` but is also easy to do by hand, e.g., with OpenMP:
+
+```cpp
+#pragma omp parallel num_threads(5)
+{
+    auto searcher = vp_index->initialize();
+    std::vector<std::pair<int, double> > results;
+    #pragma omp for
+    for (int o = 0; o < nobs; ++o) {
+        searcher->search(o, 10, results);
+        // Do something with the search 'results' for 'o'.
+    }
+}
+```
+
+## Tuning index construction
+
+Some algorithms allow the user to modify the parameters of the search by passing options in the relevant `Builder` constructor.
+For example, the KMKNN method has several options for the k-means clustering step.
+We could, say, specify which initialization algorithm to use:
+
+```cpp
+knncolle::KmknnOptions<> kk_opt;
+kk_opt.initialize_algorithm.reset(
+    new kmeans::InitializeRandom<kmeans::SimpleMatrix<double, int, int>, int, double>
+);
+```
+
+Or modify the behavior of the refinement algorithm:
+
+```cpp
+kmeans::RefineLloydOptions ll_opt;
+ll_opt.max_iterations = 20;
+ll_opt.num_threads = 5;
+kk_opt.refine_algorithm.reset(
+    new kmeans::RefineLloyd<kmeans::SimpleMatrix<double, int, int>, int, double>(ll_opt)
+);
+```
+
+After which, we construct our `KmknnBuilder`, build our `KmknnPrebuilt` index, and proceed with the nearest-neighbor search.
+
+```cpp
+knncolle::KmknnBuilder<> kk_builder(kk_opt);
+auto kk_prebuilt = kk_builder.build(mat);
+auto kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); 
+```
+
+Check out the [reference documentation](https://ltla.github.io/knncolle/) for the available options in each algorithm's `Builder`.
+
+## Polymorphism
+
+All methods implement the `Builder`, `Prebuilt` and `Searcher` interfaces via inheritance.
+This means that users can swap algorithms at run-time:
+
+```cpp
+std::unique_ptr<knncolle::Builder<> > ptr;
+if (algorithm == "brute-force") {
+    ptr.reset(new knncolle::BruteforceBuilder<>);
+} else if (algorithm == "kmknn") {
+    ptr.reset(new knncolle::KmknnBuilder<>);
+} else {
+    ptr.reset(new knncolle::VptreeBuilder<>);
+}
+
+auto some_prebuilt = ptr->build(mat);
+auto some_results = knncolle::find_nearest_neighbors(*some_prebuilt, 10); 
+```
+
+Each class is also heavily templated to enable compile-time polymorphism:
+
+- We default to `int`s for the indices and `double`s for the distances.
+  If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
+- The choice of distance calculation is often a compile-time parameter, as defined by the `MockDistance` compile-time interface.
+  Advanced users can define their own classes to customize the distance calculations.
+- The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
+  Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
+
+Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details on these interfaces.
 
 ## Building projects with **knncolle**
 
@@ -123,22 +197,6 @@ See the commit hashes in [`extern/CMakeLists.txt`](extern/CMakeLists.txt) to fin
 
 If you're not using CMake, the simple approach is to just copy the files in `include/` - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's `-I`.
 This requires the external dependencies listed in [`extern/CMakeLists.txt`](extern/CMakeLists.txt), which also need to be made available during compilation.
-
-## Further comments
-
-Both Annoy and HNSW will attempt to perform manual vectorization based on SSE and/or AVX instructions.
-This may result in differences in the results across machines due to changes in numeric precision across architectures with varying support for SSE/AVX intrinsics.
-For the most part, such differences can be avoided by consistently compiling for the "near-lowest common denominator" (such as the typical `x86-64` default for GCC and Clang) 
-and ensuring that the more specific instruction subsets like SSE3 and AVX are not enabled (which are typically off by default anyway).
-Nonetheless, if reproducibility across architectures is important, it can be achieved at the cost of some speed by defining the `NO_MANUAL_VECTORIZATION` macro,
-which will instruct both Annoy and HNSW to disable their vectorized optimizations.
-
-## Further comments
-
-By default, we have disabled manual vectorization for both Annoy and HNSW-based searches.
-This aims to avoid differences in the results due to numeric precision across architectures with varying support for SSE/AVX intrinsics.
-Our philosophy here is to favor reproducibility over speed;
-nonetheless, users can choose the latter by defining the `KNNCOLLE_MANUAL_VECTORIZATION` macro.
 
 ## References
 
