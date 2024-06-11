@@ -77,13 +77,16 @@ $(function() {
 <div class="textblock"><p><a class="anchor" id="md__2github_2workspace_2README"></a> <img src="https://github.com/knncolle/knncolle/actions/workflows/run-tests.yaml/badge.svg" alt="Unit tests" style="pointer-events: none;" class="inline"/> <img src="https://github.com/knncolle/knncolle/actions/workflows/doxygenate.yaml/badge.svg" alt="Documentation" style="pointer-events: none;" class="inline"/> <a href="https://codecov.io/gh/knncolle/knncolle"><img src="https://codecov.io/gh/knncolle/knncolle/branch/master/graph/badge.svg" alt="Codecov" style="pointer-events: none;" class="inline"/></a></p>
 <h1>Overview</h1>
 <p><b>knncolle</b> is a header-only C++ library that collects a variety of different k-nearest neighbor algorithms under a consistent interface. The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag, or by just swapping out the relevant constructors at compile time.</p>
-<p>Currently, we support the following methods:</p>
+<p>The core library supports the following methods:</p>
 <ul>
 <li><a href="https://pubmed.ncbi.nlm.nih.gov/22247818/">K-means with k-nearest neighbors</a>, an exact search that uses k-means clustering to index points.</li>
 <li><a href="http://stevehanov.ca/blog/?id=130">Vantage point tree</a>, an exact search that uses the tree of the same name.</li>
-<li><a href="https://github.com/spotify/annoy/">Annoy</a>, an approximate search based on random projections.</li>
-<li><a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
-<li>Brute force search.</li>
+<li>Brute force search, mostly implemented for testing.</li>
+</ul>
+<p>This framework is extended by various add-on libraries to more algorithms:</p>
+<ul>
+<li><a href="https://github.com/knncolle/knncolle_annoy"><b>knncolle_annoy</b></a> supports <a href="https://github.com/spotify/annoy/">Annoy</a>, an approximate search based on random projections.</li>
+<li><a href="https://github.com/knncole/knncolle_hnsw"><b>knncolle_hnsw</b></a> supports <a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
 </ul>
 <p>Most of the code in this library is derived from the <a href="https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html"><b>BiocNeighbors</b> R package</a>.</p>
 <h1>Quick start</h1>
@@ -207,9 +210,7 @@ $(function() {
 <h1>References</h1>
 <p>Wang X (2012). A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. <em>Proc Int Jt Conf Neural Netw</em>, 43, 6:2351-2358.</p>
 <p>Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a></p>
-<p>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321.</p>
-<p>Bernhardsson E (2018). Annoy. <a href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></p>
-<p>Malkov YA, Yashunin DA (2016). Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs. <em>arXiv</em>, <a href="https://arxiv.org/abs/1603.09320">https://arxiv.org/abs/1603.09320</a> </p>
+<p>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
