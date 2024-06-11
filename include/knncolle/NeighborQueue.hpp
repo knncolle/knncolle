@@ -22,7 +22,7 @@ public:
 public:    
     void reset(Index_ k) {
         my_neighbors = k;
-        my_full = (my_neighbors = 0);
+        my_full = (my_neighbors == 0);
 
         // Popping any existing elements out, just in case. This shouldn't
         // usually be necessary if report() was called as the queue should
