@@ -74,7 +74,7 @@ $(function() {
   <div class="headertitle"><div class="title">Collection of KNN algorithms </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__2github_2workspace_2README"></a> <img src="https://github.com/LTLA/knncolle/actions/workflows/run-tests.yaml/badge.svg" alt="Unit tests" style="pointer-events: none;" class="inline"/> <img src="https://github.com/LTLA/knncolle/actions/workflows/doxygenate.yaml/badge.svg" alt="Documentation" style="pointer-events: none;" class="inline"/> <a href="https://codecov.io/gh/LTLA/knncolle"><img src="https://codecov.io/gh/LTLA/knncolle/branch/master/graph/badge.svg?token=PPKVZ1QEXR" alt="Codecov" style="pointer-events: none;" class="inline"/></a></p>
+<div class="textblock"><p><a class="anchor" id="md__2github_2workspace_2README"></a> <img src="https://github.com/knncolle/knncolle/actions/workflows/run-tests.yaml/badge.svg" alt="Unit tests" style="pointer-events: none;" class="inline"/> <img src="https://github.com/knncolle/knncolle/actions/workflows/doxygenate.yaml/badge.svg" alt="Documentation" style="pointer-events: none;" class="inline"/> <a href="https://codecov.io/gh/knncolle/knncolle"><img src="https://codecov.io/gh/knncolle/knncolle/branch/master/graph/badge.svg" alt="Codecov" style="pointer-events: none;" class="inline"/></a></p>
 <h1>Overview</h1>
 <p><b>knncolle</b> is a header-only C++ library that collects a variety of different k-nearest neighbor algorithms under a consistent interface. The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag, or by just swapping out the relevant constructors at compile time.</p>
 <p>Currently, we support the following methods:</p>
@@ -103,7 +103,7 @@ $(function() {
 <div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition</b> Vptree.hpp:329</div></div>
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="knncolle_8hpp.html">knncolle.hpp</a></div><div class="ttdoc">Umbrella header to include all algorithms.</div></div>
 </div><!-- fragment --><p>The <code>find_nearest_neighbors()</code> call will return a vector of (index, distance) pairs, containing the requested number of neighbors in order of increasing distance from the query point. (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)</p>
-<p>Check out the <a href="https://ltla.github.io/knncolle/">reference documentation</a> for more details.</p>
+<p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details.</p>
 <h1>Searching in more detail</h1>
 <p>We can perform the search manually by constructing a <code>Searcher</code> instance and looping over the elements of interest. Continuing with the same variables defined in the previous section, we could replace the <code>find_nearest_neighbors()</code> call with:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> searcher = vp_index-&gt;initialize();</div>
@@ -147,7 +147,7 @@ $(function() {
 <div class="line"><span class="keyword">auto</span> kk_prebuilt = kk_builder.build(mat);</div>
 <div class="line"><span class="keyword">auto</span> kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); </div>
 <div class="ttc" id="aclassknncolle_1_1KmknnBuilder_html"><div class="ttname"><a href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on k-means clustering.</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:392</div></div>
-</div><!-- fragment --><p>Check out the <a href="https://ltla.github.io/knncolle/">reference documentation</a> for the available options in each algorithm's <code>Builder</code>.</p>
+</div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for the available options in each algorithm's <code>Builder</code>.</p>
 <h1>Polymorphism</h1>
 <p>All methods implement the <code>Builder</code>, <code>Prebuilt</code> and <code>Searcher</code> interfaces via inheritance. This means that users can swap algorithms at run-time:</p>
 <div class="fragment"><div class="line">std::unique_ptr&lt;knncolle::Builder&lt;&gt; &gt; ptr;</div>
@@ -169,7 +169,7 @@ $(function() {
 <li>The choice of distance calculation is often a compile-time parameter, as defined by the <code>MockDistance</code> compile-time interface. Advanced users can define their own classes to customize the distance calculations.</li>
 <li>The choice of input data is another compile-time paramter, as defined by the <code>MockMatrix</code> interface. Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.</li>
 </ul>
-<p>Check out the <a href="https://ltla.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
+<p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
 <h1>Building projects with <b>knncolle</b></h1>
 <h2>CMake with <code>FetchContent</code></h2>
 <p>If you're using CMake, you just need to add something like this to your <code>CMakeLists.txt</code>:</p>
@@ -177,7 +177,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">FetchContent_Declare(</div>
 <div class="line">  knncolle</div>
-<div class="line">  GIT_REPOSITORY https://github.com/LTLA/knncolle</div>
+<div class="line">  GIT_REPOSITORY https://github.com/knncolle/knncolle</div>
 <div class="line">  GIT_TAG master # or any version of interest</div>
 <div class="line">)</div>
 <div class="line"> </div>
