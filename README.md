@@ -1,8 +1,8 @@
 # Collection of KNN algorithms
 
-![Unit tests](https://github.com/LTLA/knncolle/actions/workflows/run-tests.yaml/badge.svg)
-![Documentation](https://github.com/LTLA/knncolle/actions/workflows/doxygenate.yaml/badge.svg)
-[![Codecov](https://codecov.io/gh/LTLA/knncolle/branch/master/graph/badge.svg?token=PPKVZ1QEXR)](https://codecov.io/gh/LTLA/knncolle)
+![Unit tests](https://github.com/knncolle/knncolle/actions/workflows/run-tests.yaml/badge.svg)
+![Documentation](https://github.com/knncolle/knncolle/actions/workflows/doxygenate.yaml/badge.svg)
+[![Codecov](https://codecov.io/gh/knncolle/knncolle/branch/master/graph/badge.svg)](https://codecov.io/gh/knncolle/knncolle)
 
 ## Overview
 
@@ -42,7 +42,7 @@ The `find_nearest_neighbors()` call will return a vector of (index, distance) pa
 containing the requested number of neighbors in order of increasing distance from the query point.
 (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)
 
-Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details.
+Check out the [reference documentation](https://knncolle.github.io/knncolle/) for more details.
 
 ## Searching in more detail
 
@@ -114,7 +114,7 @@ auto kk_prebuilt = kk_builder.build(mat);
 auto kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); 
 ```
 
-Check out the [reference documentation](https://ltla.github.io/knncolle/) for the available options in each algorithm's `Builder`.
+Check out the [reference documentation](https://knncolle.github.io/knncolle/) for the available options in each algorithm's `Builder`.
 
 ## Polymorphism
 
@@ -144,7 +144,7 @@ Each class is also heavily templated to enable compile-time polymorphism:
 - The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
   Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
 
-Check out the [reference documentation](https://ltla.github.io/knncolle/) for more details on these interfaces.
+Check out the [reference documentation](https://knncolle.github.io/knncolle/) for more details on these interfaces.
 
 ## Building projects with **knncolle**
 
@@ -157,7 +157,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   knncolle
-  GIT_REPOSITORY https://github.com/LTLA/knncolle
+  GIT_REPOSITORY https://github.com/knncolle/knncolle
   GIT_TAG master # or any version of interest
 )
 
@@ -168,17 +168,17 @@ Then you can link to **knncolle** to make the headers available during compilati
 
 ```cmake
 # For executables:
-target_link_libraries(myexe ltla::knncolle)
+target_link_libraries(myexe knncolle::knncolle)
 
 # For libaries
-target_link_libraries(mylib INTERFACE ltla::knncolle)
+target_link_libraries(mylib INTERFACE knncolle::knncolle)
 ```
 
 ### CMake with `find_package()`
 
 ```cmake
-find_package(ltla_knncolle CONFIG REQUIRED)
-target_link_libraries(mylib INTERFACE ltla::knncolle)
+find_package(knncolle_knncolle CONFIG REQUIRED)
+target_link_libraries(mylib INTERFACE knncolle::knncolle)
 ```
 
 To install the library, use:

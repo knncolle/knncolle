@@ -10,11 +10,11 @@ include(CMakePackageConfigHelpers)
 
 # Library
 add_library(knncolle INTERFACE)
-add_library(ltla::knncolle ALIAS knncolle)
+add_library(knncolle::knncolle ALIAS knncolle)
 
 target_include_directories(knncolle INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/ltla>)
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/knncolle>)
 target_compile_features(knncolle INTERFACE cxx_std_17)
 
 # Dependencies
@@ -43,19 +43,19 @@ endif()
 
 # Install
 install(DIRECTORY include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ltla)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/knncolle)
 
 install(TARGETS knncolle
     EXPORT knncolleTargets)
 
 install(EXPORT knncolleTargets
-    FILE ltla_knncolleTargets.cmake
-    NAMESPACE ltla::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
+    FILE knncolle_knncolleTargets.cmake
+    NAMESPACE knncolle::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/knncolle_knncolle)
 
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
-    "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
+    "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfig.cmake"
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/knncolle_knncolle)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/ltla_knncolleConfig.cmake"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ltla_knncolle)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/knncolle_knncolleConfig.cmake"
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/knncolle_knncolle)
