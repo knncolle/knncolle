@@ -25,7 +25,7 @@ class BruteforcePrebuilt;
 /**
  * @brief Brute-force nearest neighbor searcher.
  *
- * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize`.
+ * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize()`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
@@ -76,15 +76,16 @@ public:
 /**
  * @brief Index for a brute-force nearest neighbor search.
  *
- * Instances of this class are usually constructed using `BruteforceBuilder::build`.
+ * Instances of this class are usually constructed using `BruteforceBuilder::build_raw()`.
+ * The `initialize()` method will create a `BruteforceSearcher` instance.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
- * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::dimension_type`.
+ * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::index_type`.
+ * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::index_type`.
  * @tparam Store_ Floating point type for the stored data. 
- * For the output of `BruteforceBuilder::build`, this is set to `MockMatrix::data_type`.
+ * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::data_type`.
  * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
@@ -139,6 +140,8 @@ public:
  * It has quadratic complexity and is theoretically the worst-performing method;
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
+ *
+ * The `build_raw()` method will create an instance of a `BruteforcePrebuilt` class.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.

@@ -11,7 +11,7 @@ namespace knncolle {
 /**
  * @brief Compile-time interface for matrix data.
  *
- * This defines the expectations for a matrix of observation-level data to be used in `Builder::build()`.
+ * This defines the expectations for a matrix of observation-level data to be used in `Builder::build_raw()`.
  * Each matrix should support extraction of the vector of coordinates for each observation.
  */
 class MockMatrix {

@@ -16,8 +16,8 @@ namespace knncolle {
  *
  * Instances of `Searcher` subclasses are typically constructed with `Prebuilt::initialize()`.
  * This is intended to allow re-use of data allocations across different calls to `search()`.
- * Developers of subclasses may assume that a `Searcher` instance will not outlive the `Prebuilt` object used to generate it,
- * meaning that the former may hold references to the latter.
+ * Users should ensure that a `Searcher` instance does not outlive the `Prebuilt` object used to generate it;
+ * this allows developers of the former to hold references to the latter.
  *
  * @tparam Index_ Integer type for the indices.
  * For the output of `Builder::build`, this is set to `MockMatrix::index_type`.

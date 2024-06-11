@@ -26,7 +26,7 @@ class VptreePrebuilt;
 /**
  * @brief VP-tree searcher.
  *
- * Instances of this class are usually constructed using `VptreePrebuilt::initialize`.
+ * Instances of this class are usually constructed using `VptreePrebuilt::initialize()`.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
@@ -70,15 +70,16 @@ public:
 /**
  * @brief Index for a VP-tree search.
  *
- * Instances of this class are usually constructed using `VptreeBuilder`.
+ * Instances of this class are usually constructed using `VptreeBuilder::build_raw()`.
+ * The `initialize()` method will create a `VptreeSearcher` instance.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
- * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::dimension_type`.
+ * For the output of `VptreeBuilder::build_raw()`, this is set to `Matrix_::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::index_type`.
+ * For the output of `VptreeBuilder::build_raw()`, this is set to `Matrix_::index_type`.
  * @tparam Store_ Floating point type for the stored data. 
- * For the output of `VptreeBuilder::build`, this is set to `MockMatrix::data_type`.
+ * For the output of `VptreeBuilder::build_raw()`, this is set to `Matrix_::data_type`.
  * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and distances.
  */
@@ -311,6 +312,8 @@ public:
  * This reduces the memory usage of the tree and total number of distance calculations for any search.
  * It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for **knncolle**.
  *
+ * The `build_raw()` method will create a `VptreePrebuilt` instance.
+ * 
  * @tparam Distance_ Class to compute the distance between vectors, see `distance::Euclidean` for an example.
  * @tparam Matrix_ Matrix-like object satisfying the `MockMatrix` contract.
  * @tparam Float_ Floating point type for the query data and output distances.

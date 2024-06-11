@@ -14,10 +14,13 @@ namespace knncolle {
 /**
  * @brief Interface for prebuilt nearest-neighbor search indices.
  *
+ * Instances of `Prebuilt` subclasses are typically constructed with `Builder::build_raw()`.
+ * Note that a `Prebuilt` instance may outlive the `Builder` object used to generate it, so the former should not hold any references to the latter.
+ *
  * @tparam Dim_ Integer type for the number of dimensions.
- * For the output of `Builder::build`, this is set to `MockMatrix::dimension_type`.
+ * For the output of `Builder::build_raw()`, this is set to `Matrix_::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * For the output of `Builder::build`, this is set to `MockMatrix::index_type`.
+ * For the output of `Builder::build_raw()`, this is set to `Matrix_::index_type`.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<typename Dim_, typename Index_, typename Float_>
