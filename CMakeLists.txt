@@ -22,7 +22,7 @@ option(KNNCOLLE_FETCH_EXTERN "Automatically fetch knncolle's external dependenci
 if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
-    find_package(ltla_kmeans CONFIG REQUIRED)
+    find_package(ltla_kmeans 3.0.0 CONFIG REQUIRED)
 endif()
 
 target_link_libraries(knncolle INTERFACE ltla::kmeans)
