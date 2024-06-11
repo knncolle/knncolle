@@ -1,7 +1,12 @@
-<map id="knncolle/utils/find_nearest_neighbors.hpp" name="knncolle/utils/find_nearest_neighbors.hpp">
-<area shape="rect" id="node1" title="Find nearest neighbors from an existing index." alt="" coords="13,5,172,46"/>
-<area shape="rect" id="node2" title=" " alt="" coords="84,168,141,193"/>
-<area shape="rect" id="node3" title=" " alt="" coords="22,94,73,120"/>
-<area shape="rect" id="node4" title=" " alt="" coords="97,94,179,120"/>
-<area shape="rect" id="node5" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="203,94,278,120"/>
+<map id="knncolle/find_nearest_neighbors.hpp" name="knncolle/find_nearest_neighbors.hpp">
+<area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="5,5,149,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="28,241,86,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,52,70,42,95,37,130,39,165,51,226,46,227,34,166,32,129,37,93,47,67,60,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="51,94,103,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="80,46,80,78,74,78,74,46"/>
+<area shape="rect" id="Node000004" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="127,94,216,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="102,44,147,82,144,86,99,48"/>
+<area shape="rect" id="Node000005" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="87,168,184,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="168,121,151,155,146,153,163,119"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="124,196,83,233,80,229,121,192"/>
 </map>

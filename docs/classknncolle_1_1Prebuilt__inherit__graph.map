@@ -1,0 +1,9 @@
+<map id="knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;" name="knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;">
+<area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="5,93,167,134"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute&#45;force nearest neighbor search." alt="" coords="215,5,394,61"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,85,226,59,227,64,158,90"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1KmknnPrebuilt.html" title="Index for a KMKNN search." alt="" coords="222,85,387,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="182,111,221,111,221,116,182,116"/>
+<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreePrebuilt.html" title="Index for a VP&#45;tree search." alt="" coords="222,165,387,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="158,137,227,162,226,167,157,142"/>
+</map>

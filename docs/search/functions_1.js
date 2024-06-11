@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bruteforce_0',['BruteForce',['../classknncolle_1_1BruteForce.html#a655c56526b892db92377cfc52fb029c7',1,'knncolle::BruteForce']]]
+  ['create_5fworkspace_0',['create_workspace',['../classknncolle_1_1MockMatrix.html#ab67d03fc96f29ca6d37fb00a1d7fddc3',1,'knncolle::MockMatrix']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hnsw_0',['Hnsw',['../classknncolle_1_1Hnsw.html#a636c453927fa8b4d8260e754d548ccf1',1,'knncolle::Hnsw']]]
+  ['get_5fobservation_0',['get_observation',['../classknncolle_1_1MockMatrix.html#a4c8aeb3684c8163c9ed3bbfcb688e400',1,'knncolle::MockMatrix']]]
 ];

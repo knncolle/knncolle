@@ -1,4 +1,0 @@
-<map id="knncolle::Hnsw&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;" name="knncolle::Hnsw&lt; SPACE, INDEX_t, DISTANCE_t, QUERY_t &gt;">
-<area shape="rect" id="node1" title="Perform an approximate nearest neighbor search with HNSW." alt="" coords="17,94,185,150"/>
-<area shape="rect" id="node2" href="$classknncolle_1_1Base.html" title="Virtual base class defining the knncolle interface." alt="" coords="5,5,197,46"/>
-</map>

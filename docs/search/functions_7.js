@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['raw_5fdistance_0',['raw_distance',['../structknncolle_1_1distances_1_1Euclidean.html#a57bf54ad8dea48145ce64d1b25813acf',1,'knncolle::distances::Euclidean::raw_distance()'],['../structknncolle_1_1distances_1_1Manhattan.html#ae67e02a5d7622476a2d38bc257e4a873',1,'knncolle::distances::Manhattan::raw_distance()']]]
+  ['raw_5fdistance_0',['raw_distance',['../structknncolle_1_1MockDistance.html#a7cfc77c0fd9806f9030a617404a5f954',1,'knncolle::MockDistance::raw_distance()'],['../structknncolle_1_1EuclideanDistance.html#a0d6936a53ba4ed0e0ca33c9ac2515d06',1,'knncolle::EuclideanDistance::raw_distance()'],['../structknncolle_1_1ManhattanDistance.html#ac782b1cfdb76e144a3d84d674e661456',1,'knncolle::ManhattanDistance::raw_distance()']]]
 ];

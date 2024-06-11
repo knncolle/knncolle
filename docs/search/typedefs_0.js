@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['annoyeuclidean_0',['AnnoyEuclidean',['../Annoy_8hpp.html#aebb722fc041625766d43a4c9ce6e31f9',1,'knncolle']]],
-  ['annoymanhattan_1',['AnnoyManhattan',['../Annoy_8hpp.html#abdc297b9942e43f3832135618a22ead0',1,'knncolle']]]
+  ['data_5ftype_0',['data_type',['../classknncolle_1_1MockMatrix.html#a4acebbf0d2f4ba37a76fdc0c44ea3c37',1,'knncolle::MockMatrix']]],
+  ['dimension_5ftype_1',['dimension_type',['../classknncolle_1_1MockMatrix.html#ab13717b8647616569554f3393572d86a',1,'knncolle::MockMatrix']]]
 ];

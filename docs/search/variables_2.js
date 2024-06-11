@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['search_5fmult_0',['search_mult',['../structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee',1,'knncolle::Annoy::Defaults']]]
+  ['refine_5falgorithm_0',['refine_algorithm',['../structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8',1,'knncolle::KmknnOptions']]]
 ];

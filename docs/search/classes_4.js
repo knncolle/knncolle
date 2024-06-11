@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hnsw_0',['Hnsw',['../classknncolle_1_1Hnsw.html',1,'knncolle']]]
+  ['prebuilt_0',['Prebuilt',['../classknncolle_1_1Prebuilt.html',1,'knncolle']]]
 ];

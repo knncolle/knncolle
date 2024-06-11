@@ -1,13 +1,30 @@
-<map id="knncolle/Kmknn/Kmknn.hpp" name="knncolle/Kmknn/Kmknn.hpp">
-<area shape="rect" id="node1" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="372,5,555,31"/>
-<area shape="rect" id="node2" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="25,79,164,105"/>
-<area shape="rect" id="node3" title=" " alt="" coords="12,153,70,178"/>
-<area shape="rect" id="node4" href="$NeighborQueue_8hpp_source.html" title=" " alt="" coords="377,79,550,105"/>
-<area shape="rect" id="node6" title=" " alt="" coords="267,153,324,178"/>
-<area shape="rect" id="node7" title=" " alt="" coords="533,153,607,178"/>
-<area shape="rect" id="node8" href="$Base_8hpp.html" title="Defines the virtual base class for all knncolle methods." alt="" coords="239,79,352,105"/>
-<area shape="rect" id="node9" title=" " alt="" coords="625,79,769,105"/>
-<area shape="rect" id="node10" title=" " alt="" coords="793,79,857,105"/>
-<area shape="rect" id="node11" title=" " alt="" coords="881,79,934,105"/>
-<area shape="rect" id="node5" title=" " alt="" coords="435,153,492,178"/>
+<map id="knncolle/Kmknn.hpp" name="knncolle/Kmknn.hpp">
+<area shape="rect" id="Node000001" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="420,5,559,31"/>
+<area shape="rect" id="Node000002" href="$distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,79,107,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="420,33,123,81,122,76,419,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="131,79,266,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="441,34,264,77,262,72,439,29"/>
+<area shape="rect" id="Node000005" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="297,153,386,178"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="421,30,371,47,349,62,332,80,326,94,325,108,332,138,327,140,319,109,321,93,327,78,346,57,369,42,419,25"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="399,300,457,326"/>
+<area shape="poly" id="edge13_Node000001_Node000007" title=" " alt="" coords="494,31,499,95,498,137,492,179,471,239,446,288,441,286,466,237,487,178,492,136,493,95,488,32"/>
+<area shape="rect" id="Node000008" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="341,79,427,105"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="473,34,416,72,413,68,470,29"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="410,153,478,178"/>
+<area shape="poly" id="edge14_Node000001_Node000009" title=" " alt="" coords="488,32,455,138,450,137,483,31"/>
+<area shape="rect" id="Node000010" href="$MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="552,79,664,105"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="511,29,576,68,574,73,508,34"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="688,79,829,105"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="536,29,699,72,697,77,534,34"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="854,79,928,105"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="559,27,839,76,838,81,559,33"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="953,79,1005,105"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="559,23,728,41,831,57,938,76,937,81,830,62,727,47,559,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="27,153,85,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,105,59,137,53,137,53,105"/>
+<area shape="rect" id="Node000006" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="337,226,434,252"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="351,177,372,211,368,214,346,180"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="395,251,415,285,411,288,390,254"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="379,106,359,141,354,138,375,104"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="396,103,426,139,422,142,392,107"/>
 </map>

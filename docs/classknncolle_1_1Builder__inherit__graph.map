@@ -1,0 +1,9 @@
+<map id="knncolle::Builder&lt; Matrix_, Float_ &gt;" name="knncolle::Builder&lt; Matrix_, Float_ &gt;">
+<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor search indices." alt="" coords="5,77,129,118"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforceBuilder.html" title="Perform a brute&#45;force nearest neighbor search." alt="" coords="177,5,370,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,69,176,55,208,44,210,49,178,60,139,74"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1KmknnBuilder.html" title="Perform a nearest neighbor search based on k&#45;means clustering." alt="" coords="195,70,352,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="144,95,195,95,195,100,144,100"/>
+<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreeBuilder.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="197,150,350,206"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="136,121,201,147,199,152,134,126"/>
+</map>

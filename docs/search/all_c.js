@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['search_5fmult_0',['search_mult',['../structknncolle_1_1Annoy_1_1Defaults.html#aef5775a1bd6490f05178b4f88d017dee',1,'knncolle::Annoy::Defaults']]]
+  ['power_0',['power',['../structknncolle_1_1KmknnOptions.html#ad46d8aa236754eb65ea9983d355c3280',1,'knncolle::KmknnOptions']]],
+  ['prebuilt_1',['Prebuilt',['../classknncolle_1_1Prebuilt.html',1,'knncolle']]],
+  ['prebuilt_2ehpp_2',['Prebuilt.hpp',['../Prebuilt_8hpp.html',1,'']]]
 ];

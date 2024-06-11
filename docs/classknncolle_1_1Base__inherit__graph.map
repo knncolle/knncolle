@@ -1,8 +1,0 @@
-<map id="knncolle::Base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;" name="knncolle::Base&lt; INDEX_t, DISTANCE_t, QUERY_t &gt;">
-<area shape="rect" id="node1" title="Virtual base class defining the knncolle interface." alt="" coords="5,202,197,242"/>
-<area shape="rect" id="node2" href="$classknncolle_1_1Annoy.html" title="Perform an approximate nearest neighbor search with Annoy." alt="" coords="245,5,481,76"/>
-<area shape="rect" id="node3" href="$classknncolle_1_1BruteForce.html" title="Perform a brute&#45;force nearest neighbor search." alt="" coords="278,100,448,171"/>
-<area shape="rect" id="node4" href="$classknncolle_1_1Hnsw.html" title="Perform an approximate nearest neighbor search with HNSW." alt="" coords="279,194,447,250"/>
-<area shape="rect" id="node5" href="$classknncolle_1_1Kmknn.html" title="Perform a nearest neighbor search based on k&#45;means clustering." alt="" coords="257,274,469,330"/>
-<area shape="rect" id="node6" href="$classknncolle_1_1VpTree.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="257,354,469,410"/>
-</map>

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['vptree_0',['VpTree',['../classknncolle_1_1VpTree.html',1,'knncolle::VpTree&lt; DISTANCE, INDEX_t, DISTANCE_t, QUERY_t, INTERNAL_t &gt;'],['../classknncolle_1_1VpTree.html#aca1b408fa65305107cfc7fb49d5b9f84',1,'knncolle::VpTree::VpTree()']]],
-  ['vptree_2ehpp_1',['VpTree.hpp',['../VpTree_8hpp.html',1,'']]],
-  ['vptreeeuclidean_2',['VpTreeEuclidean',['../VpTree_8hpp.html#ad59adacb1e7692963f1a9b00ff49e054',1,'knncolle']]],
-  ['vptreemanhattan_3',['VpTreeManhattan',['../VpTree_8hpp.html#aad5d0c75f7f1362785ca361ea7cca5e1',1,'knncolle']]]
+  ['raw_5fdistance_0',['raw_distance',['../structknncolle_1_1MockDistance.html#a7cfc77c0fd9806f9030a617404a5f954',1,'knncolle::MockDistance::raw_distance()'],['../structknncolle_1_1EuclideanDistance.html#a0d6936a53ba4ed0e0ca33c9ac2515d06',1,'knncolle::EuclideanDistance::raw_distance()'],['../structknncolle_1_1ManhattanDistance.html#ac782b1cfdb76e144a3d84d674e661456',1,'knncolle::ManhattanDistance::raw_distance()']]],
+  ['refine_5falgorithm_1',['refine_algorithm',['../structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8',1,'knncolle::KmknnOptions']]]
 ];
