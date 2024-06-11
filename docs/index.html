@@ -184,13 +184,13 @@ $(function() {
 <div class="line">FetchContent_MakeAvailable(knncolle)</div>
 </div><!-- fragment --><p>Then you can link to <b>knncolle</b> to make the headers available during compilation:</p>
 <div class="fragment"><div class="line"># For executables:</div>
-<div class="line">target_link_libraries(myexe ltla::knncolle)</div>
+<div class="line">target_link_libraries(myexe knncolle::knncolle)</div>
 <div class="line"> </div>
 <div class="line"># For libaries</div>
-<div class="line">target_link_libraries(mylib INTERFACE ltla::knncolle)</div>
+<div class="line">target_link_libraries(mylib INTERFACE knncolle::knncolle)</div>
 </div><!-- fragment --><h2>CMake with <code>find_package()</code></h2>
-<div class="fragment"><div class="line">find_package(ltla_knncolle CONFIG REQUIRED)</div>
-<div class="line">target_link_libraries(mylib INTERFACE ltla::knncolle)</div>
+<div class="fragment"><div class="line">find_package(knncolle_knncolle CONFIG REQUIRED)</div>
+<div class="line">target_link_libraries(mylib INTERFACE knncolle::knncolle)</div>
 </div><!-- fragment --><p>To install the library, use:</p>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DKNNCOLLE_TESTS=OFF</div>
