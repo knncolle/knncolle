@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['workspace_0',['Workspace',['../structknncolle_1_1MockMatrix_1_1Workspace.html',1,'knncolle::MockMatrix']]]
+  ['prebuilt_0',['Prebuilt',['../classknncolle_1_1Prebuilt.html',1,'knncolle']]]
 ];

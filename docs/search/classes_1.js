@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['euclideandistance_0',['EuclideanDistance',['../structknncolle_1_1EuclideanDistance.html',1,'knncolle']]]
+  ['consecutiveaccessworkspace_0',['ConsecutiveAccessWorkspace',['https://ltla.github.io/CppKmeans/structkmeans_1_1MockMatrix_1_1ConsecutiveAccessWorkspace.html',1,'kmeans::MockMatrix']]]
 ];

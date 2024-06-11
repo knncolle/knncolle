@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['vptreebuilder_0',['VptreeBuilder',['../classknncolle_1_1VptreeBuilder.html',1,'knncolle']]],
-  ['vptreeprebuilt_1',['VptreePrebuilt',['../classknncolle_1_1VptreePrebuilt.html',1,'knncolle']]],
-  ['vptreesearcher_2',['VptreeSearcher',['../classknncolle_1_1VptreeSearcher.html',1,'knncolle']]]
+  ['manhattandistance_0',['ManhattanDistance',['../structknncolle_1_1ManhattanDistance.html',1,'knncolle']]],
+  ['mockdistance_1',['MockDistance',['../structknncolle_1_1MockDistance.html',1,'knncolle']]],
+  ['mockmatrix_2',['mockmatrix',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html',1,'kmeans::MockMatrix'],['../classknncolle_1_1MockMatrix.html',1,'knncolle::MockMatrix']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['refine_5falgorithm_0',['refine_algorithm',['../structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8',1,'knncolle::KmknnOptions']]]
+  ['details_0',['details',['https://ltla.github.io/CppKmeans/structkmeans_1_1Results.html#a9519a521433ace440901847b56a2bf80',1,'kmeans::Results']]]
 ];

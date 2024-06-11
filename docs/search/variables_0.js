@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initialize_5falgorithm_0',['initialize_algorithm',['../structknncolle_1_1KmknnOptions.html#a01ab1d6e283fa8945723f33942e310c0',1,'knncolle::KmknnOptions']]]
+  ['batch_5fsize_0',['batch_size',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html#adf33e7ea378417d901a1480073d505c6',1,'kmeans::RefineMiniBatchOptions']]]
 ];

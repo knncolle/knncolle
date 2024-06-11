@@ -564,6 +564,6 @@
     <name>index</name>
     <title>Collection of KNN algorithms</title>
     <filename>index.html</filename>
-    <docanchor file="index.html" title="Collection of KNN algorithms">md__2github_2workspace_2README</docanchor>
+    <docanchor file="index.html">md__2github_2workspace_2README</docanchor>
   </compound>
 </tagfile>
