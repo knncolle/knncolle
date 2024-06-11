@@ -10,13 +10,16 @@
 The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag,
 or by just swapping out the relevant constructors at compile time.
 
-Currently, we support the following methods:
+The core library supports the following methods:
 
 - [K-means with k-nearest neighbors](https://pubmed.ncbi.nlm.nih.gov/22247818/), an exact search that uses k-means clustering to index points.
 - [Vantage point tree](http://stevehanov.ca/blog/?id=130), an exact search that uses the tree of the same name.
-- [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
-- [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
-- Brute force search.
+- Brute force search, mostly implemented for testing.
+
+This framework is extended by various add-on libraries to more algorithms:
+
+- [**knncolle_annoy**](https://github.com/knncolle/knncolle_annoy) supports [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
+- [**knncolle_hnsw**](https://github.com/knncole/knncolle_hnsw) supports [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
 
 Most of the code in this library is derived from the [**BiocNeighbors** R package](https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html).
 
@@ -211,13 +214,3 @@ http://stevehanov.ca/blog/index.php?id=130
 Yianilos PN (1993).
 Data structures and algorithms for nearest neighbor search in general metric spaces.
 _Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms_, 311-321.
-
-Bernhardsson E (2018).
-Annoy.
-https://github.com/spotify/annoy
-
-Malkov YA, Yashunin DA (2016).
-Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs.
-_arXiv_,
-https://arxiv.org/abs/1603.09320
-
