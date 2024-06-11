@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+name: Check CMake install
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get latest CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Install kmeans
+      run: |
+        git clone https://github.com/LTLA/CppKmeans dep-kmeans --depth=1
+        cd dep-kmeans
+        cmake -S . -B build -DKMEANS_TESTS=OFF
+        sudo cmake --install build
+
+    - name: Configure the build
+      run: cmake -S . -B build -DKNNCOLLE_TESTS=OFF -DKNNCOLLE_FETCH_EXTERN=OFF
+
+    - name: Install the library
+      run: sudo cmake --install build
+
+    - name: Test downstream usage
+      run: |
+        mkdir _downstream
+        touch _downstream/source.cpp
+        cat << EOF > _downstream/CMakeLists.txt
+        cmake_minimum_required(VERSION 3.24)
+        project(test_install)
+        add_executable(whee source.cpp)
+        find_package(knncolle_knncolle)
+        target_link_libraries(whee knncolle::knncolle)
+        EOF
+        cd _downstream && cmake -S . -B build
