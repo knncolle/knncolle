@@ -1,4 +1,8 @@
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 name: Run unit tests
 
@@ -11,22 +15,18 @@ jobs:
       matrix:
         config:
         - {
-            name: "Ubuntu Latest GCC", 
-            os: ubuntu-latest,
-            cov: false
-          }
-        - {
             name: "Ubuntu Latest GCC, coverage enabled", 
             os: ubuntu-latest,
             cov: true
           }
         - {
             name: "macOS Latest Clang", 
-            os: macos-latest
+            os: macos-latest,
+            cov: false
           }
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
     - name: Get latest CMake
       uses: lukka/get-cmake@latest
@@ -45,7 +45,15 @@ jobs:
     - name: Run the tests
       run: |
         cd build
-        ctest
+        # Avoid using ctest because it's so slow; it starts a
+        # new process for each individual test, which is crazy.
+        for exe in $(ctest --show-only=json-v1 | jq -r ".tests[] | .command | .[0]"  | sort | uniq)
+        do
+            echo "#### RUNNING ${exe} ####"
+            echo 
+            ${exe} --gtest_brief=1
+            echo
+        done 
 
     - name: Generate code coverage
       if: ${{ matrix.config.cov == true }}
@@ -55,6 +63,8 @@ jobs:
 
     - name: Upload to Codecov
       if: ${{ matrix.config.cov == true }}
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v4
       with:
         directory: build/tests/CMakeFiles/libtest.dir/src/
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
