@@ -41,23 +41,26 @@ protected:
     }
 
 protected:
-    static void sanity_checks(const std::vector<std::pair<int, double> >& results, int k) { // for finding by vector
-        EXPECT_EQ(results.size(), std::min(k, nobs));
-        for (size_t i = 1; i < results.size(); ++i) { // check for sortedness.
+    static void sanity_checks(const std::vector<std::pair<int, double> >& results) {
+        for (size_t i = 1; i < results.size(); ++i) { // sorted by increasing distance.
             EXPECT_TRUE(results[i].second >= results[i-1].second);
+        }
+
+        auto sorted = results;
+        std::sort(sorted.begin(), sorted.end());
+        for (size_t i = 1; i < sorted.size(); ++i) { // all neighbors are unique.
+            EXPECT_TRUE(sorted[i].first >= sorted[i-1].first);
         }
     }
 
     static void sanity_checks(const std::vector<std::pair<int, double> >& results, int k, int index) { // for finding by index
         EXPECT_EQ(results.size(), std::min(k, nobs - 1));
 
-        for (size_t i = 1; i < results.size(); ++i) { // check for sortedness.
-            EXPECT_TRUE(results[i].second >= results[i-1].second);
-        }
-
         for (const auto& res : results) { // self is not in there.
             EXPECT_TRUE(res.first != index);
         }
+
+        sanity_checks(results);
     }
 };
 

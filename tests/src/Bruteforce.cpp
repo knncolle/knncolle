@@ -65,18 +65,17 @@ TEST_P(BruteforceTest, QueryEuclidean) {
     auto bptr = bb.build_shared(knncolle::SimpleMatrix(ndim, nobs, data.data())); // building a shared one for some variety.
 
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > results1, results2;
+    std::vector<std::pair<int, double> > iresults, qresults;
 
     for (int x = 0; x < nobs; ++x) {
-        bsptr->search(x, k, results1);
-        EXPECT_EQ(results1.size(), std::min(k, nobs - 1));
+        bsptr->search(data.data() + x * ndim, k + 1, qresults);
+        EXPECT_EQ(qresults[0].first, x);
+        EXPECT_EQ(qresults[0].second, 0);
+        sanity_checks(qresults);
 
-        bsptr->search(data.data() + x * ndim, k + 1, results2);
-        EXPECT_EQ(results2[0].first, x);
-        EXPECT_EQ(results2[0].second, 0);
-
-        results2.erase(results2.begin());
-        EXPECT_EQ(results1, results2);
+        qresults.erase(qresults.begin());
+        bsptr->search(x, k, iresults);
+        EXPECT_EQ(qresults, iresults);
     }
 }
 
