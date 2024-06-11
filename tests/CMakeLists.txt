@@ -23,6 +23,7 @@ add_executable(
 )
 
 include(GoogleTest)
+set(CODE_COVERAGE "Enable coverage testing" OFF)
 
 macro(decorate_test name)
     target_link_libraries(
@@ -33,7 +34,6 @@ macro(decorate_test name)
 
     target_compile_options(${name} PRIVATE -Wall -Werror -Wextra -Wpedantic)
 
-    set(CODE_COVERAGE "Enable coverage testing" OFF)
     if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         target_compile_options(${name} PRIVATE -O0 -g --coverage)
         target_link_options(${name} PRIVATE --coverage)

@@ -91,3 +91,52 @@ INSTANTIATE_TEST_SUITE_P(
         ::testing::Values(3, 10, 20) // number of neighbors (one is greater than # observations, to test correct limiting)
     )
 );
+
+class BruteforceDuplicateTest : public TestCore, public ::testing::TestWithParam<int> {
+protected:
+    void SetUp() {
+        assemble({ 5, 3 });
+    }
+};
+
+TEST_P(BruteforceDuplicateTest, Basic) {
+    // Checking for correct elimination of self when reporting from a
+    // NeighborQueue, while in the presence of many duplicates that could push
+    // out 'self' from the results.
+
+    int duplication = 10;
+    std::vector<double> dup;
+    for (int d = 0; d < duplication; ++d) {
+        dup.insert(dup.end(), data.begin(), data.end());
+    }
+
+    knncolle::BruteforceBuilder<> bb;
+    int actual_nobs = nobs * duplication;
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, actual_nobs, dup.data()));
+    auto bsptr = bptr->initialize();
+    std::vector<std::pair<int, double> > results;
+
+    int k = GetParam();
+    for (int o = 0; o < actual_nobs; ++o) {
+        bsptr->search(o, k, results);
+        int full_set = std::min(k, actual_nobs - 1);
+        EXPECT_EQ(results.size(), full_set);
+
+        int all_equal = std::min(k, duplication - 1);
+        for (int i = 0; i < all_equal; ++i) {
+            EXPECT_EQ(results[i].first % nobs, o % nobs);
+            EXPECT_EQ(results[i].second, 0);
+        }
+
+        for (int i = all_equal; i < full_set; ++i) {
+            EXPECT_NE(results[i].first % nobs, o % nobs);
+            EXPECT_GT(results[i].second, 0);
+        }
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    Bruteforce,
+    BruteforceDuplicateTest,
+    ::testing::Values(3, 10, 20) // number of neighbors
+);
