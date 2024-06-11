@@ -25,7 +25,13 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
 
 /**
  * Find the nearest neighbors within a pre-built index.
- * This is a convenient wrapper around `Prebuilt::search` that saves the caller the trouble of writing a loop.
+ * This is a convenient wrapper around `Searcher::search` that saves the caller the trouble of writing a loop.
+ *
+ * Advanced users can define a `KNNCOLLE_CUSTOM_PARALLEL` function-like macro.
+ * This will be passed three arguments - the number of observations, the number of threads,
+ * and a function `fun` that accepts a start and length of a contiguous block of observations.
+ * The `KNNCOLLE_CUSTOM_PARALLEL` call is responsible for partitioning the observations into contiguous blocks that are assigned to each thread;
+ * the `fun` should be called on each block to find the neighbors for that block.
  *
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
@@ -81,6 +87,7 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
 /**
  * Find the nearest neighbors within a pre-built search index.
  * Here, only the neighbor indices are returned, not the distances.
+ * This function will also respond to any defined `KNNCOLLE_CUSTOM_PARALLEL`, see `find_nearest_neighbors()` for details.
  *
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
