@@ -22,12 +22,10 @@ option(KNNCOLLE_FETCH_EXTERN "Automatically fetch knncolle's external dependenci
 if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
-    find_package(ltla_kmeans CONFIG REQUIRED)
-    find_package(Annoy CONFIG REQUIRED)
-    find_package(hnswlib CONFIG REQUIRED)
+    find_package(ltla_kmeans 3.0.0 CONFIG REQUIRED)
 endif()
 
-target_link_libraries(knncolle INTERFACE ltla::kmeans Annoy::Annoy hnswlib::hnswlib)
+target_link_libraries(knncolle INTERFACE ltla::kmeans)
 
 # Tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
@@ -35,6 +33,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 else()
     option(KNNCOLLE_TESTS "Build knncolle's test suite." OFF)
 endif()
+
 if(KNNCOLLE_TESTS)
     include(CTest)
     if(BUILD_TESTING)

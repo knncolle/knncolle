@@ -1,22 +1,15 @@
 #ifndef KNNCOLLE_HPP
 #define KNNCOLLE_HPP
 
-#include "BruteForce/BruteForce.hpp"
-#include "VpTree/VpTree.hpp"
+#include "Builder.hpp"
+#include "Prebuilt.hpp"
+#include "MockMatrix.hpp"
+#include "distances.hpp"
 
-#ifndef KNNCOLLE_NO_KMKNN
-#include "Kmknn/Kmknn.hpp"
-#endif
-
-#ifndef KNNCOLLE_NO_ANNOY
-#include "Annoy/Annoy.hpp"
-#endif
-
-#ifndef KNNCOLLE_NO_HNSW
-#include "Hnsw/Hnsw.hpp"
-#endif
-
-#include "utils/find_nearest_neighbors.hpp"
+#include "Bruteforce.hpp"
+#include "Vptree.hpp"
+#include "Kmknn.hpp"
+#include "find_nearest_neighbors.hpp"
 
 /**
  * @file knncolle.hpp

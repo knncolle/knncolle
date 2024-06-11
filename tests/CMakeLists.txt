@@ -16,59 +16,48 @@ enable_testing()
 
 add_executable(
     libtest
-    src/BruteForce.cpp
-    src/VpTree.cpp
+    src/Bruteforce.cpp
+    src/Vptree.cpp
     src/Kmknn.cpp
-    src/Annoy.cpp
-    src/Hnsw.cpp
     src/find_nearest_neighbors.cpp
 )
 
-target_link_libraries(
-    libtest
-    gtest_main
-    knncolle
-)
-
+include(GoogleTest)
 set(CODE_COVERAGE "Enable coverage testing" OFF)
-if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(libtest PRIVATE -O0 -g --coverage)
-    target_link_options(libtest PRIVATE --coverage)
-endif()
+
+macro(decorate_test name)
+    target_link_libraries(
+        ${name}
+        gtest_main
+        knncolle
+    )
+
+    target_compile_options(${name} PRIVATE -Wall -Werror -Wextra -Wpedantic)
+
+    if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(${name} PRIVATE -O0 -g --coverage)
+        target_link_options(${name} PRIVATE --coverage)
+    endif()
+
+    gtest_discover_tests(${name})
+endmacro()
+
+decorate_test(libtest)
 
 # Adding checks for parallelization.
-add_executable(
-    omp_test
-    src/find_nearest_neighbors.cpp
-) 
-
-target_link_libraries(
-    omp_test
-    gtest_main
-    knncolle
-)
-
-set(USE_OPENMP OFF CACHE BOOL "Compile with OpenMP support")
-if (USE_OPENMP)
-    find_package(OpenMP)
+find_package(OpenMP)
+if (OpenMP_FOUND)
+    add_executable(
+        omp_test
+        src/find_nearest_neighbors.cpp
+    )
     target_link_libraries(omp_test OpenMP::OpenMP_CXX)
+    decorate_test(omp_test)
 endif()
 
 add_executable(
     custom_parallel 
     src/find_nearest_neighbors.cpp
 ) 
-
-target_link_libraries(
-    custom_parallel 
-    gtest_main
-    knncolle
-)
-
-set_target_properties(custom_parallel PROPERTIES COMPILE_DEFINITIONS "TEST_KNNCOLLE_CUSTOM_PARALLEL")
-
-# Discovering all tests.
-include(GoogleTest)
-gtest_discover_tests(libtest)
-gtest_discover_tests(omp_test)
-gtest_discover_tests(custom_parallel)
+decorate_test(custom_parallel)
+target_compile_definitions(custom_parallel PRIVATE TEST_KNNCOLLE_CUSTOM_PARALLEL=1)

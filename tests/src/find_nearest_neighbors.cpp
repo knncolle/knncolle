@@ -6,19 +6,19 @@
 #include <thread>
 #include <iostream>
 
-template<class Function>
-void parallelize(size_t n, Function f, size_t nthreads) {
+template<class Function_>
+void custom_parallelize(size_t n, size_t nthreads, Function_ f) {
     size_t jobs_per_worker = std::ceil(static_cast<double>(n) / nthreads);
     size_t start = 0;
     std::vector<std::thread> jobs;
 
     for (size_t w = 0; w < nthreads; ++w) {
-        size_t end = std::min(n, start + jobs_per_worker);
-        if (start >= end) {
+        if (start >= n) {
             break;
         }
-        jobs.emplace_back(f, start, end);
-        start += jobs_per_worker;
+        size_t len = std::min(n - start, jobs_per_worker);
+        jobs.emplace_back(f, start, len);
+        start += len;
     }
 
     for (auto& job : jobs) {
@@ -26,7 +26,7 @@ void parallelize(size_t n, Function f, size_t nthreads) {
     }
 }
 
-#define KNNCOLLE_CUSTOM_PARALLEL parallelize
+#define KNNCOLLE_CUSTOM_PARALLEL custom_parallelize
 #endif
 
 #include "knncolle/knncolle.hpp"
@@ -35,20 +35,23 @@ void parallelize(size_t n, Function f, size_t nthreads) {
 
 #include "TestCore.hpp"
 
-class FindNearestNeighborsTest : public TestCore<std::tuple<int, int, int> > {};
+class FindNearestNeighborsTest : public TestCore, public ::testing::TestWithParam<std::tuple<std::tuple<int, int>, int> > {
+protected:
+    void SetUp() {
+        assemble(std::get<0>(GetParam()));
+    }
+};
 
 TEST_P(FindNearestNeighborsTest, Basic) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
+    int k = std::get<1>(GetParam());
 
-    auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto out = knncolle::find_nearest_neighbors<>(&base, k, 1);
+    auto base = knncolle::VptreeBuilder<>().build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto out = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
-    for (size_t i = 0; i < nobs; ++i) {
+    for (int i = 0; i < nobs; ++i) {
         const auto& x = out[i];
-        EXPECT_EQ(x.size(), k);
+        EXPECT_EQ(x.size(), std::min(k, nobs - 1));
 
         double last = 0;
         for (const auto& y : x) {
@@ -59,29 +62,32 @@ TEST_P(FindNearestNeighborsTest, Basic) {
     }
 
     // Same results in parallel.
-    auto par = knncolle::find_nearest_neighbors<>(&base, k, 3);
+    auto par = knncolle::find_nearest_neighbors<>(*base, k, 3);
     ASSERT_EQ(par.size(), out.size());
-    for (size_t i = 0; i < nobs; ++i) {
+    for (int i = 0; i < nobs; ++i) {
         EXPECT_EQ(out[i], par[i]);
     }
 }
 
 TEST_P(FindNearestNeighborsTest, DifferentType) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
+    int k = std::get<1>(GetParam());
 
-    auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto ref = knncolle::find_nearest_neighbors<>(&base, k, 1);
-    auto out = knncolle::find_nearest_neighbors<size_t, float>(&base, k, 1);
+    knncolle::SimpleMatrix mat(ndim, nobs, data.data());
+    auto base = knncolle::VptreeBuilder<>().build_unique(mat);
+    auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
-    EXPECT_EQ(out.size(), nobs);
-    for (size_t i = 0; i < nobs; ++i) {
+    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
+    auto base2 = knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float>().build_unique(mat2);
+    auto out2 = knncolle::find_nearest_neighbors(*base2, k, 1);
+
+    EXPECT_EQ(out2.size(), nobs);
+    for (int i = 0; i < nobs; ++i) {
         const auto& left = ref[i];
-        const auto& right = out[i];
-        EXPECT_EQ(left.size(), k);
-        EXPECT_EQ(right.size(), k);
-        for (size_t j = 0; j < k; ++j) {
+        const auto& right = out2[i];
+        EXPECT_EQ(left.size(), std::min(k, nobs - 1));
+        EXPECT_EQ(right.size(), left.size());
+
+        for (size_t j = 0; j < left.size(); ++j) {
             EXPECT_EQ(left[j].first, right[j].first);
             EXPECT_FLOAT_EQ(left[j].second, right[j].second);
         }
@@ -89,39 +95,40 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
 }
 
 TEST_P(FindNearestNeighborsTest, IndexOnly) {
-    auto param = GetParam();
-    assemble(param);
-    int k = std::get<2>(param);    
+    int k = std::get<1>(GetParam());
 
-    auto base = knncolle::VpTreeEuclidean<>(ndim, nobs, data.data());
-    auto ref = knncolle::find_nearest_neighbors<>(&base, k, 1);
-    auto out = knncolle::find_nearest_neighbors_index_only<>(&base, k, 1);
+    auto base = knncolle::VptreeBuilder<>().build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
+    auto out = knncolle::find_nearest_neighbors_index_only<>(*base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
-    for (size_t i = 0; i < nobs; ++i) {
+    for (int i = 0; i < nobs; ++i) {
         const auto& left = ref[i];
         const auto& right = out[i];
-        EXPECT_EQ(left.size(), k);
-        EXPECT_EQ(right.size(), k);
-        for (size_t j = 0; j < k; ++j) {
+        EXPECT_EQ(left.size(), std::min(k, nobs - 1));
+        EXPECT_EQ(right.size(), left.size());
+
+        for (size_t j = 0; j < left.size(); ++j) {
             EXPECT_EQ(left[j].first, right[j]);
         }
     }
 
     // Same results in parallel.
-    auto par = knncolle::find_nearest_neighbors_index_only<>(&base, k, 3);
+    auto par = knncolle::find_nearest_neighbors_index_only<>(*base, k, 3);
     ASSERT_EQ(par.size(), out.size());
-    for (size_t i = 0; i < nobs; ++i) {
+    for (int i = 0; i < nobs; ++i) {
         EXPECT_EQ(out[i], par[i]);
     }
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     FindNearestNeighbors,
     FindNearestNeighborsTest,
     ::testing::Combine(
-        ::testing::Values(100), // number of observations
-        ::testing::Values(5), // number of dimensions
+        ::testing::Combine(
+            ::testing::Values(5, 100), // number of observations
+            ::testing::Values(5, 20) // number of dimensions
+        ),
         ::testing::Values(1, 10) // number of neighbors 
     )
 );
