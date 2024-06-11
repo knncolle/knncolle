@@ -121,6 +121,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix&lt;int, int, double&gt;, typename Float_ = double&gt;<br />
 class knncolle::BruteforceBuilder&lt; Distance_, Matrix_, Float_ &gt;</div><p>Perform a brute-force nearest neighbor search. </p>
 <p>The brute-force search computes all pairwise distances between data and query points to identify nearest neighbors of the latter. It has quadratic complexity and is theoretically the worst-performing method; however, it has effectively no overhead from constructing or querying indexing structures, potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).</p>
+<p>The <code><a class="el" href="classknncolle_1_1BruteforceBuilder.html#a491f8b75d24452615248da7c236b7759">build_raw()</a></code> method will create an instance of a <code><a class="el" href="classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute-force nearest neighbor search.">BruteforcePrebuilt</a></code> class.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Distance_</td><td>A distance calculation class satisfying the <code><a class="el" href="structknncolle_1_1MockDistance.html" title="Expectations for a distance calculation class.">MockDistance</a></code> contract. </td></tr>

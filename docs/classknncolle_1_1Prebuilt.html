@@ -113,10 +113,11 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Dim_, typename Index_, typename Float_&gt;<br />
 class knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</div><p>Interface for prebuilt nearest-neighbor search indices. </p>
+<p>Instances of <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclasses are typically constructed with <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>. Note that a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance may outlive the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> object used to generate it, so the former should not hold any references to the latter.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. For the output of <code>Builder::build</code>, this is set to <code><a class="el" href="classknncolle_1_1MockMatrix.html#ab13717b8647616569554f3393572d86a">MockMatrix::dimension_type</a></code>. </td></tr>
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. For the output of <code>Builder::build</code>, this is set to <code><a class="el" href="classknncolle_1_1MockMatrix.html#ade1c40b06e09d623e2b83a9bd6487479">MockMatrix::index_type</a></code>. </td></tr>
+    <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. For the output of <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>, this is set to <code>Matrix_::dimension_type</code>. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the indices. For the output of <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>, this is set to <code>Matrix_::index_type</code>. </td></tr>
     <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances. </td></tr>
   </table>
   </dd>
