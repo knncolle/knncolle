@@ -35,7 +35,7 @@ knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, matrix.data());
 
 // Build a VP-tree index. 
 knncolle::VptreeBuilder<> vp_builder;
-auto vp_index = vp_builder.build(mat);
+auto vp_index = vp_builder.build_unique(mat);
 
 // Find 10 nearest neighbors of every observation.
 auto results = knncolle::find_nearest_neighbors(*vp_index, 10); 
@@ -121,7 +121,7 @@ After which, we construct our `KmknnBuilder`, build our `KmknnPrebuilt` index, a
 
 ```cpp
 knncolle::KmknnBuilder<> kk_builder(kk_opt);
-auto kk_prebuilt = kk_builder.build(mat);
+auto kk_prebuilt = kk_builder.build_unique(mat);
 auto kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); 
 ```
 
@@ -133,7 +133,7 @@ All methods implement the `Builder`, `Prebuilt` and `Searcher` interfaces via in
 This means that users can swap algorithms at run-time:
 
 ```cpp
-std::unique_ptr<knncolle::Builder<> > ptr;
+std::unique_ptr<knncolle::Builder<decltype(mat), double> > ptr;
 if (algorithm == "brute-force") {
     ptr.reset(new knncolle::BruteforceBuilder<>);
 } else if (algorithm == "kmknn") {
@@ -142,7 +142,7 @@ if (algorithm == "brute-force") {
     ptr.reset(new knncolle::VptreeBuilder<>);
 }
 
-auto some_prebuilt = ptr->build(mat);
+auto some_prebuilt = ptr->build_unique(mat);
 auto some_results = knncolle::find_nearest_neighbors(*some_prebuilt, 10); 
 ```
 
