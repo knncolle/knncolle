@@ -26,19 +26,28 @@ TEST_P(BruteforceTest, FindEuclidean) {
     auto bptr2 = bb2.build_unique(mat2);
 
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > output;
+    std::vector<int> output_i, output_i0;
+    std::vector<double> output_d, output_d0;
     auto bsptr2 = bptr2->initialize();
-    std::vector<std::pair<size_t, float> > output2;
+    std::vector<size_t> output2_i;
+    std::vector<float> output2_d;
 
     for (int x = 0; x < nobs; ++x) {
-        bsptr->search(x, k, output);
-        sanity_checks(output, k, x);
+        bsptr->search(x, k, &output_i, &output_d);
+        sanity_checks(output_i, output_d, k, x);
 
-        bsptr2->search(x, k, output2);
-        EXPECT_EQ(output.size(), output2.size());
-        for (size_t i = 0; i < output.size(); ++i) {
-            EXPECT_EQ(output2[i].first, output[i].first);
-            EXPECT_FLOAT_EQ(output2[i].second, output[i].second);
+        // Checking that it behaves with a NULL in either argument.
+        bsptr->search(x, k, NULL, &output_d0);
+        EXPECT_EQ(output_d, output_d0);
+        bsptr->search(x, k, &output_i0, NULL);
+        EXPECT_EQ(output_i, output_i0);
+
+        bsptr2->search(x, k, &output2_i, &output2_d);
+        EXPECT_EQ(output_i.size(), output2_i.size());
+        EXPECT_EQ(output_d.size(), output2_d.size());
+        for (size_t i = 0; i < output_i.size(); ++i) {
+            EXPECT_EQ(output2_i[i], output_i[i]);
+            EXPECT_FLOAT_EQ(output2_d[i], output_d[i]);
         }
     }
 }
@@ -50,11 +59,12 @@ TEST_P(BruteforceTest, FindManhattan) {
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
 
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > results;
+    std::vector<int> output_i;
+    std::vector<double> output_d;
 
     for (int x = 0; x < nobs; ++x) {
-        bsptr->search(x, k, results);
-        sanity_checks(results, k, x);
+        bsptr->search(x, k, &output_i, &output_d);
+        sanity_checks(output_i, output_d, k, x);
     }
 }
 
@@ -65,17 +75,27 @@ TEST_P(BruteforceTest, QueryEuclidean) {
     auto bptr = bb.build_shared(knncolle::SimpleMatrix(ndim, nobs, data.data())); // building a shared one for some variety.
 
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > iresults, qresults;
+    std::vector<int> query_i, query_i0, ref_i;
+    std::vector<double> query_d, query_d0, ref_d;
 
     for (int x = 0; x < nobs; ++x) {
-        bsptr->search(data.data() + x * ndim, k + 1, qresults);
-        EXPECT_EQ(qresults[0].first, x);
-        EXPECT_EQ(qresults[0].second, 0);
-        sanity_checks(qresults);
+        auto ptr = data.data() + x * ndim;
+        bsptr->search(ptr, k + 1, &query_i, &query_d);
+        EXPECT_EQ(query_i[0], x);
+        EXPECT_EQ(query_d[0], 0);
+        sanity_checks(query_i, query_d);
 
-        qresults.erase(qresults.begin());
-        bsptr->search(x, k, iresults);
-        EXPECT_EQ(qresults, iresults);
+        // Same behavior with the NULLs.
+        bsptr->search(ptr, k + 1, &query_i0, NULL);
+        EXPECT_EQ(query_i, query_i0);
+        bsptr->search(ptr, k + 1, NULL, &query_d0);
+        EXPECT_EQ(query_d, query_d0);
+
+        query_i.erase(query_i.begin());
+        query_d.erase(query_d.begin());
+        bsptr->search(x, k, &ref_i, &ref_d);
+        EXPECT_EQ(ref_i, query_i);
+        EXPECT_EQ(ref_d, query_d);
     }
 }
 
@@ -113,23 +133,24 @@ TEST_P(BruteforceDuplicateTest, Basic) {
     int actual_nobs = nobs * duplication;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, actual_nobs, dup.data()));
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > results;
+    std::vector<int> res_i;
+    std::vector<double> res_d;
 
     int k = GetParam();
     for (int o = 0; o < actual_nobs; ++o) {
-        bsptr->search(o, k, results);
+        bsptr->search(o, k, &res_i, &res_d);
         int full_set = std::min(k, actual_nobs - 1);
-        EXPECT_EQ(results.size(), full_set);
+        EXPECT_EQ(res_i.size(), full_set);
 
         int all_equal = std::min(k, duplication - 1);
         for (int i = 0; i < all_equal; ++i) {
-            EXPECT_EQ(results[i].first % nobs, o % nobs);
-            EXPECT_EQ(results[i].second, 0);
+            EXPECT_EQ(res_i[i] % nobs, o % nobs);
+            EXPECT_EQ(res_d[i], 0);
         }
 
         for (int i = all_equal; i < full_set; ++i) {
-            EXPECT_NE(results[i].first % nobs, o % nobs);
-            EXPECT_GT(results[i].second, 0);
+            EXPECT_NE(res_i[i] % nobs, o % nobs);
+            EXPECT_GT(res_d[i], 0);
         }
     }
 }

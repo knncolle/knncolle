@@ -89,20 +89,20 @@ private:
     std::vector<std::pair<Float_, Index_> > center_order;
 
 public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k + 1);
         auto new_i = my_parent->my_new_location[i];
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(new_i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search_nn(iptr, my_nearest, center_order);
-        my_nearest.report(output, new_i);
-        my_parent->normalize(output);
+        my_nearest.report(output_indices, output_distances, new_i);
+        my_parent->normalize(output_indices, output_distances);
     }
 
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k);
         my_parent->search_nn(query, my_nearest, center_order);
-        my_nearest.report(output);
-        my_parent->normalize(output);
+        my_nearest.report(output_indices, output_distances);
+        my_parent->normalize(output_indices, output_distances);
     }
 };
 
@@ -355,10 +355,16 @@ private:
         }
     }
 
-    void normalize(std::vector<std::pair<Index_, Float_> >& output) const {
-        for (auto& s : output) {
-            s.first = my_observation_id[s.first];
-            s.second = Distance_::normalize(s.second);
+    void normalize(std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) const {
+        if (output_indices) {
+            for (auto& s : *output_indices) {
+                s = my_observation_id[s];
+            }
+        }
+        if (output_distances) {
+            for (auto& d : *output_distances) {
+                d = Distance_::normalize(d);
+            }
         }
     }
 

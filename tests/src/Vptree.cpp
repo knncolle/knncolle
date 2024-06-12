@@ -32,22 +32,31 @@ TEST_P(VptreeTest, FindEuclidean) {
     knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float> vb2;
     auto vptr2 = vb2.build_unique(mat2);
 
-    std::vector<std::pair<int, double> > vresults, bresults;
+    std::vector<int> vres_i, ref_i;
+    std::vector<double> vres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto vsptr = vptr->initialize();
-    std::vector<std::pair<size_t, float> > vresults2;
+    std::vector<size_t> vres2_i;
+    std::vector<float> vres2_d;
     auto vsptr2 = vptr2->initialize();
 
     for (int x = 0; x < nobs; ++x) {
-        vsptr->search(x, k, vresults);
-        bsptr->search(x, k, bresults);
-        EXPECT_EQ(vresults, bresults);
+        vsptr->search(x, k, &vres_i, &vres_d);
+        bsptr->search(x, k, &ref_i, &ref_d);
+        EXPECT_EQ(vres_i, ref_i);
+        EXPECT_EQ(vres_d, ref_d);
 
-        vsptr2->search(x, k, vresults2);
-        EXPECT_EQ(vresults.size(), vresults2.size());
-        for (size_t i = 0; i < vresults.size(); ++i) {
-            EXPECT_EQ(vresults[i].first, vresults2[i].first);
-            EXPECT_FLOAT_EQ(vresults[i].second, vresults2[i].second);
+        // Throwing in some NULLs.
+        vsptr->search(x, k, NULL, &vres_d);
+        EXPECT_EQ(vres_d, ref_d);
+        vsptr->search(x, k, &vres_i, NULL);
+        EXPECT_EQ(vres_i, ref_i);
+
+        vsptr2->search(x, k, &vres2_i, &vres2_d);
+        EXPECT_EQ(vres_i.size(), vres2_i.size());
+        for (size_t i = 0; i < vres_i.size(); ++i) {
+            EXPECT_EQ(vres_i[i], vres2_i[i]);
+            EXPECT_FLOAT_EQ(vres_d[i], vres2_d[i]);
         }
     }
 }
@@ -63,14 +72,16 @@ TEST_P(VptreeTest, FindManhattan) {
     knncolle::VptreeBuilder<knncolle::ManhattanDistance> vb;
     auto vptr = vb.build_unique(mat);
 
-    std::vector<std::pair<int, double> > vresults, bresults;
+    std::vector<int> vres_i, ref_i;
+    std::vector<double> vres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto vsptr = vptr->initialize();
 
     for (int x = 0; x < nobs; ++x) {
-        vsptr->search(x, k, vresults);
-        bsptr->search(x, k, bresults);
-        EXPECT_EQ(vresults, bresults);
+        vsptr->search(x, k, &vres_i, &vres_d);
+        bsptr->search(x, k, &ref_i, &ref_d);
+        EXPECT_EQ(vres_i, ref_i);
+        EXPECT_EQ(vres_d, ref_d);
     }
 }
 
@@ -83,7 +94,8 @@ TEST_P(VptreeTest, QueryEuclidean) {
     knncolle::BruteforceBuilder<> bb;
     auto bptr = bb.build_unique(mat);
 
-    std::vector<std::pair<int, double> > vresults, bresults;
+    std::vector<int> vres_i, ref_i;
+    std::vector<double> vres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto vsptr = vptr->initialize();
 
@@ -92,9 +104,16 @@ TEST_P(VptreeTest, QueryEuclidean) {
 
     for (int x = 0; x < nobs; ++x) {
         fill_random(buffer.begin(), buffer.end(), rng);
-        vsptr->search(buffer.data(), k, vresults);
-        bsptr->search(buffer.data(), k, bresults);
-        EXPECT_EQ(bresults, vresults);
+        vsptr->search(buffer.data(), k, &vres_i, &vres_d);
+        bsptr->search(buffer.data(), k, &ref_i, &ref_d);
+        EXPECT_EQ(vres_i, ref_i);
+        EXPECT_EQ(vres_d, ref_d);
+
+        // Throwing in some NULLs.
+        vsptr->search(buffer.data(), k, NULL, &vres_d);
+        EXPECT_EQ(vres_d, ref_d);
+        vsptr->search(buffer.data(), k, &vres_i, NULL);
+        EXPECT_EQ(vres_i, ref_i);
     }
 }
 
@@ -132,23 +151,25 @@ TEST_P(VptreeDuplicateTest, Basic) {
     int actual_nobs = nobs * duplication;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, actual_nobs, dup.data()));
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > results;
+    std::vector<int> ires;
+    std::vector<double> dres;
 
     int k = GetParam();
     for (int o = 0; o < actual_nobs; ++o) {
-        bsptr->search(o, k, results);
+        bsptr->search(o, k, &ires, &dres);
         int full_set = std::min(k, actual_nobs - 1);
-        EXPECT_EQ(results.size(), full_set);
+        EXPECT_EQ(ires.size(), full_set);
+        EXPECT_EQ(dres.size(), full_set);
 
         int all_equal = std::min(k, duplication - 1);
         for (int i = 0; i < all_equal; ++i) {
-            EXPECT_EQ(results[i].first % nobs, o % nobs);
-            EXPECT_EQ(results[i].second, 0);
+            EXPECT_EQ(ires[i] % nobs, o % nobs);
+            EXPECT_EQ(dres[i], 0);
         }
 
         for (int i = all_equal; i < full_set; ++i) {
-            EXPECT_NE(results[i].first % nobs, o % nobs);
-            EXPECT_GT(results[i].second, 0);
+            EXPECT_NE(ires[i] % nobs, o % nobs);
+            EXPECT_GT(dres[i], 0);
         }
     }
 }

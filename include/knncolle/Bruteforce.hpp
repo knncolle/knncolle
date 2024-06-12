@@ -49,27 +49,28 @@ private:
     internal::NeighborQueue<Index_, Float_> my_nearest;
 
 private:
-    static void normalize(std::vector<std::pair<Index_, Float_> >& results) {
-        for (auto& d : results) {
-            d.second = Distance_::normalize(d.second);
-        }
-        return;
-    } 
+    static void normalize(std::vector<Float_>* output_distances) {
+        if (output_distances) {
+            for (auto& d : *output_distances) {
+                d = Distance_::normalize(d);
+            }
+        } 
+    }
 
 public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k + 1);
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search(ptr, my_nearest);
-        my_nearest.report(output, i);
-        normalize(output);
+        my_nearest.report(output_indices, output_distances, i);
+        normalize(output_distances);
     }
 
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k);
         my_parent->search(query, my_nearest);
-        my_nearest.report(output);
-        normalize(output);
+        my_nearest.report(output_indices, output_distances);
+        normalize(output_distances);
     }
 };
 

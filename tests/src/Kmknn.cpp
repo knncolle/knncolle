@@ -32,22 +32,31 @@ TEST_P(KmknnTest, FindEuclidean) {
     knncolle::KmknnBuilder<knncolle::EuclideanDistance, decltype(mat2), float> kb2;
     auto kptr2 = kb2.build_unique(mat2);
 
-    std::vector<std::pair<int, double> > kresults, bresults;
+    std::vector<int> kres_i, ref_i;
+    std::vector<double> kres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto ksptr = kptr->initialize();
-    std::vector<std::pair<size_t, float> > kresults2;
+    std::vector<size_t> kres2_i;
+    std::vector<float> kres2_d;
     auto ksptr2 = kptr2->initialize();
 
     for (int x = 0; x < nobs; ++x) {
-        ksptr->search(x, k, kresults);
-        bsptr->search(x, k, bresults);
-        EXPECT_EQ(kresults, bresults);
+        ksptr->search(x, k, &kres_i, &kres_d);
+        bsptr->search(x, k, &ref_i, &ref_d);
+        EXPECT_EQ(kres_i, ref_i);
+        EXPECT_EQ(kres_d, ref_d);
 
-        ksptr2->search(x, k, kresults2);
-        EXPECT_EQ(kresults.size(), kresults2.size());
-        for (size_t i = 0; i < kresults.size(); ++i) {
-            EXPECT_EQ(kresults[i].first, kresults2[i].first);
-            EXPECT_FLOAT_EQ(kresults[i].second, kresults2[i].second);
+        // Trying with some NULLs.
+        ksptr->search(x, k, NULL, &kres_d);
+        EXPECT_EQ(kres_d, ref_d);
+        ksptr->search(x, k, &kres_i, NULL);
+        EXPECT_EQ(kres_i, ref_i);
+
+        ksptr2->search(x, k, &kres2_i, &kres2_d);
+        EXPECT_EQ(kres_i.size(), kres2_i.size());
+        for (size_t i = 0; i < kres_i.size(); ++i) {
+            EXPECT_EQ(kres_i[i], kres2_i[i]);
+            EXPECT_FLOAT_EQ(kres_d[i], kres2_d[i]);
         }
     }
 }
@@ -66,14 +75,16 @@ TEST_P(KmknnTest, FindManhattan) {
     knncolle::KmknnBuilder<knncolle::ManhattanDistance> kb(opt);
     auto kptr = kb.build_unique(mat);
 
-    std::vector<std::pair<int, double> > kresults, bresults;
+    std::vector<int> kres_i, ref_i;
+    std::vector<double> kres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto ksptr = kptr->initialize();
 
     for (int x = 0; x < nobs; ++x) {
-        ksptr->search(x, k, kresults);
-        bsptr->search(x, k, bresults);
-        EXPECT_EQ(kresults, bresults);
+        ksptr->search(x, k, &kres_i, &kres_d);
+        bsptr->search(x, k, &ref_i, &ref_d);
+        EXPECT_EQ(kres_i, ref_i);
+        EXPECT_EQ(kres_d, ref_d);
     }
 }
 
@@ -86,7 +97,8 @@ TEST_P(KmknnTest, QueryEuclidean) {
     knncolle::BruteforceBuilder<> bb;
     auto bptr = bb.build_unique(mat);
 
-    std::vector<std::pair<int, double> > kresults, bresults;
+    std::vector<int> kres_i, ref_i;
+    std::vector<double> kres_d, ref_d;
     auto bsptr = bptr->initialize();
     auto ksptr = kptr->initialize();
 
@@ -95,9 +107,16 @@ TEST_P(KmknnTest, QueryEuclidean) {
 
     for (int x = 0; x < nobs; ++x) {
         fill_random(buffer.begin(), buffer.end(), rng);
-        ksptr->search(buffer.data(), k, kresults);
-        bsptr->search(buffer.data(), k, bresults);
-        EXPECT_EQ(bresults, kresults);
+        ksptr->search(buffer.data(), k, &kres_i, &kres_d);
+        bsptr->search(buffer.data(), k, &ref_i, &ref_d);
+        EXPECT_EQ(kres_i, ref_i);
+        EXPECT_EQ(kres_d, ref_d);
+
+        // Trying with some NULLs.
+        ksptr->search(buffer.data(), k, NULL, &kres_d);
+        EXPECT_EQ(kres_d, ref_d);
+        ksptr->search(buffer.data(), k, &kres_i, NULL);
+        EXPECT_EQ(kres_i, ref_i);
     }
 }
 
@@ -136,23 +155,25 @@ TEST_P(KmknnDuplicateTest, Basic) {
     int actual_nobs = nobs * duplication;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, actual_nobs, dup.data()));
     auto bsptr = bptr->initialize();
-    std::vector<std::pair<int, double> > results;
+    std::vector<int> res_i;
+    std::vector<double> res_d;
 
     int k = GetParam();
     for (int o = 0; o < actual_nobs; ++o) {
-        bsptr->search(o, k, results);
+        bsptr->search(o, k, &res_i, &res_d);
         int full_set = std::min(k, actual_nobs - 1);
-        EXPECT_EQ(results.size(), full_set);
+        EXPECT_EQ(res_i.size(), full_set);
+        EXPECT_EQ(res_d.size(), full_set);
 
         int all_equal = std::min(k, duplication - 1);
         for (int i = 0; i < all_equal; ++i) {
-            EXPECT_EQ(results[i].first % nobs, o % nobs);
-            EXPECT_EQ(results[i].second, 0);
+            EXPECT_EQ(res_i[i] % nobs, o % nobs);
+            EXPECT_EQ(res_d[i], 0);
         }
 
         for (int i = all_equal; i < full_set; ++i) {
-            EXPECT_NE(results[i].first % nobs, o % nobs);
-            EXPECT_GT(results[i].second, 0);
+            EXPECT_NE(res_i[i] % nobs, o % nobs);
+            EXPECT_GT(res_d[i], 0);
         }
     }
 }

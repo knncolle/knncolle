@@ -40,21 +40,29 @@ public:
      * @param i The index of the observation of interest.
      * This should be non-negative and less than the total number of observations in `Prebuilt::num_observations()`.
      * @param k The number of neighbors to identify.
-     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
-     * Length is at most `k` but may be shorter if the total number of observations is less than `k + 1`.
+     * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
+     * Length of the vector on output is no more than `k`, but may be shorter if the total number of observations is less than `k + 1`.
      * This vector is guaranteed to not contain `i` itself.
+     * Optionally NULL, in which case no indices are returned.
+     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * This corresponds to the indices reported in `output_indices`.
+     * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) = 0;
+    virtual void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
      *
      * @param query Pointer to an array of length equal to `Prebuilt::num_dimensions()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
-     * @param[out] output On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance.
-     * Length is at most `k` but may be shorter if the total number of observations is less than `k`.
+     * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
+     * Length of the vector on output is no more than `k`, but may be shorter if the total number of observations is less than `k + 1`.
+     * Optionally NULL, in which case no indices are returned.
+     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * This corresponds to the indices reported in `output_indices`.
+     * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) = 0;
+    virtual void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) = 0;
 };
 
 }

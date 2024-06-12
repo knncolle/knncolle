@@ -26,7 +26,8 @@ public:
 
         // Popping any existing elements out, just in case. This shouldn't
         // usually be necessary if report() was called as the queue should
-        // already be copletely exhausted.
+        // already be completely exhausted, but sometimes report() is a no-op
+        // or there might have been an intervening exception, etc.
         while (!my_nearest.empty()) {
             my_nearest.pop();
         }
@@ -60,9 +61,17 @@ public:
         return;
     }
 
-    void report(std::vector<std::pair<Index_, Distance_> >& output, Index_ self) {
-        output.clear();
-        output.reserve(my_nearest.size() - 1);
+private:
+    template<bool do_indices_, bool do_distances_>
+    void report_raw(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
+        if constexpr(do_indices_) {
+            output_indices->clear();
+            output_indices->reserve(my_nearest.size() - 1);
+        }
+        if constexpr(do_distances_) {
+            output_distances->clear();
+            output_distances->reserve(my_nearest.size() - 1);
+        }
 
         bool found_self = false;
         while (!my_nearest.empty()) {
@@ -70,36 +79,85 @@ public:
             if (!found_self && top.second == self) {
                 found_self = true;
             } else {
-                output.emplace_back(top.second, top.first);
+                if constexpr(do_indices_) {
+                    output_indices->push_back(top.second);
+                }
+                if constexpr(do_distances_) {
+                    output_distances->push_back(top.first);
+                }
             }
             my_nearest.pop();
         }
 
         // We use push_back + reverse to give us sorting in increasing order;
         // this is nicer than push_front() for std::vectors.
-        std::reverse(output.begin(), output.end());
+        if constexpr(do_indices_) {
+            std::reverse(output_indices->begin(), output_indices->end());
+        }
+        if constexpr(do_distances_) {
+            std::reverse(output_distances->begin(), output_distances->end());
+        }
 
         // Removing the most distance element if we couldn't find ourselves,
         // e.g., because there are too many duplicates.
         if (!found_self) {
-            output.pop_back();
+            if constexpr(do_indices_) {
+                output_indices->pop_back();
+            }
+            if constexpr(do_distances_) {
+                output_distances->pop_back();
+            }
         }
     } 
 
-    void report(std::vector<std::pair<Index_, Distance_> >& output) {
-        output.clear();
-        output.reserve(my_nearest.size());
+public:
+    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
+        if (output_indices && output_distances) {
+            report_raw<true, true>(output_indices, output_distances, self);
+        } else if (output_indices) {
+            report_raw<true, false>(output_indices, output_distances, self);
+        } else if (output_distances) {
+            report_raw<false, true>(output_indices, output_distances, self);
+        }
+    }
+
+private:
+    template<bool do_indices_, bool do_distances_>
+    void report_raw(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        size_t position = my_nearest.size();
+
+        if constexpr(do_indices_) {
+            output_indices->clear();
+            output_indices->resize(position);
+        }
+        if constexpr(do_distances_) {
+            output_distances->clear();
+            output_distances->resize(position);
+        }
 
         while (!my_nearest.empty()) {
             const auto& top = my_nearest.top();
-            output.emplace_back(top.second, top.first);
+            --position;
+            if constexpr(do_indices_) {
+                (*output_indices)[position] = top.second;
+            }
+            if constexpr(do_distances_) {
+                (*output_distances)[position] = top.first;
+            }
             my_nearest.pop();
         }
-
-        // We use push_back + reverse to give us sorting in increasing order;
-        // this is nicer than push_front() for std::vectors.
-        std::reverse(output.begin(), output.end());
     } 
+
+public:
+    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        if (output_indices && output_distances) {
+            report_raw<true, true>(output_indices, output_distances);
+        } else if (output_indices) {
+            report_raw<true, false>(output_indices, output_distances);
+        } else if (output_distances) {
+            report_raw<false, true>(output_indices, output_distances);
+        }
+    }
 
 private:
     size_t my_neighbors = 0;

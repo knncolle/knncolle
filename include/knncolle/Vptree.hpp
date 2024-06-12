@@ -51,19 +51,19 @@ private:
     std::vector<std::pair<Float_, Index_> > center_order;
 
 public:
-    void search(Index_ i, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k + 1);
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
         Float_ max_dist = std::numeric_limits<Float_>::max();
         my_parent->search_nn(0, iptr, max_dist, my_nearest);
-        my_nearest.report(output, i);
+        my_nearest.report(output_indices, output_distances, i);
     }
 
-    void search(const Float_* query, Index_ k, std::vector<std::pair<Index_, Float_> >& output) {
+    void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_nearest.reset(k);
         Float_ max_dist = std::numeric_limits<Float_>::max();
         my_parent->search_nn(0, query, max_dist, my_nearest);
-        my_nearest.report(output);
+        my_nearest.report(output_indices, output_distances);
     }
 };
 

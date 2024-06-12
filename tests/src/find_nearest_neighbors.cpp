@@ -50,14 +50,19 @@ TEST_P(FindNearestNeighborsTest, Basic) {
 
     EXPECT_EQ(out.size(), nobs);
     for (int i = 0; i < nobs; ++i) {
-        const auto& x = out[i];
-        EXPECT_EQ(x.size(), std::min(k, nobs - 1));
+        const auto& x_i = out[i].first;
+        const auto& x_d = out[i].second;
+        EXPECT_EQ(x_i.size(), std::min(k, nobs - 1));
+        EXPECT_EQ(x_i.size(), x_d.size());
+
+        for (const auto& y : x_i) {
+            EXPECT_NE(y, i);
+        }
 
         double last = 0;
-        for (const auto& y : x) {
-            EXPECT_NE(y.first, i);
-            EXPECT_TRUE(y.second > last);
-            last = y.second;
+        for (const auto& d : x_d) {
+            EXPECT_TRUE(d > last);
+            last = d;
         }
     }
 
@@ -65,7 +70,8 @@ TEST_P(FindNearestNeighborsTest, Basic) {
     auto par = knncolle::find_nearest_neighbors<>(*base, k, 3);
     ASSERT_EQ(par.size(), out.size());
     for (int i = 0; i < nobs; ++i) {
-        EXPECT_EQ(out[i], par[i]);
+        EXPECT_EQ(out[i].first, par[i].first);
+        EXPECT_EQ(out[i].second, par[i].second);
     }
 }
 
@@ -82,14 +88,16 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
 
     EXPECT_EQ(out2.size(), nobs);
     for (int i = 0; i < nobs; ++i) {
-        const auto& left = ref[i];
-        const auto& right = out2[i];
-        EXPECT_EQ(left.size(), std::min(k, nobs - 1));
-        EXPECT_EQ(right.size(), left.size());
+        const auto& left_i = ref[i].first;
+        const auto& left_d = ref[i].second;
+        const auto& right_i = out2[i].first;
+        const auto& right_d = out2[i].second;
 
-        for (size_t j = 0; j < left.size(); ++j) {
-            EXPECT_EQ(left[j].first, right[j].first);
-            EXPECT_FLOAT_EQ(left[j].second, right[j].second);
+        EXPECT_EQ(right_i.size(), left_i.size());
+        EXPECT_EQ(right_d.size(), left_i.size());
+        for (size_t j = 0; j < left_i.size(); ++j) {
+            EXPECT_EQ(left_i[j], right_i[j]);
+            EXPECT_FLOAT_EQ(left_d[j], right_d[j]);
         }
     }
 }
@@ -103,14 +111,9 @@ TEST_P(FindNearestNeighborsTest, IndexOnly) {
 
     EXPECT_EQ(out.size(), nobs);
     for (int i = 0; i < nobs; ++i) {
-        const auto& left = ref[i];
+        const auto& left = ref[i].first;
         const auto& right = out[i];
-        EXPECT_EQ(left.size(), std::min(k, nobs - 1));
-        EXPECT_EQ(right.size(), left.size());
-
-        for (size_t j = 0; j < left.size(); ++j) {
-            EXPECT_EQ(left[j].first, right[j]);
-        }
+        EXPECT_EQ(left, right);
     }
 
     // Same results in parallel.

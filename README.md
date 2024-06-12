@@ -37,13 +37,12 @@ knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, matrix.data());
 knncolle::VptreeBuilder<> vp_builder;
 auto vp_index = vp_builder.build(mat);
 
-// Find 10 nearest neighbors of every element.
+// Find 10 nearest neighbors of every observation.
 auto results = knncolle::find_nearest_neighbors(*vp_index, 10); 
-```
 
-The `find_nearest_neighbors()` call will return a vector of (index, distance) pairs,
-containing the requested number of neighbors in order of increasing distance from the query point.
-(In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)
+results[0].first; // indices of neighbors of the first observation
+results[0].second; // distances to neighbors of the first observation
+```
 
 Check out the [reference documentation](https://knncolle.github.io/knncolle/) for more details.
 
@@ -54,10 +53,11 @@ Continuing with the same variables defined in the previous section, we could rep
 
 ```cpp
 auto searcher = vp_index->initialize();
-std::vector<std::pair<int, double> > results;
+std::vector<int> indices;
+std::vector<double> distances;
 for (int o = 0; o < nobs; ++o) {
-    searcher->search(o, 10, results);
-    // Do something with the search 'results' for 'o'.
+    searcher->search(o, 10, &indices, &distances);
+    // Do something with the search results for 'o'.
 }
 ```
 
@@ -66,7 +66,7 @@ The code below searches for the nearest 5 neighbors to a query vector at the ori
 
 ```cpp
 std::vector<double> query(ndim);
-searcher->search(query.data(), 5, results);
+searcher->search(query.data(), 5, &indices, &distances);
 ```
 
 To parallelize the loop, we just need to construct a separate `Searcher` (and the result vector) for each thread.
@@ -76,13 +76,21 @@ This is already implemented in `find_nearest_neighbors()` but is also easy to do
 #pragma omp parallel num_threads(5)
 {
     auto searcher = vp_index->initialize();
-    std::vector<std::pair<int, double> > results;
+    std::vector<int> indices;
+    std::vector<double> distances;
     #pragma omp for
     for (int o = 0; o < nobs; ++o) {
-        searcher->search(o, 10, results);
+        searcher->search(o, 10, &indices, &distances);
         // Do something with the search 'results' for 'o'.
     }
 }
+```
+
+Either (or both) of `indices` and `distances` may be `NULL`, in which case the corresponding values are not reported.
+This allows implementations to skip the extraction of distances when only the identities of the neighbors are of interest.
+
+```cpp
+searcher->search(0, 5, &indices, NULL);
 ```
 
 ## Tuning index construction
