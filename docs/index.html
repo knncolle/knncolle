@@ -98,37 +98,44 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="comment">// Build a VP-tree index. </span></div>
 <div class="line"><a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;&gt;</a> vp_builder;</div>
-<div class="line"><span class="keyword">auto</span> vp_index = vp_builder.build(mat);</div>
+<div class="line"><span class="keyword">auto</span> vp_index = vp_builder.<a class="code hl_function" href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">build_unique</a>(mat);</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Find 10 nearest neighbors of every element.</span></div>
+<div class="line"><span class="comment">// Find 10 nearest neighbors of every observation.</span></div>
 <div class="line"><span class="keyword">auto</span> results = knncolle::find_nearest_neighbors(*vp_index, 10); </div>
+<div class="line"> </div>
+<div class="line">results[0].first; <span class="comment">// indices of neighbors of the first observation</span></div>
+<div class="line">results[0].second; <span class="comment">// distances to neighbors of the first observation</span></div>
+<div class="ttc" id="aclassknncolle_1_1Builder_html_afeda432debae999f988f32f147055251"><div class="ttname"><a href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">knncolle::Builder::build_unique</a></div><div class="ttdeci">std::unique_ptr&lt; Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; &gt; build_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Builder.hpp:50</div></div>
 <div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div><div class="ttdoc">Simple wrapper for an in-memory matrix.</div><div class="ttdef"><b>Definition</b> MockMatrix.hpp:116</div></div>
 <div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition</b> Vptree.hpp:332</div></div>
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="knncolle_8hpp.html">knncolle.hpp</a></div><div class="ttdoc">Umbrella header to include all algorithms.</div></div>
-</div><!-- fragment --><p>The <code>find_nearest_neighbors()</code> call will return a vector of (index, distance) pairs, containing the requested number of neighbors in order of increasing distance from the query point. (In cases where the requested number of neighbors is greater than the actual number of neighbors, the latter is returned.)</p>
-<p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details.</p>
+</div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details.</p>
 <h1>Searching in more detail</h1>
 <p>We can perform the search manually by constructing a <code>Searcher</code> instance and looping over the elements of interest. Continuing with the same variables defined in the previous section, we could replace the <code>find_nearest_neighbors()</code> call with:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> searcher = vp_index-&gt;initialize();</div>
-<div class="line">std::vector&lt;std::pair&lt;int, double&gt; &gt; results;</div>
+<div class="line">std::vector&lt;int&gt; indices;</div>
+<div class="line">std::vector&lt;double&gt; distances;</div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> o = 0; o &lt; nobs; ++o) {</div>
-<div class="line">    searcher-&gt;search(o, 10, results);</div>
-<div class="line">    <span class="comment">// Do something with the search &#39;results&#39; for &#39;o&#39;.</span></div>
+<div class="line">    searcher-&gt;search(o, 10, &amp;indices, &amp;distances);</div>
+<div class="line">    <span class="comment">// Do something with the search results for &#39;o&#39;.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Similarly, we can query the prebuilt index for the neighbors of an arbitrary vector. The code below searches for the nearest 5 neighbors to a query vector at the origin:</p>
 <div class="fragment"><div class="line">std::vector&lt;double&gt; query(ndim);</div>
-<div class="line">searcher-&gt;search(query.data(), 5, results);</div>
+<div class="line">searcher-&gt;search(query.data(), 5, &amp;indices, &amp;distances);</div>
 </div><!-- fragment --><p>To parallelize the loop, we just need to construct a separate <code>Searcher</code> (and the result vector) for each thread. This is already implemented in <code>find_nearest_neighbors()</code> but is also easy to do by hand, e.g., with OpenMP:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#pragma omp parallel num_threads(5)</span></div>
 <div class="line">{</div>
 <div class="line">    <span class="keyword">auto</span> searcher = vp_index-&gt;initialize();</div>
-<div class="line">    std::vector&lt;std::pair&lt;int, double&gt; &gt; results;</div>
+<div class="line">    std::vector&lt;int&gt; indices;</div>
+<div class="line">    std::vector&lt;double&gt; distances;</div>
 <div class="line"><span class="preprocessor">    #pragma omp for</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> o = 0; o &lt; nobs; ++o) {</div>
-<div class="line">        searcher-&gt;search(o, 10, results);</div>
+<div class="line">        searcher-&gt;search(o, 10, &amp;indices, &amp;distances);</div>
 <div class="line">        <span class="comment">// Do something with the search &#39;results&#39; for &#39;o&#39;.</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
+</div><!-- fragment --><p>Either (or both) of <code>indices</code> and <code>distances</code> may be <code>NULL</code>, in which case the corresponding values are not reported. This allows implementations to skip the extraction of distances when only the identities of the neighbors are of interest.</p>
+<div class="fragment"><div class="line">searcher-&gt;search(0, 5, &amp;indices, NULL);</div>
 </div><!-- fragment --><h1>Tuning index construction</h1>
 <p>Some algorithms allow the user to modify the parameters of the search by passing options in the relevant <code>Builder</code> constructor. For example, the KMKNN method has several options for the k-means clustering step. We could, say, specify which initialization algorithm to use:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structknncolle_1_1KmknnOptions.html">knncolle::KmknnOptions&lt;&gt;</a> kk_opt;</div>
@@ -153,13 +160,13 @@ $(function() {
 <div class="ttc" id="astructknncolle_1_1KmknnOptions_html_adf03e5a3046a1da5cacff93d37975ff8"><div class="ttname"><a href="structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8">knncolle::KmknnOptions::refine_algorithm</a></div><div class="ttdeci">std::shared_ptr&lt; kmeans::Refine&lt; kmeans::SimpleMatrix&lt; Store_, Index_, Dim_ &gt;, Index_, Store_ &gt; &gt; refine_algorithm</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:55</div></div>
 </div><!-- fragment --><p>After which, we construct our <code>KmknnBuilder</code>, build our <code>KmknnPrebuilt</code> index, and proceed with the nearest-neighbor search.</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder&lt;&gt;</a> kk_builder(kk_opt);</div>
-<div class="line"><span class="keyword">auto</span> kk_prebuilt = kk_builder.build(mat);</div>
+<div class="line"><span class="keyword">auto</span> kk_prebuilt = kk_builder.build_unique(mat);</div>
 <div class="line"><span class="keyword">auto</span> kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); </div>
-<div class="ttc" id="aclassknncolle_1_1KmknnBuilder_html"><div class="ttname"><a href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on k-means clustering.</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:395</div></div>
+<div class="ttc" id="aclassknncolle_1_1KmknnBuilder_html"><div class="ttname"><a href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on k-means clustering.</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:401</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for the available options in each algorithm's <code>Builder</code>.</p>
 <h1>Polymorphism</h1>
 <p>All methods implement the <code>Builder</code>, <code>Prebuilt</code> and <code>Searcher</code> interfaces via inheritance. This means that users can swap algorithms at run-time:</p>
-<div class="fragment"><div class="line">std::unique_ptr&lt;knncolle::Builder&lt;&gt; &gt; ptr;</div>
+<div class="fragment"><div class="line">std::unique_ptr&lt;<a class="code hl_class" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt;<span class="keyword">decltype</span>(mat), <span class="keywordtype">double</span>&gt; &gt; ptr;</div>
 <div class="line"><span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;brute-force&quot;</span>) {</div>
 <div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt;&gt;</a>);</div>
 <div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;kmknn&quot;</span>) {</div>
@@ -168,10 +175,11 @@ $(function() {
 <div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;&gt;</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">auto</span> some_prebuilt = ptr-&gt;build(mat);</div>
+<div class="line"><span class="keyword">auto</span> some_prebuilt = ptr-&gt;<a class="code hl_function" href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">build_unique</a>(mat);</div>
 <div class="line"><span class="keyword">auto</span> some_results = <a class="code hl_function" href="find__nearest__neighbors_8hpp.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*some_prebuilt, 10); </div>
-<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:151</div></div>
-<div class="ttc" id="afind__nearest__neighbors_8hpp_html_a22e035b2d5eb293fd828a67e61f3213d"><div class="ttname"><a href="find__nearest__neighbors_8hpp.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a></div><div class="ttdeci">NeighborList&lt; Index_, Float_ &gt; find_nearest_neighbors(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:49</div></div>
+<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:152</div></div>
+<div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="classknncolle_1_1Builder.html">knncolle::Builder</a></div><div class="ttdoc">Interface to build nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Builder.hpp:22</div></div>
+<div class="ttc" id="afind__nearest__neighbors_8hpp_html_a22e035b2d5eb293fd828a67e61f3213d"><div class="ttname"><a href="find__nearest__neighbors_8hpp.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a></div><div class="ttdeci">NeighborList&lt; Index_, Float_ &gt; find_nearest_neighbors(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:51</div></div>
 </div><!-- fragment --><p>Each class is also heavily templated to enable compile-time polymorphism:</p>
 <ul>
 <li>We default to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s.</li>

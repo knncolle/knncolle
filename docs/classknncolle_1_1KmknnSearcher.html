@@ -109,10 +109,10 @@ Collaboration diagram for knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, S
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3b014cd78a8dac7f9609f5597f10766d" id="r_a3b014cd78a8dac7f9609f5597f10766d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1KmknnSearcher.html#a3b014cd78a8dac7f9609f5597f10766d">search</a> (Index_ i, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</td></tr>
-<tr class="separator:a3b014cd78a8dac7f9609f5597f10766d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bad9ef9dd1bb1b41b891018e2a3d375" id="r_a2bad9ef9dd1bb1b41b891018e2a3d375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1KmknnSearcher.html#a2bad9ef9dd1bb1b41b891018e2a3d375">search</a> (const Float_ *query, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</td></tr>
-<tr class="separator:a2bad9ef9dd1bb1b41b891018e2a3d375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3db2397321aec4f6e89774f22f71c482" id="r_a3db2397321aec4f6e89774f22f71c482"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1KmknnSearcher.html#a3db2397321aec4f6e89774f22f71c482">search</a> (Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
+<tr class="separator:a3db2397321aec4f6e89774f22f71c482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7c1f3e8224d260adfec2625216e90c6" id="r_aa7c1f3e8224d260adfec2625216e90c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1KmknnSearcher.html#aa7c1f3e8224d260adfec2625216e90c6">search</a> (const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
+<tr class="separator:aa7c1f3e8224d260adfec2625216e90c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_&gt;<br />
@@ -129,8 +129,8 @@ class knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2bad9ef9dd1bb1b41b891018e2a3d375" name="a2bad9ef9dd1bb1b41b891018e2a3d375"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bad9ef9dd1bb1b41b891018e2a3d375">&#9670;&#160;</a></span>search() <span class="overload">[1/2]</span></h2>
+<a id="aa7c1f3e8224d260adfec2625216e90c6" name="aa7c1f3e8224d260adfec2625216e90c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c1f3e8224d260adfec2625216e90c6">&#9670;&#160;</a></span>search() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,8 +155,14 @@ template&lt;class Distance_ , typename Dim_ , typename Index_ , typename Store_ 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
+          <td class="paramtype">std::vector&lt; Index_ &gt; *&#160;</td>
+          <td class="paramname"><em>output_indices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Float_ &gt; *&#160;</td>
+          <td class="paramname"><em>output_distances</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -175,17 +181,18 @@ template&lt;class Distance_ , typename Dim_ , typename Index_ , typename Store_ 
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Prebuilt.html#a99412339915bc2ff0a6cd58ef4012d74">Prebuilt::num_dimensions()</a></code>, containing the coordinates of the query point. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance. Length is at most <code>k</code> but may be shorter if the total number of observations is less than <code>k</code>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. Length of the vector on output is no more than <code>k</code>, but may be shorter if the total number of observations is less than <code>k + 1</code>. Optionally NULL, in which case no indices are returned. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classknncolle_1_1Searcher.html#aa0d13f2063efa595fac417a858f831f5">knncolle::Searcher&lt; Index_, Float_ &gt;</a>.</p>
+<p>Implements <a class="el" href="classknncolle_1_1Searcher.html#a9f4bac73a3dd958d1f09e1093bd1cf01">knncolle::Searcher&lt; Index_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a3b014cd78a8dac7f9609f5597f10766d" name="a3b014cd78a8dac7f9609f5597f10766d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b014cd78a8dac7f9609f5597f10766d">&#9670;&#160;</a></span>search() <span class="overload">[2/2]</span></h2>
+<a id="a3db2397321aec4f6e89774f22f71c482" name="a3db2397321aec4f6e89774f22f71c482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3db2397321aec4f6e89774f22f71c482">&#9670;&#160;</a></span>search() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,8 +217,14 @@ template&lt;class Distance_ , typename Dim_ , typename Index_ , typename Store_ 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
+          <td class="paramtype">std::vector&lt; Index_ &gt; *&#160;</td>
+          <td class="paramname"><em>output_indices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Float_ &gt; *&#160;</td>
+          <td class="paramname"><em>output_distances</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -230,12 +243,13 @@ template&lt;class Distance_ , typename Dim_ , typename Index_ , typename Store_ 
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">i</td><td>The index of the observation of interest. This should be non-negative and less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>On output, a vector of (index, distance) pairs containing the identities of the nearest neighbors in order of increasing distance. Length is at most <code>k</code> but may be shorter if the total number of observations is less than <code>k + 1</code>. This vector is guaranteed to not contain <code>i</code> itself. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. Length of the vector on output is no more than <code>k</code>, but may be shorter if the total number of observations is less than <code>k + 1</code>. This vector is guaranteed to not contain <code>i</code> itself. Optionally NULL, in which case no indices are returned. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classknncolle_1_1Searcher.html#a38d90c0f450cad9177b3f2bac0ecbe01">knncolle::Searcher&lt; Index_, Float_ &gt;</a>.</p>
+<p>Implements <a class="el" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">knncolle::Searcher&lt; Index_, Float_ &gt;</a>.</p>
 
 </div>
 </div>

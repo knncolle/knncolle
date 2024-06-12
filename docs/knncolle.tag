@@ -152,15 +152,15 @@
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>aa3e05aadff4afc92a5e14f0600045e08</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>a5250b4ce7176fbe1a60783bc4dd324f0</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>a9f31abf9a5ad3513aefed90ed3941c1d</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>afef023240ea7ddcc28561c0f71c54601</anchor>
+      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -316,15 +316,15 @@
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>a3b014cd78a8dac7f9609f5597f10766d</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>a3db2397321aec4f6e89774f22f71c482</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>a2bad9ef9dd1bb1b41b891018e2a3d375</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>aa7c1f3e8224d260adfec2625216e90c6</anchor>
+      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -454,15 +454,15 @@
       <type>virtual void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>a38d90c0f450cad9177b3f2bac0ecbe01</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)=0</arglist>
+      <anchor>a6ad140ee93a7af57fdb722c16476aee4</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>aa0d13f2063efa595fac417a858f831f5</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)=0</arglist>
+      <anchor>a9f4bac73a3dd958d1f09e1093bd1cf01</anchor>
+      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -545,15 +545,15 @@
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>ad9d56b72002cf257e9832dd311f78ca8</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>a3b2a7c230cfdf88cf1fa42896ca5909a</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>a0366fafff42b03a48d683ef368252750</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &amp;output)</arglist>
+      <anchor>ac86dd5bf34f233d04502e789224eb44a</anchor>
+      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="struct">
