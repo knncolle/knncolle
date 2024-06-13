@@ -24,6 +24,10 @@ namespace knncolle {
 
 /** 
  * @brief Options for `KmknnBuilder` and `KmknnPrebuilt` construction. 
+ *
+ * This can also be created via the `KmknnBuilder::Options` definition,
+ * which ensures consistency with the template parameters used in `KmknnBuilder`.
+ *
  * @tparam Dim_ Integer type for the number of dimensions.
  * When constructing a `KmknnBuilder`, this should be the same as `Matrix_::dimension_type`.
  * @tparam Index_ Integer type for the indices.
@@ -399,20 +403,33 @@ public:
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class KmknnBuilder : public Builder<Matrix_, Float_> {
+public:
+    /**
+     * Convenient name for the `KmknnOptions` class that ensures consistent template parametrization.
+     */
+    typedef KmknnOptions<typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type> Options;
+
 private:
-    KmknnOptions<typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type> my_options;
+    Options my_options;
 
 public:
     /**
      * @param options Further options for the KMKNN algorithm.
      */
-    KmknnBuilder(const KmknnOptions<typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type>& options) :
-        my_options(std::move(options)) {}
+    KmknnBuilder(Options options) : my_options(std::move(options)) {}
 
     /**
      * Default constructor.
      */
     KmknnBuilder() = default;
+
+    /**
+     * @return Options for the KMKNN algorithm.
+     * These can be modified prior to running `build_raw()` and friends.
+     */
+    Options& get_options() {
+        return my_options;
+    }
 
 public:
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
