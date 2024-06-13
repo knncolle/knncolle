@@ -61,14 +61,13 @@ public:
         return;
     }
 
-private:
-    template<bool do_indices_, bool do_distances_>
-    void report_raw(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
-        if constexpr(do_indices_) {
+public:
+    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
+        if (output_indices) {
             output_indices->clear();
             output_indices->reserve(my_nearest.size() - 1);
         }
-        if constexpr(do_distances_) {
+        if (output_distances) {
             output_distances->clear();
             output_distances->reserve(my_nearest.size() - 1);
         }
@@ -79,10 +78,10 @@ private:
             if (!found_self && top.second == self) {
                 found_self = true;
             } else {
-                if constexpr(do_indices_) {
+                if (output_indices) {
                     output_indices->push_back(top.second);
                 }
-                if constexpr(do_distances_) {
+                if (output_distances) {
                     output_distances->push_back(top.first);
                 }
             }
@@ -91,46 +90,34 @@ private:
 
         // We use push_back + reverse to give us sorting in increasing order;
         // this is nicer than push_front() for std::vectors.
-        if constexpr(do_indices_) {
+        if (output_indices) {
             std::reverse(output_indices->begin(), output_indices->end());
         }
-        if constexpr(do_distances_) {
+        if (output_distances) {
             std::reverse(output_distances->begin(), output_distances->end());
         }
 
         // Removing the most distance element if we couldn't find ourselves,
         // e.g., because there are too many duplicates.
         if (!found_self) {
-            if constexpr(do_indices_) {
+            if (output_indices) {
                 output_indices->pop_back();
             }
-            if constexpr(do_distances_) {
+            if (output_distances) {
                 output_distances->pop_back();
             }
         }
     } 
 
 public:
-    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
-        if (output_indices && output_distances) {
-            report_raw<true, true>(output_indices, output_distances, self);
-        } else if (output_indices) {
-            report_raw<true, false>(output_indices, output_distances, self);
-        } else if (output_distances) {
-            report_raw<false, true>(output_indices, output_distances, self);
-        }
-    }
-
-private:
-    template<bool do_indices_, bool do_distances_>
-    void report_raw(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         size_t position = my_nearest.size();
 
-        if constexpr(do_indices_) {
+        if (output_indices) {
             output_indices->clear();
             output_indices->resize(position);
         }
-        if constexpr(do_distances_) {
+        if (output_distances) {
             output_distances->clear();
             output_distances->resize(position);
         }
@@ -138,26 +125,15 @@ private:
         while (!my_nearest.empty()) {
             const auto& top = my_nearest.top();
             --position;
-            if constexpr(do_indices_) {
+            if (output_indices) {
                 (*output_indices)[position] = top.second;
             }
-            if constexpr(do_distances_) {
+            if (output_distances) {
                 (*output_distances)[position] = top.first;
             }
             my_nearest.pop();
         }
     } 
-
-public:
-    void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        if (output_indices && output_distances) {
-            report_raw<true, true>(output_indices, output_distances);
-        } else if (output_indices) {
-            report_raw<true, false>(output_indices, output_distances);
-        } else if (output_distances) {
-            report_raw<false, true>(output_indices, output_distances);
-        }
-    }
 
 private:
     size_t my_neighbors = 0;
