@@ -60,10 +60,14 @@ public:
     }
 
     void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_nearest.reset(k);
-        Float_ max_dist = std::numeric_limits<Float_>::max();
-        my_parent->search_nn(0, query, max_dist, my_nearest);
-        my_nearest.report(output_indices, output_distances);
+        if (k == 0) { // protect the NeighborQueue from k = 0.
+            internal::flush_output(output_indices, output_distances, 0);
+        } else {
+            my_nearest.reset(k);
+            Float_ max_dist = std::numeric_limits<Float_>::max();
+            my_parent->search_nn(0, query, max_dist, my_nearest);
+            my_nearest.report(output_indices, output_distances);
+        }
     }
 };
 

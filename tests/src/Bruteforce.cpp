@@ -160,3 +160,20 @@ INSTANTIATE_TEST_SUITE_P(
     BruteforceDuplicateTest,
     ::testing::Values(3, 10, 20) // number of neighbors
 );
+
+TEST(Bruteforce, Empty) {
+    int ndim = 5;
+    int nobs = 0;
+    std::vector<double> data;
+
+    knncolle::BruteforceBuilder<> bb;
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto bsptr = bptr->initialize();
+    std::vector<int> res_i(10);
+    std::vector<double> res_d(10);
+
+    std::vector<double> target(ndim);
+    bsptr->search(target.data(), 0, &res_i, &res_d);
+    EXPECT_TRUE(res_i.empty());
+    EXPECT_TRUE(res_d.empty());
+}

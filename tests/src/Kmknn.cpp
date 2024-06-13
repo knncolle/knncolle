@@ -229,7 +229,7 @@ struct InitializeNonsense : public kmeans::InitializeRandom<Matrix_, Cluster_, F
     }
 };
 
-TEST_F(KmknnMiscTest, SkipEmpty) {
+TEST_F(KmknnMiscTest, SkipEmptyClusters) {
     // We test the code that skips empty clusters in the constructor when these
     // clusters occur before a non-empty cluster. We do so by forcing the first
     // cluster to be empty by making its center ridiculous.
@@ -253,9 +253,26 @@ TEST_F(KmknnMiscTest, SkipEmpty) {
     auto ksptr = kptr->initialize();
 
     for (int x = 0; x < nobs; ++x) {
-        bsptr->search(x, 4, &kres_i, &kres_d);
-        ksptr->search(x, 4, &ref_i, &ref_d);
+        bsptr->search(x, 4, &ref_i, &ref_d);
+        ksptr->search(x, 4, &kres_i, &kres_d);
         EXPECT_EQ(kres_i, ref_i);
         EXPECT_EQ(kres_d, ref_d);
     }
+}
+
+TEST(Kmknn, Empty) {
+    int ndim = 5;
+    int nobs = 0;
+    std::vector<double> data;
+
+    knncolle::KmknnBuilder<> kb;
+    auto kptr = kb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto ksptr = kptr->initialize();
+    std::vector<int> res_i(10);
+    std::vector<double> res_d(10);
+
+    std::vector<double> target(ndim);
+    ksptr->search(target.data(), 0, &res_i, &res_d);
+    EXPECT_TRUE(res_i.empty());
+    EXPECT_TRUE(res_d.empty());
 }

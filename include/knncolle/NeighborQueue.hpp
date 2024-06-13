@@ -9,6 +9,18 @@ namespace knncolle {
 
 namespace internal {
 
+template<typename Index_, typename Distance_>
+void flush_output(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, size_t n) {
+    if (output_indices) {
+        output_indices->clear();
+        output_indices->resize(n);
+    }
+    if (output_distances) {
+        output_distances->clear();
+        output_distances->resize(n);
+    }
+}
+
 /* The NeighborQueue class is a priority queue that contains indices and
  * distances in decreasing order from the top of the queue. Existing elements
  * are displaced by incoming elements that have shorter distances, thus making
@@ -20,9 +32,9 @@ public:
     NeighborQueue() = default;
 
 public:    
-    void reset(Index_ k) {
+    void reset(Index_ k) { // We expect that k > 0.
         my_neighbors = k;
-        my_full = (my_neighbors == 0);
+        my_full = false;
 
         // Popping any existing elements out, just in case. This shouldn't
         // usually be necessary if report() was called as the queue should
@@ -30,11 +42,6 @@ public:
         // or there might have been an intervening exception, etc.
         while (!my_nearest.empty()) {
             my_nearest.pop();
-        }
-
-        // Avoid crashing if 'limit()' is called on an always-empty queue.
-        if (my_full) {
-            my_nearest.emplace(0, 0); 
         }
     }
 
@@ -63,13 +70,16 @@ public:
 
 public:
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
+        // We expect that nearest is non-empty, as a search should at least
+        // find 'self' (or duplicates thereof).
+        size_t num_expected = my_nearest.size() - 1;
         if (output_indices) {
             output_indices->clear();
-            output_indices->reserve(my_nearest.size() - 1);
+            output_indices->reserve(num_expected);
         }
         if (output_distances) {
             output_distances->clear();
-            output_distances->reserve(my_nearest.size() - 1);
+            output_distances->reserve(num_expected);
         }
 
         bool found_self = false;
@@ -112,15 +122,7 @@ public:
 public:
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         size_t position = my_nearest.size();
-
-        if (output_indices) {
-            output_indices->clear();
-            output_indices->resize(position);
-        }
-        if (output_distances) {
-            output_distances->clear();
-            output_distances->resize(position);
-        }
+        flush_output(output_indices, output_distances, position);
 
         while (!my_nearest.empty()) {
             const auto& top = my_nearest.top();
@@ -136,8 +138,8 @@ public:
     } 
 
 private:
-    size_t my_neighbors = 0;
-    bool my_full = true;
+    size_t my_neighbors = 1;
+    bool my_full = false;
     std::priority_queue<std::pair<Distance_, Index_> > my_nearest;
 };
 
