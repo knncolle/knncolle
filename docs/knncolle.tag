@@ -215,12 +215,19 @@
     <templarg>class Matrix_</templarg>
     <templarg>typename Float_</templarg>
     <base>knncolle::Builder</base>
+    <member kind="typedef">
+      <type>KmknnOptions&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type &gt;</type>
+      <name>Options</name>
+      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
+      <anchor>ab70f49036aa3f59e67e84eb9bdae5c2c</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>KmknnBuilder</name>
       <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>a02ee5eb826aff5fa27598279b5065aec</anchor>
-      <arglist>(const KmknnOptions&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type &gt; &amp;options)</arglist>
+      <anchor>ae8338140eae1984a667f226475401491</anchor>
+      <arglist>(Options options)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -228,6 +235,13 @@
       <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
       <anchor>ac9a0a6e9e591b23b7bed3c16ab786ea3</anchor>
       <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type>Options &amp;</type>
+      <name>get_options</name>
+      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
+      <anchor>af6dc5c628478732fb4b5d0f027f1d7a8</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
