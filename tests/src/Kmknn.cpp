@@ -68,11 +68,7 @@ TEST_P(KmknnTest, FindManhattan) {
     knncolle::BruteforceBuilder<knncolle::ManhattanDistance> bb;
     auto bptr = bb.build_unique(mat);
 
-    // Injecting some more interesting options.
-    knncolle::KmknnOptions<> opt;
-    opt.initialize_algorithm.reset(new kmeans::InitializeRandom<>);
-    opt.refine_algorithm.reset(new kmeans::RefineLloyd<>);
-    knncolle::KmknnBuilder<knncolle::ManhattanDistance> kb(opt);
+    knncolle::KmknnBuilder<knncolle::ManhattanDistance> kb;
     auto kptr = kb.build_unique(mat);
 
     std::vector<int> kres_i, ref_i;
@@ -140,10 +136,13 @@ protected:
 };
 
 TEST_P(KmknnDuplicateTest, Basic) {
-    // The duplicate testing checks that KMKNN handles zero-size clusters
-    // correctly. With the default kmeans++ initialization, some of the
-    // clusters will be empty if 'k' is larger than the number of unique
-    // points; these should be filtered out during KmknnPrebuilt construction.
+    // Duplicate tests also check that KMKNN handles zero-size clusters
+    // correctly when these clusters occur after all other clusters. With the
+    // default kmeans++ initialization, the trailing clusters will be empty if
+    // 'k' is larger than the number of unique points.
+    //
+    // Note that we don't consider zero-size clusters that are intermingled
+    // with non-zero-size clusters; see the SkipEmpty test below for that.
 
     int duplication = 10;
     std::vector<double> dup;
@@ -183,3 +182,80 @@ INSTANTIATE_TEST_SUITE_P(
     KmknnDuplicateTest,
     ::testing::Values(3, 10, 20) // number of neighbors
 );
+
+class KmknnMiscTest : public TestCore, public ::testing::Test {
+protected:
+    void SetUp() {
+        assemble({ 100, 5 });
+    }
+};
+
+TEST_F(KmknnMiscTest, Options) {
+    knncolle::KmknnBuilder<> kb;
+    EXPECT_FALSE(kb.get_options().initialize_algorithm);
+    EXPECT_FALSE(kb.get_options().refine_algorithm);
+
+    knncolle::KmknnOptions<> opt;
+    opt.initialize_algorithm.reset(new kmeans::InitializeRandom<>);
+    opt.refine_algorithm.reset(new kmeans::RefineLloyd<>);
+
+    knncolle::KmknnBuilder<> kb2(opt); // test the constructor.
+    EXPECT_TRUE(kb2.get_options().initialize_algorithm);
+    EXPECT_TRUE(kb2.get_options().refine_algorithm);
+
+    knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, data.data());
+    auto kptr = kb.build_unique(mat);
+    auto kptr2 = kb2.build_unique(mat);
+
+    std::vector<int> kres_i, kres2_i;
+    std::vector<double> kres_d, kres2_d;
+    auto ksptr = kptr->initialize();
+    auto ksptr2 = kptr2->initialize();
+
+    for (int x = 0; x < nobs; ++x) {
+        ksptr->search(x, 5, &kres_i, &kres_d);
+        ksptr2->search(x, 5, &kres2_i, &kres2_d);
+        EXPECT_EQ(kres_i, kres2_i);
+        EXPECT_EQ(kres_d, kres2_d);
+    }
+}
+
+template<class Matrix_ = kmeans::SimpleMatrix<double, int>, typename Cluster_ = int, typename Float_ = double>
+struct InitializeNonsense : public kmeans::InitializeRandom<Matrix_, Cluster_, Float_> {
+    Cluster_ run(const Matrix_& data, Cluster_ ncenters, Float_* centers) const {
+        auto available = kmeans::InitializeRandom<Matrix_, Cluster_, Float_>::run(data, ncenters, centers);
+        std::fill_n(centers, data.num_dimensions(), 100000000); // first one is nonsensically far away.
+        return available;
+    }
+};
+
+TEST_F(KmknnMiscTest, SkipEmpty) {
+    // We test the code that skips empty clusters in the constructor when these
+    // clusters occur before a non-empty cluster. We do so by forcing the first
+    // cluster to be empty by making its center ridiculous.
+
+    knncolle::KmknnBuilder<> kb;
+    auto& opt = kb.get_options();
+    opt.initialize_algorithm.reset(new InitializeNonsense<>); // nothing will be assigned to the first cluster. 
+    kmeans::RefineLloydOptions ll_opt;
+    ll_opt.max_iterations = 1;
+    opt.refine_algorithm.reset(new kmeans::RefineLloyd(ll_opt)); // no iterations so cluster centers can't be changed during refinement.
+
+    knncolle::BruteforceBuilder<> bb;
+
+    knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, data.data());
+    auto kptr = kb.build_unique(mat);
+    auto bptr = bb.build_unique(mat);
+
+    std::vector<int> kres_i, ref_i;
+    std::vector<double> kres_d, ref_d;
+    auto bsptr = bptr->initialize();
+    auto ksptr = kptr->initialize();
+
+    for (int x = 0; x < nobs; ++x) {
+        bsptr->search(x, 4, &kres_i, &kres_d);
+        ksptr->search(x, 4, &ref_i, &ref_d);
+        EXPECT_EQ(kres_i, ref_i);
+        EXPECT_EQ(kres_d, ref_d);
+    }
+}
