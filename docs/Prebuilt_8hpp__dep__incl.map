@@ -2,7 +2,7 @@
 <area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="209,5,350,31"/>
 <area shape="rect" id="Node000002" href="$Bruteforce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="31,168,189,193"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,39,178,56,147,81,132,102,123,126,114,168,109,167,118,124,128,99,143,77,175,52,212,34"/>
-<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="207,241,352,267"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="207,241,352,267"/>
 <area shape="poly" id="edge14_Node000001_Node000003" title=" " alt="" coords="212,38,133,62,93,79,58,97,30,118,12,141,9,153,9,165,13,178,21,192,33,201,50,210,96,225,207,244,206,249,95,230,48,215,30,206,17,195,8,180,3,166,3,152,8,138,26,114,55,93,91,74,131,57,210,33"/>
 <area shape="rect" id="Node000004" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="157,87,295,112"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="265,46,236,87,232,84,261,43"/>

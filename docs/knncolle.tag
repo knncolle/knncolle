@@ -12,6 +12,7 @@
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceBuilder</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>Builder.hpp</name>
@@ -19,6 +20,7 @@
     <filename>Builder_8hpp.html</filename>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <class kind="class">knncolle::Builder</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>distances.hpp</name>
@@ -27,12 +29,14 @@
     <class kind="struct">knncolle::MockDistance</class>
     <class kind="struct">knncolle::EuclideanDistance</class>
     <class kind="struct">knncolle::ManhattanDistance</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>find_nearest_neighbors.hpp</name>
     <path>knncolle/</path>
     <filename>find__nearest__neighbors_8hpp.html</filename>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>Kmknn.hpp</name>
@@ -46,6 +50,7 @@
     <class kind="class">knncolle::KmknnSearcher</class>
     <class kind="class">knncolle::KmknnPrebuilt</class>
     <class kind="class">knncolle::KmknnBuilder</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>knncolle.hpp</name>
@@ -59,6 +64,7 @@
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="Kmknn_8hpp" name="Kmknn.hpp" local="yes" import="no" module="no" objc="no">Kmknn.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>MockMatrix.hpp</name>
@@ -67,6 +73,7 @@
     <class kind="class">knncolle::MockMatrix</class>
     <class kind="struct">knncolle::MockMatrix::Workspace</class>
     <class kind="class">knncolle::SimpleMatrix</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>Prebuilt.hpp</name>
@@ -74,12 +81,14 @@
     <filename>Prebuilt_8hpp.html</filename>
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
     <class kind="class">knncolle::Prebuilt</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>Searcher.hpp</name>
     <path>knncolle/</path>
     <filename>Searcher_8hpp.html</filename>
     <class kind="class">knncolle::Searcher</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
     <name>Vptree.hpp</name>
@@ -92,6 +101,7 @@
     <class kind="class">knncolle::VptreeSearcher</class>
     <class kind="class">knncolle::VptreePrebuilt</class>
     <class kind="class">knncolle::VptreeBuilder</class>
+    <namespace>knncolle</namespace>
   </compound>
   <compound kind="class">
     <name>knncolle::BruteforceBuilder</name>
@@ -573,6 +583,49 @@
   <compound kind="struct">
     <name>knncolle::MockMatrix::Workspace</name>
     <filename>structknncolle_1_1MockMatrix_1_1Workspace.html</filename>
+  </compound>
+  <compound kind="namespace">
+    <name>knncolle</name>
+    <filename>namespaceknncolle.html</filename>
+    <class kind="class">knncolle::BruteforceBuilder</class>
+    <class kind="class">knncolle::BruteforcePrebuilt</class>
+    <class kind="class">knncolle::BruteforceSearcher</class>
+    <class kind="class">knncolle::Builder</class>
+    <class kind="struct">knncolle::EuclideanDistance</class>
+    <class kind="class">knncolle::KmknnBuilder</class>
+    <class kind="struct">knncolle::KmknnOptions</class>
+    <class kind="class">knncolle::KmknnPrebuilt</class>
+    <class kind="class">knncolle::KmknnSearcher</class>
+    <class kind="struct">knncolle::ManhattanDistance</class>
+    <class kind="struct">knncolle::MockDistance</class>
+    <class kind="class">knncolle::MockMatrix</class>
+    <class kind="class">knncolle::Prebuilt</class>
+    <class kind="class">knncolle::Searcher</class>
+    <class kind="class">knncolle::SimpleMatrix</class>
+    <class kind="class">knncolle::VptreeBuilder</class>
+    <class kind="class">knncolle::VptreePrebuilt</class>
+    <class kind="class">knncolle::VptreeSearcher</class>
+    <member kind="typedef">
+      <type>std::vector&lt; std::pair&lt; std::vector&lt; Index_ &gt;, std::vector&lt; Float_ &gt; &gt; &gt;</type>
+      <name>NeighborList</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a3faddeb80b10f56cb982a4e83ad3aca9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>NeighborList&lt; Index_, Float_ &gt;</type>
+      <name>find_nearest_neighbors</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a22e035b2d5eb293fd828a67e61f3213d</anchor>
+      <arglist>(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; Index_ &gt; &gt;</type>
+      <name>find_nearest_neighbors_index_only</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a0b726765329530a709095ba304033a0d</anchor>
+      <arglist>(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+    </member>
   </compound>
   <compound kind="page">
     <name>index</name>

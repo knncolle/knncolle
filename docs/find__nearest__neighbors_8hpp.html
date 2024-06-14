@@ -76,6 +76,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">find_nearest_neighbors.hpp File Reference</div></div>
@@ -110,166 +111,37 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="find__nearest__neighbors_8hpp__dep__incl.png" border="0" usemap="#aknncolle_2find__nearest__neighbors_8hppdep" alt=""/></div>
 <map name="aknncolle_2find__nearest__neighbors_8hppdep" id="aknncolle_2find__nearest__neighbors_8hppdep">
 <area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="6,5,150,46"/>
-<area shape="rect" href="knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="5,94,151,120"/>
+<area shape="rect" href="knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="5,94,151,120"/>
 <area shape="poly" title=" " alt="" coords="81,62,81,93,75,93,75,62"/>
 </map>
 </div>
 </div>
 <p><a href="find__nearest__neighbors_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceknncolle" id="r_namespaceknncolle"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html">knncolle</a></td></tr>
+<tr class="memdesc:namespaceknncolle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of KNN algorithms. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a3faddeb80b10f56cb982a4e83ad3aca9" id="r_a3faddeb80b10f56cb982a4e83ad3aca9"><td class="memTemplParams" colspan="2">template&lt;typename Index_  = int, typename Float_  = double&gt; </td></tr>
-<tr class="memitem:a3faddeb80b10f56cb982a4e83ad3aca9"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#a3faddeb80b10f56cb982a4e83ad3aca9">knncolle::NeighborList</a> = std::vector&lt; std::pair&lt; std::vector&lt; Index_ &gt;, std::vector&lt; Float_ &gt; &gt; &gt;</td></tr>
+<tr class="memitem:a3faddeb80b10f56cb982a4e83ad3aca9"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">knncolle::NeighborList</a> = std::vector&lt; std::pair&lt; std::vector&lt; Index_ &gt;, std::vector&lt; Float_ &gt; &gt; &gt;</td></tr>
 <tr class="separator:a3faddeb80b10f56cb982a4e83ad3aca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d" id="r_a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplParams" colspan="2">template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </td></tr>
-<tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="find__nearest__neighbors_8hpp.html#a3faddeb80b10f56cb982a4e83ad3aca9">NeighborList</a>&lt; Index_, Float_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
+<tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">NeighborList</a>&lt; Index_, Float_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a22e035b2d5eb293fd828a67e61f3213d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b726765329530a709095ba304033a0d" id="r_a0b726765329530a709095ba304033a0d"><td class="memTemplParams" colspan="2">template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </td></tr>
-<tr class="memitem:a0b726765329530a709095ba304033a0d"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; Index_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#a0b726765329530a709095ba304033a0d">knncolle::find_nearest_neighbors_index_only</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
+<tr class="memitem:a0b726765329530a709095ba304033a0d"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; Index_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">knncolle::find_nearest_neighbors_index_only</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a0b726765329530a709095ba304033a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Find nearest neighbors from an existing index. </p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a3faddeb80b10f56cb982a4e83ad3aca9" name="a3faddeb80b10f56cb982a4e83ad3aca9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3faddeb80b10f56cb982a4e83ad3aca9">&#9670;&#160;</a></span>NeighborList</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Index_  = int, typename Float_  = double&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="find__nearest__neighbors_8hpp.html#a3faddeb80b10f56cb982a4e83ad3aca9">knncolle::NeighborList</a> = typedef std::vector&lt;std::pair&lt;std::vector&lt;Index_&gt;, std::vector&lt;Float_&gt; &gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>List of nearest neighbors for multiple observations. Each entry corresponds to an observation and contains a pair of vectors. The first vector contains the identities of the nearest neighbors of the observation, sorted by increasing distance, while the second vector contains the distances to those neighbors.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the distances. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a22e035b2d5eb293fd828a67e61f3213d" name="a22e035b2d5eb293fd828a67e61f3213d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22e035b2d5eb293fd828a67e61f3213d">&#9670;&#160;</a></span>find_nearest_neighbors()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">NeighborList&lt; Index_, Float_ &gt; knncolle::find_nearest_neighbors </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>k</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>num_threads</em> = <code>1</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Find the nearest neighbors within a pre-built index. This is a convenient wrapper around <code>Searcher::search</code> that saves the caller the trouble of writing a loop.</p>
-<p>Advanced users can define a <code>KNNCOLLE_CUSTOM_PARALLEL</code> function-like macro. This will be passed three arguments - the number of observations, the number of threads, and a function <code>fun</code> that accepts a start and length of a contiguous block of observations. The <code>KNNCOLLE_CUSTOM_PARALLEL</code> call is responsible for partitioning the observations into contiguous blocks that are assigned to each thread; the <code>fun</code> should be called on each block to find the neighbors for that block.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. </td></tr>
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">index</td><td>A <code>Prebuilt</code> index. </td></tr>
-    <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
-    <tr><td class="paramname">num_threads</td><td>Number of threads to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <code>NeighborList</code> of length equal to the number of observations in <code>index</code>. Each entry contains (up to) the <code>k</code> nearest neighbors for each observation, sorted by increasing distance. The <code>i</code>-th entry is guaranteed to not contain <code>i</code> itself. </dd></dl>
-
-</div>
-</div>
-<a id="a0b726765329530a709095ba304033a0d" name="a0b726765329530a709095ba304033a0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b726765329530a709095ba304033a0d">&#9670;&#160;</a></span>find_nearest_neighbors_index_only()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt; std::vector&lt; Index_ &gt; &gt; knncolle::find_nearest_neighbors_index_only </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>k</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>num_threads</em> = <code>1</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Find the nearest neighbors within a pre-built search index. Here, only the neighbor indices are returned, not the distances. This function will also respond to any defined <code>KNNCOLLE_CUSTOM_PARALLEL</code>, see <code>find_nearest_neighbors()</code> for details.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. </td></tr>
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">index</td><td>A <code>Prebuilt</code> index. </td></tr>
-    <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
-    <tr><td class="paramname">num_threads</td><td>Number of threads to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A vector of vectors of length equal to the number of observations in <code>index</code>. Each vector contains the indices of (up to) the <code>k</code> nearest neighbors for each observation, sorted by increasing distance. The <code>i</code>-th entry is guaranteed to not contain <code>i</code> itself. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

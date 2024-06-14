@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,45,161,93,122,154,102,202,90,242,84,240,97,200,118,151,156,90,195,41"/>
 <area shape="rect" id="Node000004" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="283,79,424,105"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="255,36,331,76,329,81,253,41"/>
-<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="314,315,459,341"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="314,315,459,341"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="151,268,336,312,335,317,150,274"/>
 <area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="269,111,216,129,167,155,142,175,121,199,93,242,88,239,117,196,139,172,164,150,214,124,267,106"/>
 <area shape="poly" id="edge16_Node000004_Node000003" title=" " alt="" coords="440,100,536,119,575,133,601,151,607,165,607,183,596,221,573,269,547,288,519,303,461,321,459,315,517,298,545,284,569,265,591,220,602,182,602,166,597,154,573,138,534,124,439,105"/>

@@ -1,5 +1,5 @@
 <map id="knncolle/Kmknn.hpp" name="knncolle/Kmknn.hpp">
 <area shape="rect" id="Node000001" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="9,5,147,31"/>
-<area shape="rect" id="Node000002" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="5,79,151,105"/>
+<area shape="rect" id="Node000002" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="5,79,151,105"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,46,81,79,75,79,75,46"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="knncolle/Bruteforce.hpp" name="knncolle/Bruteforce.hpp">
 <area shape="rect" id="Node000001" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="5,5,163,31"/>
-<area shape="rect" id="Node000002" href="$knncolle_8hpp.html" title="Umbrella header to include all algorithms." alt="" coords="11,79,157,105"/>
+<area shape="rect" id="Node000002" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="11,79,157,105"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,46,87,79,81,79,81,46"/>
 </map>
