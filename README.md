@@ -19,7 +19,7 @@ The core library supports the following methods:
 This framework is extended by various add-on libraries to more algorithms:
 
 - [**knncolle_annoy**](https://github.com/knncolle/knncolle_annoy) supports [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
-- [**knncolle_hnsw**](https://github.com/knncole/knncolle_hnsw) supports [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
+- [**knncolle_hnsw**](https://github.com/knncolle/knncolle_hnsw) supports [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
 
 Most of the code in this library is derived from the [**BiocNeighbors** R package](https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html).
 

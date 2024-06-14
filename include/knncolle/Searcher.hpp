@@ -45,7 +45,7 @@ public:
      * Length of the vector on output is no more than `k`, but may be shorter if the total number of observations is less than `k + 1`.
      * This vector is guaranteed to not contain `i` itself.
      * Optionally NULL, in which case no indices are returned.
-     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * @param[out] output_distances Pointer to a vector, to be filled with the distances of the nearest neighbors. 
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
@@ -60,7 +60,7 @@ public:
      * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
      * Length of the vector on output is no more than `k`, but may be shorter if the total number of observations is less than `k + 1`.
      * Optionally NULL, in which case no indices are returned.
-     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * @param[out] output_distances Pointer to a vector, to be filled with the distances of the nearest neighbors. 
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
