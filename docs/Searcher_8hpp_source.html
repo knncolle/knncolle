@@ -98,16 +98,38 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">   52</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">search</a>(Index_ i, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Float_&gt;* output_distances) = 0;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classknncolle_1_1Searcher.html#a9f4bac73a3dd958d1f09e1093bd1cf01">   67</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1Searcher.html#a9f4bac73a3dd958d1f09e1093bd1cf01">search</a>(<span class="keyword">const</span> Float_* query, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Float_&gt;* output_distances) = 0;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>};</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00075" data-start="{" data-end="}">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d">   75</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d">can_search_all</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
 </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classknncolle_1_1Searcher.html#acd4da2c541a1b9c71032e4a828c52a3c">   94</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1Searcher.html#acd4da2c541a1b9c71032e4a828c52a3c">search_all</a>([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector&lt;Index_&gt;* output_indices, [[maybe_unused]] std::vector&lt;Float_&gt;* output_distances) {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;distance-based searches not supported&quot;</span>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    }</div>
+</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classknncolle_1_1Searcher.html#a059a6bc370ef98ee7be929448ceda1cf">  111</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1Searcher.html#a059a6bc370ef98ee7be929448ceda1cf">search_all</a>([[maybe_unused]] <span class="keyword">const</span> Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector&lt;Index_&gt;* output_indices, [[maybe_unused]] std::vector&lt;Float_&gt;* output_distances) {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;distance-based searches not supported&quot;</span>);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>};</div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassknncolle_1_1Searcher_html"><div class="ttname"><a href="classknncolle_1_1Searcher.html">knncolle::Searcher</a></div><div class="ttdoc">Interface for searching nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Searcher.hpp:27</div></div>
+<div class="ttc" id="aclassknncolle_1_1Searcher_html_a059a6bc370ef98ee7be929448ceda1cf"><div class="ttname"><a href="classknncolle_1_1Searcher.html#a059a6bc370ef98ee7be929448ceda1cf">knncolle::Searcher::search_all</a></div><div class="ttdeci">virtual void search_all(const Float_ *query, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</div><div class="ttdef"><b>Definition</b> Searcher.hpp:111</div></div>
 <div class="ttc" id="aclassknncolle_1_1Searcher_html_a6ad140ee93a7af57fdb722c16476aee4"><div class="ttname"><a href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">knncolle::Searcher::search</a></div><div class="ttdeci">virtual void search(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</div></div>
+<div class="ttc" id="aclassknncolle_1_1Searcher_html_a8362d0f6ea1b7f6e09d26a9188d31d1d"><div class="ttname"><a href="classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d">knncolle::Searcher::can_search_all</a></div><div class="ttdeci">virtual bool can_search_all() const</div><div class="ttdef"><b>Definition</b> Searcher.hpp:75</div></div>
 <div class="ttc" id="aclassknncolle_1_1Searcher_html_a9f4bac73a3dd958d1f09e1093bd1cf01"><div class="ttname"><a href="classknncolle_1_1Searcher.html#a9f4bac73a3dd958d1f09e1093bd1cf01">knncolle::Searcher::search</a></div><div class="ttdeci">virtual void search(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:20</div></div>
+<div class="ttc" id="aclassknncolle_1_1Searcher_html_acd4da2c541a1b9c71032e4a828c52a3c"><div class="ttname"><a href="classknncolle_1_1Searcher.html#acd4da2c541a1b9c71032e4a828c52a3c">knncolle::Searcher::search_all</a></div><div class="ttdeci">virtual void search_all(Index_ i, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</div><div class="ttdef"><b>Definition</b> Searcher.hpp:94</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
