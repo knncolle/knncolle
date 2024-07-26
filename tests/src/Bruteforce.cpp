@@ -99,6 +99,57 @@ TEST_P(BruteforceTest, QueryEuclidean) {
     }
 }
 
+TEST_P(BruteforceTest, AllEuclidean) {
+    int k = std::get<1>(GetParam());    
+
+    knncolle::BruteforceBuilder<> bb;
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto bsptr = bptr->initialize();
+    std::vector<int> output_i, ref_i;
+    std::vector<double> output_d, ref_d;
+
+    EXPECT_TRUE(bsptr->can_search_all());
+
+    for (int x = 0; x < nobs; ++x) {
+        {
+            bsptr->search(x, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            bsptr->search_all(x, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i); 
+            EXPECT_EQ(output_d, ref_d);
+
+            bsptr->search_all(x, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            bsptr->search_all(x, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+
+        {
+            auto ptr = data.data() + x * ndim;
+            bsptr->search(ptr, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            bsptr->search_all(ptr, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i);
+            EXPECT_EQ(output_d, ref_d);
+
+            bsptr->search_all(ptr, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            bsptr->search_all(ptr, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+    }
+}
+
 INSTANTIATE_TEST_SUITE_P(
     Bruteforce,
     BruteforceTest,

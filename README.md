@@ -93,6 +93,25 @@ This allows implementations to skip the extraction of distances when only the id
 searcher->search(0, 5, &indices, NULL);
 ```
 
+## Finding all neighbors within range
+
+A related problem involves finding all neighbors within a certain distance of an observation.
+This can be achieved using the `Searcher::search_all()` method:
+
+```cpp
+if (seacher->can_search_all()) {
+    // Report all neighbors within a distance of 10 from the first point.
+    searcher->search_all(0, 10, &indices, &distances);
+
+    // Report all neighbors within a distance of 0.5 from a query point.
+    searcher->search_all(query.data(), 0.5, &indices, &distances);
+}
+```
+
+This method is optional so developers of `Searcher` subclasses may choose to not implement it.
+Applications should check `Searcher::can_search_all()` before attempting a call, as shown above.
+Otherwise, the default method will raise an exception. 
+
 ## Tuning index construction
 
 Some algorithms allow the user to modify the parameters of the search by passing options in the relevant `Builder` constructor.

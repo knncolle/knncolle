@@ -20,10 +20,15 @@ add_executable(
     src/Vptree.cpp
     src/Kmknn.cpp
     src/find_nearest_neighbors.cpp
+    src/misc.cpp
 )
 
 include(GoogleTest)
-set(CODE_COVERAGE "Enable coverage testing" OFF)
+option(CODE_COVERAGE "Enable coverage testing" OFF)
+set(DO_CODE_COVERAGE OFF)
+if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    set(DO_CODE_COVERAGE ON)
+endif()
 
 macro(decorate_test name)
     target_link_libraries(
@@ -34,7 +39,7 @@ macro(decorate_test name)
 
     target_compile_options(${name} PRIVATE -Wall -Werror -Wextra -Wpedantic)
 
-    if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    if(DO_CODE_COVERAGE)
         target_compile_options(${name} PRIVATE -O0 -g --coverage)
         target_link_options(${name} PRIVATE --coverage)
     endif()
