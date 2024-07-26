@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "knncolle/Searcher.hpp"
+#include "knncolle/distances.hpp"
 
 #include <vector>
 #include <random>
@@ -21,4 +22,11 @@ TEST(SearcherDefaults, Basic) {
     EXPECT_FALSE(tmp.can_search_all());
     EXPECT_ANY_THROW(tmp.search_all(0, 1, &tmp_i, &tmp_d));
     EXPECT_ANY_THROW(tmp.search_all(static_cast<double*>(NULL), 1, &tmp_i, &tmp_d));
+}
+
+TEST(MockDistance, Basic) {
+    std::vector<double> left(5);
+    std::vector<double> right(5, 1);
+    EXPECT_EQ(knncolle::MockDistance::template raw_distance<double>(left.data(), right.data(), 5), 5.0);
+    EXPECT_EQ(knncolle::MockDistance::normalize(4.0), 4.0);
 }
