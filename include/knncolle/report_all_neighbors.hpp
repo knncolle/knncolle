@@ -8,8 +8,8 @@ namespace internal {
 // These functions clean up the output for the search_all() functions.
 
 template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
-void report_all_neighbors_preamble(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances, Index_ i,) {
-    std::sort(all_neighbors.begin(), my_all_neighbors.end());
+void report_all_neighbors_preamble(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    std::sort(all_neighbors.begin(), all_neighbors.end());
     if constexpr(do_indices_) {
         output_indices->clear();
         output_indices->reserve(all_neighbors.size() - 1);
@@ -21,8 +21,8 @@ void report_all_neighbors_preamble(std::vector<std::pair<Float_, Index_> >& all_
 }
 
 template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
-void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances, Index_ i,) {
-    report_all_neighbors_preamble<do_indices, do_distances_>(all_neighbors, output_indices, output_distances);
+void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances, Index_ i) {
+    report_all_neighbors_preamble<do_indices_, do_distances_>(all_neighbors, output_indices, output_distances);
     for (const auto& an : all_neighbors) {
         if (an.second != i) {
             if constexpr(do_indices_) {
@@ -48,7 +48,7 @@ void report_all_neighbors(std::vector<std::pair<Float_, Index_> >& all_neighbors
 
 template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
 void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-    report_all_neighbors_preamble<do_indices, do_distances_>(all_neighbors, output_indices, output_distances);
+    report_all_neighbors_preamble<do_indices_, do_distances_>(all_neighbors, output_indices, output_distances);
     for (const auto& an : all_neighbors) {
         if constexpr(do_indices_) {
             output_indices->push_back(an.second);

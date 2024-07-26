@@ -71,13 +71,13 @@ public:
         my_all_neighbors.clear();
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search_all(0, iptr, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
     }
 
     void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_all_neighbors.clear();
         my_parent->search_all(0, query, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
     }
 };
 
@@ -317,20 +317,20 @@ private:
 
         if (dist < curnode.radius) { // If the target lies within the radius of ball:
             if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_nn(curnode.left, target, threshold, all_neighbors);
+                search_all(curnode.left, target, threshold, all_neighbors);
             }
 
             if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_nn(curnode.right, target, threshold, all_neighbors);
+                search_all(curnode.right, target, threshold, all_neighbors);
             }
 
         } else { // If the target lies outsize the radius of the ball:
             if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_nn(curnode.right, target, threshold, all_neighbors);
+                search_all(curnode.right, target, threshold, all_neighbors);
             }
 
             if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_nn(curnode.left, target, threshold, all_neighbors);
+                search_all(curnode.left, target, threshold, all_neighbors);
             }
         }
     }

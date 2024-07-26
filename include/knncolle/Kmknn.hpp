@@ -112,14 +112,14 @@ public:
         auto new_i = my_parent->my_new_location[i];
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(new_i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search_all(iptr, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
         my_parent->normalize(output_indices, output_distances);
     }
 
     void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_all_neighbors.clear();
         my_parent->search_all(query, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
         my_parent->normalize(output_indices, output_distances);
     }
 };
@@ -384,10 +384,9 @@ private:
         Index_ ncenters = my_sizes.size();
         auto center_ptr = my_centers.data(); 
         for (Index_ center = 0; center < ncenters; ++center, center_ptr += my_dim) {
-            const Index_ center = curcent.second;
-            const Float_ dist2center = Distance_::normalize(template raw_distance<Float_>(target, center_ptr, my_dim));
+            const Float_ dist2center = Distance_::normalize(Distance_::template raw_distance<Float_>(target, center_ptr, my_dim));
 
-            const auto cur_nobs = my_sizes[center];
+            auto cur_nobs = my_sizes[center];
             const Float_* dIt = my_dist_to_centroid.data() + my_offsets[center];
             const Float_ maxdist = *(dIt + cur_nobs - 1);
 

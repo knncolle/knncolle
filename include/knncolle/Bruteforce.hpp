@@ -79,14 +79,14 @@ public:
         my_all_neighbors.clear();
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search_all(ptr, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
         normalize(output_distances);
     }
 
     void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_all_neighbors.clear();
         my_parent->search_all(query, d, my_all_neighbors);
-        report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
         normalize(output_distances);
     }
 };
@@ -144,13 +144,13 @@ private:
     }
 
     template<typename Query_>
-    void search_all(const Query_* query, Float_ threshold, cstd::vector<std::pair<Index_, Float_> >& all_neighbors) const {
+    void search_all(const Query_* query, Float_ threshold, std::vector<std::pair<Float_, Index_> >& all_neighbors) const {
         Float_ threshold_raw = threshold * threshold;
         auto copy = my_data.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            Float_ raw_distance = Distance_::template raw_distance<Float_>(query, copy, my_dim) {
+            Float_ raw_distance = Distance_::template raw_distance<Float_>(query, copy, my_dim);
             if (threshold_raw >= raw_distance) {
-                all_neighbors.emplace_back(x, raw_distance);
+                all_neighbors.emplace_back(raw_distance, x);
             }
         }
     }

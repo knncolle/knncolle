@@ -78,7 +78,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search_all(Index_ i, Float_ distance, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    virtual void search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
     }
 
@@ -94,7 +94,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search_all(const Float_* query, Float_ distance, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    virtual void search_all([[maybe_unused]] const Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
     }
 };
