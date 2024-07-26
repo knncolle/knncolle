@@ -117,6 +117,55 @@ TEST_P(VptreeTest, QueryEuclidean) {
     }
 }
 
+TEST_P(VptreeTest, AllEuclidean) {
+    int k = std::get<1>(GetParam());    
+
+    knncolle::VptreeBuilder<> vb;
+    auto vptr = vb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto vsptr = vptr->initialize();
+    std::vector<int> output_i, ref_i;
+    std::vector<double> output_d, ref_d;
+
+    for (int x = 0; x < nobs; ++x) {
+        {
+            vsptr->search(x, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            vsptr->search_all(x, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i); 
+            EXPECT_EQ(output_d, ref_d);
+
+            vsptr->search_all(x, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            vsptr->search_all(x, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+
+        {
+            auto ptr = data.data() + x * ndim;
+            vsptr->search(ptr, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            vsptr->search_all(ptr, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i);
+            EXPECT_EQ(output_d, ref_d);
+
+            vsptr->search_all(ptr, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            vsptr->search_all(ptr, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+    }
+}
+
 INSTANTIATE_TEST_SUITE_P(
     Vptree,
     VptreeTest,

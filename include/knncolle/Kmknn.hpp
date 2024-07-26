@@ -112,7 +112,7 @@ public:
         auto new_i = my_parent->my_new_location[i];
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(new_i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search_all(iptr, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, new_i);
         my_parent->normalize(output_indices, output_distances);
     }
 
@@ -418,7 +418,7 @@ private:
 
                 auto dist2cell_raw = Distance_::template raw_distance<Float_>(target, other_ptr, my_dim);
                 if (dist2cell_raw <= threshold_raw) {
-                    all_neighbors.emplace_back(cur_start + celldex, dist2cell_raw);
+                    all_neighbors.emplace_back(dist2cell_raw, cur_start + celldex);
                 }
             }
         }

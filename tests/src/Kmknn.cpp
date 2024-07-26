@@ -120,6 +120,55 @@ TEST_P(KmknnTest, QueryEuclidean) {
     }
 }
 
+TEST_P(KmknnTest, AllEuclidean) {
+    int k = std::get<1>(GetParam());    
+
+    knncolle::KmknnBuilder<> kb;
+    auto kptr = kb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto ksptr = kptr->initialize();
+    std::vector<int> output_i, ref_i;
+    std::vector<double> output_d, ref_d;
+
+    for (int x = 0; x < nobs; ++x) {
+        {
+            ksptr->search(x, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            ksptr->search_all(x, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i); 
+            EXPECT_EQ(output_d, ref_d);
+
+            ksptr->search_all(x, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            ksptr->search_all(x, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+
+        {
+            auto ptr = data.data() + x * ndim;
+            ksptr->search(ptr, k, &ref_i, &ref_d);
+            double new_threshold = ref_d.back() * 0.99;
+            while (ref_d.size() && ref_d.back() > new_threshold) {
+                ref_d.pop_back();
+                ref_i.pop_back();
+            }
+
+            ksptr->search_all(ptr, new_threshold, &output_i, &output_d);
+            EXPECT_EQ(output_i, ref_i);
+            EXPECT_EQ(output_d, ref_d);
+
+            ksptr->search_all(ptr, new_threshold, NULL, &output_d);
+            EXPECT_EQ(output_d, ref_d);
+            ksptr->search_all(ptr, new_threshold, &output_i, NULL);
+            EXPECT_EQ(output_i, ref_i);
+        }
+    }
+}
+
 INSTANTIATE_TEST_SUITE_P(
     Kmknn,
     KmknnTest,
