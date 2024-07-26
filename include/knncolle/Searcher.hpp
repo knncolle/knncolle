@@ -63,6 +63,40 @@ public:
      * Optionally NULL, in which case no distances are returned.
      */
     virtual void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) = 0;
+
+    /** 
+     * Find all neighbors of the `i`-th observation within a certain distance.
+     * A run-time exception is thrown if this method is called on a subclass that does not implement it.
+     *
+     * @param i The index of the observation of interest.
+     * This should be non-negative and less than the total number of observations in `Prebuilt::num_observations()`.
+     * @param distance The distance in which to consider neighbors.
+     * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
+     * This vector is guaranteed to not contain `i` itself.
+     * Optionally NULL, in which case no indices are returned.
+     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * This corresponds to the indices reported in `output_indices`.
+     * Optionally NULL, in which case no distances are returned.
+     */
+    virtual void search_all(Index_ i, Float_ distance, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+        throw std::runtime_error("distance-based searches not supported");
+    }
+
+    /** 
+     * Find all neighbors of a new observation within a certain distance.
+     * A run-time exception is thrown if this method is called on a subclass that does not implement it.
+     *
+     * @param query Pointer to an array of length equal to `Prebuilt::num_dimensions()`, containing the coordinates of the query point.
+     * @param distance The distance in which to consider neighbors.
+     * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
+     * Optionally NULL, in which case no indices are returned.
+     * @param[out] output_indices Pointer to a vector, to be filled with the distances of the nearest neighbors. 
+     * This corresponds to the indices reported in `output_indices`.
+     * Optionally NULL, in which case no distances are returned.
+     */
+    virtual void search_all(const Float_* query, Float_ distance, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+        throw std::runtime_error("distance-based searches not supported");
+    }
 };
 
 }
