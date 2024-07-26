@@ -129,6 +129,8 @@ TEST_P(KmknnTest, AllEuclidean) {
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;
 
+    EXPECT_TRUE(ksptr->can_search_all());
+
     for (int x = 0; x < nobs; ++x) {
         {
             ksptr->search(x, k, &ref_i, &ref_d);

@@ -20,6 +20,7 @@ add_executable(
     src/Vptree.cpp
     src/Kmknn.cpp
     src/find_nearest_neighbors.cpp
+    src/misc.cpp
 )
 
 include(GoogleTest)

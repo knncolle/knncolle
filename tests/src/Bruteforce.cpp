@@ -108,6 +108,8 @@ TEST_P(BruteforceTest, AllEuclidean) {
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;
 
+    EXPECT_TRUE(bsptr->can_search_all());
+
     for (int x = 0; x < nobs; ++x) {
         {
             bsptr->search(x, k, &ref_i, &ref_d);

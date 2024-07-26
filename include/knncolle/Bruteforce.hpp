@@ -75,6 +75,10 @@ public:
         normalize(output_distances);
     }
 
+    bool can_search_all() const {
+        return true;
+    }
+
     void search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_all_neighbors.clear();
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.

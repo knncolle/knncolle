@@ -107,6 +107,10 @@ public:
         my_parent->normalize(output_indices, output_distances);
     }
 
+    bool can_search_all() const {
+        return true;
+    }
+
     void search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         my_all_neighbors.clear();
         auto new_i = my_parent->my_new_location[i];
