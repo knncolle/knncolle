@@ -6,9 +6,6 @@
     <filename>Bruteforce_8hpp.html</filename>
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
-    <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
-    <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceBuilder</class>
@@ -178,20 +175,6 @@
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
       <anchor>a9c7cd8e9f01f5798d5b98a1d5318e8f4</anchor>
       <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>ae357f3671f707710dae4e1dbb3f84974</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>af4b5ba96e5c5d013c387a3d70e82032a</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -378,20 +361,6 @@
       <anchor>a8fae155ea1722024e5dde21550674116</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>ae30438e827e6752640d2f6833d9d9090</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>ab2fd9795cb27814c1c429b89c919c2a4</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
   </compound>
   <compound kind="struct">
     <name>knncolle::ManhattanDistance</name>
@@ -537,20 +506,6 @@
       <anchor>a8362d0f6ea1b7f6e09d26a9188d31d1d</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>acd4da2c541a1b9c71032e4a828c52a3c</anchor>
-      <arglist>(Index_ i, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>a059a6bc370ef98ee7be929448ceda1cf</anchor>
-      <arglist>(const Float_ *query, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
   </compound>
   <compound kind="class">
     <name>knncolle::SimpleMatrix</name>
@@ -648,20 +603,6 @@
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
       <anchor>ac7a0f11645ab4f57b9991602339e0e15</anchor>
       <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>a635f26652dcbc5329a0245a49fdcbba6</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>ac49aefd2ae600e48c6491957865b4f66</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="struct">
