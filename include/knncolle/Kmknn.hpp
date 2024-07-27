@@ -119,20 +119,37 @@ public:
         return true;
     }
 
-    void search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
+    Index_ search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         auto new_i = my_parent->my_new_location[i];
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(new_i) * my_parent->my_long_ndim; // cast to avoid overflow.
-        my_parent->search_all(iptr, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, new_i);
-        my_parent->normalize(output_indices, output_distances);
+
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(iptr, d, count);
+            return internal::safe_remove_self(count);
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(iptr, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, new_i);
+            my_parent->normalize(output_indices, output_distances);
+            return internal::safe_remove_self(my_all_neighbors.size());
+        }
     }
 
-    void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
-        my_parent->search_all(query, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
-        my_parent->normalize(output_indices, output_distances);
+    Index_ search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(query, d, count);
+            return count;
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(query, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+            my_parent->normalize(output_indices, output_distances);
+            return my_all_neighbors.size();
+        }
     }
 };
 
@@ -386,8 +403,8 @@ private:
         }
     }
 
-    template<typename Query_>
-    void search_all(const Query_* target, Float_ threshold, std::vector<std::pair<Float_, Index_> >& all_neighbors) const {
+    template<bool count_only_, typename Query_, typename Output_>
+    void search_all(const Query_* target, Float_ threshold, Output_& all_neighbors) const {
         Float_ threshold_raw = threshold * threshold;
 
         /* Computing distances to all centers. We don't sort them here 
@@ -430,7 +447,11 @@ private:
 
                 auto dist2cell_raw = Distance_::template raw_distance<Float_>(target, other_ptr, my_dim);
                 if (dist2cell_raw <= threshold_raw) {
-                    all_neighbors.emplace_back(dist2cell_raw, cur_start + celldex);
+                    if constexpr(count_only_) {
+                        ++all_neighbors;
+                    } else {
+                        all_neighbors.emplace_back(dist2cell_raw, cur_start + celldex);
+                    }
                 }
             }
         }

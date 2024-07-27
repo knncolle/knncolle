@@ -90,9 +90,12 @@ public:
      * @param[out] output_distances Pointer to a vector, to be filled with the distances of the nearest neighbors. 
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
+     *
+     * @return Number of neighbors within \code{distance} of \code{i}.
      */
-    virtual void search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
+    virtual Index_ search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
+        return 0;
     }
 
     /** 
@@ -107,9 +110,12 @@ public:
      * @param[out] output_distances Pointer to a vector, to be filled with the distances of the nearest neighbors. 
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
+     *
+     * @return Number of neighbors within \code{distance} of \code{query}.
      */
-    virtual void search_all([[maybe_unused]] const Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
+    virtual Index_ search_all([[maybe_unused]] const Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
+        return 0;
     }
 };
 

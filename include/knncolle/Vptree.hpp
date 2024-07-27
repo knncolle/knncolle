@@ -75,17 +75,34 @@ public:
         return true;
     }
 
-    void search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
+    Index_ search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
-        my_parent->search_all(0, iptr, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(0, iptr, d, count);
+            return internal::safe_remove_self(count);
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(0, iptr, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+            return internal::safe_remove_self(my_all_neighbors.size());
+        }
     }
 
-    void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
-        my_parent->search_all(0, query, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+    Index_ search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(0, query, d, count);
+            return count;
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(0, query, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+            return my_all_neighbors.size();
+        }
     }
 };
 
@@ -312,33 +329,37 @@ private:
         }
     }
 
-    template<typename Query_>
-    void search_all(Index_ curnode_index, const Query_* target, Float_ threshold, std::vector<std::pair<Float_, Index_> >& all_neighbors) const { 
+    template<bool count_only_, typename Query_, typename Output_>
+    void search_all(Index_ curnode_index, const Query_* target, Float_ threshold, Output_& all_neighbors) const { 
         auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
         Float_ dist = Distance_::normalize(Distance_::template raw_distance<Float_>(nptr, target, my_dim));
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
         if (dist <= threshold) {
-            all_neighbors.emplace_back(dist, curnode.index);
+            if constexpr(count_only_) {
+                ++all_neighbors;
+            } else {
+                all_neighbors.emplace_back(dist, curnode.index);
+            }
         }
 
         if (dist < curnode.radius) { // If the target lies within the radius of ball:
             if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_all(curnode.left, target, threshold, all_neighbors);
+                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
             }
 
             if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_all(curnode.right, target, threshold, all_neighbors);
+                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
             }
 
         } else { // If the target lies outsize the radius of the ball:
             if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_all(curnode.right, target, threshold, all_neighbors);
+                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
             }
 
             if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_all(curnode.left, target, threshold, all_neighbors);
+                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
             }
         }
     }

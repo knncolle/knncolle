@@ -7,6 +7,12 @@ namespace internal {
 
 // These functions clean up the output for the search_all() functions.
 
+template<typename Index_>
+Index_ safe_remove_self(Index_ count) {
+    // Some protection for wacky cases where self != self.
+    return (count ? count - 1 : 0);
+}
+
 template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
 void report_all_neighbors_preamble(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
     std::sort(all_neighbors.begin(), all_neighbors.end());

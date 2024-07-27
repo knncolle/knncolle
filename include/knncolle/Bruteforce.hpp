@@ -83,19 +83,36 @@ public:
         return true;
     }
 
-    void search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
+    Index_ search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
-        my_parent->search_all(ptr, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
-        normalize(output_distances);
+
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(ptr, d, count);
+            return internal::safe_remove_self(count);
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(ptr, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+            normalize(output_distances);
+            return internal::safe_remove_self(my_all_neighbors.size());
+        }
     }
 
-    void search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        my_all_neighbors.clear();
-        my_parent->search_all(query, d, my_all_neighbors);
-        internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
-        normalize(output_distances);
+    Index_ search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+        if (!output_indices && !output_distances) {
+            Index_ count = 0;
+            my_parent->template search_all<true>(query, d, count);
+            return count;
+
+        } else {
+            my_all_neighbors.clear();
+            my_parent->template search_all<false>(query, d, my_all_neighbors);
+            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+            normalize(output_distances);
+            return my_all_neighbors.size();
+        }
     }
 };
 
@@ -151,14 +168,18 @@ private:
         }
     }
 
-    template<typename Query_>
-    void search_all(const Query_* query, Float_ threshold, std::vector<std::pair<Float_, Index_> >& all_neighbors) const {
+    template<bool count_only_, typename Query_, typename Output_>
+    void search_all(const Query_* query, Float_ threshold, Output_& all_neighbors) const {
         Float_ threshold_raw = threshold * threshold;
         auto copy = my_data.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
             Float_ raw_distance = Distance_::template raw_distance<Float_>(query, copy, my_dim);
             if (threshold_raw >= raw_distance) {
-                all_neighbors.emplace_back(raw_distance, x);
+                if constexpr(count_only_) {
+                    ++all_neighbors; // expect this to be an integer.
+                } else {
+                    all_neighbors.emplace_back(raw_distance, x); // expect this to be a vector of (distance, index) pairs.
+                }
             }
         }
     }

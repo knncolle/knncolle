@@ -137,14 +137,18 @@ TEST_P(VptreeTest, AllEuclidean) {
                 ref_i.pop_back();
             }
 
-            vsptr->search_all(x, new_threshold, &output_i, &output_d);
+            auto num = vsptr->search_all(x, new_threshold, &output_i, &output_d);
             EXPECT_EQ(output_i, ref_i); 
             EXPECT_EQ(output_d, ref_d);
+            EXPECT_EQ(num, ref_i.size());
 
             vsptr->search_all(x, new_threshold, NULL, &output_d);
             EXPECT_EQ(output_d, ref_d);
             vsptr->search_all(x, new_threshold, &output_i, NULL);
             EXPECT_EQ(output_i, ref_i);
+
+            auto num2 = vsptr->search_all(x, new_threshold, NULL, NULL);
+            EXPECT_EQ(num, num2);
         }
 
         {
@@ -156,14 +160,18 @@ TEST_P(VptreeTest, AllEuclidean) {
                 ref_i.pop_back();
             }
 
-            vsptr->search_all(ptr, new_threshold, &output_i, &output_d);
+            auto num = vsptr->search_all(ptr, new_threshold, &output_i, &output_d);
             EXPECT_EQ(output_i, ref_i);
             EXPECT_EQ(output_d, ref_d);
+            EXPECT_EQ(num, ref_i.size());
 
             vsptr->search_all(ptr, new_threshold, NULL, &output_d);
             EXPECT_EQ(output_d, ref_d);
             vsptr->search_all(ptr, new_threshold, &output_i, NULL);
             EXPECT_EQ(output_i, ref_i);
+
+            auto num2 = vsptr->search_all(ptr, new_threshold, NULL, NULL);
+            EXPECT_EQ(num, num2);
         }
     }
 }

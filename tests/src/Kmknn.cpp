@@ -136,14 +136,18 @@ TEST_P(KmknnTest, AllEuclidean) {
                 ref_i.pop_back();
             }
 
-            ksptr->search_all(x, new_threshold, &output_i, &output_d);
+            auto num = ksptr->search_all(x, new_threshold, &output_i, &output_d);
             EXPECT_EQ(output_i, ref_i); 
             EXPECT_EQ(output_d, ref_d);
+            EXPECT_EQ(num, ref_i.size());
 
             ksptr->search_all(x, new_threshold, NULL, &output_d);
             EXPECT_EQ(output_d, ref_d);
             ksptr->search_all(x, new_threshold, &output_i, NULL);
             EXPECT_EQ(output_i, ref_i);
+
+            auto num2 = ksptr->search_all(x, new_threshold, NULL, NULL);
+            EXPECT_EQ(num, num2);
         }
 
         {
@@ -155,14 +159,18 @@ TEST_P(KmknnTest, AllEuclidean) {
                 ref_i.pop_back();
             }
 
-            ksptr->search_all(ptr, new_threshold, &output_i, &output_d);
+            auto num = ksptr->search_all(ptr, new_threshold, &output_i, &output_d);
             EXPECT_EQ(output_i, ref_i);
             EXPECT_EQ(output_d, ref_d);
+            EXPECT_EQ(num, ref_i.size());
 
             ksptr->search_all(ptr, new_threshold, NULL, &output_d);
             EXPECT_EQ(output_d, ref_d);
             ksptr->search_all(ptr, new_threshold, &output_i, NULL);
             EXPECT_EQ(output_i, ref_i);
+
+            auto num2 = ksptr->search_all(ptr, new_threshold, NULL, NULL);
+            EXPECT_EQ(num, num2);
         }
     }
 }
