@@ -128,7 +128,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>VptreeSearcher&lt; D
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_&gt;<br />
 class knncolle::VptreePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</div><p>Index for a VP-tree search. </p>
-<p>Instances of this class are usually constructed using <code><a class="el" href="classknncolle_1_1VptreeBuilder.html#a0c25ca5b2d7a812032d7cf1d42e3ad3a">VptreeBuilder::build_raw()</a></code>. The <code><a class="el" href="classknncolle_1_1VptreePrebuilt.html#a583eeead36f94b77d5ceb46c47fd8aa3">initialize()</a></code> method will create a <code><a class="el" href="classknncolle_1_1VptreeSearcher.html" title="VP-tree searcher.">VptreeSearcher</a></code> instance.</p>
+<p>Instances of this class are usually constructed using <code><a class="el" href="classknncolle_1_1VptreeBuilder.html#a0c25ca5b2d7a812032d7cf1d42e3ad3a">VptreeBuilder::build_raw()</a></code>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Distance_</td><td>A distance calculation class satisfying the <code><a class="el" href="structknncolle_1_1MockDistance.html" title="Expectations for a distance calculation class.">MockDistance</a></code> contract. </td></tr>
@@ -217,7 +217,7 @@ template&lt;class Distance_ , typename Dim_ , typename Index_ , typename Store_ 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Create a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> for searching the index. </p><dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance. </dd></dl>
+<p>Creates a <code><a class="el" href="classknncolle_1_1VptreeSearcher.html" title="VP-tree searcher.">VptreeSearcher</a></code> instance. </p>
 
 <p>Implements <a class="el" href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</a>.</p>
 

@@ -122,7 +122,6 @@ Public Member Functions</h2></td></tr>
 class knncolle::VptreeBuilder&lt; Distance_, Matrix_, Float_ &gt;</div><p>Perform a nearest neighbor search based on a vantage point (VP) tree. </p>
 <p>In a vantage point tree (Yianilos, 1993), each node contains a subset of points that is split into two further partitions. The split is determined by picking an arbitrary point inside that subset as the node center, computing the distance to all other points from the center, and using the median distance as the "radius" of a hypersphere. The left child of this node contains all points within that hypersphere while the right child contains the remaining points. This procedure is applied recursively until all points resolve to individual nodes, thus yielding a VP tree. Upon searching, the algorithm traverses the tree and exploits the triangle inequality between query points and node centers to narrow the search space.</p>
 <p>The major advantage of VP trees over more conventional KD-trees or ball trees is that the former does not need to construct intermediate nodes, instead using the data points themselves at the nodes. This reduces the memory usage of the tree and total number of distance calculations for any search. It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for <b>knncolle</b>.</p>
-<p>The <code><a class="el" href="classknncolle_1_1VptreeBuilder.html#a0c25ca5b2d7a812032d7cf1d42e3ad3a">build_raw()</a></code> method will create a <code><a class="el" href="classknncolle_1_1VptreePrebuilt.html" title="Index for a VP-tree search.">VptreePrebuilt</a></code> instance.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Distance_</td><td>Class to compute the distance between vectors, see <code>distance::Euclidean</code> for an example. </td></tr>
@@ -160,13 +159,7 @@ template&lt;class Distance_  = EuclideanDistance, class Matrix_  = SimpleMatrix&
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>Matrix-like object (see <code><a class="el" href="classknncolle_1_1MockMatrix.html" title="Compile-time interface for matrix data.">MockMatrix</a></code>) containing observations in columns and dimensions in rows. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to a pre-built search index. </dd></dl>
+<p>Creates a <code><a class="el" href="classknncolle_1_1VptreePrebuilt.html" title="Index for a VP-tree search.">VptreePrebuilt</a></code> instance. </p>
 
 <p>Implements <a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">knncolle::Builder&lt; Matrix_, Float_ &gt;</a>.</p>
 
