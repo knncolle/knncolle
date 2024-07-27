@@ -91,7 +91,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      *
-     * @return Number of neighbors within \code{distance} of \code{i}.
+     * @return Number of neighbors within `distance` of `i`.
      */
     virtual Index_ search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
@@ -111,7 +111,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      *
-     * @return Number of neighbors within \code{distance} of \code{query}.
+     * @return Number of neighbors within `distance` of `query`.
      */
     virtual Index_ search_all([[maybe_unused]] const Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");

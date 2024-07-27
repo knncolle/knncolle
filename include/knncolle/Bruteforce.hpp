@@ -120,7 +120,6 @@ public:
  * @brief Index for a brute-force nearest neighbor search.
  *
  * Instances of this class are usually constructed using `BruteforceBuilder::build_raw()`.
- * The `initialize()` method will create a `BruteforceSearcher` instance.
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
@@ -187,6 +186,9 @@ private:
     friend class BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_>;
 
 public:
+    /**
+     * Creates a `BruteforceSearcher` instance.
+     */
     std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
         return std::make_unique<BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_> >(this);
     }
@@ -200,8 +202,6 @@ public:
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * The `build_raw()` method will create an instance of a `BruteforcePrebuilt` class.
- *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
@@ -209,6 +209,9 @@ public:
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class BruteforceBuilder : public Builder<Matrix_, Float_> {
 public:
+    /**
+     * Creates a `BruteforcePrebuilt` instance.
+     */
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
         auto ndim = data.num_dimensions();
         auto nobs = data.num_observations();
