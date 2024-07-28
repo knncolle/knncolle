@@ -1,5 +1,7 @@
 <map id="knncolle/Searcher.hpp" name="knncolle/Searcher.hpp">
 <area shape="rect" id="Node000001" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="5,5,155,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="51,79,109,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,31,83,63,77,63,77,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="6,79,63,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,33,53,67,48,64,70,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="88,79,165,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="90,30,113,64,108,67,85,33"/>
 </map>

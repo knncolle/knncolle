@@ -1,12 +1,14 @@
 <map id="knncolle/find_nearest_neighbors.hpp" name="knncolle/find_nearest_neighbors.hpp">
 <area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="5,5,149,46"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="28,241,86,267"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,52,70,42,95,37,130,39,165,51,226,46,227,34,166,32,129,37,93,47,67,60,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,241,75,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,52,70,42,95,37,130,36,165,43,226,38,227,31,165,31,129,37,93,47,67,60,45"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="51,94,103,120"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="80,46,80,78,74,78,74,46"/>
 <area shape="rect" id="Node000004" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="127,94,216,120"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="102,44,147,82,144,86,99,48"/>
-<area shape="rect" id="Node000005" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="87,168,184,193"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="168,121,151,155,146,153,163,119"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="124,196,83,233,80,229,121,192"/>
+<area shape="rect" id="Node000005" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="106,168,203,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="171,121,163,153,158,152,166,119"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="137,196,79,235,76,230,135,192"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="116,241,193,267"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="157,194,157,226,152,226,152,194"/>
 </map>
