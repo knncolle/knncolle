@@ -440,7 +440,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
 <div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keyword">template</span>&lt;<span class="keywordtype">bool</span> count_only_, <span class="keyword">typename</span> Query_, <span class="keyword">typename</span> Output_&gt;</div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    <span class="keywordtype">void</span> search_all(<span class="keyword">const</span> Query_* target, Float_ threshold, Output_&amp; all_neighbors)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        Float_ threshold_raw = threshold * threshold;</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>        Float_ threshold_raw = Distance_::denormalize(threshold);</div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> </div>
 <div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        <span class="comment">/* Computing distances to all centers. We don&#39;t sort them here </span></div>
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span><span class="comment">         * because the threshold is constant so there&#39;s no point.</span></div>

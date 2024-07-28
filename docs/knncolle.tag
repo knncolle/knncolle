@@ -238,6 +238,13 @@
       <anchor>a79fdf3c2dde43bd0e9103486b8a4839b</anchor>
       <arglist>(Output_ raw)</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>denormalize</name>
+      <anchorfile>structknncolle_1_1EuclideanDistance.html</anchorfile>
+      <anchor>a1bb3cf480fc39ebb740c9f840626a6a5</anchor>
+      <arglist>(Output_ norm)</arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>knncolle::KmknnBuilder</name>
@@ -410,6 +417,13 @@
       <anchor>a4dea393df5acd96968fa6476ee6d6ad0</anchor>
       <arglist>(Output_ raw)</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>denormalize</name>
+      <anchorfile>structknncolle_1_1ManhattanDistance.html</anchorfile>
+      <anchor>a4cae134de658e4b96433db80b62a549e</anchor>
+      <arglist>(Output_ norm)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>knncolle::MockDistance</name>
@@ -427,6 +441,13 @@
       <anchorfile>structknncolle_1_1MockDistance.html</anchorfile>
       <anchor>acf139f39a2c07856820442a8e12701cd</anchor>
       <arglist>(Output_ raw)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>denormalize</name>
+      <anchorfile>structknncolle_1_1MockDistance.html</anchorfile>
+      <anchor>ae3456039934506172efe9d6bde895d96</anchor>
+      <arglist>(Output_ norm)</arglist>
     </member>
   </compound>
   <compound kind="class">

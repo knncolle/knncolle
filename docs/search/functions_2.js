@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['find_5fnearest_5fneighbors_0',['find_nearest_neighbors',['../namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d',1,'knncolle']]],
-  ['find_5fnearest_5fneighbors_5findex_5fonly_1',['find_nearest_neighbors_index_only',['../namespaceknncolle.html#a0b726765329530a709095ba304033a0d',1,'knncolle']]]
+  ['denormalize_0',['denormalize',['../structknncolle_1_1MockDistance.html#ae3456039934506172efe9d6bde895d96',1,'knncolle::MockDistance::denormalize()'],['../structknncolle_1_1EuclideanDistance.html#a1bb3cf480fc39ebb740c9f840626a6a5',1,'knncolle::EuclideanDistance::denormalize()'],['../structknncolle_1_1ManhattanDistance.html#a4cae134de658e4b96433db80b62a549e',1,'knncolle::ManhattanDistance::denormalize()']]]
 ];
