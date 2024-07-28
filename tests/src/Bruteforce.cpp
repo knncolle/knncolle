@@ -158,6 +158,33 @@ TEST_P(BruteforceTest, AllEuclidean) {
     }
 }
 
+TEST_P(BruteforceTest, AllManhattan) {
+    int k = std::get<1>(GetParam());    
+
+    // Using Manhattan to test that denormalization is done correctly.
+    knncolle::BruteforceBuilder<knncolle::ManhattanDistance> bb;
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto bsptr = bptr->initialize();
+    std::vector<int> output_i, ref_i;
+    std::vector<double> output_d, ref_d;
+
+    EXPECT_TRUE(bsptr->can_search_all());
+
+    for (int x = 0; x < nobs; ++x) {
+        bsptr->search(x, k, &ref_i, &ref_d);
+        double new_threshold = ref_d.back() * 0.99;
+        while (ref_d.size() && ref_d.back() > new_threshold) {
+            ref_d.pop_back();
+            ref_i.pop_back();
+        }
+
+        auto num = bsptr->search_all(x, new_threshold, &output_i, &output_d);
+        EXPECT_EQ(output_i, ref_i); 
+        EXPECT_EQ(output_d, ref_d);
+        EXPECT_EQ(num, ref_i.size());
+    }
+}
+
 INSTANTIATE_TEST_SUITE_P(
     Bruteforce,
     BruteforceTest,

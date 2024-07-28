@@ -169,7 +169,7 @@ private:
 
     template<bool count_only_, typename Query_, typename Output_>
     void search_all(const Query_* query, Float_ threshold, Output_& all_neighbors) const {
-        Float_ threshold_raw = threshold * threshold;
+        Float_ threshold_raw = Distance_::denormalize(threshold);
         auto copy = my_data.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
             Float_ raw_distance = Distance_::template raw_distance<Float_>(query, copy, my_dim);

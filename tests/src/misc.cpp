@@ -29,4 +29,5 @@ TEST(MockDistance, Basic) {
     std::vector<double> right(5, 1);
     EXPECT_EQ(knncolle::MockDistance::template raw_distance<double>(left.data(), right.data(), 5), 5.0);
     EXPECT_EQ(knncolle::MockDistance::normalize(4.0), 4.0);
+    EXPECT_EQ(knncolle::MockDistance::denormalize(4.0), 4.0);
 }

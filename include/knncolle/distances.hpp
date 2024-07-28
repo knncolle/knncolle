@@ -17,7 +17,7 @@ namespace knncolle {
 struct MockDistance {
     /**
      * The raw distance `r` for a distance `d` is defined so that `r(x, y) > r(x, z)` iff `d(x, y) > d(x, z)`.
-     * `r(x, y)` is converted to `d(x, z)` via a monotonic transform in `normalize()`.
+     * `r(x, y)` is converted to `d(x, z)` via a monotonic transform in `normalize()`, and vice versa for `denormalize()`.
      * We separate out these two steps to avoid, e.g., a costly root operation for a Euclidean distance when only the relative values are of interest.
      *
      * @param x Pointer to the array containing the first vector.
@@ -49,6 +49,16 @@ struct MockDistance {
     template<typename Output_>
     static Output_ normalize(Output_ raw) {
         return raw;
+    }
+
+    /**
+     * @tparam Output_ Floating point type for the output distance.
+     * @param raw Normalized distance (i.e., the output of `normalize()`).
+     * @return The denormalized distance (i.e., the input to `normalize()`).
+     */
+    template<typename Output_>
+    static Output_ denormalize(Output_ norm) {
+        return norm;
     }
 };
 
@@ -88,6 +98,16 @@ struct EuclideanDistance {
     static Output_ normalize(Output_ raw) {
         return std::sqrt(raw);
     }
+
+    /**
+     * @tparam Output_ Floating point type for the output distance.
+     * @param norm Euclidean distance.
+     * @return Squared Euclidean distance.
+     */
+    template<typename Output_>
+    static Output_ denormalize(Output_ norm) {
+        return norm * norm;
+    }
 };
 
 /**
@@ -124,6 +144,16 @@ struct ManhattanDistance {
     template<typename Output_>
     static Output_ normalize(Output_ raw) {
         return raw;
+    }
+
+    /**
+     * @tparam Output_ Floating point type for the distance.
+     * @param norm Normalized distance.
+     * @return `norm` with no modification.
+     */
+    template<typename Output_>
+    static Output_ denormalize(Output_ norm) {
+        return norm;
     }
 };
 

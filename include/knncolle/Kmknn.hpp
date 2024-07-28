@@ -404,7 +404,7 @@ private:
 
     template<bool count_only_, typename Query_, typename Output_>
     void search_all(const Query_* target, Float_ threshold, Output_& all_neighbors) const {
-        Float_ threshold_raw = threshold * threshold;
+        Float_ threshold_raw = Distance_::denormalize(threshold);
 
         /* Computing distances to all centers. We don't sort them here 
          * because the threshold is constant so there's no point.
