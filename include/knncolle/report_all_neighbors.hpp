@@ -1,6 +1,9 @@
 #ifndef KNNCOLLE_REPORT_ALL_NEIGHBORS_HPP
 #define KNNCOLLE_REPORT_ALL_NEIGHBORS_HPP
 
+#include <algorithm>
+#include <vector>
+
 namespace knncolle {
 
 namespace internal {

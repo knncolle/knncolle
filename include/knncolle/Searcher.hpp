@@ -2,6 +2,7 @@
 #define KNNCOLLE_SEARCHER_HPP
 
 #include <vector>
+#include <stdexcept>
 
 /**
  * @file Searcher.hpp
