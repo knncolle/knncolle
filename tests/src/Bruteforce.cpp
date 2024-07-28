@@ -235,4 +235,8 @@ TEST(Bruteforce, Empty) {
     bsptr->search(target.data(), 0, &res_i, &res_d);
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
+
+    bsptr->search_all(target.data(), 0, &res_i, &res_d);
+    EXPECT_TRUE(res_i.empty());
+    EXPECT_TRUE(res_d.empty());
 }
