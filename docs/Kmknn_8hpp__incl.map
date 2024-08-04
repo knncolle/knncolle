@@ -4,32 +4,33 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="446,32,123,81,122,76,445,27"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="131,79,266,105"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="461,34,268,78,267,72,460,29"/>
-<area shape="rect" id="Node000005" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="349,153,438,178"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="452,34,413,52,396,64,382,80,377,94,376,108,383,137,378,139,371,109,372,92,378,78,392,61,410,47,450,29"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="275,300,333,326"/>
-<area shape="poly" id="edge16_Node000001_Node000007" title=" " alt="" coords="458,34,412,52,390,65,370,81,351,103,336,129,317,185,308,240,306,285,301,285,303,240,312,184,331,127,347,100,366,77,387,61,409,47,456,29"/>
-<area shape="rect" id="Node000009" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="392,79,477,105"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="503,34,461,71,457,67,499,30"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="472,153,539,178"/>
-<area shape="poly" id="edge17_Node000001_Node000010" title=" " alt="" coords="517,32,510,137,504,137,511,31"/>
-<area shape="rect" id="Node000011" href="$MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="683,153,795,178"/>
-<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="525,30,552,65,592,103,636,127,681,145,679,150,633,132,589,107,548,69,521,33"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="603,79,765,105"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="544,29,642,70,640,75,542,34"/>
-<area shape="rect" id="Node000013" href="/github/workspace/docs/kmeans.tag$kmeans_8hpp.html" title=" " alt="" coords="789,79,931,105"/>
-<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="574,29,787,73,786,78,573,34"/>
+<area shape="rect" id="Node000005" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="286,153,375,178"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="445,25,414,31,383,42,354,58,331,81,325,93,323,108,325,137,320,138,317,108,320,92,327,77,351,54,381,37,413,26,444,20"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="404,226,471,252"/>
+<area shape="poly" id="edge18_Node000001_Node000006" title=" " alt="" coords="513,32,449,213,444,211,508,30"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="439,300,497,326"/>
+<area shape="poly" id="edge17_Node000001_Node000008" title=" " alt="" coords="516,31,505,123,485,253,478,285,473,284,480,251,500,123,511,31"/>
+<area shape="rect" id="Node000010" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="341,79,427,105"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="494,34,420,74,418,69,491,29"/>
+<area shape="rect" id="Node000011" href="$MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="713,153,826,178"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="585,17,669,21,761,31,842,48,873,61,894,77,901,89,901,101,888,121,861,137,830,150,828,145,859,132,884,117,896,99,896,91,890,81,870,66,841,54,760,36,668,27,584,23"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="718,79,879,105"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="563,29,736,72,735,77,562,34"/>
+<area shape="rect" id="Node000013" href="/github/workspace/docs/kmeans.tag$kmeans_8hpp.html" title=" " alt="" coords="552,79,693,105"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="534,29,593,68,590,72,532,34"/>
 <area shape="rect" id="Node000014" title=" " alt="" coords="955,79,1029,105"/>
-<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="585,25,743,45,940,76,939,81,742,50,584,30"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="585,25,746,47,936,76,940,77,940,82,936,82,745,52,584,31"/>
 <area shape="rect" id="Node000015" title=" " alt="" coords="1054,79,1106,105"/>
-<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="585,21,785,38,910,54,1039,76,1038,82,909,60,784,44,584,26"/>
+<area shape="poly" id="edge19_Node000001_Node000015" title=" " alt="" coords="585,21,785,38,910,54,1039,76,1038,82,909,60,784,44,584,26"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="27,153,85,178"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,105,59,137,53,137,53,105"/>
-<area shape="rect" id="Node000006" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="345,226,442,252"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="396,179,396,211,391,211,391,179"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="380,255,333,292,329,288,377,250"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="357,300,435,326"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="396,252,398,284,392,285,391,252"/>
-<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="430,106,410,141,406,138,426,104"/>
-<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="448,103,485,140,481,143,444,107"/>
-<area shape="poly" id="edge14_Node000013_Node000011" title=" " alt="" coords="841,108,774,147,771,142,838,103"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="350,177,408,215,405,220,347,181"/>
+<area shape="rect" id="Node000007" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="282,226,379,252"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="333,179,333,211,328,211,328,179"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="355,250,432,290,430,295,353,255"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="292,300,369,326"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="333,252,333,284,328,284,328,252"/>
+<area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="377,106,351,142,347,138,373,103"/>
+<area shape="poly" id="edge11_Node000010_Node000006" title=" " alt="" coords="391,104,430,211,425,213,386,106"/>
+<area shape="poly" id="edge15_Node000013_Node000011" title=" " alt="" coords="649,103,732,143,729,148,646,108"/>
 </map>

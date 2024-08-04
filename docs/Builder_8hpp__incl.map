@@ -1,13 +1,14 @@
 <map id="knncolle/Builder.hpp" name="knncolle/Builder.hpp">
-<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor indices." alt="" coords="61,5,199,31"/>
-<area shape="rect" id="Node000002" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="35,79,124,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,33,99,68,94,65,119,30"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="148,79,216,105"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="141,30,166,65,162,68,136,33"/>
-<area shape="rect" id="Node000003" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="31,153,128,178"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="82,105,82,137,77,137,77,105"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="5,226,63,252"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="74,180,52,215,47,212,70,177"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="87,226,165,252"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="89,177,112,212,108,215,85,180"/>
+<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor indices." alt="" coords="12,5,149,31"/>
+<area shape="rect" id="Node000002" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="77,79,166,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,30,109,64,105,67,85,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,153,73,178"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="80,32,49,138,44,137,74,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,107,66,144,63,140,106,103"/>
+<area shape="rect" id="Node000004" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="97,153,194,178"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="128,104,139,137,134,139,123,106"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="70,226,128,252"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="140,180,117,215,113,212,136,177"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="152,226,230,252"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="155,177,178,212,173,215,151,180"/>
 </map>
