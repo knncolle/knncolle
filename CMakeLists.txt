@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(knncolle
-    VERSION 2.1.3
+    VERSION 2.1.4
     DESCRIPTION "Collection of k-nearest neighbors algorithms in C++"
     LANGUAGES CXX)
 

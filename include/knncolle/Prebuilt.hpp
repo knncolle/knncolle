@@ -1,6 +1,7 @@
 #ifndef KNNCOLLE_PREBUILT_HPP
 #define KNNCOLLE_PREBUILT_HPP
 
+#include <memory>
 #include "Searcher.hpp"
 
 /**
