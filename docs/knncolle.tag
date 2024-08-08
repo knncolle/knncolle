@@ -29,6 +29,7 @@
     <class kind="struct">knncolle::MockDistance</class>
     <class kind="struct">knncolle::EuclideanDistance</class>
     <class kind="struct">knncolle::ManhattanDistance</class>
+    <class kind="struct">knncolle::CosineDistance</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -219,6 +220,31 @@
       <anchorfile>classknncolle_1_1Builder.html</anchorfile>
       <anchor>afeda432debae999f988f32f147055251</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>knncolle::CosineDistance</name>
+    <filename>structknncolle_1_1CosineDistance.html</filename>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>raw_distance</name>
+      <anchorfile>structknncolle_1_1CosineDistance.html</anchorfile>
+      <anchor>a02a26f1b8a40ce94cf0b44ff344abbf0</anchor>
+      <arglist>(const DataX_ *x, const DataY_ *y, Dim_ num_dimensions)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>normalize</name>
+      <anchorfile>structknncolle_1_1CosineDistance.html</anchorfile>
+      <anchor>ad380c0749db9c6457b0b8a77951c75e0</anchor>
+      <arglist>(Output_ raw)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static Output_</type>
+      <name>denormalize</name>
+      <anchorfile>structknncolle_1_1CosineDistance.html</anchorfile>
+      <anchor>ae2c9d740adb393e2db121184ba47534c</anchor>
+      <arglist>(Output_ norm)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -696,6 +722,7 @@
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::Builder</class>
+    <class kind="struct">knncolle::CosineDistance</class>
     <class kind="struct">knncolle::EuclideanDistance</class>
     <class kind="class">knncolle::KmknnBuilder</class>
     <class kind="struct">knncolle::KmknnOptions</class>
