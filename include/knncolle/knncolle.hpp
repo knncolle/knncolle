@@ -4,7 +4,9 @@
 #include "Builder.hpp"
 #include "Prebuilt.hpp"
 #include "MockMatrix.hpp"
+
 #include "distances.hpp"
+#include "L2Normalized.hpp"
 
 #include "Bruteforce.hpp"
 #include "Vptree.hpp"
