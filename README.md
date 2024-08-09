@@ -165,14 +165,31 @@ auto some_prebuilt = ptr->build_unique(mat);
 auto some_results = knncolle::find_nearest_neighbors(*some_prebuilt, 10); 
 ```
 
-Each class is also heavily templated to enable compile-time polymorphism:
+Each class is also heavily templated to enable compile-time polymorphism.
+We default to `int`s for the indices and `double`s for the distances.
+If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
+The choice of distance calculation is also a compile-time parameter for most subclasses,
+and users can define their own classes to use a custom distance.
 
-- We default to `int`s for the indices and `double`s for the distances.
-  If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
-- The choice of distance calculation is often a compile-time parameter, as defined by the `MockDistance` compile-time interface.
-  Advanced users can define their own classes to customize the distance calculations.
-- The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
-  Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
+The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
+Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
+For example, we implement the `L2NormalizedMatrix` class to apply on-the-fly L2 normalization of each observation's vector of coordinates.
+We then combine this with the `L2NormalizedBuilder` class to transform an existing neighbor search method from Euclidean to cosine distances.
+
+```cpp
+bool use_cosine = true;
+std::unique_ptr<knncolle::Builder<decltype(mat), double> > ptr;
+
+if (use_cosine) {
+    typedef knncolle:VptreeBuilder<
+        knncolle::EuclideanDistance,
+        knncolle::L2NormalizedMatrix<> // only use as a template argument.
+    > L2VptreeBuilder;
+    ptr.reset(new knncolle::L2NormalizedBuilder(new L2VptreeBuilder));
+} else {
+    ptr.reset(new knncolle:VptreeBuilder<>);
+}
+```
 
 Check out the [reference documentation](https://knncolle.github.io/knncolle/) for more details on these interfaces.
 
