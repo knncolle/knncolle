@@ -1,0 +1,5 @@
+<map id="knncolle::L2NormalizedPrebuilt&lt; Dim_, Index_, Float_ &gt;" name="knncolle::L2NormalizedPrebuilt&lt; Dim_, Index_, Float_ &gt;">
+<area shape="rect" id="Node000001" title="Wrapper around a prebuilt index with L2 normalization." alt="" coords="5,94,205,135"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="24,5,186,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,62,108,94,102,94,102,62"/>
+</map>

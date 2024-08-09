@@ -1,5 +1,12 @@
 var searchData=
 [
-  ['searcher_0',['Searcher',['../classknncolle_1_1Searcher.html',1,'knncolle']]],
-  ['simplematrix_1',['simplematrix',['https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html',1,'kmeans::SimpleMatrix&lt; typename Data_, typename Index_, typename Dim_ &gt;'],['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Dim_, Index_, Data_ &gt;']]]
+  ['randomaccessworkspace_0',['RandomAccessWorkspace',['https://ltla.github.io/CppKmeans/structkmeans_1_1MockMatrix_1_1RandomAccessWorkspace.html',1,'kmeans::MockMatrix']]],
+  ['refine_1',['Refine',['https://ltla.github.io/CppKmeans/classkmeans_1_1Refine.html',1,'kmeans']]],
+  ['refinehartiganwong_2',['RefineHartiganWong',['https://ltla.github.io/CppKmeans/classkmeans_1_1RefineHartiganWong.html',1,'kmeans']]],
+  ['refinehartiganwongoptions_3',['RefineHartiganWongOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineHartiganWongOptions.html',1,'kmeans']]],
+  ['refinelloyd_4',['RefineLloyd',['https://ltla.github.io/CppKmeans/classkmeans_1_1RefineLloyd.html',1,'kmeans']]],
+  ['refinelloydoptions_5',['RefineLloydOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html',1,'kmeans']]],
+  ['refineminibatch_6',['RefineMiniBatch',['https://ltla.github.io/CppKmeans/classkmeans_1_1RefineMiniBatch.html',1,'kmeans']]],
+  ['refineminibatchoptions_7',['RefineMiniBatchOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html',1,'kmeans']]],
+  ['results_8',['Results',['https://ltla.github.io/CppKmeans/structkmeans_1_1Results.html',1,'kmeans']]]
 ];

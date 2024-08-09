@@ -190,13 +190,25 @@ $(function() {
 <div class="line"><span class="keyword">auto</span> some_results = <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*some_prebuilt, 10); </div>
 <div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:210</div></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="classknncolle_1_1Builder.html">knncolle::Builder</a></div><div class="ttdoc">Interface to build nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Builder.hpp:22</div></div>
-</div><!-- fragment --><p>Each class is also heavily templated to enable compile-time polymorphism:</p>
-<ul>
-<li>We default to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s.</li>
-<li>The choice of distance calculation is often a compile-time parameter, as defined by the <code>MockDistance</code> compile-time interface. Advanced users can define their own classes to customize the distance calculations.</li>
-<li>The choice of input data is another compile-time paramter, as defined by the <code>MockMatrix</code> interface. Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.</li>
-</ul>
-<p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
+</div><!-- fragment --><p>Each class is also heavily templated to enable compile-time polymorphism. We default to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s. The choice of distance calculation is also a compile-time parameter for most subclasses, and users can define their own classes to use a custom distance.</p>
+<p>The choice of input data is another compile-time paramter, as defined by the <code>MockMatrix</code> interface. Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices. For example, we implement the <code>L2NormalizedMatrix</code> class to apply on-the-fly L2 normalization of each observation's vector of coordinates. We then combine this with the <code>L2NormalizedBuilder</code> class to transform an existing neighbor search method from Euclidean to cosine distances.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span> use_cosine = <span class="keyword">true</span>;</div>
+<div class="line">std::unique_ptr&lt;<a class="code hl_class" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt;<span class="keyword">decltype</span>(mat), <span class="keywordtype">double</span>&gt; &gt; ptr;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (use_cosine) {</div>
+<div class="line">    <span class="keyword">typedef</span> <a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a>:VptreeBuilder&lt;</div>
+<div class="line">        <a class="code hl_struct" href="structknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a>,</div>
+<div class="line">        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix&lt;&gt;</a> <span class="comment">// only use as a template argument.</span></div>
+<div class="line">    &gt; L2VptreeBuilder;</div>
+<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a>(<span class="keyword">new</span> L2VptreeBuilder));</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a>:VptreeBuilder&lt;&gt;);</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:214</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix</a></div><div class="ttdoc">Wrapper around a matrix with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:162</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:21</div></div>
+<div class="ttc" id="astructknncolle_1_1EuclideanDistance_html"><div class="ttname"><a href="structknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a></div><div class="ttdoc">Compute Euclidean distances between two input vectors.</div><div class="ttdef"><b>Definition</b> distances.hpp:68</div></div>
+</div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
 <h1>Building projects with <b>knncolle</b></h1>
 <h2>CMake with <code>FetchContent</code></h2>
 <p>If you're using CMake, you just need to add something like this to your <code>CMakeLists.txt</code>:</p>

@@ -1,0 +1,23 @@
+<map id="knncolle/L2Normalized.hpp" name="knncolle/L2Normalized.hpp">
+<area shape="rect" id="Node000001" title="Wrapper for L2 normalization prior to search." alt="" coords="83,5,260,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,300,63,326"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,34,71,52,54,64,40,80,27,105,19,132,14,189,19,242,29,284,23,286,14,243,9,189,14,131,22,103,36,78,50,61,68,47,108,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="51,79,108,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="157,34,108,72,105,67,154,29"/>
+<area shape="rect" id="Node000004" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="97,226,195,252"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="173,32,152,211,146,211,167,31"/>
+<area shape="rect" id="Node000006" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="184,153,273,178"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="179,30,221,137,216,139,174,32"/>
+<area shape="rect" id="Node000008" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="234,79,319,105"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="191,29,248,68,245,72,188,34"/>
+<area shape="rect" id="Node000009" href="$MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="343,79,456,105"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="211,29,347,71,345,76,209,34"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="128,255,67,294,64,289,126,250"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="107,300,185,326"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="149,252,149,284,143,284,143,252"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="216,181,173,218,170,214,213,177"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="248,226,316,252"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="240,177,266,212,262,215,235,180"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="271,106,248,141,243,138,267,103"/>
+<area shape="poly" id="edge11_Node000008_Node000007" title=" " alt="" coords="282,105,289,152,288,210,282,210,283,153,276,105"/>
+</map>

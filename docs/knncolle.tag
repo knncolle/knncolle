@@ -60,10 +60,25 @@
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
+    <includes id="L2Normalized_8hpp" name="L2Normalized.hpp" local="yes" import="no" module="no" objc="no">L2Normalized.hpp</includes>
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="Kmknn_8hpp" name="Kmknn.hpp" local="yes" import="no" module="no" objc="no">Kmknn.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
+    <name>L2Normalized.hpp</name>
+    <path>knncolle/</path>
+    <filename>L2Normalized_8hpp.html</filename>
+    <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
+    <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
+    <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
+    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
+    <class kind="class">knncolle::L2NormalizedSearcher</class>
+    <class kind="class">knncolle::L2NormalizedPrebuilt</class>
+    <class kind="class">knncolle::L2NormalizedMatrix</class>
+    <class kind="class">knncolle::L2NormalizedBuilder</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -400,6 +415,75 @@
       <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
+  <compound kind="class">
+    <name>knncolle::L2NormalizedBuilder</name>
+    <filename>classknncolle_1_1L2NormalizedBuilder.html</filename>
+    <templarg>class Matrix_</templarg>
+    <templarg>typename Float_</templarg>
+    <base>knncolle::Builder</base>
+    <member kind="function">
+      <type></type>
+      <name>L2NormalizedBuilder</name>
+      <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
+      <anchor>a7f3702fbbf54bbbaceb925aa2936bd45</anchor>
+      <arglist>(std::unique_ptr&lt; Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; &gt; builder)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>L2NormalizedBuilder</name>
+      <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
+      <anchor>a16df727021e97c341b7ef957eb79dd23</anchor>
+      <arglist>(Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; *builder)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
+      <name>build_raw</name>
+      <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
+      <anchor>a9747f9c49d62c8d0c47c017586e0b297</anchor>
+      <arglist>(const Matrix_ &amp;data) const</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::L2NormalizedMatrix</name>
+    <filename>classknncolle_1_1L2NormalizedMatrix.html</filename>
+    <templarg>class Matrix_</templarg>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::L2NormalizedPrebuilt</name>
+    <filename>classknncolle_1_1L2NormalizedPrebuilt.html</filename>
+    <templarg>typename Dim_</templarg>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Float_</templarg>
+    <base>knncolle::Prebuilt</base>
+    <member kind="function">
+      <type></type>
+      <name>L2NormalizedPrebuilt</name>
+      <anchorfile>classknncolle_1_1L2NormalizedPrebuilt.html</anchorfile>
+      <anchor>a43c889080f754e44c6085cc10a46f32b</anchor>
+      <arglist>(std::unique_ptr&lt; Prebuilt&lt; Dim_, Index_, Float_ &gt; &gt; prebuilt)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
+      <name>initialize</name>
+      <anchorfile>classknncolle_1_1L2NormalizedPrebuilt.html</anchorfile>
+      <anchor>a0879ea8c8512d04a2f73fb7afd7eae56</anchor>
+      <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::L2NormalizedSearcher</name>
+    <filename>classknncolle_1_1L2NormalizedSearcher.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Float_</templarg>
+    <base>knncolle::Searcher</base>
+    <member kind="function">
+      <type></type>
+      <name>L2NormalizedSearcher</name>
+      <anchorfile>classknncolle_1_1L2NormalizedSearcher.html</anchorfile>
+      <anchor>ad97e99e0fd85202cce0357333a78a2a4</anchor>
+      <arglist>(std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt; searcher, size_t num_dimensions)</arglist>
+    </member>
+  </compound>
   <compound kind="struct">
     <name>knncolle::ManhattanDistance</name>
     <filename>structknncolle_1_1ManhattanDistance.html</filename>
@@ -701,6 +785,10 @@
     <class kind="struct">knncolle::KmknnOptions</class>
     <class kind="class">knncolle::KmknnPrebuilt</class>
     <class kind="class">knncolle::KmknnSearcher</class>
+    <class kind="class">knncolle::L2NormalizedBuilder</class>
+    <class kind="class">knncolle::L2NormalizedMatrix</class>
+    <class kind="class">knncolle::L2NormalizedPrebuilt</class>
+    <class kind="class">knncolle::L2NormalizedSearcher</class>
     <class kind="struct">knncolle::ManhattanDistance</class>
     <class kind="struct">knncolle::MockDistance</class>
     <class kind="class">knncolle::MockMatrix</class>

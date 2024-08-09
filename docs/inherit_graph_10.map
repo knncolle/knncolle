@@ -1,9 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,93,133,134"/>
-<area shape="rect" id="Node000001" href="$classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="181,5,368,61"/>
-<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="136,84,200,59,202,64,138,89"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1KmknnSearcher.html" title="KMKNN searcher." alt="" coords="190,85,359,141"/>
-<area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="148,111,190,111,190,116,148,116"/>
-<area shape="rect" id="Node000003" href="$classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="192,165,357,221"/>
-<area shape="poly" id="edge9_Node000000_Node000003" title=" " alt="" coords="138,137,202,162,200,167,136,142"/>
+<area shape="rect" id="Node000000" href="$classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="5,129,167,170"/>
+<area shape="rect" id="Node000001" href="$classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute&#45;force nearest neighbor search." alt="" coords="225,5,404,61"/>
+<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="131,118,213,71,238,59,241,64,216,76,133,123"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1KmknnPrebuilt.html" title="Index for a KMKNN search." alt="" coords="232,85,397,141"/>
+<area shape="poly" id="edge6_Node000000_Node000002" title=" " alt="" coords="181,131,231,124,232,129,182,137"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1L2NormalizedPrebuilt.html" title="Wrapper around a prebuilt index with L2 normalization." alt="" coords="215,165,414,206"/>
+<area shape="poly" id="edge7_Node000000_Node000003" title=" " alt="" coords="182,162,215,167,214,172,181,167"/>
+<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreePrebuilt.html" title="Index for a VP&#45;tree search." alt="" coords="232,229,397,285"/>
+<area shape="poly" id="edge8_Node000000_Node000004" title=" " alt="" coords="138,175,216,215,242,226,240,231,214,220,136,180"/>
 </map>

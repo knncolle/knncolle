@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['vptreebuilder_0',['VptreeBuilder',['../classknncolle_1_1VptreeBuilder.html',1,'knncolle']]],
-  ['vptreeprebuilt_1',['VptreePrebuilt',['../classknncolle_1_1VptreePrebuilt.html',1,'knncolle']]],
-  ['vptreesearcher_2',['VptreeSearcher',['../classknncolle_1_1VptreeSearcher.html',1,'knncolle']]]
+  ['searcher_0',['Searcher',['../classknncolle_1_1Searcher.html',1,'knncolle']]],
+  ['simplematrix_1',['simplematrix',['https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html',1,'kmeans::SimpleMatrix&lt; typename Data_, typename Index_, typename Dim_ &gt;'],['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Dim_, Index_, Data_ &gt;']]]
 ];

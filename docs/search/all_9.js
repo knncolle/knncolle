@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['manhattandistance_0',['ManhattanDistance',['../structknncolle_1_1ManhattanDistance.html',1,'knncolle']]],
-  ['max_5fchange_5fproportion_1',['max_change_proportion',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html#a8facb9fb31d589bb41fa9e196e1e15e4',1,'kmeans::RefineMiniBatchOptions']]],
-  ['max_5fiterations_2',['max_iterations',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineHartiganWongOptions.html#a84e571b7448c1fc74dec8419feb0b0c9',1,'kmeans::RefineHartiganWongOptions::max_iterations'],['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a',1,'kmeans::RefineLloydOptions::max_iterations'],['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html#a8a4b7d596a2c1780d645739904948bd4',1,'kmeans::RefineMiniBatchOptions::max_iterations']]],
-  ['mockdistance_3',['MockDistance',['../structknncolle_1_1MockDistance.html',1,'knncolle']]],
-  ['mockmatrix_4',['mockmatrix',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html',1,'kmeans::MockMatrix'],['../classknncolle_1_1MockMatrix.html',1,'knncolle::MockMatrix']]],
-  ['mockmatrix_2ehpp_5',['mockmatrix.hpp',['../MockMatrix_8hpp.html',1,'(Global Namespace)'],['https://ltla.github.io/CppKmeans/MockMatrix_8hpp.html',1,'(Global Namespace)']]]
+  ['l2normalized_2ehpp_0',['L2Normalized.hpp',['../L2Normalized_8hpp.html',1,'']]],
+  ['l2normalizedbuilder_1',['l2normalizedbuilder',['../classknncolle_1_1L2NormalizedBuilder.html',1,'knncolle::L2NormalizedBuilder&lt; Matrix_, Float_ &gt;'],['../classknncolle_1_1L2NormalizedBuilder.html#a7f3702fbbf54bbbaceb925aa2936bd45',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(std::unique_ptr&lt; Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; &gt; builder)'],['../classknncolle_1_1L2NormalizedBuilder.html#a16df727021e97c341b7ef957eb79dd23',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; *builder)']]],
+  ['l2normalizedmatrix_2',['L2NormalizedMatrix',['../classknncolle_1_1L2NormalizedMatrix.html',1,'knncolle']]],
+  ['l2normalizedprebuilt_3',['l2normalizedprebuilt',['../classknncolle_1_1L2NormalizedPrebuilt.html',1,'knncolle::L2NormalizedPrebuilt&lt; Dim_, Index_, Float_ &gt;'],['../classknncolle_1_1L2NormalizedPrebuilt.html#a43c889080f754e44c6085cc10a46f32b',1,'knncolle::L2NormalizedPrebuilt::L2NormalizedPrebuilt()']]],
+  ['l2normalizedsearcher_4',['l2normalizedsearcher',['../classknncolle_1_1L2NormalizedSearcher.html',1,'knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt;'],['../classknncolle_1_1L2NormalizedSearcher.html#ad97e99e0fd85202cce0357333a78a2a4',1,'knncolle::L2NormalizedSearcher::L2NormalizedSearcher()']]]
 ];
