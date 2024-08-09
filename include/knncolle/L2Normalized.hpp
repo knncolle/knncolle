@@ -223,7 +223,7 @@ public:
      * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.
      * This should be parametrized to accept an `L2NormalizedMatrix` wrapper around the intended matrix type.
      */
-    L2NormalizedBuilder(L2NormalizedMatrix<Matrix_>, Float_>* builder) : my_builder(builder) {}
+    L2NormalizedBuilder(Builder<L2NormalizedMatrix<Matrix_>, Float_>* builder) : my_builder(builder) {}
 
 private:
     std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> > my_builder;
