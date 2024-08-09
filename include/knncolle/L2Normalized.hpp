@@ -155,8 +155,8 @@ public:
  * @tparam Matrix_ Any class that satisfies the `MockMatrix_` interface.
  * 
  * This class satisfies the `MockMatrix` interface and performs L2 normalization of each observation's data vector in its implementation of `MockMatrix::get_observation()`.
- * It is only intended for use in constructing a `L2NormalizedBuilder` instance;
- * in general, users should not be constructing an actual instance of this class.
+ * It is mainly intended for use as a template argument when defining a `builder` for the `L2NormalizedBuilder` constructor.
+ * In general, users should not be constructing an actual instance of this class.
  */
 template<class Matrix_ = SimpleMatrix<int, int, double> >
 class L2NormalizedMatrix {
@@ -215,10 +215,15 @@ class L2NormalizedBuilder : public Builder<Matrix_, Float_> {
 public:
     /**
      * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.
-     * This should be parametrized to accept an `L2NormalizedMatrix` wrapper around the desired matrix,
-     * though it is not necessary for users to actually construct a `L2NormalizedMatrix` explicitly.
+     * This should be parametrized to accept an `L2NormalizedMatrix` wrapper around the intended matrix type.
      */
     L2NormalizedBuilder(std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> > builder) : my_builder(std::move(builder)) {}
+
+    /**
+     * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.
+     * This should be parametrized to accept an `L2NormalizedMatrix` wrapper around the intended matrix type.
+     */
+    L2NormalizedBuilder(L2NormalizedMatrix<Matrix_>, Float_>* builder) : my_builder(builder) {}
 
 private:
     std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> > my_builder;

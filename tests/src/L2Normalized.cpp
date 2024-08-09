@@ -80,7 +80,8 @@ TEST_P(L2NormalizedTest, Query) {
     knncolle::VptreeBuilder<> bb;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, normalized.data()));
 
-    knncolle::L2NormalizedBuilder<> lb(std::make_unique<knncolle::VptreeBuilder<knncolle::EuclideanDistance, knncolle::L2NormalizedMatrix<> > >());
+    // Try the other constructor for some variety.
+    knncolle::L2NormalizedBuilder<> lb(new knncolle::VptreeBuilder<knncolle::EuclideanDistance, knncolle::L2NormalizedMatrix<> >);
     auto lptr = lb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
