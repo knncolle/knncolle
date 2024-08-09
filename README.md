@@ -174,7 +174,7 @@ and users can define their own classes to use a custom distance.
 The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
 Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
 For example, we implement the `L2NormalizedMatrix` class to apply on-the-fly L2 normalization of each observation's vector of coordinates.
-When combined with the `L2NormalizedBuilder`, this allows users to adapt a Euclidean search method to identify neighbors based on cosine distances.
+We then combine this with the `L2NormalizedBuilder` class to transform an existing neighbor search method from Euclidean to cosine distances.
 
 ```cpp
 bool use_cosine = true;
