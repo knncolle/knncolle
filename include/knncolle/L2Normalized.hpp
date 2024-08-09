@@ -7,6 +7,7 @@
 #include "Searcher.hpp"
 #include "Prebuilt.hpp"
 #include "Builder.hpp"
+#include "MockMatrix.hpp"
 
 /**
  * @file L2Normalized.hpp
@@ -21,7 +22,7 @@ namespace knncolle {
 namespace internal {
 
 template<typename Float_>
-const Float_* l2norm(const Float_* ptr, size_t n, Float_* buffer) {
+const Float_* l2norm(const Float_* ptr, size_t ndim, Float_* buffer) {
     Float_ l2 = 0;
     for (size_t d = 0; d < ndim; ++d) {
         auto val = ptr[d];
@@ -37,9 +38,9 @@ const Float_* l2norm(const Float_* ptr, size_t n, Float_* buffer) {
     #pragma omp simd
 #endif
     for (size_t d = 0; d < ndim; ++d) {
-        normalized[d] = ptr[d] / l2;
+        buffer[d] = ptr[d] / l2;
     }
-    return normalized.data();
+    return buffer;
 }
 
 }
@@ -92,12 +93,12 @@ public:
     }
 
     Index_ search_all(Index_ i, Float_ threshold, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
-        return my_searcher->search_all(i, k, output_indices, output_distances);
+        return my_searcher->search_all(i, threshold, output_indices, output_distances);
     }
 
     Index_ search_all(const Float_* ptr, Float_ threshold, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
         auto normalized = internal::l2norm(ptr, buffer.size(), buffer.data());
-        return my_searcher->search_all(normalized, k, output_indices, output_distances);
+        return my_searcher->search_all(normalized, threshold, output_indices, output_distances);
     }
     /**
      * @endcond
@@ -115,7 +116,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<typename Dim_, typename Index_, typename Float_>
-class L2NormalizedPrebuilt : public Builder<Dim_, Index_, Float_> {
+class L2NormalizedPrebuilt : public Prebuilt<Dim_, Index_, Float_> {
 public:
     /**
      * @param prebuilt Pointer to a `Prebuilt` instance for the neighbor search that is to be wrapped.
@@ -130,11 +131,11 @@ public:
      * @cond
      */
     Index_ num_observations() const {
-        return prebuilt->num_observations();
+        return my_prebuilt->num_observations();
     }
 
     Dim_ num_dimensions() const {
-        return prebuilt->num_dimensions();
+        return my_prebuilt->num_dimensions();
     }
     /**
      * @endcond
@@ -144,7 +145,7 @@ public:
      * Creates a `L2NormalizedSearcher` instance.
      */
     std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
-        return std::make_unique<L2NormalizedSearcher<Index_, Float_> >(my_prebuilt->initialize());
+        return std::make_unique<L2NormalizedSearcher<Index_, Float_> >(my_prebuilt->initialize(), my_prebuilt->num_dimensions());
     }
 };
 
@@ -157,7 +158,7 @@ public:
  * It is only intended for use in constructing a `L2NormalizedBuilder` instance;
  * in general, users should not be constructing an actual instance of this class.
  */
-template<class Matrix_>
+template<class Matrix_ = SimpleMatrix<int, int, double> >
 class L2NormalizedMatrix {
 /**
  * @cond
@@ -172,6 +173,14 @@ public:
     typedef typename Matrix_::data_type data_type;
     typedef typename Matrix_::index_type index_type;
     typedef typename Matrix_::dimension_type dimension_type;
+
+    dimension_type num_dimensions() const {
+        return my_matrix.num_dimensions();
+    }
+
+    index_type num_observations() const {
+        return my_matrix.num_observations();
+    }
 
     struct Workspace {
         Workspace(size_t n) : normalized(n) {}
@@ -201,7 +210,7 @@ public:
  * Thus, given an arbitrary algorithm that finds nearest neighbors according to Euclidean distance, 
  * users can wrap the former's `Builder` with this `L2NormalizedBuilder` to obtain neighbors according to the cosine distance.
  */
-template<class Matrix_, typename Float_>
+template<class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
 class L2NormalizedBuilder : public Builder<Matrix_, Float_> {
 public:
     /**
@@ -212,14 +221,14 @@ public:
     L2NormalizedBuilder(std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> > builder) : my_builder(std::move(builder)) {}
 
 private:
-    std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> my_builder;
+    std::unique_ptr<Builder<L2NormalizedMatrix<Matrix_>, Float_> > my_builder;
 
 public:
     /**
      * Creates a `L2NormalizedPrebuilt` instance.
      */
     Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
-        return new L2NormalizedPrebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>(builder.build_raw(L2NormalizedMatrix(data)));
+        return new L2NormalizedPrebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>(my_builder->build_unique(L2NormalizedMatrix(data)));
     }
 };
 
