@@ -53,7 +53,7 @@ struct MockDistance {
 
     /**
      * @tparam Output_ Floating point type for the output distance.
-     * @param raw Normalized distance (i.e., the output of `normalize()`).
+     * @param norm Normalized distance (i.e., the output of `normalize()`).
      * @return The denormalized distance (i.e., the input to `normalize()`).
      */
     template<typename Output_>
