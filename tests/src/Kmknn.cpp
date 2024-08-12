@@ -346,6 +346,25 @@ TEST_F(KmknnMiscTest, SkipEmptyClusters) {
     }
 }
 
+TEST(Kmknn, Duplicates) {
+    // Duplicates are another way to induce empty clusters.
+    int ndim = 5;
+    int nobs = 200;
+    std::vector<double> data(ndim * nobs);
+
+    knncolle::KmknnBuilder<> kb;
+    auto kptr = kb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto ksptr = kptr->initialize();
+    std::vector<int> res_i(10);
+    std::vector<double> res_d(10);
+
+    ksptr->search(0, 10, NULL, &res_d);
+    EXPECT_EQ(res_d, std::vector<double>(10));
+
+    ksptr->search(199, 5, NULL, &res_d);
+    EXPECT_EQ(res_d, std::vector<double>(5));
+}
+
 TEST(Kmknn, Empty) {
     int ndim = 5;
     int nobs = 0;

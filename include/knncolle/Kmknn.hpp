@@ -247,6 +247,7 @@ public:
                 }
                 ncenters = survivors;
                 my_centers.resize(static_cast<size_t>(ncenters) * my_long_ndim);
+                my_sizes.resize(ncenters);
             }
         }
 
