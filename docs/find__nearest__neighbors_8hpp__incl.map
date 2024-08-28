@@ -1,16 +1,18 @@
 <map id="knncolle/find_nearest_neighbors.hpp" name="knncolle/find_nearest_neighbors.hpp">
-<area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="5,5,149,46"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="28,241,86,267"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,48,52,70,42,95,37,122,36,143,42,193,50,226,45,227,37,194,31,143,31,121,37,93,47,67,60,45"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="51,94,103,120"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="80,46,80,78,74,78,74,46"/>
-<area shape="rect" id="Node000004" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="127,94,216,120"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="102,44,147,82,144,86,99,48"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="51,168,119,193"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="159,122,113,160,109,156,155,118"/>
-<area shape="rect" id="Node000006" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="143,168,240,193"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="178,119,187,152,182,153,172,121"/>
-<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="170,196,94,236,92,231,168,192"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="153,241,230,267"/>
-<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="194,194,194,226,189,226,189,194"/>
+<area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="29,5,172,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,241,63,267"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,49,39,69,19,95,10,129,10,164,17,198,26,226,21,228,11,199,5,165,5,128,14,93,35,65,61,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="28,94,80,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="91,48,71,82,67,79,87,45"/>
+<area shape="rect" id="Node000004" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="104,94,193,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="115,45,136,79,131,82,110,48"/>
+<area shape="rect" id="Node000008" href="/github/workspace/docs/subpar.tag$subpar_8hpp.html" title=" " alt="" coords="217,94,344,120"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="147,44,240,85,238,90,145,49"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="28,168,96,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="136,122,90,160,86,156,132,118"/>
+<area shape="rect" id="Node000006" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="120,168,217,193"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="155,119,164,152,159,153,149,121"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="147,196,71,236,69,231,145,192"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="130,241,207,267"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="171,194,171,226,166,226,166,194"/>
 </map>

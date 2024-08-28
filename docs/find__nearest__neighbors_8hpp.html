@@ -77,6 +77,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">find_nearest_neighbors.hpp File Reference</div></div>
@@ -88,25 +89,28 @@ $(function() {
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &quot;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" href="https://ltla.github.io/subpar/subpar_8hpp.html">subpar/subpar.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for find_nearest_neighbors.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="find__nearest__neighbors_8hpp__incl.png" border="0" usemap="#aknncolle_2find__nearest__neighbors_8hpp" alt=""/></div>
 <map name="aknncolle_2find__nearest__neighbors_8hpp" id="aknncolle_2find__nearest__neighbors_8hpp">
-<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="5,5,149,46"/>
-<area shape="rect" title=" " alt="" coords="28,241,86,267"/>
-<area shape="poly" title=" " alt="" coords="65,48,52,70,42,95,37,122,36,143,42,193,50,226,45,227,37,194,31,143,31,121,37,93,47,67,60,45"/>
-<area shape="rect" title=" " alt="" coords="51,94,103,120"/>
-<area shape="poly" title=" " alt="" coords="80,46,80,78,74,78,74,46"/>
-<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="127,94,216,120"/>
-<area shape="poly" title=" " alt="" coords="102,44,147,82,144,86,99,48"/>
-<area shape="rect" title=" " alt="" coords="51,168,119,193"/>
-<area shape="poly" title=" " alt="" coords="159,122,113,160,109,156,155,118"/>
-<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="143,168,240,193"/>
-<area shape="poly" title=" " alt="" coords="178,119,187,152,182,153,172,121"/>
-<area shape="poly" title=" " alt="" coords="170,196,94,236,92,231,168,192"/>
-<area shape="rect" title=" " alt="" coords="153,241,230,267"/>
-<area shape="poly" title=" " alt="" coords="194,194,194,226,189,226,189,194"/>
+<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="29,5,172,46"/>
+<area shape="rect" title=" " alt="" coords="5,241,63,267"/>
+<area shape="poly" title=" " alt="" coords="65,49,39,69,19,95,10,129,10,164,17,198,26,226,21,228,11,199,5,165,5,128,14,93,35,65,61,44"/>
+<area shape="rect" title=" " alt="" coords="28,94,80,120"/>
+<area shape="poly" title=" " alt="" coords="91,48,71,82,67,79,87,45"/>
+<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="104,94,193,120"/>
+<area shape="poly" title=" " alt="" coords="115,45,136,79,131,82,110,48"/>
+<area shape="rect" target="_parent" href="https://ltla.github.io/subpar/subpar_8hpp.html" title=" " alt="" coords="217,94,344,120"/>
+<area shape="poly" title=" " alt="" coords="147,44,240,85,238,90,145,49"/>
+<area shape="rect" title=" " alt="" coords="28,168,96,193"/>
+<area shape="poly" title=" " alt="" coords="136,122,90,160,86,156,132,118"/>
+<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="120,168,217,193"/>
+<area shape="poly" title=" " alt="" coords="155,119,164,152,159,153,149,121"/>
+<area shape="poly" title=" " alt="" coords="147,196,71,236,69,231,145,192"/>
+<area shape="rect" title=" " alt="" coords="130,241,207,267"/>
+<area shape="poly" title=" " alt="" coords="171,194,171,226,166,226,166,194"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -128,6 +132,11 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespaceknncolle"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collection of KNN algorithms. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a0cb24deadbb020f8cef9e4df964d6f8c" id="r_a0cb24deadbb020f8cef9e4df964d6f8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a>&#160;&#160;&#160;<a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a63f23d31089b98cd332e8a7508e35c15">::subpar::parallelize</a></td></tr>
+<tr class="separator:a0cb24deadbb020f8cef9e4df964d6f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a3faddeb80b10f56cb982a4e83ad3aca9" id="r_a3faddeb80b10f56cb982a4e83ad3aca9"><td class="memTemplParams" colspan="2">template&lt;typename Index_  = int, typename Float_  = double&gt; </td></tr>
@@ -145,7 +154,23 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Find nearest neighbors from an existing index. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0cb24deadbb020f8cef9e4df964d6f8c" name="a0cb24deadbb020f8cef9e4df964d6f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb24deadbb020f8cef9e4df964d6f8c">&#9670;&#160;</a></span>KNNCOLLE_CUSTOM_PARALLEL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KNNCOLLE_CUSTOM_PARALLEL&#160;&#160;&#160;<a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a63f23d31089b98cd332e8a7508e35c15">::subpar::parallelize</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function-like macro implementing the parallelization scheme for the <b>knncolle</b> library. If undefined by the user, it defaults to <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a63f23d31089b98cd332e8a7508e35c15">subpar::parallelize()</a></code>. Any user-defined macro should accept the same arguments as <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a63f23d31089b98cd332e8a7508e35c15">subpar::parallelize()</a></code>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

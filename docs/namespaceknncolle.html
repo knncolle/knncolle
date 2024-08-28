@@ -228,7 +228,6 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Find the nearest neighbors within a pre-built index. This is a convenient wrapper around <code><a class="el" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">Searcher::search</a></code> that saves the caller the trouble of writing a loop.</p>
-<p>Advanced users can define a <code>KNNCOLLE_CUSTOM_PARALLEL</code> function-like macro. This will be passed three arguments - the number of observations, the number of threads, and a function <code>fun</code> that accepts a start and length of a contiguous block of observations. The <code>KNNCOLLE_CUSTOM_PARALLEL</code> call is responsible for partitioning the observations into contiguous blocks that are assigned to each thread; the <code>fun</code> should be called on each block to find the neighbors for that block.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. </td></tr>
@@ -241,7 +240,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
   <table class="params">
     <tr><td class="paramname">index</td><td>A <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> index. </td></tr>
     <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
-    <tr><td class="paramname">num_threads</td><td>Number of threads to use.</td></tr>
+    <tr><td class="paramname">num_threads</td><td>Number of threads to use. The parallelization scheme is defined by the <a class="el" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a> macro.</td></tr>
   </table>
   </dd>
 </dl>
@@ -282,7 +281,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Find the nearest neighbors within a pre-built search index. Here, only the neighbor indices are returned, not the distances. This function will also respond to any defined <code>KNNCOLLE_CUSTOM_PARALLEL</code>, see <code><a class="el" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">find_nearest_neighbors()</a></code> for details.</p>
+<p>Find the nearest neighbors within a pre-built search index. Here, only the neighbor indices are returned, not the distances.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. </td></tr>
@@ -295,7 +294,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
   <table class="params">
     <tr><td class="paramname">index</td><td>A <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> index. </td></tr>
     <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
-    <tr><td class="paramname">num_threads</td><td>Number of threads to use.</td></tr>
+    <tr><td class="paramname">num_threads</td><td>Number of threads to use. The parallelization scheme is defined by the <a class="el" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a> macro.</td></tr>
   </table>
   </dd>
 </dl>

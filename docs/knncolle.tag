@@ -37,6 +37,13 @@
     <filename>find__nearest__neighbors_8hpp.html</filename>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <namespace>knncolle</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>KNNCOLLE_CUSTOM_PARALLEL</name>
+      <anchorfile>find__nearest__neighbors_8hpp.html</anchorfile>
+      <anchor>a0cb24deadbb020f8cef9e4df964d6f8c</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>Kmknn.hpp</name>
