@@ -26,15 +26,15 @@ namespace knncolle {
 
 /**
  * List of nearest neighbors for multiple observations.
- * Each entry corresponds to an observation and contains a pair of vectors.
- * The first vector contains the identities of the nearest neighbors of the observation, sorted by increasing distance,
- * while the second vector contains the distances to those neighbors.
+ * Each entry corresponds to an observation and contains a nested list (i.e., vector) of its neighbors.
+ * Each entry of the nested vector is a pair that contains the identity of the neighbor as an observation index (first) and the distance from the observation to the neighbor (second),
+ * sorted by increasing distance.
  *
  * @tparam Index_ Integer type for the indices.
  * @tparam Float_ Floating point type for the distances.
  */
 template<typename Index_ = int, typename Float_ = double> 
-using NeighborList = std::vector<std::pair<std::vector<Index_>, std::vector<Float_> > >;
+using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
 
 /**
  * Find the nearest neighbors within a pre-built index.
@@ -60,8 +60,15 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
 
     KNNCOLLE_CUSTOM_PARALLEL(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize();
+        std::vector<Index_> indices;
+        std::vector<Float_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
-            sptr->search(i, k, &(output[i].first), &(output[i].second));
+            sptr->search(i, k, &indices, &distances);
+            int actual_k = indices.size();
+            output[i].reserve(actual_k);
+            for (int j = 0; j < actual_k; ++j) {
+                output[i].emplace_back(indices[j], distances[j]);
+            }
         }
     });
 
