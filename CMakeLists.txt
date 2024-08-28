@@ -23,9 +23,10 @@ if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
     find_package(ltla_kmeans 3.0.0 CONFIG REQUIRED)
+    find_package(ltla_subpar 0.2.1 CONFIG REQUIRED)
 endif()
 
-target_link_libraries(knncolle INTERFACE ltla::kmeans)
+target_link_libraries(knncolle INTERFACE ltla::kmeans ltla::subpar)
 
 # Tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
