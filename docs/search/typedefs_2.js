@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9',1,'knncolle']]]
+  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09',1,'knncolle']]]
 ];

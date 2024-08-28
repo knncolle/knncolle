@@ -99,54 +99,61 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_ = <span class="keywordtype">int</span>, <span class="keyword">typename</span> Float_ = <span class="keywordtype">double</span>&gt; </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">   37</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">NeighborList</a> = std::vector&lt;std::pair&lt;std::vector&lt;Index_&gt;, std::vector&lt;Float_&gt; &gt; &gt;;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">   37</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">NeighborList</a> = std::vector&lt;std::vector&lt;std::pair&lt;Index_, Float_&gt; &gt; &gt;;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Dim_, <span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Float_&gt;</div>
 <div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">   57</a></span><a class="code hl_typedef" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">NeighborList&lt;Index_, Float_&gt;</a> <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">find_nearest_neighbors</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Dim_, Index_, Float_&gt;</a>&amp; index, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> num_threads = 1) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">   57</a></span><a class="code hl_typedef" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">NeighborList&lt;Index_, Float_&gt;</a> <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">find_nearest_neighbors</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Dim_, Index_, Float_&gt;</a>&amp; index, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> num_threads = 1) {</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    Index_ nobs = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">num_observations</a>();</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <a class="code hl_typedef" href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">NeighborList&lt;Index_, Float_&gt;</a> output(nobs);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <a class="code hl_typedef" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">NeighborList&lt;Index_, Float_&gt;</a> output(nobs);</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <a class="code hl_define" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a>(num_threads, nobs, [&amp;](<span class="keywordtype">int</span>, Index_ start, Index_ length) -&gt; <span class="keywordtype">void</span> {</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">auto</span> sptr = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">initialize</a>();</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">for</span> (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            sptr-&gt;search(i, k, &amp;(output[i].first), &amp;(output[i].second));</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    });</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        std::vector&lt;Index_&gt; indices;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        std::vector&lt;Float_&gt; distances;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">for</span> (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            sptr-&gt;search(i, k, &amp;indices, &amp;distances);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordtype">int</span> actual_k = indices.size();</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            output[i].reserve(actual_k);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; actual_k; ++j) {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                output[i].emplace_back(indices[j], distances[j]);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    });</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}</div>
 </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Dim_, <span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Float_&gt;</div>
-<div class="foldopen" id="foldopen00089" data-start="{" data-end="}">
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">   89</a></span>std::vector&lt;std::vector&lt;Index_&gt; &gt; <a class="code hl_function" href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">find_nearest_neighbors_index_only</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Dim_, Index_, Float_&gt;</a>&amp; index, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> num_threads = 1) {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    Index_ nobs = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">num_observations</a>();</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    std::vector&lt;std::vector&lt;Index_&gt; &gt; output(nobs);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_define" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a>(num_threads, nobs, [&amp;](<span class="keywordtype">int</span>, Index_ start, Index_ length) -&gt; <span class="keywordtype">void</span> {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">auto</span> sptr = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">initialize</a>();</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">for</span> (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            sptr-&gt;search(i, k, &amp;(output[i]), NULL);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    });</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Dim_, <span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Float_&gt;</div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">   96</a></span>std::vector&lt;std::vector&lt;Index_&gt; &gt; <a class="code hl_function" href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">find_nearest_neighbors_index_only</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Dim_, Index_, Float_&gt;</a>&amp; index, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> num_threads = 1) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    Index_ nobs = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">num_observations</a>();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    std::vector&lt;std::vector&lt;Index_&gt; &gt; output(nobs);</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <a class="code hl_define" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a>(num_threads, nobs, [&amp;](<span class="keywordtype">int</span>, Index_ start, Index_ length) -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keyword">auto</span> sptr = index.<a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">initialize</a>();</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">for</span> (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            sptr-&gt;search(i, k, &amp;(output[i]), NULL);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    });</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>}</div>
 </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aPrebuilt_8hpp_html"><div class="ttname"><a href="Prebuilt_8hpp.html">Prebuilt.hpp</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor indices.</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:28</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html_a6dd837344267241384206661df28e1ab"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">knncolle::Prebuilt::num_observations</a></div><div class="ttdeci">virtual Index_ num_observations() const =0</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html_a71b757b154aa2713d732afd2d9444bb9"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">knncolle::Prebuilt::initialize</a></div><div class="ttdeci">virtual std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt; initialize() const =0</div></div>
 <div class="ttc" id="afind__nearest__neighbors_8hpp_html_a0cb24deadbb020f8cef9e4df964d6f8c"><div class="ttname"><a href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a></div><div class="ttdeci">#define KNNCOLLE_CUSTOM_PARALLEL</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:22</div></div>
 <div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:21</div></div>
-<div class="ttc" id="anamespaceknncolle_html_a0b726765329530a709095ba304033a0d"><div class="ttname"><a href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">knncolle::find_nearest_neighbors_index_only</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; Index_ &gt; &gt; find_nearest_neighbors_index_only(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:89</div></div>
+<div class="ttc" id="anamespaceknncolle_html_a0b726765329530a709095ba304033a0d"><div class="ttname"><a href="namespaceknncolle.html#a0b726765329530a709095ba304033a0d">knncolle::find_nearest_neighbors_index_only</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; Index_ &gt; &gt; find_nearest_neighbors_index_only(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:96</div></div>
 <div class="ttc" id="anamespaceknncolle_html_a22e035b2d5eb293fd828a67e61f3213d"><div class="ttname"><a href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a></div><div class="ttdeci">NeighborList&lt; Index_, Float_ &gt; find_nearest_neighbors(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:57</div></div>
-<div class="ttc" id="anamespaceknncolle_html_a3faddeb80b10f56cb982a4e83ad3aca9"><div class="ttname"><a href="namespaceknncolle.html#a3faddeb80b10f56cb982a4e83ad3aca9">knncolle::NeighborList</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; std::vector&lt; Index_ &gt;, std::vector&lt; Float_ &gt; &gt; &gt; NeighborList</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:37</div></div>
+<div class="ttc" id="anamespaceknncolle_html_a25d7a950cf7745b99bc834b79e064c09"><div class="ttname"><a href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">knncolle::NeighborList</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &gt; NeighborList</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:37</div></div>
 <div class="ttc" id="asubpar_8hpp_html"><div class="ttname"><a href="https://ltla.github.io/subpar/subpar_8hpp.html">subpar.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

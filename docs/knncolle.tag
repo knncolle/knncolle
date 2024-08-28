@@ -806,10 +806,10 @@
     <class kind="class">knncolle::VptreePrebuilt</class>
     <class kind="class">knncolle::VptreeSearcher</class>
     <member kind="typedef">
-      <type>std::vector&lt; std::pair&lt; std::vector&lt; Index_ &gt;, std::vector&lt; Float_ &gt; &gt; &gt;</type>
+      <type>std::vector&lt; std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &gt;</type>
       <name>NeighborList</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a3faddeb80b10f56cb982a4e83ad3aca9</anchor>
+      <anchor>a25d7a950cf7745b99bc834b79e064c09</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
