@@ -234,9 +234,9 @@ $(function() {
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DKNNCOLLE_TESTS=OFF</div>
 <div class="line">cmake --build . --target install</div>
-</div><!-- fragment --><p>By default, this will use <code>FetchContent</code> to fetch all external dependencies. If you want to install them manually, use <code>-DKNNCOLLE_FETCH_EXTERN=OFF</code>. See the commit hashes in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> to find compatible versions of each dependency.</p>
+</div><!-- fragment --><p>By default, this will use <code>FetchContent</code> to fetch all external dependencies. If you want to install them manually, use <code>-DKNNCOLLE_FETCH_EXTERN=OFF</code>. See <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> to find compatible versions of each dependency.</p>
 <h2>Manual</h2>
-<p>If you're not using CMake, the simple approach is to just copy the files in <code>include/</code> - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. This requires the external dependencies listed in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a>, which also need to be made available during compilation.</p>
+<p>If you're not using CMake, the simple approach is to just copy the files in <code>include/</code> - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. The external dependencies listed in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> also need to be made available during compilation.</p>
 <h1>References</h1>
 <p>Wang X (2012). A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. <em>Proc Int Jt Conf Neural Netw</em>, 43, 6:2351-2358.</p>
 <p>Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a></p>
