@@ -7,8 +7,7 @@ var indexSectionsWithContent =
   4: "bcdfgiklnprsv",
   5: "bcdimnprs",
   6: "dino",
-  7: "k",
-  8: "acko"
+  7: "acko"
 };
 
 var indexSectionNames =
@@ -20,8 +19,7 @@ var indexSectionNames =
   4: "functions",
   5: "variables",
   6: "typedefs",
-  7: "defines",
-  8: "pages"
+  7: "pages"
 };
 
 var indexSectionLabels =
@@ -33,7 +31,6 @@ var indexSectionLabels =
   4: "Functions",
   5: "Variables",
   6: "Typedefs",
-  7: "Macros",
-  8: "Pages"
+  7: "Pages"
 };
 
