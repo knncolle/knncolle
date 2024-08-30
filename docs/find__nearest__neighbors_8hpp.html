@@ -134,8 +134,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aed4672889736905fb32c0322e273d0b6" id="r_aed4672889736905fb32c0322e273d0b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#aed4672889736905fb32c0322e273d0b6">KNNCOLLE_CUSTOM_PARALLEL</a>(nthreads,  ntasks,  fun)&#160;&#160;&#160;<a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">::subpar::parallelize_range</a>(nthreads, ntasks, fun)</td></tr>
-<tr class="separator:aed4672889736905fb32c0322e273d0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb24deadbb020f8cef9e4df964d6f8c" id="r_a0cb24deadbb020f8cef9e4df964d6f8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c">KNNCOLLE_CUSTOM_PARALLEL</a>&#160;&#160;&#160;::subpar::parallelize</td></tr>
+<tr class="separator:a0cb24deadbb020f8cef9e4df964d6f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -155,38 +155,18 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Find nearest neighbors from an existing index. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aed4672889736905fb32c0322e273d0b6" name="aed4672889736905fb32c0322e273d0b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed4672889736905fb32c0322e273d0b6">&#9670;&#160;</a></span>KNNCOLLE_CUSTOM_PARALLEL</h2>
+<a id="a0cb24deadbb020f8cef9e4df964d6f8c" name="a0cb24deadbb020f8cef9e4df964d6f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb24deadbb020f8cef9e4df964d6f8c">&#9670;&#160;</a></span>KNNCOLLE_CUSTOM_PARALLEL</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define KNNCOLLE_CUSTOM_PARALLEL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">nthreads, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ntasks, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">fun&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">::subpar::parallelize_range</a>(nthreads, ntasks, fun)</td>
+          <td class="memname">#define KNNCOLLE_CUSTOM_PARALLEL&#160;&#160;&#160;::subpar::parallelize</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function-like macro implementing the parallelization scheme for the <b>knncolle</b> library. If undefined by the user, it defaults to <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">subpar::parallelize_range()</a></code>. Any user-defined macro should accept the same arguments as <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">subpar::parallelize_range()</a></code>. </p>
+<p>Function-like macro implementing the parallelization scheme for the <b>knncolle</b> library. If undefined by the user, it defaults to <code>subpar::parallelize()</code>. Any user-defined macro should accept the same arguments as <code>subpar::parallelize()</code>. </p>
 
 </div>
 </div>

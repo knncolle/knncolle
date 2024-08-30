@@ -12,5 +12,5 @@ var searchData=
   ['knn_20algorithms_9',['Collection of KNN algorithms',['../index.html',1,'']]],
   ['knncolle_10',['knncolle',['../namespaceknncolle.html',1,'']]],
   ['knncolle_2ehpp_11',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]],
-  ['knncolle_5fcustom_5fparallel_12',['KNNCOLLE_CUSTOM_PARALLEL',['../find__nearest__neighbors_8hpp.html#aed4672889736905fb32c0322e273d0b6',1,'find_nearest_neighbors.hpp']]]
+  ['knncolle_5fcustom_5fparallel_12',['KNNCOLLE_CUSTOM_PARALLEL',['../find__nearest__neighbors_8hpp.html#a0cb24deadbb020f8cef9e4df964d6f8c',1,'find_nearest_neighbors.hpp']]]
 ];

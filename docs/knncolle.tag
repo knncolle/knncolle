@@ -41,8 +41,8 @@
       <type>#define</type>
       <name>KNNCOLLE_CUSTOM_PARALLEL</name>
       <anchorfile>find__nearest__neighbors_8hpp.html</anchorfile>
-      <anchor>aed4672889736905fb32c0322e273d0b6</anchor>
-      <arglist>(nthreads, ntasks, fun)</arglist>
+      <anchor>a0cb24deadbb020f8cef9e4df964d6f8c</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="file">
