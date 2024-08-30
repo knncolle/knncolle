@@ -1,5 +1,10 @@
 #include <gtest/gtest.h>
 
+#ifdef TEST_CUSTOM_PARALLEL
+#include "subpar/subpar.hpp"
+#define KNNCOLLE_CUSTOM_PARALLEL(nw, nt, fun) subpar::parallelize(nw, nt, std::move(fun));
+#endif
+
 #include "knncolle/knncolle.hpp"
 
 #include <vector>

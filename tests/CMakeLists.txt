@@ -14,6 +14,31 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+option(CODE_COVERAGE "Enable coverage testing" OFF)
+set(DO_CODE_COVERAGE OFF)
+if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    set(DO_CODE_COVERAGE ON)
+endif()
+
+include(GoogleTest)
+
+macro(decorate_test target)
+    target_link_libraries(
+        ${target}
+        gtest_main
+        knncolle
+    )
+
+    target_compile_options(${target} PRIVATE -Wall -Werror -Wextra -Wpedantic)
+
+    if(DO_CODE_COVERAGE)
+        target_compile_options(${target} PRIVATE -O0 -g --coverage)
+        target_link_options(${target} PRIVATE --coverage)
+    endif()
+
+    gtest_discover_tests(${target})
+endmacro()
+
 add_executable(
     libtest
     src/Bruteforce.cpp
@@ -23,20 +48,11 @@ add_executable(
     src/find_nearest_neighbors.cpp
     src/misc.cpp
 )
+decorate_test(libtest)
 
-target_link_libraries(
-    libtest
-    gtest_main
-    knncolle
+add_executable(
+    cuspartest
+    src/find_nearest_neighbors.cpp
 )
-
-target_compile_options(libtest PRIVATE -Wall -Werror -Wextra -Wpedantic)
-
-option(CODE_COVERAGE "Enable coverage testing" OFF)
-if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(libtest PRIVATE -O0 -g --coverage)
-    target_link_options(libtest PRIVATE --coverage)
-endif()
-
-include(GoogleTest)
-gtest_discover_tests(libtest)
+decorate_test(cuspartest)
+target_compile_definitions(cuspartest PRIVATE TEST_CUSTOM_PARALLEL=1)
