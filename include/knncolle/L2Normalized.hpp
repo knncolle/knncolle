@@ -35,9 +35,6 @@ const Float_* l2norm(const Float_* ptr, size_t ndim, Float_* buffer) {
     }
 
     l2 = std::sqrt(l2);
-#ifdef _OPENMP
-    #pragma omp simd
-#endif
     for (size_t d = 0; d < ndim; ++d) {
         buffer[d] = ptr[d] / l2;
     }
