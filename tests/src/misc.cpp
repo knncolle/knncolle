@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "knncolle/Searcher.hpp"
 #include "knncolle/distances.hpp"
+#include "knncolle/NeighborQueue.hpp"
 
 #include <vector>
 #include <random>
@@ -30,4 +31,34 @@ TEST(MockDistance, Basic) {
     EXPECT_EQ(knncolle::MockDistance::template raw_distance<double>(left.data(), right.data(), 5), 5.0);
     EXPECT_EQ(knncolle::MockDistance::normalize(4.0), 4.0);
     EXPECT_EQ(knncolle::MockDistance::denormalize(4.0), 4.0);
+}
+
+TEST(NeighborQueue, Ties) {
+    knncolle::internal::NeighborQueue<int, double> q;
+
+    q.reset(5);
+    for (int i = 10; i > 0; --i) {
+        q.add(i, 1.0);
+    }
+
+    std::vector<int> output_indices;
+    std::vector<double> output_distances;
+    q.report(&output_indices, &output_distances);
+    {
+        std::vector<int> expected_i { 1, 2, 3, 4, 5 };
+        EXPECT_EQ(output_indices, expected_i);
+        EXPECT_EQ(output_distances, std::vector<double>(5, 1.0));
+    }
+
+    q.reset(6);
+    for (int i = 11; i < 20; ++i) {
+        q.add(i, 1.0);
+    }
+
+    q.report(&output_indices, &output_distances, 15);
+    {
+        std::vector<int> expected_i { 11, 12, 13, 14, 16 };
+        EXPECT_EQ(output_indices, expected_i);
+        EXPECT_EQ(output_distances, std::vector<double>(5, 1.0));
+    }
 }

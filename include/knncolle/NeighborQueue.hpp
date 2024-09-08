@@ -61,9 +61,13 @@ public:
             if (my_nearest.size() == my_neighbors) {
                 my_full = true;
             }
-        } else if (d < limit()) {
-            my_nearest.emplace(d, i);
-            my_nearest.pop();
+        } else {
+            const auto& furthest = my_nearest.top();
+            auto furthest_dist = furthest.first;
+            if (d < furthest_dist || (d == furthest_dist && i < furthest.second)) {
+                my_nearest.emplace(d, i);
+                my_nearest.pop();
+            }
         }
         return;
     }
