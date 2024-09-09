@@ -301,7 +301,7 @@ private:
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
-        if (dist < max_dist) {
+        if (dist <= max_dist) {
             nearest.add(curnode.index, dist);
             if (nearest.is_full()) {
                 max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)

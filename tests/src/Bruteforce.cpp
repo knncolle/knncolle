@@ -267,3 +267,50 @@ TEST(Bruteforce, Empty) {
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
 }
+
+TEST(BruteForce, Ties) {
+    int ndim = 5;
+    int nobs = 10;
+    std::vector<double> data(ndim * nobs, 1);
+    std::fill(data.begin() + nobs * ndim / 2, data.end(), 2);
+    const double delta = std::sqrt(ndim);
+
+    knncolle::BruteforceBuilder<> bb;
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    auto bsptr = bptr->initialize();
+    std::vector<int> output_indices;
+    std::vector<double> output_distances;
+
+    // Check that ties are broken in a stable manner.
+    {
+        bsptr->search(0, 6, &output_indices, &output_distances);
+        std::vector<int> expected_i { 1, 2, 3, 4, 5, 6 };
+        EXPECT_EQ(output_indices, expected_i);
+        std::vector<double> expected_d { 0, 0, 0, 0, delta, delta };
+        EXPECT_EQ(output_distances, expected_d);
+    }
+
+    {
+        bsptr->search(4, 5, &output_indices, &output_distances);
+        std::vector<int> expected_i { 0, 1, 2, 3, 5 };
+        EXPECT_EQ(output_indices, expected_i);
+        std::vector<double> expected_d { 0, 0, 0, 0, delta };
+        EXPECT_EQ(output_distances, expected_d);
+    }
+
+    {
+        bsptr->search(5, 3, &output_indices, &output_distances);
+        std::vector<int> expected_i { 6, 7, 8 };
+        EXPECT_EQ(output_indices, expected_i);
+        std::vector<double> expected_d { 0, 0, 0 };
+        EXPECT_EQ(output_distances, expected_d);
+    }
+
+    {
+        bsptr->search(9, 7, &output_indices, &output_distances);
+        std::vector<int> expected_i { 5, 6, 7, 8, 0, 1, 2 };
+        EXPECT_EQ(output_indices, expected_i);
+        std::vector<double> expected_d { 0, 0, 0, 0, delta, delta, delta };
+        EXPECT_EQ(output_distances, expected_d);
+    }
+}

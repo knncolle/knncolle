@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <type_traits>
+#include <limits>
 
 /**
  * @file Bruteforce.hpp
@@ -162,8 +163,15 @@ private:
     template<typename Query_>
     void search(const Query_* query, internal::NeighborQueue<Index_, Float_>& nearest) const {
         auto copy = my_data.data();
+        Float_ threshold_raw = std::numeric_limits<Float_>::infinity();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            nearest.add(x, Distance_::template raw_distance<Float_>(query, copy, my_dim));
+            auto dist_raw = Distance_::template raw_distance<Float_>(query, copy, my_dim);
+            if (dist_raw <= threshold_raw) {
+                nearest.add(x, dist_raw);
+                if (nearest.is_full()) {
+                    threshold_raw = nearest.limit();
+                }
+            }
         }
     }
 

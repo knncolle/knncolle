@@ -14,6 +14,7 @@
 #include <vector>
 #include <memory>
 #include <limits>
+#include <cmath>
 
 /**
  * @file Kmknn.hpp
@@ -346,7 +347,7 @@ private:
         std::sort(center_order.begin(), center_order.end());
 
         // Computing the distance to each center, and deciding whether to proceed for each cluster.
-        Float_ threshold_raw = -1;
+        Float_ threshold_raw = std::numeric_limits<Float_>::infinity();
         for (const auto& curcent : center_order) {
             const Index_ center = curcent.second;
             const Float_ dist2center = Distance_::normalize(curcent.first);
@@ -359,8 +360,8 @@ private:
 #if KNNCOLLE_KMKNN_USE_UPPER
             Float_ upper_bd = std::numeric_limits<Float_>::max();
 #endif
-            
-            if (threshold_raw >= 0) {
+
+            if (!std::isinf(threshold_raw)) {
                 const Float_ threshold = Distance_::normalize(threshold_raw);
 
                 /* The conditional expression below exploits the triangle inequality; it is equivalent to asking whether:
@@ -392,12 +393,14 @@ private:
 #endif
 
                 auto dist2cell_raw = Distance_::template raw_distance<Float_>(target, other_cell, my_dim);
-                nearest.add(cur_start + celldex, dist2cell_raw);
-                if (nearest.is_full()) {
-                    threshold_raw = nearest.limit(); // Shrinking the threshold, if an earlier NN has been found.
+                if (dist2cell_raw <= threshold_raw) {
+                    nearest.add(cur_start + celldex, dist2cell_raw);
+                    if (nearest.is_full()) {
+                        threshold_raw = nearest.limit(); // Shrinking the threshold, if an earlier NN has been found.
 #if KNNCOLLE_KMKNN_USE_UPPER
-                    upper_bd = Distance_::normalize(threshold_raw) + dist2center; 
+                        upper_bd = Distance_::normalize(threshold_raw) + dist2center; 
 #endif
+                    }
                 }
             }
         }

@@ -62,12 +62,8 @@ public:
                 my_full = true;
             }
         } else {
-            const auto& furthest = my_nearest.top();
-            auto furthest_dist = furthest.first;
-            if (d < furthest_dist || (d == furthest_dist && i < furthest.second)) {
-                my_nearest.emplace(d, i);
-                my_nearest.pop();
-            }
+            my_nearest.emplace(d, i);
+            my_nearest.pop();
         }
         return;
     }
