@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['power_0',['power',['../structknncolle_1_1KmknnOptions.html#ad46d8aa236754eb65ea9983d355c3280',1,'knncolle::KmknnOptions']]],
-  ['power_5fiteration_5foptions_1',['power_iteration_options',['https://ltla.github.io/CppKmeans/structkmeans_1_1InitializePcaPartitionOptions.html#aae54f365770bdc4cbb4398d7868536c3',1,'kmeans::InitializePcaPartitionOptions']]]
+  ['optimize_5fpartition_0',['optimize_partition',['https://ltla.github.io/CppKmeans/structkmeans_1_1InitializeVariancePartitionOptions.html#a13e076c3b829ab3664a83a8f1d3b8bfc',1,'kmeans::InitializeVariancePartitionOptions']]]
 ];
