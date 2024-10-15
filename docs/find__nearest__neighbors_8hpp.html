@@ -87,6 +87,7 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
 <code>#include &quot;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://ltla.github.io/subpar/subpar_8hpp.html">subpar/subpar.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -94,22 +95,24 @@ Include dependency graph for find_nearest_neighbors.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="find__nearest__neighbors_8hpp__incl.png" border="0" usemap="#aknncolle_2find__nearest__neighbors_8hpp" alt=""/></div>
 <map name="aknncolle_2find__nearest__neighbors_8hpp" id="aknncolle_2find__nearest__neighbors_8hpp">
-<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="29,5,172,46"/>
-<area shape="rect" title=" " alt="" coords="5,241,63,267"/>
-<area shape="poly" title=" " alt="" coords="65,49,39,69,19,95,10,129,10,164,17,198,26,226,21,228,11,199,5,165,5,128,14,93,35,65,61,44"/>
-<area shape="rect" title=" " alt="" coords="28,94,80,120"/>
-<area shape="poly" title=" " alt="" coords="91,48,71,82,67,79,87,45"/>
-<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="104,94,193,120"/>
-<area shape="poly" title=" " alt="" coords="115,45,136,79,131,82,110,48"/>
-<area shape="rect" target="_parent" href="https://ltla.github.io/subpar/subpar_8hpp.html" title=" " alt="" coords="217,94,344,120"/>
-<area shape="poly" title=" " alt="" coords="147,44,240,85,238,90,145,49"/>
-<area shape="rect" title=" " alt="" coords="28,168,96,193"/>
-<area shape="poly" title=" " alt="" coords="136,122,90,160,86,156,132,118"/>
-<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="120,168,217,193"/>
-<area shape="poly" title=" " alt="" coords="155,119,164,152,159,153,149,121"/>
-<area shape="poly" title=" " alt="" coords="147,196,71,236,69,231,145,192"/>
-<area shape="rect" title=" " alt="" coords="130,241,207,267"/>
-<area shape="poly" title=" " alt="" coords="171,194,171,226,166,226,166,194"/>
+<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="71,5,214,46"/>
+<area shape="rect" title=" " alt="" coords="46,241,103,267"/>
+<area shape="poly" title=" " alt="" coords="75,49,42,68,17,95,10,112,8,129,16,166,35,200,56,228,51,231,30,203,11,168,3,130,5,111,12,93,39,64,73,44"/>
+<area shape="rect" title=" " alt="" coords="26,94,78,120"/>
+<area shape="poly" title=" " alt="" coords="122,48,79,86,76,82,118,44"/>
+<area shape="rect" title=" " alt="" coords="102,94,183,120"/>
+<area shape="poly" title=" " alt="" coords="145,46,145,78,140,78,140,46"/>
+<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="207,94,297,120"/>
+<area shape="poly" title=" " alt="" coords="171,44,224,82,221,87,168,49"/>
+<area shape="rect" target="_parent" href="https://ltla.github.io/subpar/subpar_8hpp.html" title=" " alt="" coords="320,94,448,120"/>
+<area shape="poly" title=" " alt="" coords="204,44,333,86,331,91,202,49"/>
+<area shape="rect" title=" " alt="" coords="112,168,179,193"/>
+<area shape="poly" title=" " alt="" coords="235,122,178,161,175,156,232,118"/>
+<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="203,168,301,193"/>
+<area shape="poly" title=" " alt="" coords="255,120,255,152,249,152,249,120"/>
+<area shape="poly" title=" " alt="" coords="223,196,119,238,117,233,221,191"/>
+<area shape="rect" title=" " alt="" coords="213,241,291,267"/>
+<area shape="poly" title=" " alt="" coords="255,194,255,226,249,226,249,194"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -142,6 +145,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073" id="r_a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplParams" colspan="2">template&lt;typename Task_ , class Run_ &gt; </td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">knncolle::parallelize</a> (int num_workers, Task_ num_tasks, Run_ run_task_range)</td></tr>
 <tr class="separator:a5faf80c12bbfbab853c41f6d001fe073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a926c81cd626de7081b073a891d352543" id="r_a926c81cd626de7081b073a891d352543"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
+<tr class="memitem:a926c81cd626de7081b073a891d352543"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">knncolle::cap_k</a> (int k, Index_ num_observations)</td></tr>
+<tr class="separator:a926c81cd626de7081b073a891d352543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d" id="r_a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplParams" colspan="2">template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </td></tr>
 <tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">NeighborList</a>&lt; Index_, Float_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a22e035b2d5eb293fd828a67e61f3213d"><td class="memSeparator" colspan="2">&#160;</td></tr>

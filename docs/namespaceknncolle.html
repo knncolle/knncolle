@@ -162,6 +162,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073" id="r_a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplParams" colspan="2">template&lt;typename Task_ , class Run_ &gt; </td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">parallelize</a> (int num_workers, Task_ num_tasks, Run_ run_task_range)</td></tr>
 <tr class="separator:a5faf80c12bbfbab853c41f6d001fe073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a926c81cd626de7081b073a891d352543" id="r_a926c81cd626de7081b073a891d352543"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
+<tr class="memitem:a926c81cd626de7081b073a891d352543"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">cap_k</a> (int k, Index_ num_observations)</td></tr>
+<tr class="separator:a926c81cd626de7081b073a891d352543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d" id="r_a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplParams" colspan="2">template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </td></tr>
 <tr class="memitem:a22e035b2d5eb293fd828a67e61f3213d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceknncolle.html#a25d7a950cf7745b99bc834b79e064c09">NeighborList</a>&lt; Index_, Float_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">find_nearest_neighbors</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a22e035b2d5eb293fd828a67e61f3213d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,6 +200,51 @@ template&lt;typename Index_  = int, typename Float_  = double&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a926c81cd626de7081b073a891d352543" name="a926c81cd626de7081b073a891d352543"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a926c81cd626de7081b073a891d352543">&#9670;&#160;</a></span>cap_k()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int knncolle::cap_k </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Index_&#160;</td>
+          <td class="paramname"><em>num_observations</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cap the number of neighbors to use in <code><a class="el" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">Searcher::search()</a></code> with an index <code>i</code>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the number of observations. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">k</td><td>Number of nearest neighbors, should be non-negative. </td></tr>
+    <tr><td class="paramname">num_observations</td><td>Number of observations in the dataset.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Capped number of neighbors to search for. This is equal to <code>k</code> if it is less than <code>num_observations</code>; otherwise it is equal to <code>num_observations - 1</code> if <code>num_observations &gt; 0</code>; otherwise it is equal to zero. </dd></dl>
+
+</div>
+</div>
 <a id="a22e035b2d5eb293fd828a67e61f3213d" name="a22e035b2d5eb293fd828a67e61f3213d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22e035b2d5eb293fd828a67e61f3213d">&#9670;&#160;</a></span>find_nearest_neighbors()</h2>
 
@@ -242,7 +290,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>A <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> index. </td></tr>
-    <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
+    <tr><td class="paramname">k</td><td>Number of nearest neighbors. This should be non-negative. Explicitly calling <code><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">cap_k()</a></code> is not necessary as this is done automatically inside this function. </td></tr>
     <tr><td class="paramname">num_threads</td><td>Number of threads to use. The parallelization scheme is defined by <code><a class="el" href="namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">parallelize()</a></code>.</td></tr>
   </table>
   </dd>
@@ -296,7 +344,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>A <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> index. </td></tr>
-    <tr><td class="paramname">k</td><td>Number of nearest neighbors. </td></tr>
+    <tr><td class="paramname">k</td><td>Number of nearest neighbors. This should be non-negative. Explicitly calling <code><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">cap_k()</a></code> is not necessary as this is done automatically inside this function. </td></tr>
     <tr><td class="paramname">num_threads</td><td>Number of threads to use. The parallelization scheme is defined by <code><a class="el" href="namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">parallelize()</a></code>.</td></tr>
   </table>
   </dd>

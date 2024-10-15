@@ -813,6 +813,13 @@
       <arglist>(int num_workers, Task_ num_tasks, Run_ run_task_range)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>cap_k</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a926c81cd626de7081b073a891d352543</anchor>
+      <arglist>(int k, Index_ num_observations)</arglist>
+    </member>
+    <member kind="function">
       <type>NeighborList&lt; Index_, Float_ &gt;</type>
       <name>find_nearest_neighbors</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
