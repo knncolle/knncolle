@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <utility>
+#include <type_traits>
+
 #include "Prebuilt.hpp"
 
 /**
@@ -52,6 +54,35 @@ template<typename Index_ = int, typename Float_ = double>
 using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
 
 /**
+ * Cap the number of neighbors to use in `Searcher::search()` with an index `i`.
+ *
+ * @tparam Index_ Integer type for the number of observations.
+ * @param k Number of nearest neighbors, should be non-negative.
+ * @param num_observations Number of observations in the dataset.
+ *
+ * @return Capped number of neighbors to search for.
+ * This is equal to `k` if it is less than `num_observations`;
+ * otherwise it is equal to `num_observations - 1` if `num_observations > 0`;
+ * otherwise it is equal to zero.
+ */
+template<typename Index_>
+int cap_k(int k, Index_ num_observations) {
+    if constexpr(std::is_signed<Index_>::value) {
+        if (k < num_observations) {
+            return k;
+        }
+    } else {
+        if (static_cast<typename std::make_unsigned<Index_>::type>(k) < num_observations) {
+            return k;
+        }
+    }
+    if (num_observations) {
+        return num_observations - 1;
+    }
+    return 0;
+}
+
+/**
  * Find the nearest neighbors within a pre-built index.
  * This is a convenient wrapper around `Searcher::search` that saves the caller the trouble of writing a loop.
  *
@@ -61,6 +92,8 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
+ * This should be non-negative.
+ * Explicitly calling `cap_k()` is not necessary as this is done automatically inside this function.
  * @param num_threads Number of threads to use.
  * The parallelization scheme is defined by `parallelize()`.
  *
@@ -71,6 +104,7 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
 template<typename Dim_, typename Index_, typename Float_>
 NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Float_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
+    k = cap_k(k, nobs);
     NeighborList<Index_, Float_> output(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
@@ -100,6 +134,8 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
+ * This should be non-negative.
+ * Explicitly calling `cap_k()` is not necessary as this is done automatically inside this function.
  * @param num_threads Number of threads to use.
  * The parallelization scheme is defined by `parallelize()`.
  *
@@ -110,6 +146,7 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
 template<typename Dim_, typename Index_, typename Float_>
 std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
+    k = cap_k(k, nobs);
     std::vector<std::vector<Index_> > output(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {

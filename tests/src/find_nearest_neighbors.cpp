@@ -105,3 +105,15 @@ INSTANTIATE_TEST_SUITE_P(
         ::testing::Values(1, 10) // number of neighbors 
     )
 );
+
+TEST(CapK, Basic) {
+    EXPECT_EQ(knncolle::cap_k<int32_t>(10, 100), 10);
+    EXPECT_EQ(knncolle::cap_k<int32_t>(10, 10), 9);
+    EXPECT_EQ(knncolle::cap_k<int32_t>(10, 1), 0);
+    EXPECT_EQ(knncolle::cap_k<int32_t>(10, 0), 0);
+
+    EXPECT_EQ(knncolle::cap_k<uint32_t>(10, 100), 10);
+    EXPECT_EQ(knncolle::cap_k<uint32_t>(10, 10), 9);
+    EXPECT_EQ(knncolle::cap_k<uint32_t>(10, 1), 0);
+    EXPECT_EQ(knncolle::cap_k<uint32_t>(10, 0), 0);
+}
