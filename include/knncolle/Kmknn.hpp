@@ -77,7 +77,7 @@ class KmknnPrebuilt;
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class KmknnSearcher : public Searcher<Index_, Float_> {
+class KmknnSearcher final : public Searcher<Index_, Float_> {
 public:
     /**
      * @cond
@@ -170,7 +170,7 @@ public:
  * @tparam Float_ Floating point type for the query data and distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class KmknnPrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+class KmknnPrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
@@ -504,7 +504,7 @@ public:
  * _Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
-class KmknnBuilder : public Builder<Matrix_, Float_> {
+class KmknnBuilder final : public Builder<Matrix_, Float_> {
 public:
     /**
      * Convenient name for the `KmknnOptions` class that ensures consistent template parametrization.

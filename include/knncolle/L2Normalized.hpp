@@ -57,7 +57,7 @@ const Float_* l2norm(const Float_* ptr, size_t ndim, Float_* buffer) {
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<typename Index_, typename Float_>
-class L2NormalizedSearcher : public Searcher<Index_, Float_> {
+class L2NormalizedSearcher final : public Searcher<Index_, Float_> {
 public:
     /**
      * @param searcher Pointer to a `Searcher` class for the neighbor search that is to be wrapped.
@@ -114,7 +114,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<typename Dim_, typename Index_, typename Float_>
-class L2NormalizedPrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+class L2NormalizedPrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
 public:
     /**
      * @param prebuilt Pointer to a `Prebuilt` instance for the neighbor search that is to be wrapped.
@@ -209,7 +209,7 @@ public:
  * users can wrap the former's `Builder` with this `L2NormalizedBuilder` to obtain neighbors according to the cosine distance.
  */
 template<class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
-class L2NormalizedBuilder : public Builder<Matrix_, Float_> {
+class L2NormalizedBuilder final : public Builder<Matrix_, Float_> {
 public:
     /**
      * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.

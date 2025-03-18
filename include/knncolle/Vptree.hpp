@@ -36,7 +36,7 @@ class VptreePrebuilt;
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class VptreeSearcher : public Searcher<Index_, Float_> {
+class VptreeSearcher final : public Searcher<Index_, Float_> {
 public:
     /**
      * @cond
@@ -122,7 +122,7 @@ public:
  * @tparam Float_ Floating point type for the query data and distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class VptreePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+class VptreePrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
@@ -403,7 +403,7 @@ public:
  * http://stevehanov.ca/blog/index.php?id=130
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
-class VptreeBuilder : public Builder<Matrix_, Float_> {
+class VptreeBuilder final : public Builder<Matrix_, Float_> {
 public:
     /**
      * Creates a `VptreePrebuilt` instance.

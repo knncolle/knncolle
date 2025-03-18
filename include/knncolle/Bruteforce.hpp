@@ -36,7 +36,7 @@ class BruteforcePrebuilt;
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class BruteforceSearcher : public Searcher<Index_, Float_> {
+class BruteforceSearcher final : public Searcher<Index_, Float_> {
 public:
     /**
      * @cond
@@ -133,7 +133,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class BruteforcePrebuilt : public Prebuilt<Dim_, Index_, Float_> {
+class BruteforcePrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
@@ -215,7 +215,7 @@ public:
  * @tparam Float_ Floating point type for the query data and output distances.
  */
 template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
-class BruteforceBuilder : public Builder<Matrix_, Float_> {
+class BruteforceBuilder final : public Builder<Matrix_, Float_> {
 public:
     /**
      * Creates a `BruteforcePrebuilt` instance.
