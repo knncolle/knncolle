@@ -6,8 +6,8 @@
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="458,34,267,78,266,72,457,29"/>
 <area shape="rect" id="Node000005" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="261,153,350,178"/>
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="443,29,384,46,356,61,331,81,316,108,309,138,304,137,311,106,327,77,353,57,382,41,442,24"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="391,300,449,326"/>
-<area shape="poly" id="edge14_Node000001_Node000008" title=" " alt="" coords="509,32,492,80,430,286,425,284,487,78,504,30"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="394,300,451,326"/>
+<area shape="poly" id="edge14_Node000001_Node000008" title=" " alt="" coords="509,32,492,80,432,286,427,284,487,78,504,30"/>
 <area shape="rect" id="Node000010" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="341,79,427,105"/>
 <area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="490,34,420,73,417,69,488,29"/>
 <area shape="rect" id="Node000011" href="$MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="501,79,614,105"/>
@@ -16,19 +16,19 @@
 <area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="547,29,670,71,668,76,545,34"/>
 <area shape="rect" id="Node000013" title=" " alt="" coords="824,79,888,105"/>
 <area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="578,29,809,76,808,81,577,34"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="913,79,965,105"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="912,79,965,105"/>
 <area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="579,24,722,44,898,76,897,81,721,49,578,30"/>
 <area shape="rect" id="Node000015" title=" " alt="" coords="989,79,1038,105"/>
 <area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="579,22,755,40,863,55,974,76,973,81,862,60,754,45,579,27"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="27,153,85,178"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,105,59,137,53,137,53,105"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="357,226,424,252"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="322,177,367,214,363,218,318,181"/>
-<area shape="rect" id="Node000007" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="235,226,333,252"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="304,179,295,212,289,211,299,178"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="308,250,385,290,382,295,306,255"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="245,300,323,326"/>
-<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="287,252,287,284,281,284,281,252"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="358,226,426,252"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="322,177,368,214,364,218,318,181"/>
+<area shape="rect" id="Node000007" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="237,226,334,252"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="305,179,295,212,290,211,299,178"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="310,250,387,290,385,295,307,255"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="247,300,324,326"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="288,252,288,284,283,284,283,252"/>
 <area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="372,107,332,144,328,140,369,103"/>
-<area shape="poly" id="edge11_Node000010_Node000006" title=" " alt="" coords="387,105,392,211,387,211,382,105"/>
+<area shape="poly" id="edge11_Node000010_Node000006" title=" " alt="" coords="387,105,393,211,388,211,382,105"/>
 </map>

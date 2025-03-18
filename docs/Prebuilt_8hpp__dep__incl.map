@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="361,41,137,169,135,165,358,37"/>
 <area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="321,241,466,267"/>
 <area shape="poly" id="edge17_Node000001_Node000003" title=" " alt="" coords="308,31,195,50,137,65,84,82,42,104,15,129,9,143,9,158,14,174,26,192,45,206,73,218,150,235,239,245,320,249,320,254,238,250,149,240,72,223,42,211,22,195,9,176,3,158,4,142,11,126,39,100,82,78,135,60,194,45,307,26"/>
-<area shape="rect" id="Node000004" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="325,87,462,112"/>
+<area shape="rect" id="Node000004" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="325,86,462,112"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="396,47,396,86,391,86,391,47"/>
 <area shape="rect" id="Node000005" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="218,168,356,193"/>
 <area shape="poly" id="edge12_Node000001_Node000005" title=" " alt="" coords="358,42,335,59,316,81,304,103,297,127,290,167,285,167,291,125,299,101,311,77,331,55,355,37"/>

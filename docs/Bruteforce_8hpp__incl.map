@@ -5,7 +5,7 @@
 <area shape="rect" id="Node000004" title=" " alt="" coords="131,79,266,105"/>
 <area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="433,34,262,77,261,72,432,29"/>
 <area shape="rect" id="Node000005" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="294,226,391,252"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="450,34,412,53,375,81,347,113,332,153,330,183,336,211,330,212,325,183,327,152,343,111,372,77,409,49,448,29"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="450,34,412,53,375,81,348,113,333,153,331,183,336,211,331,212,326,183,328,152,343,111,371,77,409,49,447,29"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="449,300,506,326"/>
 <area shape="poly" id="edge15_Node000001_Node000006" title=" " alt="" coords="487,31,497,79,505,166,497,252,489,286,484,284,492,252,500,166,492,79,481,32"/>
 <area shape="rect" id="Node000008" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="397,79,483,105"/>
@@ -18,7 +18,7 @@
 <area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="531,29,711,72,709,77,530,34"/>
 <area shape="rect" id="Node000013" title=" " alt="" coords="879,79,961,105"/>
 <area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="559,27,698,48,865,76,864,81,697,53,559,33"/>
-<area shape="rect" id="Node000014" title=" " alt="" coords="985,79,1037,105"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="984,79,1037,105"/>
 <area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="560,22,744,40,855,55,970,76,969,81,855,61,743,45,559,27"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="27,153,85,178"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,105,59,137,53,137,53,105"/>

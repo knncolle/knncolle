@@ -10,8 +10,8 @@
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="339,270,472,312,470,317,337,275"/>
 <area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="180,268,438,312,437,317,179,273"/>
 <area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="390,113,354,130,323,154,308,176,299,199,290,241,284,240,293,198,304,173,319,151,351,125,388,108"/>
-<area shape="poly" id="edge20_Node000005_Node000003" title=" " alt="" coords="541,94,613,100,687,110,750,126,774,138,791,151,796,163,797,178,793,215,783,250,775,269,742,288,694,302,582,321,581,316,692,297,740,283,771,265,778,248,788,214,792,178,791,164,787,154,771,142,748,132,686,115,612,105,541,99"/>
-<area shape="poly" id="edge16_Node000005_Node000004" title=" " alt="" coords="406,113,295,155,195,203,117,243,115,239,192,198,293,150,404,108"/>
+<area shape="poly" id="edge20_Node000005_Node000003" title=" " alt="" coords="541,94,613,100,687,110,750,126,774,138,791,151,796,163,797,179,792,216,782,250,773,269,741,287,693,302,582,321,581,316,692,297,739,282,769,265,777,248,787,215,792,179,791,164,787,154,771,142,748,132,686,115,612,105,541,99"/>
+<area shape="poly" id="edge16_Node000005_Node000004" title=" " alt="" coords="406,113,294,155,194,202,117,243,114,239,192,198,292,150,404,108"/>
 <area shape="rect" id="Node000006" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="333,160,471,186"/>
 <area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="441,119,412,161,408,158,436,116"/>
 <area shape="rect" id="Node000007" href="$Kmknn_8hpp.html" title="Implements the k&#45;means with k&#45;nearest neighbors (KMKNN) algorithm." alt="" coords="440,241,578,267"/>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.8">
+<tagfile doxygen_version="1.12.0">
   <compound kind="file">
     <name>Bruteforce.hpp</name>
     <path>knncolle/</path>
@@ -124,7 +124,7 @@
     <templarg>class Distance_</templarg>
     <templarg>class Matrix_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Builder</base>
+    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
     <member kind="function">
       <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
       <name>build_raw</name>
@@ -141,7 +141,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt</base>
+    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
     <member kind="function">
       <type>Dim_</type>
       <name>num_dimensions</name>
@@ -172,7 +172,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher</base>
+    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
     <member kind="function">
       <type>void</type>
       <name>search</name>
@@ -267,12 +267,12 @@
     <templarg>class Distance_</templarg>
     <templarg>class Matrix_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Builder</base>
+    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
     <member kind="typedef">
       <type>KmknnOptions&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type &gt;</type>
       <name>Options</name>
       <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>ab70f49036aa3f59e67e84eb9bdae5c2c</anchor>
+      <anchor>aff5bccecdef9c86c11c53aac0007b883</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -340,7 +340,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt</base>
+    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
     <member kind="function">
       <type>Index_</type>
       <name>num_observations</name>
@@ -378,7 +378,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher</base>
+    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
     <member kind="function">
       <type>void</type>
       <name>search</name>
@@ -420,7 +420,7 @@
     <filename>classknncolle_1_1L2NormalizedBuilder.html</filename>
     <templarg>class Matrix_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Builder</base>
+    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>L2NormalizedBuilder</name>
@@ -454,7 +454,7 @@
     <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt</base>
+    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>L2NormalizedPrebuilt</name>
@@ -475,7 +475,7 @@
     <filename>classknncolle_1_1L2NormalizedSearcher.html</filename>
     <templarg>typename Index_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher</base>
+    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>L2NormalizedSearcher</name>
@@ -542,21 +542,21 @@
       <type>double</type>
       <name>data_type</name>
       <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>a4acebbf0d2f4ba37a76fdc0c44ea3c37</anchor>
+      <anchor>ad8b1a8a42200caf3985f6e6c3ab225fd</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>int</type>
       <name>index_type</name>
       <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>ade1c40b06e09d623e2b83a9bd6487479</anchor>
+      <anchor>a66b87f03e9440cb519167209b89366fc</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>int</type>
       <name>dimension_type</name>
       <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>ab13717b8647616569554f3393572d86a</anchor>
+      <anchor>a9ed79174a6f3737ea75da393073e3d79</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -677,7 +677,7 @@
     <templarg>class Distance_</templarg>
     <templarg>class Matrix_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Builder</base>
+    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
     <member kind="function">
       <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
       <name>build_raw</name>
@@ -694,7 +694,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt</base>
+    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
     <member kind="function">
       <type>Index_</type>
       <name>num_observations</name>
@@ -732,7 +732,7 @@
     <templarg>typename Index_</templarg>
     <templarg>typename Store_</templarg>
     <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher</base>
+    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
     <member kind="function">
       <type>void</type>
       <name>search</name>
@@ -802,7 +802,7 @@
       <type>std::vector&lt; std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &gt;</type>
       <name>NeighborList</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a25d7a950cf7745b99bc834b79e064c09</anchor>
+      <anchor>a72beeaa95281de7a5cf16937ccbae47f</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
