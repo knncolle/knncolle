@@ -124,15 +124,12 @@ public:
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
- * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::dimension_type`.
  * @tparam Index_ Integer type for the indices.
- * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::index_type`.
- * @tparam Store_ Floating point type for the stored data. 
- * For the output of `BruteforceBuilder::build_raw()`, this is set to `Matrix_::data_type`.
- * This may be set to a lower-precision type than `Float_` to save memory.
  * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Store_ Floating point type for the stored data. 
+ * This may be set to a lower-precision type than `Float_` to save memory.
  */
-template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+template<class Distance_, typename Dim_, typename Index_, typename Float_, typename Store_>
 class BruteforcePrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
 private:
     Dim_ my_dim;
@@ -211,32 +208,30 @@ public:
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
  * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
+ * @tparam Matrix_ Class satisfying the `Matrix` interface.
  * @tparam Float_ Floating point type for the query data and output distances.
  */
-template<class Distance_ = EuclideanDistance, class Matrix_ = SimpleMatrix<int, int, double>, typename Float_ = double>
-class BruteforceBuilder final : public Builder<Matrix_, Float_> {
+template<class Distance_, typename Dim_, typename Index_, typename Float_, class Matrix_ = Matrix<Dim_, Index_, Float_> >
+class BruteforceBuilder final : public Builder<Dim_, Index_, Float_, Matrix_> {
 public:
     /**
      * Creates a `BruteforcePrebuilt` instance.
      */
-    Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const {
+    Prebuilt<Dim_, Index_, Float_>* build_raw(const Matrix_& data) const {
         auto ndim = data.num_dimensions();
         auto nobs = data.num_observations();
+        auto work = data.new_extractor();
 
-        typedef decltype(ndim) Dim_;
-        typedef decltype(nobs) Index_;
-        typedef typename Matrix_::data_type Store_;
+        typedef typename std::remove_reference<decltype(*(work->next()))>::type Store_;
         std::vector<typename Matrix_::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
 
-        auto work = data.create_workspace();
         auto sIt = store.begin();
         for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
-            auto ptr = data.get_observation(work);
+            auto ptr = work->next();
             std::copy(ptr, ptr + ndim, sIt);
         }
 
-        return new BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>(ndim, nobs, std::move(store));
+        return new BruteforcePrebuilt<Distance_, Dim_, Index_, Float_, Store_>(ndim, nobs, std::move(store));
     }
 };
 
