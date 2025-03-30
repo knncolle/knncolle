@@ -43,7 +43,6 @@ add_executable(
     libtest
     src/Bruteforce.cpp
     src/Vptree.cpp
-    src/Kmknn.cpp
     src/L2Normalized.cpp
     src/find_nearest_neighbors.cpp
     src/misc.cpp
