@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['can_5fsearch_5fall_0',['can_search_all',['../classknncolle_1_1BruteforceSearcher.html#a9c7cd8e9f01f5798d5b98a1d5318e8f4',1,'knncolle::BruteforceSearcher::can_search_all()'],['../classknncolle_1_1KmknnSearcher.html#a8fae155ea1722024e5dde21550674116',1,'knncolle::KmknnSearcher::can_search_all()'],['../classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d',1,'knncolle::Searcher::can_search_all()'],['../classknncolle_1_1VptreeSearcher.html#ac7a0f11645ab4f57b9991602339e0e15',1,'knncolle::VptreeSearcher::can_search_all()']]],
+  ['can_5fsearch_5fall_0',['can_search_all',['../classknncolle_1_1BruteforceSearcher.html#a9c7cd8e9f01f5798d5b98a1d5318e8f4',1,'knncolle::BruteforceSearcher::can_search_all()'],['../classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d',1,'knncolle::Searcher::can_search_all()'],['../classknncolle_1_1VptreeSearcher.html#ac7a0f11645ab4f57b9991602339e0e15',1,'knncolle::VptreeSearcher::can_search_all()']]],
   ['cap_5fk_1',['cap_k',['../namespaceknncolle.html#a926c81cd626de7081b073a891d352543',1,'knncolle']]],
   ['centers_2',['centers',['https://ltla.github.io/CppKmeans/structkmeans_1_1Results.html#a7e604079d5168e1d29cfd9f47281b414',1,'kmeans::Results']]],
   ['clusters_3',['clusters',['https://ltla.github.io/CppKmeans/structkmeans_1_1Results.html#a8890398736c8a854eab8834ca6f8b62a',1,'kmeans::Results']]],

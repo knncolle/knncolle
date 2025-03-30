@@ -39,20 +39,6 @@
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
-    <name>Kmknn.hpp</name>
-    <path>knncolle/</path>
-    <filename>Kmknn_8hpp.html</filename>
-    <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
-    <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
-    <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
-    <class kind="struct">knncolle::KmknnOptions</class>
-    <class kind="class">knncolle::KmknnSearcher</class>
-    <class kind="class">knncolle::KmknnPrebuilt</class>
-    <class kind="class">knncolle::KmknnBuilder</class>
-    <namespace>knncolle</namespace>
-  </compound>
-  <compound kind="file">
     <name>knncolle.hpp</name>
     <path>knncolle/</path>
     <filename>knncolle_8hpp.html</filename>
@@ -63,7 +49,6 @@
     <includes id="L2Normalized_8hpp" name="L2Normalized.hpp" local="yes" import="no" module="no" objc="no">L2Normalized.hpp</includes>
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
-    <includes id="Kmknn_8hpp" name="Kmknn.hpp" local="yes" import="no" module="no" objc="no">Kmknn.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
     <namespace>knncolle</namespace>
   </compound>
@@ -259,160 +244,6 @@
       <anchorfile>structknncolle_1_1EuclideanDistance.html</anchorfile>
       <anchor>a1bb3cf480fc39ebb740c9f840626a6a5</anchor>
       <arglist>(Output_ norm)</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>knncolle::KmknnBuilder</name>
-    <filename>classknncolle_1_1KmknnBuilder.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>class Matrix_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
-    <member kind="typedef">
-      <type>KmknnOptions&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, typename Matrix_::data_type &gt;</type>
-      <name>Options</name>
-      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>aff5bccecdef9c86c11c53aac0007b883</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>KmknnBuilder</name>
-      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>ae8338140eae1984a667f226475401491</anchor>
-      <arglist>(Options options)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>KmknnBuilder</name>
-      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>ac9a0a6e9e591b23b7bed3c16ab786ea3</anchor>
-      <arglist>()=default</arglist>
-    </member>
-    <member kind="function">
-      <type>Options &amp;</type>
-      <name>get_options</name>
-      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>af6dc5c628478732fb4b5d0f027f1d7a8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
-      <name>build_raw</name>
-      <anchorfile>classknncolle_1_1KmknnBuilder.html</anchorfile>
-      <anchor>aafe27a514becc203a33ec54584bf6562</anchor>
-      <arglist>(const Matrix_ &amp;data) const</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>knncolle::KmknnOptions</name>
-    <filename>structknncolle_1_1KmknnOptions.html</filename>
-    <templarg>typename Dim_</templarg>
-    <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <member kind="variable">
-      <type>double</type>
-      <name>power</name>
-      <anchorfile>structknncolle_1_1KmknnOptions.html</anchorfile>
-      <anchor>ad46d8aa236754eb65ea9983d355c3280</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::shared_ptr&lt; kmeans::Initialize&lt; kmeans::SimpleMatrix&lt; Store_, Index_, Dim_ &gt;, Index_, Store_ &gt; &gt;</type>
-      <name>initialize_algorithm</name>
-      <anchorfile>structknncolle_1_1KmknnOptions.html</anchorfile>
-      <anchor>a01ab1d6e283fa8945723f33942e310c0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::shared_ptr&lt; kmeans::Refine&lt; kmeans::SimpleMatrix&lt; Store_, Index_, Dim_ &gt;, Index_, Store_ &gt; &gt;</type>
-      <name>refine_algorithm</name>
-      <anchorfile>structknncolle_1_1KmknnOptions.html</anchorfile>
-      <anchor>adf03e5a3046a1da5cacff93d37975ff8</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>knncolle::KmknnPrebuilt</name>
-    <filename>classknncolle_1_1KmknnPrebuilt.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
-    <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
-    <member kind="function">
-      <type>Index_</type>
-      <name>num_observations</name>
-      <anchorfile>classknncolle_1_1KmknnPrebuilt.html</anchorfile>
-      <anchor>ac47cf8cff93bcb0c14a7312b9f1bf812</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Dim_</type>
-      <name>num_dimensions</name>
-      <anchorfile>classknncolle_1_1KmknnPrebuilt.html</anchorfile>
-      <anchor>adad9d751074e36037ea3e20bd20a50c3</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>KmknnPrebuilt</name>
-      <anchorfile>classknncolle_1_1KmknnPrebuilt.html</anchorfile>
-      <anchor>aa45f08f940ab256706b3c27d00d2992a</anchor>
-      <arglist>(Dim_ num_dim, Index_ num_obs, std::vector&lt; Store_ &gt; data, const KmknnOptions&lt; Dim_, Index_, Store_ &gt; &amp;options)</arglist>
-    </member>
-    <member kind="function">
-      <type>std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
-      <name>initialize</name>
-      <anchorfile>classknncolle_1_1KmknnPrebuilt.html</anchorfile>
-      <anchor>a361ec0511a7cd79ce3f318560a8349cf</anchor>
-      <arglist>() const</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>knncolle::KmknnSearcher</name>
-    <filename>classknncolle_1_1KmknnSearcher.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
-    <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
-    <member kind="function">
-      <type>void</type>
-      <name>search</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>a3db2397321aec4f6e89774f22f71c482</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>search</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>aa7c1f3e8224d260adfec2625216e90c6</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>can_search_all</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>a8fae155ea1722024e5dde21550674116</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Index_</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>ac31860ebca446559f97c8b07f4c37efa</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>Index_</type>
-      <name>search_all</name>
-      <anchorfile>classknncolle_1_1KmknnSearcher.html</anchorfile>
-      <anchor>a268f3f69058d2d5a1d0514d37ec5f97c</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -781,10 +612,6 @@
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::Builder</class>
     <class kind="struct">knncolle::EuclideanDistance</class>
-    <class kind="class">knncolle::KmknnBuilder</class>
-    <class kind="struct">knncolle::KmknnOptions</class>
-    <class kind="class">knncolle::KmknnPrebuilt</class>
-    <class kind="class">knncolle::KmknnSearcher</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="class">knncolle::L2NormalizedPrebuilt</class>

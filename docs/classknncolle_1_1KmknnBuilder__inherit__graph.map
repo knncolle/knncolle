@@ -1,5 +1,0 @@
-<map id="knncolle::KmknnBuilder&lt; Distance_, Matrix_, Float_ &gt;" name="knncolle::KmknnBuilder&lt; Distance_, Matrix_, Float_ &gt;">
-<area shape="rect" id="Node000001" title="Perform a nearest neighbor search based on k&#45;means clustering." alt="" coords="5,94,162,150"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1Builder.html" title="Interface to build nearest&#45;neighbor search indices." alt="" coords="22,5,145,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,61,86,93,81,93,81,61"/>
-</map>

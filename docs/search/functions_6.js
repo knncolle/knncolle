@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['kmknnbuilder_0',['KmknnBuilder',['../classknncolle_1_1KmknnBuilder.html#ae8338140eae1984a667f226475401491',1,'knncolle::KmknnBuilder::KmknnBuilder(Options options)'],['../classknncolle_1_1KmknnBuilder.html#ac9a0a6e9e591b23b7bed3c16ab786ea3',1,'knncolle::KmknnBuilder::KmknnBuilder()=default']]],
-  ['kmknnprebuilt_1',['KmknnPrebuilt',['../classknncolle_1_1KmknnPrebuilt.html#aa45f08f940ab256706b3c27d00d2992a',1,'knncolle::KmknnPrebuilt']]]
+  ['l2normalizedbuilder_0',['L2NormalizedBuilder',['../classknncolle_1_1L2NormalizedBuilder.html#a7f3702fbbf54bbbaceb925aa2936bd45',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(std::unique_ptr&lt; Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; &gt; builder)'],['../classknncolle_1_1L2NormalizedBuilder.html#a16df727021e97c341b7ef957eb79dd23',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; *builder)']]],
+  ['l2normalizedprebuilt_1',['L2NormalizedPrebuilt',['../classknncolle_1_1L2NormalizedPrebuilt.html#a43c889080f754e44c6085cc10a46f32b',1,'knncolle::L2NormalizedPrebuilt']]],
+  ['l2normalizedsearcher_2',['L2NormalizedSearcher',['../classknncolle_1_1L2NormalizedSearcher.html#ad97e99e0fd85202cce0357333a78a2a4',1,'knncolle::L2NormalizedSearcher']]]
 ];

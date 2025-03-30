@@ -95,12 +95,12 @@ $(function(){ initResizable(false); });
 <p><b>knncolle</b> is a header-only C++ library that collects a variety of different k-nearest neighbor algorithms under a consistent interface. The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag, or by just swapping out the relevant constructors at compile time.</p>
 <p>The core library supports the following methods:</p>
 <ul>
-<li><a href="https://pubmed.ncbi.nlm.nih.gov/22247818/">K-means with k-nearest neighbors</a>, an exact search that uses k-means clustering to index points.</li>
 <li><a href="http://stevehanov.ca/blog/?id=130">Vantage point tree</a>, an exact search that uses the tree of the same name.</li>
 <li>Brute force search, mostly implemented for testing.</li>
 </ul>
 <p>This framework is extended by various add-on libraries to more algorithms:</p>
 <ul>
+<li><a href="https://github.com/knncolle/knncolle_kmknn"><b>knncolle_kmknn</b></a> supports <a href="https://pubmed.ncbi.nlm.nih.gov/22247818/">K-means with k-nearest neighbors</a>, an exact search based on k-means clustering.</li>
 <li><a href="https://github.com/knncolle/knncolle_annoy"><b>knncolle_annoy</b></a> supports <a href="https://github.com/spotify/annoy/">Annoy</a>, an approximate search based on random projections.</li>
 <li><a href="https://github.com/knncolle/knncolle_hnsw"><b>knncolle_hnsw</b></a> supports <a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
 </ul>
@@ -165,31 +165,27 @@ $(function(){ initResizable(false); });
 </div><!-- fragment --><p>This method is optional so developers of <code>Searcher</code> subclasses may choose to not implement it. Applications should check <code>Searcher::can_search_all()</code> before attempting a call, as shown above. Otherwise, the default method will raise an exception.</p>
 <h1>Tuning index construction</h1>
 <p>Some algorithms allow the user to modify the parameters of the search by passing options in the relevant <code>Builder</code> constructor. For example, the KMKNN method has several options for the k-means clustering step. We could, say, specify which initialization algorithm to use:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structknncolle_1_1KmknnOptions.html">knncolle::KmknnOptions&lt;&gt;</a> kk_opt;</div>
-<div class="line">kk_opt.<a class="code hl_variable" href="structknncolle_1_1KmknnOptions.html#a01ab1d6e283fa8945723f33942e310c0">initialize_algorithm</a>.reset(</div>
+<div class="fragment"><div class="line">knncolle::KmknnOptions&lt;&gt; kk_opt;</div>
+<div class="line">kk_opt.initialize_algorithm.reset(</div>
 <div class="line">    <span class="keyword">new</span> <a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html">kmeans::InitializeRandom</a>&lt;<a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix&lt;double, int, int&gt;</a>, <span class="keywordtype">int</span>, <span class="keywordtype">double</span>&gt;</div>
 <div class="line">);</div>
 <div class="ttc" id="aclasskmeans_1_1InitializeRandom_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html">kmeans::InitializeRandom</a></div></div>
 <div class="ttc" id="aclasskmeans_1_1SimpleMatrix_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix</a></div></div>
-<div class="ttc" id="astructknncolle_1_1KmknnOptions_html"><div class="ttname"><a href="structknncolle_1_1KmknnOptions.html">knncolle::KmknnOptions</a></div><div class="ttdoc">Options for KmknnBuilder and KmknnPrebuilt construction.</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:41</div></div>
-<div class="ttc" id="astructknncolle_1_1KmknnOptions_html_a01ab1d6e283fa8945723f33942e310c0"><div class="ttname"><a href="structknncolle_1_1KmknnOptions.html#a01ab1d6e283fa8945723f33942e310c0">knncolle::KmknnOptions::initialize_algorithm</a></div><div class="ttdeci">std::shared_ptr&lt; kmeans::Initialize&lt; kmeans::SimpleMatrix&lt; Store_, Index_, Dim_ &gt;, Index_, Store_ &gt; &gt; initialize_algorithm</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:55</div></div>
 </div><!-- fragment --><p>Or modify the behavior of the refinement algorithm:</p>
 <div class="fragment"><div class="line"><a class="code hl_structRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html">kmeans::RefineLloydOptions</a> ll_opt;</div>
 <div class="line">ll_opt.<a class="code hl_variableRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a">max_iterations</a> = 20;</div>
 <div class="line">ll_opt.<a class="code hl_variableRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#a016c4d237bde819fa8d5c5631c52360b">num_threads</a> = 5;</div>
-<div class="line">kk_opt.<a class="code hl_variable" href="structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8">refine_algorithm</a>.reset(</div>
+<div class="line">kk_opt.refine_algorithm.reset(</div>
 <div class="line">    <span class="keyword">new</span> <a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1RefineLloyd.html">kmeans::RefineLloyd</a>&lt;<a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix&lt;double, int, int&gt;</a>, <span class="keywordtype">int</span>, <span class="keywordtype">double</span>&gt;(ll_opt)</div>
 <div class="line">);</div>
 <div class="ttc" id="aclasskmeans_1_1RefineLloyd_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1RefineLloyd.html">kmeans::RefineLloyd</a></div></div>
 <div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html">kmeans::RefineLloydOptions</a></div></div>
 <div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html_a016c4d237bde819fa8d5c5631c52360b"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#a016c4d237bde819fa8d5c5631c52360b">kmeans::RefineLloydOptions::num_threads</a></div><div class="ttdeci">int num_threads</div></div>
 <div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html_ac927615927b93f499bbabb24cfc3fb9a"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a">kmeans::RefineLloydOptions::max_iterations</a></div><div class="ttdeci">int max_iterations</div></div>
-<div class="ttc" id="astructknncolle_1_1KmknnOptions_html_adf03e5a3046a1da5cacff93d37975ff8"><div class="ttname"><a href="structknncolle_1_1KmknnOptions.html#adf03e5a3046a1da5cacff93d37975ff8">knncolle::KmknnOptions::refine_algorithm</a></div><div class="ttdeci">std::shared_ptr&lt; kmeans::Refine&lt; kmeans::SimpleMatrix&lt; Store_, Index_, Dim_ &gt;, Index_, Store_ &gt; &gt; refine_algorithm</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:61</div></div>
 </div><!-- fragment --><p>After which, we construct our <code>KmknnBuilder</code>, build our <code>KmknnPrebuilt</code> index, and proceed with the nearest-neighbor search.</p>
-<div class="fragment"><div class="line"><a class="code hl_class" href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder&lt;&gt;</a> kk_builder(kk_opt);</div>
+<div class="fragment"><div class="line">knncolle::KmknnBuilder&lt;&gt; kk_builder(kk_opt);</div>
 <div class="line"><span class="keyword">auto</span> kk_prebuilt = kk_builder.build_unique(mat);</div>
 <div class="line"><span class="keyword">auto</span> kk_results = <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*kk_prebuilt, 10); </div>
-<div class="ttc" id="aclassknncolle_1_1KmknnBuilder_html"><div class="ttname"><a href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on k-means clustering.</div><div class="ttdef"><b>Definition</b> Kmknn.hpp:507</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for the available options in each algorithm's <code>Builder</code>.</p>
 <h1>Polymorphism</h1>
 <p>All methods implement the <code>Builder</code>, <code>Prebuilt</code> and <code>Searcher</code> interfaces via inheritance. This means that users can swap algorithms at run-time:</p>
@@ -197,7 +193,7 @@ $(function(){ initResizable(false); });
 <div class="line"><span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;brute-force&quot;</span>) {</div>
 <div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt;&gt;</a>);</div>
 <div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;kmknn&quot;</span>) {</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1KmknnBuilder.html">knncolle::KmknnBuilder&lt;&gt;</a>);</div>
+<div class="line">    ptr.reset(<span class="keyword">new</span> knncolle::KmknnBuilder&lt;&gt;);</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
 <div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;&gt;</a>);</div>
 <div class="line">}</div>

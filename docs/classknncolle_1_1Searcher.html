@@ -106,15 +106,13 @@ Inheritance diagram for knncolle::Searcher&lt; Index_, Float_ &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classknncolle_1_1Searcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map" id="aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map">
-<area shape="rect" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,129,133,170"/>
+<area shape="rect" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,85,133,126"/>
 <area shape="rect" href="classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="191,5,378,61"/>
-<area shape="poly" title=" " alt="" coords="107,117,179,71,204,59,206,64,182,75,110,122"/>
-<area shape="rect" href="classknncolle_1_1KmknnSearcher.html" title="KMKNN searcher." alt="" coords="200,85,368,141"/>
-<area shape="poly" title=" " alt="" coords="148,133,199,125,200,130,148,139"/>
-<area shape="rect" href="classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="181,165,388,206"/>
-<area shape="poly" title=" " alt="" coords="148,160,181,165,180,170,148,165"/>
-<area shape="rect" href="classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="202,229,367,285"/>
-<area shape="poly" title=" " alt="" coords="115,176,182,215,207,226,205,231,179,220,112,180"/>
+<area shape="poly" title=" " alt="" coords="145,77,198,59,200,64,147,82"/>
+<area shape="rect" href="classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="181,85,388,126"/>
+<area shape="poly" title=" " alt="" coords="148,102,180,102,180,108,148,108"/>
+<area shape="rect" href="classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="202,149,367,205"/>
+<area shape="poly" title=" " alt="" coords="147,128,202,147,200,152,145,133"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -170,7 +168,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 <p>It is expected that the return value of this method should be constant throughout the lifetime of any <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance.</p>
 <dl class="section return"><dt>Returns</dt><dd>Whether this instance has an implementation of the <code><a class="el" href="#ae7fb8a8e436303c5917f3717393cf056">search_all()</a></code> method. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a9c7cd8e9f01f5798d5b98a1d5318e8f4">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1KmknnSearcher.html#a8fae155ea1722024e5dde21550674116">knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac7a0f11645ab4f57b9991602339e0e15">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a9c7cd8e9f01f5798d5b98a1d5318e8f4">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac7a0f11645ab4f57b9991602339e0e15">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -223,7 +221,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#afef023240ea7ddcc28561c0f71c54601">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1KmknnSearcher.html#aa7c1f3e8224d260adfec2625216e90c6">knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac86dd5bf34f233d04502e789224eb44a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#afef023240ea7ddcc28561c0f71c54601">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac86dd5bf34f233d04502e789224eb44a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -276,7 +274,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a5250b4ce7176fbe1a60783bc4dd324f0">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1KmknnSearcher.html#a3db2397321aec4f6e89774f22f71c482">knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a3b2a7c230cfdf88cf1fa42896ca5909a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a5250b4ce7176fbe1a60783bc4dd324f0">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a3b2a7c230cfdf88cf1fa42896ca5909a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -330,7 +328,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>query</code>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#aae68bf23ca7d80dbf0a6138cb8cb6d15">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1KmknnSearcher.html#a268f3f69058d2d5a1d0514d37ec5f97c">knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a51594cb79d1ea89aea64359690e5301e">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#aae68bf23ca7d80dbf0a6138cb8cb6d15">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a51594cb79d1ea89aea64359690e5301e">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -384,7 +382,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>i</code>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a1164e4e1e627b716f9db91e8931872e9">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1KmknnSearcher.html#ac31860ebca446559f97c8b07f4c37efa">knncolle::KmknnSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ab1cdb331dcde946b831446f219979d3a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a1164e4e1e627b716f9db91e8931872e9">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ab1cdb331dcde946b831446f219979d3a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
 
 </div>
 </div>
