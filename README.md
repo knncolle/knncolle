@@ -12,12 +12,12 @@ or by just swapping out the relevant constructors at compile time.
 
 The core library supports the following methods:
 
-- [K-means with k-nearest neighbors](https://pubmed.ncbi.nlm.nih.gov/22247818/), an exact search that uses k-means clustering to index points.
 - [Vantage point tree](http://stevehanov.ca/blog/?id=130), an exact search that uses the tree of the same name.
 - Brute force search, mostly implemented for testing.
 
 This framework is extended by various add-on libraries to more algorithms:
 
+- [**knncolle_kmknn**](https://github.com/knncolle/knncolle_kmknn) supports [K-means with k-nearest neighbors](https://pubmed.ncbi.nlm.nih.gov/22247818/), an exact search based on k-means clustering.
 - [**knncolle_annoy**](https://github.com/knncolle/knncolle_annoy) supports [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
 - [**knncolle_hnsw**](https://github.com/knncolle/knncolle_hnsw) supports [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
 

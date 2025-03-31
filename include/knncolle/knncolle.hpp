@@ -10,7 +10,6 @@
 
 #include "Bruteforce.hpp"
 #include "Vptree.hpp"
-#include "Kmknn.hpp"
 #include "find_nearest_neighbors.hpp"
 
 /**
