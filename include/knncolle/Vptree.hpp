@@ -12,6 +12,7 @@
 #include <random>
 #include <limits>
 #include <tuple>
+#include <memory>
 
 /**
  * @file Vptree.hpp
@@ -24,7 +25,7 @@ namespace knncolle {
 /**
  * @cond
  */
-template<class DistanceMetric_, typename Dim_, typename Index_, typename Store_, typename Data_, typename Distance_>
+template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
 class VptreePrebuilt;
 /**
  * @endcond
@@ -43,19 +44,19 @@ class VptreePrebuilt;
  * @tparam Store_ Numeric type for the stored data.
  * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
+template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
 class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    VptreeSearcher(const VptreePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>& parent) : my_parent(parent) {}
+    VptreeSearcher(const VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& parent) : my_parent(parent) {}
     /**
      * @endcond
      */
 
 private:                
-    const VptreePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>& my_parent;
+    const VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& my_parent;
     internal::NeighborQueue<Index_, Distance_> my_nearest;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
@@ -127,13 +128,14 @@ public:
  * @tparam Store_ Numeric type for the stored data.
  * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
+template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
 class VptreePrebuilt final : public Prebuilt<Dim_, Index_, Data_, Distance_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
     size_t my_long_ndim;
     std::vector<Store_> my_data;
+    std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
     Index_ num_observations() const {
@@ -200,7 +202,7 @@ private:
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
                 const Store_* loc = coords + static_cast<size_t>(items[i].second) * my_long_ndim; // cast to avoid overflow.
-                items[i].first = DistanceMetric_::template raw_distance<Distance_>(vantage_ptr, loc, my_dim);
+                items[i].first = my_metric->raw_distance(vantage_ptr, loc, my_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -209,7 +211,7 @@ private:
             std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
 
             // Radius of the new node will be the distance to the median.
-            node.radius = DistanceMetric_::normalize(items[median].first);
+            node.radius = my_metric->normalize(items[median].first);
 
             // Recursively build tree.
             if (lower_p1 < median) {
@@ -236,11 +238,12 @@ public:
      * @param num_obs Number of observations.
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
-    VptreePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data) : 
+    VptreePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim),
         my_obs(num_obs),
         my_long_ndim(my_dim),
-        my_data(std::move(data))
+        my_data(std::move(data)),
+        my_metric(std::move(metric))
     {
         if (num_obs) {
             std::vector<DataPoint> items;
@@ -300,10 +303,9 @@ public:
     }
 
 private:
-    template<typename Query_>
-    void search_nn(Index_ curnode_index, const Query_* target, Distance_& max_dist, internal::NeighborQueue<Index_, Distance_>& nearest) const { 
+    void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, internal::NeighborQueue<Index_, Distance_>& nearest) const { 
         auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
-        Distance_ dist = DistanceMetric_::normalize(DistanceMetric_::template raw_distance<Distance_>(nptr, target, my_dim));
+        Distance_ dist = my_metric->normalize(my_metric->raw_distance(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
@@ -334,10 +336,10 @@ private:
         }
     }
 
-    template<bool count_only_, typename Query_, typename Output_>
-    void search_all(Index_ curnode_index, const Query_* target, Distance_ threshold, Output_& all_neighbors) const { 
+    template<bool count_only_, typename Output_>
+    void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
         auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
-        Distance_ dist = DistanceMetric_::normalize(DistanceMetric_::template raw_distance<Distance_>(nptr, target, my_dim));
+        Distance_ dist = my_metric->normalize(my_metric->raw_distance(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
@@ -369,14 +371,14 @@ private:
         }
     }
 
-    friend class VptreeSearcher<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>;
+    friend class VptreeSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>;
 
 public:
     /**
      * Creates a `VptreeSearcher` instance.
      */
     std::unique_ptr<Searcher<Index_, Distance_> > initialize() const {
-        return std::make_unique<VptreeSearcher<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_> >(this);
+        return std::make_unique<VptreeSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_> >(this);
     }
 };
 
@@ -413,25 +415,45 @@ public:
  * VP trees: A data structure for finding stuff fast.
  * http://stevehanov.ca/blog/index.php?id=130
  */
-template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_, class Matrix_ = SimpleMatrix<Dim_, Index_, Data_> >
+template<
+    typename Dim_,
+    typename Index_,
+    typename Data_,
+    typename Distance_,
+    class DistanceMetric_ = DistanceMetric<Dim_, Data_, Distance_>,
+    typename Store_ = Data_ = Data_,
+    class Matrix_ = SimpleMatrix<Dim_, Index_, Data_>
+>
 class VptreeBuilder final : public Builder<Dim_, Index_, Data_, Distance_, Matrix_> {
+public:
+    /**
+     * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
+     */
+    VptreeForceBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
+
+    /**
+     * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
+     */
+    VptreeForceBuilder(const DistanceMetric_* metric) : VptreeForceBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
+
+private:
+    std::shared_ptr<const DistanceMetric_> my_metric;
+
 public:
     /**
      * Creates a `VptreePrebuilt` instance.
      */
     Prebuilt<Dim_, Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
-        auto ndim = data.num_dimensions();
-        auto nobs = data.num_observations();
-
-        std::vector<Store_> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
+        size_t ndim = data.num_dimensions();
+        size_t nobs = data.num_observations();
         auto work = data.new_extractor();
-        auto sIt = store.begin();
-        for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
-            auto ptr = work->next();
-            std::copy_n(ptr, ndim, sIt);
+
+        std::vector<Store_> store(ndim * nobs);
+        for (size_t o = 0; o < nobs; ++o) {
+            std::copy_n(work->next(), ndim, store.begin() + o * ndim);
         }
 
-        return new VptreePrebuilt<DistanceMetric_, decltype(ndim), decltype(nobs), Data_, Distance_, Store_>(ndim, nobs, std::move(store));
+        return new VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>(ndim, nobs, std::move(store), my_metric);
     }
 };
 
