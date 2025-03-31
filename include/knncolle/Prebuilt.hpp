@@ -20,9 +20,10 @@ namespace knncolle {
  *
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Data_ Numeric type for the query data.
+ * @tparam Distance_ Floating point type for the distances.
  */
-template<typename Dim_, typename Index_, typename Float_>
+template<typename Dim_, typename Index_, typename Data_, typename Distance_>
 class Prebuilt {
 public:
     /**
@@ -48,7 +49,7 @@ public:
      * Create a `Searcher` for searching the index.
      * @return Pointer to a `Searcher` instance.
      */
-    virtual std::unique_ptr<Searcher<Index_, Float_> > initialize() const = 0;
+    virtual std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const = 0;
 };
 
 }

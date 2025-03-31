@@ -48,9 +48,9 @@ void parallelize(int num_workers, Task_ num_tasks, Run_ run_task_range) {
  * sorted by increasing distance.
  *
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the distances.
+ * @tparam Distance_ Floating point type for the distances.
  */
-template<typename Index_ = int, typename Float_ = double> 
+template<typename Index_, typename Distance_>
 using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
 
 /**
@@ -88,7 +88,8 @@ int cap_k(int k, Index_ num_observations) {
  *
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
@@ -101,16 +102,16 @@ int cap_k(int k, Index_ num_observations) {
  * Each entry contains (up to) the `k` nearest neighbors for each observation, sorted by increasing distance.
  * The `i`-th entry is guaranteed to not contain `i` itself.
  */
-template<typename Dim_, typename Index_, typename Float_>
-NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Float_>& index, int k, int num_threads = 1) {
+template<typename Dim_, typename Index_, typename Data_, typename Distance_>
+NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
-    NeighborList<Index_, Float_> output(nobs);
+    NeighborList<Index_, Distance_> output(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize();
         std::vector<Index_> indices;
-        std::vector<Float_> distances;
+        std::vector<Distance_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
             sptr->search(i, k, &indices, &distances);
             int actual_k = indices.size();
@@ -130,7 +131,8 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
  *
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
@@ -143,8 +145,8 @@ NeighborList<Index_, Float_> find_nearest_neighbors(const Prebuilt<Dim_, Index_,
  * Each vector contains the indices of (up to) the `k` nearest neighbors for each observation, sorted by increasing distance.
  * The `i`-th entry is guaranteed to not contain `i` itself.
  */
-template<typename Dim_, typename Index_, typename Float_>
-std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Float_>& index, int k, int num_threads = 1) {
+template<typename Dim_, typename Index_, typename Data_, typename Distance_>
+std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
     std::vector<std::vector<Index_> > output(nobs);

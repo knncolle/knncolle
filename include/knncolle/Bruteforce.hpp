@@ -21,7 +21,7 @@
 
 namespace knncolle {
 
-template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
+template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
 class BruteforcePrebuilt;
 
 /**
@@ -29,30 +29,32 @@ class BruteforcePrebuilt;
  *
  * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize()`.
  *
- * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
- * @tparam Store_ Floating point type for the stored data. 
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
+ * @tparam Store_ Numeric type for the stored data.
+ * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<class Distance_, typename Dim_, typename Index_, typename Store_, typename Float_>
-class BruteforceSearcher final : public Searcher<Index_, Float_> {
+template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
+class BruteforceSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    BruteforceSearcher(const BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* parent) : my_parent(parent) {}
+    BruteforceSearcher(const BruteforcePrebuilt<DistanceMethod_, Dim_, Index_, Data_, Distance_, Store_>& parent) : my_parent(parent) {}
     /**
      * @endcond
      */
 
 private:                
-    const BruteforcePrebuilt<Distance_, Dim_, Index_, Store_, Float_>* my_parent;
-    internal::NeighborQueue<Index_, Float_> my_nearest;
-    std::vector<std::pair<Float_, Index_> > my_all_neighbors;
+    const BruteforcePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>& my_parent;
+    internal::NeighborQueue<Index_, Distance_> my_nearest;
+    std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 private:
-    static void normalize(std::vector<Float_>* output_distances) {
+    static void normalize(std::vector<Distance_>* output_distances) {
         if (output_distances) {
             for (auto& d : *output_distances) {
                 d = Distance_::normalize(d);
@@ -61,7 +63,7 @@ private:
     }
 
 public:
-    void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
         my_parent->search(ptr, my_nearest);
@@ -69,7 +71,7 @@ public:
         normalize(output_distances);
     }
 
-    void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         if (k == 0) { // protect the NeighborQueue from k = 0.
             internal::flush_output(output_indices, output_distances, 0);
         } else {
@@ -84,7 +86,7 @@ public:
         return true;
     }
 
-    Index_ search_all(Index_ i, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
@@ -101,7 +103,7 @@ public:
         }
     }
 
-    Index_ search_all(const Float_* query, Float_ d, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+    Index_ search_all(const Data_* query, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         if (!output_indices && !output_distances) {
             Index_ count = 0;
             my_parent->template search_all<true>(query, d, count);
@@ -122,15 +124,16 @@ public:
  *
  * Instances of this class are usually constructed using `BruteforceBuilder::build_raw()`.
  *
- * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
- * @tparam Float_ Floating point type for the query data and output distances.
- * @tparam Store_ Floating point type for the stored data. 
- * This may be set to a lower-precision type than `Float_` to save memory.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
+ * @tparam Store_ Numeric type for the stored data.
+ * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<class Distance_, typename Dim_, typename Index_, typename Float_, typename Store_>
-class BruteforcePrebuilt final : public Prebuilt<Dim_, Index_, Float_> {
+template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
+class BruteforcePrebuilt final : public Prebuilt<Dim_, Index_, Data_, Distance_> {
 private:
     Dim_ my_dim;
     Index_ my_obs;
@@ -157,12 +160,11 @@ public:
     }
 
 private:
-    template<typename Query_>
-    void search(const Query_* query, internal::NeighborQueue<Index_, Float_>& nearest) const {
+    void search(const Data_* query, internal::NeighborQueue<Index_, Distance_>& nearest) const {
         auto copy = my_data.data();
-        Float_ threshold_raw = std::numeric_limits<Float_>::infinity();
+        Distance_ threshold_raw = std::numeric_limits<Distance_>::infinity();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            auto dist_raw = Distance_::template raw_distance<Float_>(query, copy, my_dim);
+            auto dist_raw = DistanceMetric_::template raw_distance<Distance_>(query, copy, my_dim);
             if (dist_raw <= threshold_raw) {
                 nearest.add(x, dist_raw);
                 if (nearest.is_full()) {
@@ -174,10 +176,10 @@ private:
 
     template<bool count_only_, typename Query_, typename Output_>
     void search_all(const Query_* query, Float_ threshold, Output_& all_neighbors) const {
-        Float_ threshold_raw = Distance_::denormalize(threshold);
+        Float_ threshold_raw = DistanceMetric_::denormalize(threshold);
         auto copy = my_data.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            Float_ raw_distance = Distance_::template raw_distance<Float_>(query, copy, my_dim);
+            Float_ raw_distance = DistanceMetric_::template raw_distance<Float_>(query, copy, my_dim);
             if (threshold_raw >= raw_distance) {
                 if constexpr(count_only_) {
                     ++all_neighbors; // expect this to be an integer.
@@ -188,14 +190,14 @@ private:
         }
     }
 
-    friend class BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_>;
+    friend class BruteforceSearcher<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>;
 
 public:
     /**
      * Creates a `BruteforceSearcher` instance.
      */
     std::unique_ptr<Searcher<Index_, Float_> > initialize() const {
-        return std::make_unique<BruteforceSearcher<Distance_, Dim_, Index_, Store_, Float_> >(this);
+        return std::make_unique<BruteforceSearcher<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_> >(this);
     }
 };
 
@@ -207,12 +209,17 @@ public:
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * @tparam Distance_ A distance calculation class satisfying the `MockDistance` contract.
- * @tparam Matrix_ Class satisfying the `Matrix` interface.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
+ * @tparam Dim_ Integer type for the number of dimensions.
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
+ * @tparam Store_ Numeric type for the stored data.
+ * This may be a lower-precision type than `Data_` to reduce memory usage.
+ * @tparam Matrix_ Class that satisfies the `Matrix` interface.
  */
-template<class Distance_, typename Dim_, typename Index_, typename Float_, class Matrix_ = Matrix<Dim_, Index_, Float_> >
-class BruteforceBuilder final : public Builder<Dim_, Index_, Float_, Matrix_> {
+template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_ = Data_, class Matrix_ = Matrix<Dim_, Index_, Data_> >
+class BruteforceBuilder final : public Builder<Dim_, Index_, Data_, Distance_, Matrix_> {
 public:
     /**
      * Creates a `BruteforcePrebuilt` instance.
@@ -222,16 +229,14 @@ public:
         auto nobs = data.num_observations();
         auto work = data.new_extractor();
 
-        typedef typename std::remove_reference<decltype(*(work->next()))>::type Store_;
-        std::vector<typename Matrix_::data_type> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
-
+        std::vector<Store_> store(static_cast<size_t>(ndim) * static_cast<size_t>(nobs));
         auto sIt = store.begin();
         for (decltype(nobs) o = 0; o < nobs; ++o, sIt += ndim) {
             auto ptr = work->next();
             std::copy(ptr, ptr + ndim, sIt);
         }
 
-        return new BruteforcePrebuilt<Distance_, Dim_, Index_, Float_, Store_>(ndim, nobs, std::move(store));
+        return new BruteforcePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, Store_>(ndim, nobs, std::move(store));
     }
 };
 

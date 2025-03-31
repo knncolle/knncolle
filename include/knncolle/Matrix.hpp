@@ -89,6 +89,7 @@ public:
  *
  * @tparam Data_ Numeric type of the data.
  */
+template<typename Data_>
 class SimpleMatrixExtractor final : public MatrixExtractor<Data_> {
 public:
     /**
