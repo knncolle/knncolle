@@ -6,7 +6,7 @@
 #include "Searcher.hpp"
 #include "Builder.hpp"
 #include "Prebuilt.hpp"
-#include "MockMatrix.hpp"
+#include "Matrix.hpp"
 #include "report_all_neighbors.hpp"
 
 #include <vector>
@@ -44,18 +44,18 @@ public:
     /**
      * @cond
      */
-    BruteforceSearcher(const BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMethod_, Store_>& parent) : my_parent(parent) {}
+    BruteforceSearcher(const BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& parent) : my_parent(parent) {}
     /**
      * @endcond
      */
 
 private:                
-    const BruteforcePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, DistanceMethod_, Store_>& my_parent;
+    const BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& my_parent;
     internal::NeighborQueue<Index_, Distance_> my_nearest;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 private:
-    static void normalize(std::vector<Distance_>* output_distances) {
+    void normalize(std::vector<Distance_>* output_distances) const {
         if (output_distances) {
             for (auto& d : *output_distances) {
                 d = my_parent.my_metric->normalize(d);
@@ -66,7 +66,7 @@ private:
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
-        auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_long_ndim; // cast to avoid overflow.
         my_parent.search(ptr, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
         normalize(output_distances);
@@ -88,16 +88,16 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto ptr = my_parent->my_data.data() + static_cast<size_t>(i) * my_parent->my_long_ndim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_long_ndim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.search_all<true>(ptr, d, count);
+            my_parent.template search_all<true>(ptr, d, count);
             return internal::safe_remove_self(count);
 
         } else {
             my_all_neighbors.clear();
-            my_parent.search_all<false>(ptr, d, my_all_neighbors);
+            my_parent.template search_all<false>(ptr, d, my_all_neighbors);
             internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
             normalize(output_distances);
             return internal::safe_remove_self(my_all_neighbors.size());
@@ -107,12 +107,12 @@ public:
     Index_ search_all(const Data_* query, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.search_all<true>(query, d, count);
+            my_parent.template search_all<true>(query, d, count);
             return count;
 
         } else {
             my_all_neighbors.clear();
-            my_parent.search_all<false>(query, d, my_all_neighbors);
+            my_parent.template search_all<false>(query, d, my_all_neighbors);
             internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             normalize(output_distances);
             return my_all_neighbors.size();
@@ -166,7 +166,7 @@ private:
         auto copy = my_data.data();
         Distance_ threshold_raw = std::numeric_limits<Distance_>::infinity();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            auto dist_raw = my_metric->raw_distance(my_dim, query, copy);
+            auto dist_raw = my_metric->raw(my_dim, query, copy);
             if (dist_raw <= threshold_raw) {
                 nearest.add(x, dist_raw);
                 if (nearest.is_full()) {
@@ -178,15 +178,15 @@ private:
 
     template<bool count_only_, typename Output_>
     void search_all(const Data_* query, Distance_ threshold, Output_& all_neighbors) const {
-        Float_ threshold_raw = my_metric->denormalize(threshold);
+        Distance_ threshold_raw = my_metric->denormalize(threshold);
         auto copy = my_data.data();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            Float_ raw_distance = my_metric->raw_distance(my_dim, query, copy);
-            if (threshold_raw >= raw_distance) {
+            Distance_ raw = my_metric->raw(my_dim, query, copy);
+            if (threshold_raw >= raw) {
                 if constexpr(count_only_) {
                     ++all_neighbors; // expect this to be an integer.
                 } else {
-                    all_neighbors.emplace_back(raw_distance, x); // expect this to be a vector of (distance, index) pairs.
+                    all_neighbors.emplace_back(raw, x); // expect this to be a vector of (distance, index) pairs.
                 }
             }
         }
@@ -199,7 +199,7 @@ public:
      * Creates a `BruteforceSearcher` instance.
      */
     std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
-        return std::make_unique<BruteforceSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_> >(this);
+        return std::make_unique<BruteforceSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_> >(*this);
     }
 };
 
@@ -234,12 +234,12 @@ public:
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
      */
-    BruteForceBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
+    BruteforceBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
 
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
      */
-    BruteForceBuilder(const DistanceMetric_* metric) : BruteForceBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
+    BruteforceBuilder(const DistanceMetric_* metric) : BruteforceBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
 
 private:
     std::shared_ptr<const DistanceMetric_> my_metric;
@@ -248,7 +248,7 @@ public:
     /**
      * Creates a `BruteforcePrebuilt` instance.
      */
-    Prebuilt<Dim_, Index_, Float_>* build_raw(const Matrix_& data) const {
+    Prebuilt<Dim_, Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
         size_t ndim = data.num_dimensions();
         size_t nobs = data.num_observations();
         auto work = data.new_extractor();
@@ -258,7 +258,7 @@ public:
             std::copy_n(work->next(), ndim, store.begin() + o * ndim);
         }
 
-        return new BruteforcePrebuilt<DistanceMetric_, Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>(ndim, nobs, std::move(store), my_metric);
+        return new BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>(ndim, nobs, std::move(store), my_metric);
     }
 };
 

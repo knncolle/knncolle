@@ -20,6 +20,7 @@ namespace knncolle {
  */
 template<typename Dim_, typename Data_, typename Distance_>
 class DistanceMetric {
+public:
     /**
      * The raw distance `r` for a distance `d` is defined so that `r(x, y) > r(x, z)` iff `d(x, y) > d(x, z)`.
      * `r(x, y)` is converted to `d(x, z)` via a monotonic transform in `normalize()`, and vice versa for `denormalize()`.
@@ -59,7 +60,7 @@ public:
     /**
      * @cond
      */
-    Distance_ raw_distance(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
         for (Dim_ d = 0; d < num_dimensions; ++d) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
@@ -72,7 +73,7 @@ public:
         return std::sqrt(raw);
     }
 
-    Distance_ denormalize(Output_ norm) const {
+    Distance_ denormalize(Distance_ norm) const {
         return norm * norm;
     }
     /**
@@ -89,12 +90,12 @@ public:
  * @tparam Dim_ Integer type for the vector length.
  */
 template<typename Dim_, typename Data_, typename Distance_>
-class ManhattanDistance final : public Metric<Dim_, Data_, Distance_> {
+class ManhattanDistance final : public DistanceMetric<Dim_, Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    Distance_ raw_distance(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
         for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
@@ -103,11 +104,11 @@ public:
         return output;
     }
 
-    Distance_ normalize(Distance_ raw) {
+    Distance_ normalize(Distance_ raw) const {
         return raw;
     }
 
-    Distance_ denormalize(Distance_ norm) {
+    Distance_ denormalize(Distance_ norm) const {
         return norm;
     }
     /**

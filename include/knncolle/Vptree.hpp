@@ -36,11 +36,11 @@ class VptreePrebuilt;
  *
  * Instances of this class are usually constructed using `VptreePrebuilt::initialize()`.
  *
- * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
  * @tparam Store_ Numeric type for the stored data.
  * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
@@ -120,11 +120,11 @@ public:
  *
  * Instances of this class are usually constructed using `VptreeBuilder::build_raw()`.
  *
- * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
  * @tparam Store_ Numeric type for the stored data.
  * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
@@ -202,7 +202,7 @@ private:
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
                 const Store_* loc = coords + static_cast<size_t>(items[i].second) * my_long_ndim; // cast to avoid overflow.
-                items[i].first = my_metric->raw_distance(vantage_ptr, loc, my_dim);
+                items[i].first = my_metric->raw(vantage_ptr, loc, my_dim);
             }
 
             // Partition around the median distance from the vantage point.
@@ -305,7 +305,7 @@ public:
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, internal::NeighborQueue<Index_, Distance_>& nearest) const { 
         auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
-        Distance_ dist = my_metric->normalize(my_metric->raw_distance(my_dim, nptr, target));
+        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
@@ -339,7 +339,7 @@ private:
     template<bool count_only_, typename Output_>
     void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
         auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
-        Distance_ dist = my_metric->normalize(my_metric->raw_distance(my_dim, nptr, target));
+        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
         const auto& curnode = my_nodes[curnode_index];
@@ -396,11 +396,11 @@ public:
  * This reduces the memory usage of the tree and total number of distance calculations for any search.
  * It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for **knncolle**.
  *
- * @tparam DistanceMetric_ A distance calculation class satisfying the `MockDistance` contract.
  * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
  * @tparam Store_ Numeric type for the stored data.
  * This may be a lower-precision type than `Data_` to reduce memory usage.
  * @tparam Matrix_ Class that satisfies the `Matrix` interface.
@@ -429,12 +429,12 @@ public:
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
      */
-    VptreeForceBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
+    VptreeBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
 
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
      */
-    VptreeForceBuilder(const DistanceMetric_* metric) : VptreeForceBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
+    VptreeBuilder(const DistanceMetric_* metric) : VptreeBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
 
 private:
     std::shared_ptr<const DistanceMetric_> my_metric;

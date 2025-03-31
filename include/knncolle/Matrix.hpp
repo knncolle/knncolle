@@ -148,7 +148,7 @@ public:
     }
 
     std::unique_ptr<MatrixExtractor<Data_> > new_extractor() const {
-        return std::make_unique<SimpleMatrixExtrator<Data_> >(my_data, my_num_dim);
+        return std::make_unique<SimpleMatrixExtractor<Data_> >(my_data, my_num_dim);
     }
 };
 
