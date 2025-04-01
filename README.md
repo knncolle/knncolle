@@ -30,11 +30,27 @@ Given a matrix with dimensions in the rows and observations in the columns, we c
 ```cpp
 #include "knncolle/knncolle.hpp"
 
-// Wrap our data in a light SimpleMatrix.
-knncolle::SimpleMatrix<int, int, double> mat(ndim, nobs, matrix.data());
+int ndim = 10;
+int nobs = 1000;
+std::vector<double> matrix(ndim * nobs); // column-major dims x obs matrix. 
 
-// Build a VP-tree index. 
-knncolle::VptreeBuilder<> vp_builder;
+// Wrap our data in a SimpleMatrix.
+knncolle::SimpleMatrix<
+    /* observation index */ int,
+    /* data type */ double
+> mat(ndim, nobs, matrix.data());
+
+// Build a VP-tree index with double-precision Euclidean distances.
+knncolle::VptreeBuilder<
+    /* observation index */ int, 
+    /* data type */ double, 
+    /* distance type */ double
+> vp_builder(
+    new knncolle::EuclideanDistance<
+        /* data type = */ double,
+        /* distance type = */ double
+    >
+);
 auto vp_index = vp_builder.build_unique(mat);
 
 // Find 10 nearest neighbors of every observation.
@@ -112,86 +128,86 @@ This method is optional so developers of `Searcher` subclasses may choose to not
 Applications should check `Searcher::can_search_all()` before attempting a call, as shown above.
 Otherwise, the default method will raise an exception. 
 
-## Tuning index construction
+## Polymoprhism via interfaces
 
-Some algorithms allow the user to modify the parameters of the search by passing options in the relevant `Builder` constructor.
-For example, the KMKNN method has several options for the k-means clustering step.
-We could, say, specify which initialization algorithm to use:
-
-```cpp
-knncolle::KmknnOptions<> kk_opt;
-kk_opt.initialize_algorithm.reset(
-    new kmeans::InitializeRandom<kmeans::SimpleMatrix<double, int, int>, int, double>
-);
-```
-
-Or modify the behavior of the refinement algorithm:
-
-```cpp
-kmeans::RefineLloydOptions ll_opt;
-ll_opt.max_iterations = 20;
-ll_opt.num_threads = 5;
-kk_opt.refine_algorithm.reset(
-    new kmeans::RefineLloyd<kmeans::SimpleMatrix<double, int, int>, int, double>(ll_opt)
-);
-```
-
-After which, we construct our `KmknnBuilder`, build our `KmknnPrebuilt` index, and proceed with the nearest-neighbor search.
-
-```cpp
-knncolle::KmknnBuilder<> kk_builder(kk_opt);
-auto kk_prebuilt = kk_builder.build_unique(mat);
-auto kk_results = knncolle::find_nearest_neighbors(*kk_prebuilt, 10); 
-```
-
-Check out the [reference documentation](https://knncolle.github.io/knncolle/) for the available options in each algorithm's `Builder`.
-
-## Polymorphism
-
-All methods implement the `Builder`, `Prebuilt` and `Searcher` interfaces via inheritance.
+All KNN search algorithms implement the `Builder`, `Prebuilt` and `Searcher` interfaces via inheritance.
 This means that users can swap algorithms at run-time:
 
 ```cpp
-std::unique_ptr<knncolle::Builder<decltype(mat), double> > ptr;
+auto dist_type = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+
+std::unique_ptr<knncolle::Builder<int, double, double> > ptr;
 if (algorithm == "brute-force") {
-    ptr.reset(new knncolle::BruteforceBuilder<>);
-} else if (algorithm == "kmknn") {
-    ptr.reset(new knncolle::KmknnBuilder<>);
+    ptr.reset(new knncolle::BruteforceBuilder<int, double, double>(dist_type));
+} else if (algorithm == "vp-tree") {
+    ptr.reset(new knncolle::VptreeBuilder<int, double, double>(dist_type));
 } else {
-    ptr.reset(new knncolle::VptreeBuilder<>);
+    // do something else
 }
 
 auto some_prebuilt = ptr->build_unique(mat);
 auto some_results = knncolle::find_nearest_neighbors(*some_prebuilt, 10); 
 ```
 
-Each class is also heavily templated to enable compile-time polymorphism.
-We default to `int`s for the indices and `double`s for the distances.
-If precision is not a concern, one can often achieve greater speed by swapping all `double`s with `float`s.
-The choice of distance calculation is also a compile-time parameter for most subclasses,
-and users can define their own classes to use a custom distance.
-
-The choice of input data is another compile-time paramter, as defined by the `MockMatrix` interface.
-Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices.
-For example, we implement the `L2NormalizedMatrix` class to apply on-the-fly L2 normalization of each observation's vector of coordinates.
-We then combine this with the `L2NormalizedBuilder` class to transform an existing neighbor search method from Euclidean to cosine distances.
+Similarly, for algorithms that accept a `DistanceMetric`, we can switch between distances at run-time:
 
 ```cpp
-bool use_cosine = true;
-std::unique_ptr<knncolle::Builder<decltype(mat), double> > ptr;
-
-if (use_cosine) {
-    typedef knncolle:VptreeBuilder<
-        knncolle::EuclideanDistance,
-        knncolle::L2NormalizedMatrix<> // only use as a template argument.
-    > L2VptreeBuilder;
-    ptr.reset(new knncolle::L2NormalizedBuilder(new L2VptreeBuilder));
+std::shared_ptr<knncolle::DistanceMetric<double, double> > distptr;
+if (distance == "euclidean") {
+    distptr.reset(new knncolle::EuclideanDistance<double, double>);
+} else if (distance == "manhattan") {
+    distptr.reset(new knncolle::ManhattanDistance<double, double>);
 } else {
-    ptr.reset(new knncolle:VptreeBuilder<>);
+    // do something else.
 }
+
+knncolle::VptreeBuilder<int, double, double> vp_builder(std::move(distptr));
+```
+
+We can even switch between input matrix representations at run-time, as long as they follow the `Matrix` interface.
+This allows the various `Builder` classes to accept input data in other formats (e.g., sparse, file-backed).
+For example, **knncolle** implements the `L2NormalizedMatrix` subclass to apply on-the-fly L2 normalization of each observation's vector of coordinates.
+This is used inside the `L2NormalizedBuilder` class to transform an existing neighbor search method from Euclidean to cosine distances.
+
+```cpp
+auto builder = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(
+    new knncolle::EuclideanDistance<double, double>
+);
+
+auto l2builder = std::make_shared<knncolle::L2NormalizedBuilder<
+    /* observation index */ int,
+    /* data type */ double,
+    /* distance type */ double,
+    /* normalized type */ double
+> >(std::move(builder));
+
+// Any Matrix 'mat' is automatically wrapped in a L2NormalizedMatrix
+// before being passed to 'builder->build_unique'.
+auto l2index = l2builder->build_unique(mat);
 ```
 
 Check out the [reference documentation](https://knncolle.github.io/knncolle/) for more details on these interfaces.
+
+## Modifying template parameters
+
+Each interface has a few template parameters to define its types.
+In general, we recommend using `int`s for the observation indices and `double`s for the data and distances.
+If precision is not a concern, we can achieve greater speed by swapping `double`s with `float`s.
+We may also need to swap `int` with `size_t` for larger datasets, e.g., more than 2 billion observations.
+
+Advanced users can set up the templates to bypass virtual dispatch at the cost of more compile-time complexity.
+For example, we could parametrize the `VptreeBuilder` so that it is hard-coded to use Euclidean distances and to only accept column-major in-memory matrices.
+This gives the compiler an opportunity to devirtualize the relevant method calls for a potential performance improvement.
+
+```cpp
+typedef knncolle::VptreeBuilder<
+    int,
+    double,
+    double,
+    kncolle::SimpleMatrix<int, double>,
+    knncolle::EuclideanDistance<double, double>
+> VptreeEuclideanSimple;
+```
 
 ## Building projects with **knncolle**
 
