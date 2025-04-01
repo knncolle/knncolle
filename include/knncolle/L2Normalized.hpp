@@ -268,26 +268,20 @@ public:
      * Otherwise, the `Builder` should explicitly have a `NormalizedMatrix` in its template parametrization.
      * This is because it will be accepting the normalized matrix in `build_raw()` instead of `Matrix_`.
      */
-    typedef Matrix_ BuilderMatrix;
-//    typedef typename std::conditional<
-//        std::is_base_of<Matrix_, NormalizedMatrix>::value,
-//        Matrix_,
-//        NormalizedMatrix
-//    >::type BuilderMatrix;
+    typedef typename std::conditional<
+        std::is_base_of<Matrix_, NormalizedMatrix>::value,
+        Matrix_,
+        NormalizedMatrix
+    >::type BuilderMatrix;
 
 public:
     /**
      * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.
      */
-    L2NormalizedBuilder(std::shared_ptr<const Builder<Index_, Data_, Distance_, BuilderMatrix> > builder) : my_builder(std::move(builder)) {}
-
-    /**
-     * @param builder Pointer to a `Builder` for an arbitrary neighbor search algorithm.
-     */
-    L2NormalizedBuilder(const Builder<Index_, Data_, Distance_, BuilderMatrix>* builder) : my_builder(builder) {}
+    L2NormalizedBuilder(std::shared_ptr<const Builder<Index_, Normalized_, Distance_, BuilderMatrix> > builder) : my_builder(std::move(builder)) {}
 
 private:
-    std::shared_ptr<const Builder<Index_, Data_, Distance_, BuilderMatrix> > my_builder;
+    std::shared_ptr<const Builder<Index_, Normalized_, Distance_, BuilderMatrix> > my_builder;
 
 public:
     /**

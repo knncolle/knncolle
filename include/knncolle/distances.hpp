@@ -94,7 +94,7 @@ public:
      */
     Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
-        for (size_t d = 0; d < num_dimensions; ++d, ++x, ++y) {
+        for (size_t d = 0; d < num_dimensions; ++d) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
             output += std::abs(delta);
         }

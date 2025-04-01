@@ -51,7 +51,7 @@ void parallelize(int num_workers, Task_ num_tasks, Run_ run_task_range) {
  * @tparam Distance_ Floating point type for the distances.
  */
 template<typename Index_, typename Distance_>
-using NeighborList = std::vector<std::vector<std::pair<Index_, Float_> > >;
+using NeighborList = std::vector<std::vector<std::pair<Index_, Distance_> > >;
 
 /**
  * Cap the number of neighbors to use in `Searcher::search()` with an index `i`.
@@ -86,9 +86,8 @@ int cap_k(int k, Index_ num_observations) {
  * Find the nearest neighbors within a pre-built index.
  * This is a convenient wrapper around `Searcher::search` that saves the caller the trouble of writing a loop.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Data_ Numeric type for the input data.
  * @tparam Distance_ Floating point type for the distances.
  *
  * @param index A `Prebuilt` index.
@@ -102,8 +101,8 @@ int cap_k(int k, Index_ num_observations) {
  * Each entry contains (up to) the `k` nearest neighbors for each observation, sorted by increasing distance.
  * The `i`-th entry is guaranteed to not contain `i` itself.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_>
-NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Dim_, Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
+template<typename Index_, typename Data_, typename Distance_>
+NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
     NeighborList<Index_, Distance_> output(nobs);
@@ -129,7 +128,6 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Dim_, Inde
  * Find the nearest neighbors within a pre-built search index.
  * Here, only the neighbor indices are returned, not the distances.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
@@ -145,8 +143,8 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Dim_, Inde
  * Each vector contains the indices of (up to) the `k` nearest neighbors for each observation, sorted by increasing distance.
  * The `i`-th entry is guaranteed to not contain `i` itself.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_>
-std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Dim_, Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
+template<typename Index_, typename Data_, typename Distance_>
+std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
     std::vector<std::vector<Index_> > output(nobs);

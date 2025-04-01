@@ -3,6 +3,7 @@
 #include "knncolle/L2Normalized.hpp"
 
 #include <vector>
+#include <cmath>
 
 #include "TestCore.hpp"
 
@@ -154,3 +155,74 @@ INSTANTIATE_TEST_SUITE_P(
         ::testing::Values(3, 10, 20) // number of neighbors (one is greater than # observations, to test correct limiting)
     )
 );
+
+class L2NormalizedTypeTest : public TestCore, public ::testing::Test {
+protected:
+    void SetUp() {
+        assemble({ 100, 10 });
+    }
+};
+
+TEST_F(L2NormalizedTypeTest, NonBaseMatrix) {
+    // Works correctly with a non-base Matrix_ class.
+    typedef knncolle::L2NormalizedMatrix<int, double, double, knncolle::SimpleMatrix<int, double> > NormalizedMatrix;
+    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(new knncolle::EuclideanDistance<double, double>);
+    knncolle::L2NormalizedBuilder<int, double, double, double, knncolle::SimpleMatrix<int, double> > lb(vb);
+
+    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    EXPECT_EQ(lptr->num_observations(), nobs);
+    EXPECT_EQ(lptr->num_dimensions(), ndim);
+
+    // Comparing to the reference calculation.
+    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    knncolle::L2NormalizedBuilder<int, double, double, double> lbref(vbref);
+    auto lrefptr = lbref.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+
+    auto lsptr = lptr->initialize();
+    auto lsrefptr = lrefptr->initialize();
+    std::vector<int> output_i, output2_i; 
+    std::vector<double> output_d, output2_d; 
+
+    int k = 5;
+    for (int x = 0; x < nobs; ++x) {
+        lsptr->search(x, k, &output_i, &output_d);
+        lsrefptr->search(x, k, &output2_i, &output2_d);
+        EXPECT_EQ(output_i, output2_i);
+        EXPECT_EQ(output_d, output2_d);
+    }
+}
+
+TEST_F(L2NormalizedTypeTest, NonIdenticalNormalized) {
+    std::vector<double> rounded(data.begin(), data.end());
+    for (auto& r : rounded) {
+        r = std::round(r);
+    }
+
+    // Works correctly when Normalized_ != Data_.
+    typedef knncolle::L2NormalizedMatrix<int, int, double> NormalizedMatrix;
+    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(new knncolle::EuclideanDistance<double, double>);
+    knncolle::L2NormalizedBuilder<int, int, double, double> lb(vb);
+
+    std::vector<int> idata(rounded.begin(), rounded.end());
+    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, int>(ndim, nobs, idata.data()));
+    EXPECT_EQ(lptr->num_observations(), nobs);
+    EXPECT_EQ(lptr->num_dimensions(), ndim);
+
+    // Comparing to the reference calculation.
+    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    knncolle::L2NormalizedBuilder<int, double, double, double> lbref(vbref);
+    auto lrefptr = lbref.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, rounded.data()));
+
+    auto lsptr = lptr->initialize();
+    auto lsrefptr = lrefptr->initialize();
+    std::vector<int> output_i, output2_i; 
+    std::vector<double> output_d, output2_d; 
+
+    int k = 5;
+    for (int x = 0; x < nobs; ++x) {
+        lsptr->search(x, k, &output_i, &output_d);
+        lsrefptr->search(x, k, &output2_i, &output2_d);
+        EXPECT_EQ(output_i, output2_i);
+        EXPECT_EQ(output_d, output2_d);
+    }
+}
