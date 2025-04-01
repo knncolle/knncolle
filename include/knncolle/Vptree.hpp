@@ -227,9 +227,7 @@ private:
 
 public:
     /**
-     * @param num_dim Number of dimensions.
-     * @param num_obs Number of observations.
-     * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
+     * @cond
      */
     VptreePrebuilt(size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim),
@@ -293,6 +291,9 @@ public:
             }
         }
     }
+    /**
+     * @endcond
+     */
 
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, internal::NeighborQueue<Index_, Distance_>& nearest) const { 
