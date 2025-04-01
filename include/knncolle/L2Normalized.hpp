@@ -216,6 +216,9 @@ public:
     L2NormalizedMatrix(const Matrix_& matrix) : my_matrix(matrix) {}
 
 private:
+    static_assert(std::is_same<decltype(std::declval<Matrix_>().num_observations()), Index_>::value);
+    static_assert(std::is_same<typename std::remove_pointer<decltype(std::declval<Matrix_>().new_extractor()->next())>::type, const Data_>::value);
+
     const Matrix_& my_matrix;
 
 public:

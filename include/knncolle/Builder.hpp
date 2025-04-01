@@ -5,6 +5,7 @@
 #include "Matrix.hpp"
 #include <memory>
 #include <utility>
+#include <type_traits>
 
 /**
  * @file Builder.hpp
@@ -35,6 +36,9 @@ public:
     Builder& operator=(Builder&&) = default;
     Builder& operator=(const Builder&) = default;
     virtual ~Builder() = default;
+
+    static_assert(std::is_same<decltype(std::declval<Matrix_>().num_observations()), Index_>::value);
+    static_assert(std::is_same<typename std::remove_pointer<decltype(std::declval<Matrix_>().new_extractor()->next())>::type, const Data_>::value);
     /**
      * @endcond
      */
