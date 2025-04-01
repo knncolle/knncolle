@@ -1,5 +1,5 @@
-<map id="knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;" name="knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;">
-<area shape="rect" id="Node000001" title="VP&#45;tree searcher." alt="" coords="5,94,171,150"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="24,5,152,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,61,91,93,85,93,85,61"/>
+<map id="knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;" name="knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;">
+<area shape="rect" id="Node000001" title="VP&#45;tree searcher." alt="" coords="14,94,184,150"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,5,193,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,61,102,93,96,93,96,61"/>
 </map>

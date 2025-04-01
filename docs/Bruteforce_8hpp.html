@@ -104,47 +104,52 @@ $(function(){ initResizable(false); });
 <code>#include &quot;<a class="el" href="Searcher_8hpp_source.html">Searcher.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Builder_8hpp_source.html">Builder.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="MockMatrix_8hpp_source.html">MockMatrix.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Matrix_8hpp_source.html">Matrix.hpp</a>&quot;</code><br />
 <code>#include &quot;report_all_neighbors.hpp&quot;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;limits&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Bruteforce.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="Bruteforce_8hpp__incl.png" border="0" usemap="#aknncolle_2Bruteforce_8hpp" alt=""/></div>
 <map name="aknncolle_2Bruteforce_8hpp" id="aknncolle_2Bruteforce_8hpp">
-<area shape="rect" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="401,5,559,31"/>
+<area shape="rect" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="427,5,584,31"/>
 <area shape="rect" href="distances_8hpp.html" title="Classes for distance calculations." alt="" coords="5,79,107,105"/>
-<area shape="poly" title=" " alt="" coords="404,34,123,81,122,76,403,29"/>
+<area shape="poly" title=" " alt="" coords="427,34,123,81,122,76,426,28"/>
 <area shape="rect" title=" " alt="" coords="131,79,266,105"/>
-<area shape="poly" title=" " alt="" coords="433,34,262,77,261,72,432,29"/>
-<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="294,226,391,252"/>
-<area shape="poly" title=" " alt="" coords="450,34,412,53,375,81,348,113,333,153,331,183,336,211,331,212,326,183,328,152,343,111,371,77,409,49,447,29"/>
-<area shape="rect" title=" " alt="" coords="449,300,506,326"/>
-<area shape="poly" title=" " alt="" coords="487,31,497,79,505,166,497,252,489,286,484,284,492,252,500,166,492,79,481,32"/>
-<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="397,79,483,105"/>
-<area shape="poly" title=" " alt="" coords="476,33,456,67,452,64,471,30"/>
-<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="342,153,431,178"/>
-<area shape="poly" title=" " alt="" coords="446,34,413,52,399,65,388,80,380,108,382,137,377,138,375,108,383,78,395,62,410,48,443,29"/>
-<area shape="rect" href="MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="557,79,670,105"/>
-<area shape="poly" title=" " alt="" coords="504,29,578,69,576,74,501,34"/>
-<area shape="rect" title=" " alt="" coords="694,79,855,105"/>
-<area shape="poly" title=" " alt="" coords="531,29,711,72,709,77,530,34"/>
-<area shape="rect" title=" " alt="" coords="879,79,961,105"/>
-<area shape="poly" title=" " alt="" coords="559,27,698,48,865,76,864,81,697,53,559,33"/>
-<area shape="rect" title=" " alt="" coords="984,79,1037,105"/>
-<area shape="poly" title=" " alt="" coords="560,22,744,40,855,55,970,76,969,81,855,61,743,45,559,27"/>
+<area shape="poly" title=" " alt="" coords="454,34,266,78,265,72,452,29"/>
+<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="345,226,442,252"/>
+<area shape="poly" title=" " alt="" coords="489,34,434,81,405,115,384,153,380,183,386,211,380,212,375,183,379,152,401,112,430,78,486,30"/>
+<area shape="rect" title=" " alt="" coords="275,300,333,326"/>
+<area shape="poly" title=" " alt="" coords="476,34,440,53,406,81,369,132,342,189,323,243,312,286,307,284,318,241,337,187,365,129,402,77,437,49,474,29"/>
+<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="543,79,628,105"/>
+<area shape="poly" title=" " alt="" coords="521,30,563,67,559,71,517,34"/>
+<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="393,153,482,178"/>
+<area shape="poly" title=" " alt="" coords="502,32,452,140,447,137,497,30"/>
+<area shape="rect" title=" " alt="" coords="486,226,554,252"/>
+<area shape="poly" title=" " alt="" coords="509,31,521,211,516,211,503,31"/>
+<area shape="rect" href="Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="682,153,763,178"/>
+<area shape="poly" title=" " alt="" coords="544,29,592,49,642,77,678,108,706,139,702,143,674,111,638,81,589,54,542,34"/>
+<area shape="rect" title=" " alt="" coords="703,79,865,105"/>
+<area shape="poly" title=" " alt="" coords="553,29,723,72,721,77,552,34"/>
+<area shape="rect" title=" " alt="" coords="889,79,970,105"/>
+<area shape="poly" title=" " alt="" coords="585,28,874,76,874,81,584,33"/>
+<area shape="rect" title=" " alt="" coords="994,79,1046,105"/>
+<area shape="poly" title=" " alt="" coords="585,22,762,41,869,56,979,76,978,81,868,61,761,46,584,28"/>
 <area shape="rect" title=" " alt="" coords="27,153,85,178"/>
 <area shape="poly" title=" " alt="" coords="59,105,59,137,53,137,53,105"/>
-<area shape="poly" title=" " alt="" coords="367,250,442,290,440,295,364,255"/>
-<area shape="rect" title=" " alt="" coords="304,300,381,326"/>
-<area shape="poly" title=" " alt="" coords="345,252,345,284,340,284,340,252"/>
-<area shape="poly" title=" " alt="" coords="433,106,407,142,403,138,429,103"/>
-<area shape="rect" title=" " alt="" coords="416,226,483,252"/>
-<area shape="poly" title=" " alt="" coords="443,105,447,152,450,210,445,211,441,153,438,105"/>
-<area shape="poly" title=" " alt="" coords="382,180,360,214,356,211,377,177"/>
-<area shape="poly" title=" " alt="" coords="399,177,431,213,427,216,395,180"/>
+<area shape="poly" title=" " alt="" coords="380,255,333,292,329,288,377,250"/>
+<area shape="rect" title=" " alt="" coords="357,300,435,326"/>
+<area shape="poly" title=" " alt="" coords="396,252,398,284,392,285,391,252"/>
+<area shape="poly" title=" " alt="" coords="561,108,478,148,475,143,559,103"/>
+<area shape="poly" title=" " alt="" coords="582,106,534,213,529,211,578,104"/>
+<area shape="poly" title=" " alt="" coords="610,103,687,143,685,147,607,108"/>
+<area shape="rect" title=" " alt="" coords="608,153,659,178"/>
+<area shape="poly" title=" " alt="" coords="595,103,619,138,614,141,591,106"/>
+<area shape="poly" title=" " alt="" coords="432,180,411,214,407,211,428,177"/>
+<area shape="poly" title=" " alt="" coords="453,177,496,214,493,218,450,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -162,13 +167,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforceSearcher.html">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforceSearcher.html">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Brute-force nearest neighbor searcher.  <a href="classknncolle_1_1BruteforceSearcher.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforcePrebuilt.html">knncolle::BruteforcePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforcePrebuilt.html">knncolle::BruteforcePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for a brute-force nearest neighbor search.  <a href="classknncolle_1_1BruteforcePrebuilt.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt; Distance_, Matrix_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt; Index_, Data_, Distance_, Matrix_, DistanceMetric_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a brute-force nearest neighbor search.  <a href="classknncolle_1_1BruteforceBuilder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">

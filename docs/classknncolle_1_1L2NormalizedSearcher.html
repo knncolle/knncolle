@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt; Class Template Reference</title>
+<title>knncolle: knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1L2NormalizedSearcher-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
+  <div class="headertitle"><div class="title">knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -102,69 +102,71 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="L2Normalized_8hpp_source.html">L2Normalized.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt;:</div>
+Inheritance diagram for knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1L2NormalizedSearcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_inherit__map" id="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_inherit__map">
-<area shape="rect" title="Wrapper around a search interface with L2 normalization." alt="" coords="5,94,213,135"/>
-<area shape="rect" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="45,5,173,46"/>
-<area shape="poly" title=" " alt="" coords="112,62,112,94,106,94,106,62"/>
+<div class="center"><img src="classknncolle_1_1L2NormalizedSearcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_inherit__map" id="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_inherit__map">
+<area shape="rect" title="Wrapper around a search interface with L2 normalization." alt="" coords="5,94,213,150"/>
+<area shape="rect" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="15,5,203,46"/>
+<area shape="poly" title=" " alt="" coords="112,61,112,93,106,93,106,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
-Collaboration diagram for knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt;:</div>
+Collaboration diagram for knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1L2NormalizedSearcher__coll__graph.png" border="0" usemap="#aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_coll__map" id="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Float___01_4_coll__map">
-<area shape="rect" title="Wrapper around a search interface with L2 normalization." alt="" coords="5,94,213,135"/>
-<area shape="rect" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="45,5,173,46"/>
-<area shape="poly" title=" " alt="" coords="112,62,112,94,106,94,106,62"/>
+<div class="center"><img src="classknncolle_1_1L2NormalizedSearcher__coll__graph.png" border="0" usemap="#aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_coll__map" id="aknncolle_1_1L2NormalizedSearcher_3_01Index___00_01Data___00_01Distance___00_01Normalized___01_4_coll__map">
+<area shape="rect" title="Wrapper around a search interface with L2 normalization." alt="" coords="5,94,213,150"/>
+<area shape="rect" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="15,5,203,46"/>
+<area shape="poly" title=" " alt="" coords="112,61,112,93,106,93,106,61"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad97e99e0fd85202cce0357333a78a2a4" id="r_ad97e99e0fd85202cce0357333a78a2a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad97e99e0fd85202cce0357333a78a2a4">L2NormalizedSearcher</a> (std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Float_ &gt; &gt; searcher, size_t num_dimensions)</td></tr>
-<tr class="separator:ad97e99e0fd85202cce0357333a78a2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classknncolle_1_1Searcher"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classknncolle_1_1Searcher')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher&lt; Index_, Float_ &gt;</a></td></tr>
-<tr class="memitem:a6ad140ee93a7af57fdb722c16476aee4 inherit pub_methods_classknncolle_1_1Searcher" id="r_a6ad140ee93a7af57fdb722c16476aee4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">search</a> (Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</td></tr>
-<tr class="separator:a6ad140ee93a7af57fdb722c16476aee4 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f4bac73a3dd958d1f09e1093bd1cf01 inherit pub_methods_classknncolle_1_1Searcher" id="r_a9f4bac73a3dd958d1f09e1093bd1cf01"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a9f4bac73a3dd958d1f09e1093bd1cf01">search</a> (const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</td></tr>
-<tr class="separator:a9f4bac73a3dd958d1f09e1093bd1cf01 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8362d0f6ea1b7f6e09d26a9188d31d1d inherit pub_methods_classknncolle_1_1Searcher" id="r_a8362d0f6ea1b7f6e09d26a9188d31d1d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a8362d0f6ea1b7f6e09d26a9188d31d1d">can_search_all</a> () const</td></tr>
-<tr class="separator:a8362d0f6ea1b7f6e09d26a9188d31d1d inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fb8a8e436303c5917f3717393cf056 inherit pub_methods_classknncolle_1_1Searcher" id="r_ae7fb8a8e436303c5917f3717393cf056"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#ae7fb8a8e436303c5917f3717393cf056">search_all</a> (Index_ i, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
-<tr class="separator:ae7fb8a8e436303c5917f3717393cf056 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbe92827aebee347f57257591712d093 inherit pub_methods_classknncolle_1_1Searcher" id="r_adbe92827aebee347f57257591712d093"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#adbe92827aebee347f57257591712d093">search_all</a> (const Float_ *query, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
-<tr class="separator:adbe92827aebee347f57257591712d093 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a267a48a9a523918eec6cc74407489e95" id="r_a267a48a9a523918eec6cc74407489e95"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a267a48a9a523918eec6cc74407489e95">L2NormalizedSearcher</a> (std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Normalized_, Distance_ &gt; &gt; searcher, size_t num_dimensions)</td></tr>
+<tr class="separator:a267a48a9a523918eec6cc74407489e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classknncolle_1_1Searcher"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classknncolle_1_1Searcher')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;</a></td></tr>
+<tr class="memitem:ab0f6c2ce78952dd555f7f1a8fb3ac208 inherit pub_methods_classknncolle_1_1Searcher" id="r_ab0f6c2ce78952dd555f7f1a8fb3ac208"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#ab0f6c2ce78952dd555f7f1a8fb3ac208">search</a> (Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</td></tr>
+<tr class="separator:ab0f6c2ce78952dd555f7f1a8fb3ac208 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6968d65276d81f47c92f6351ec786150 inherit pub_methods_classknncolle_1_1Searcher" id="r_a6968d65276d81f47c92f6351ec786150"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a6968d65276d81f47c92f6351ec786150">search</a> (const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</td></tr>
+<tr class="separator:a6968d65276d81f47c92f6351ec786150 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a175ab05c339e3aa39b974f1ceebc21a3 inherit pub_methods_classknncolle_1_1Searcher" id="r_a175ab05c339e3aa39b974f1ceebc21a3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a175ab05c339e3aa39b974f1ceebc21a3">can_search_all</a> () const</td></tr>
+<tr class="separator:a175ab05c339e3aa39b974f1ceebc21a3 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef8c1bf087751bff46af346bda2feb3 inherit pub_methods_classknncolle_1_1Searcher" id="r_a3ef8c1bf087751bff46af346bda2feb3"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a3ef8c1bf087751bff46af346bda2feb3">search_all</a> (Index_ i, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
+<tr class="separator:a3ef8c1bf087751bff46af346bda2feb3 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c88e638622eadc5f3c0328e8a1c5f1 inherit pub_methods_classknncolle_1_1Searcher" id="r_a37c88e638622eadc5f3c0328e8a1c5f1"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Searcher.html#a37c88e638622eadc5f3c0328e8a1c5f1">search_all</a> (const Data_ *query, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
+<tr class="separator:a37c88e638622eadc5f3c0328e8a1c5f1 inherit pub_methods_classknncolle_1_1Searcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Float_&gt;<br />
-class knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt;</div><p>Wrapper around a search interface with L2 normalization. </p>
-<p>This applies L2 normalization to each query vector before running <code><a class="el" href="classknncolle_1_1Searcher.html#a6ad140ee93a7af57fdb722c16476aee4">search()</a></code> and <code><a class="el" href="classknncolle_1_1Searcher.html#ae7fb8a8e436303c5917f3717393cf056">search_all()</a></code>, typically for calculation of cosine distances. Instances of this class are typically constructed with <code><a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html#a0879ea8c8512d04a2f73fb7afd7eae56">L2NormalizedPrebuilt::initialize()</a></code>.</p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Data_, typename Distance_, typename Normalized_&gt;<br />
+class knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt;</div><p>Wrapper around a search interface with L2 normalization. </p>
+<p>This applies L2 normalization to each query vector before running <code><a class="el" href="classknncolle_1_1Searcher.html#ab0f6c2ce78952dd555f7f1a8fb3ac208">search()</a></code> and <code><a class="el" href="classknncolle_1_1Searcher.html#a3ef8c1bf087751bff46af346bda2feb3">search_all()</a></code>, typically for calculation of cosine distances. Instances of this class are typically constructed with <code><a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html#afb014f25024603b63877e5dee3ad3459">L2NormalizedPrebuilt::initialize()</a></code>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. For the output of <code>Builder::build</code>, this is set to <code><a class="el" href="classknncolle_1_1MockMatrix.html#a66b87f03e9440cb519167209b89366fc">MockMatrix::index_type</a></code>. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the input and query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances. </td></tr>
+    <tr><td class="paramname">Normalized_</td><td>Floating-point type for the L2-normalized data. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad97e99e0fd85202cce0357333a78a2a4" name="ad97e99e0fd85202cce0357333a78a2a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad97e99e0fd85202cce0357333a78a2a4">&#9670;&#160;</a></span>L2NormalizedSearcher()</h2>
+<a id="a267a48a9a523918eec6cc74407489e95" name="a267a48a9a523918eec6cc74407489e95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a267a48a9a523918eec6cc74407489e95">&#9670;&#160;</a></span>L2NormalizedSearcher()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Normalized_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classknncolle_1_1L2NormalizedSearcher.html">knncolle::L2NormalizedSearcher</a>&lt; Index_, Float_ &gt;::L2NormalizedSearcher </td>
+          <td class="memname"><a class="el" href="classknncolle_1_1L2NormalizedSearcher.html">knncolle::L2NormalizedSearcher</a>&lt; Index_, Data_, Distance_, Normalized_ &gt;::L2NormalizedSearcher </td>
           <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Float_ &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>searcher</em></span>, </td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Normalized_, Distance_ &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>searcher</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

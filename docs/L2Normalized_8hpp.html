@@ -102,37 +102,43 @@ $(function(){ initResizable(false); });
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
 <code>#include &quot;<a class="el" href="Searcher_8hpp_source.html">Searcher.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Builder_8hpp_source.html">Builder.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="MockMatrix_8hpp_source.html">MockMatrix.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Matrix_8hpp_source.html">Matrix.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for L2Normalized.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="L2Normalized_8hpp__incl.png" border="0" usemap="#aknncolle_2L2Normalized_8hpp" alt=""/></div>
 <map name="aknncolle_2L2Normalized_8hpp" id="aknncolle_2L2Normalized_8hpp">
-<area shape="rect" title="Wrapper for L2 normalization prior to search." alt="" coords="112,5,289,31"/>
+<area shape="rect" title="Wrapper for L2 normalization prior to search." alt="" coords="153,5,331,31"/>
 <area shape="rect" title=" " alt="" coords="5,300,63,326"/>
-<area shape="poly" title=" " alt="" coords="115,34,74,52,56,64,41,81,28,105,19,131,14,188,19,241,28,284,23,285,14,242,9,188,14,130,23,103,37,77,53,61,71,47,113,29"/>
-<area shape="rect" title=" " alt="" coords="52,79,109,105"/>
-<area shape="poly" title=" " alt="" coords="182,34,115,73,113,68,179,29"/>
+<area shape="poly" title=" " alt="" coords="169,34,91,54,59,66,40,81,26,105,17,131,13,159,12,188,18,242,28,285,23,286,13,243,6,188,7,159,12,130,21,102,36,77,57,62,89,49,168,29"/>
+<area shape="rect" title=" " alt="" coords="51,79,108,105"/>
+<area shape="poly" title=" " alt="" coords="215,34,122,75,120,70,213,29"/>
 <area shape="rect" title=" " alt="" coords="278,226,345,252"/>
-<area shape="poly" title=" " alt="" coords="265,29,305,47,323,61,338,78,346,94,350,112,349,149,340,184,327,214,323,212,335,183,343,148,345,113,341,96,333,80,319,64,303,52,263,34"/>
+<area shape="poly" title=" " alt="" coords="328,29,382,44,437,68,462,84,484,103,503,126,518,152,522,175,515,194,498,208,475,220,418,233,361,239,360,234,417,228,473,215,495,204,510,191,517,174,513,154,499,129,481,107,459,89,434,73,380,49,327,34"/>
+<area shape="rect" title=" " alt="" coords="184,79,236,105"/>
+<area shape="poly" title=" " alt="" coords="239,32,224,66,219,64,234,30"/>
 <area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="97,226,195,252"/>
-<area shape="poly" title=" " alt="" coords="200,32,155,212,150,211,195,31"/>
+<area shape="poly" title=" " alt="" coords="223,33,196,53,174,80,160,113,152,148,147,211,142,211,146,148,155,112,169,78,193,49,220,29"/>
 <area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="184,153,273,178"/>
-<area shape="poly" title=" " alt="" coords="206,31,226,137,221,138,200,32"/>
-<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="238,79,323,105"/>
-<area shape="poly" title=" " alt="" coords="216,30,258,67,254,71,212,34"/>
-<area shape="rect" href="MockMatrix_8hpp.html" title="Expectations for matrix inputs." alt="" coords="399,79,512,105"/>
-<area shape="poly" title=" " alt="" coords="245,29,398,72,397,77,243,34"/>
+<area shape="poly" title=" " alt="" coords="247,31,252,64,251,105,242,139,237,137,246,104,247,64,242,32"/>
+<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="311,79,397,105"/>
+<area shape="poly" title=" " alt="" coords="262,29,324,68,321,73,260,34"/>
+<area shape="rect" href="Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="423,153,504,178"/>
+<area shape="poly" title=" " alt="" coords="306,29,359,47,386,60,410,77,437,106,455,138,450,140,433,109,407,81,383,65,357,52,304,34"/>
 <area shape="poly" title=" " alt="" coords="128,255,67,294,64,289,126,250"/>
 <area shape="rect" title=" " alt="" coords="107,300,185,326"/>
 <area shape="poly" title=" " alt="" coords="149,252,149,284,143,284,143,252"/>
 <area shape="poly" title=" " alt="" coords="244,177,288,214,284,218,241,181"/>
 <area shape="poly" title=" " alt="" coords="216,181,173,218,170,214,213,177"/>
-<area shape="poly" title=" " alt="" coords="286,104,308,210,303,211,281,106"/>
-<area shape="poly" title=" " alt="" coords="274,106,249,142,244,138,270,103"/>
+<area shape="poly" title=" " alt="" coords="353,106,322,212,317,211,348,104"/>
+<area shape="poly" title=" " alt="" coords="334,108,264,147,262,142,331,103"/>
+<area shape="poly" title=" " alt="" coords="374,103,434,142,431,146,371,107"/>
+<area shape="rect" title=" " alt="" coords="348,153,400,178"/>
+<area shape="poly" title=" " alt="" coords="360,104,369,137,364,138,355,106"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -150,16 +156,19 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedSearcher.html">knncolle::L2NormalizedSearcher&lt; Index_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedSearcher.html">knncolle::L2NormalizedSearcher&lt; Index_, Data_, Distance_, Normalized_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around a search interface with L2 normalization.  <a href="classknncolle_1_1L2NormalizedSearcher.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html">knncolle::L2NormalizedPrebuilt&lt; Dim_, Index_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html">knncolle::L2NormalizedPrebuilt&lt; Index_, Data_, Distance_, Normalized_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around a prebuilt index with L2 normalization.  <a href="classknncolle_1_1L2NormalizedPrebuilt.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix&lt; Matrix_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedMatrixExtractor.html">knncolle::L2NormalizedMatrixExtractor&lt; Index_, Data_, Normalized_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extractor for the <code><a class="el" href="classknncolle_1_1L2NormalizedMatrix.html" title="Wrapper around a matrix with L2 normalization.">L2NormalizedMatrix</a></code>.  <a href="classknncolle_1_1L2NormalizedMatrixExtractor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix&lt; Index_, Data_, Normalized_, Matrix_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around a matrix with L2 normalization.  <a href="classknncolle_1_1L2NormalizedMatrix.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder&lt; Matrix_, Float_ &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder&lt; Index_, Data_, Distance_, Normalized_, Matrix_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around a builder with L2 normalization.  <a href="classknncolle_1_1L2NormalizedBuilder.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">

@@ -109,23 +109,39 @@ $(function(){ initResizable(false); });
 <p>Given a matrix with dimensions in the rows and observations in the columns, we can do:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="knncolle_8hpp.html">knncolle/knncolle.hpp</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Wrap our data in a light SimpleMatrix.</span></div>
-<div class="line"><a class="code hl_class" href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix&lt;int, int, double&gt;</a> mat(ndim, nobs, matrix.data());</div>
+<div class="line"><span class="keywordtype">int</span> ndim = 10;</div>
+<div class="line"><span class="keywordtype">int</span> nobs = 1000;</div>
+<div class="line">std::vector&lt;double&gt; matrix(ndim * nobs); <span class="comment">// column-major dims x obs matrix. </span></div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Build a VP-tree index. </span></div>
-<div class="line"><a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;&gt;</a> vp_builder;</div>
-<div class="line"><span class="keyword">auto</span> vp_index = vp_builder.<a class="code hl_function" href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">build_unique</a>(mat);</div>
+<div class="line"><span class="comment">// Wrap our data in a SimpleMatrix.</span></div>
+<div class="line"><a class="code hl_class" href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>&lt;</div>
+<div class="line">    <span class="comment">/* observation index */</span> int,</div>
+<div class="line">    <span class="comment">/* data type */</span> <span class="keywordtype">double</span></div>
+<div class="line">&gt; mat(ndim, nobs, matrix.data());</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Build a VP-tree index with double-precision Euclidean distances.</span></div>
+<div class="line"><a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a>&lt;</div>
+<div class="line">    <span class="comment">/* observation index */</span> int, </div>
+<div class="line">    <span class="comment">/* data type */</span> double, </div>
+<div class="line">    <span class="comment">/* distance type */</span> <span class="keywordtype">double</span></div>
+<div class="line">&gt; vp_builder(</div>
+<div class="line">    <span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a>&lt;</div>
+<div class="line">        <span class="comment">/* data type = */</span> <span class="keywordtype">double</span>,</div>
+<div class="line">        <span class="comment">/* distance type = */</span> <span class="keywordtype">double</span></div>
+<div class="line">    &gt;</div>
+<div class="line">);</div>
+<div class="line"><span class="keyword">auto</span> vp_index = vp_builder.build_unique(mat);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Find 10 nearest neighbors of every observation.</span></div>
-<div class="line"><span class="keyword">auto</span> results = <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*vp_index, 10); </div>
+<div class="line"><span class="keyword">auto</span> results = <a class="code hl_function" href="namespaceknncolle.html#a2c6d8b116464bab254bda34216338c3c">knncolle::find_nearest_neighbors</a>(*vp_index, 10); </div>
 <div class="line"> </div>
 <div class="line">results[0].first; <span class="comment">// indices of neighbors of the first observation</span></div>
 <div class="line">results[0].second; <span class="comment">// distances to neighbors of the first observation</span></div>
-<div class="ttc" id="aclassknncolle_1_1Builder_html_afeda432debae999f988f32f147055251"><div class="ttname"><a href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">knncolle::Builder::build_unique</a></div><div class="ttdeci">std::unique_ptr&lt; Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; &gt; build_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Builder.hpp:50</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div><div class="ttdoc">Simple wrapper for an in-memory matrix.</div><div class="ttdef"><b>Definition</b> MockMatrix.hpp:116</div></div>
-<div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition</b> Vptree.hpp:406</div></div>
+<div class="ttc" id="aclassknncolle_1_1EuclideanDistance_html"><div class="ttname"><a href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a></div><div class="ttdoc">Compute Euclidean distances between two input vectors.</div><div class="ttdef"><b>Definition</b> distances.hpp:70</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div><div class="ttdoc">Simple wrapper for an in-memory matrix.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:125</div></div>
+<div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a></div><div class="ttdoc">Perform a nearest neighbor search based on a vantage point (VP) tree.</div><div class="ttdef"><b>Definition</b> Vptree.hpp:415</div></div>
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="knncolle_8hpp.html">knncolle.hpp</a></div><div class="ttdoc">Umbrella header for all algorithms.</div></div>
-<div class="ttc" id="anamespaceknncolle_html_a22e035b2d5eb293fd828a67e61f3213d"><div class="ttname"><a href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a></div><div class="ttdeci">NeighborList&lt; Index_, Float_ &gt; find_nearest_neighbors(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:105</div></div>
+<div class="ttc" id="anamespaceknncolle_html_a2c6d8b116464bab254bda34216338c3c"><div class="ttname"><a href="namespaceknncolle.html#a2c6d8b116464bab254bda34216338c3c">knncolle::find_nearest_neighbors</a></div><div class="ttdeci">NeighborList&lt; Index_, Distance_ &gt; find_nearest_neighbors(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</div><div class="ttdef"><b>Definition</b> find_nearest_neighbors.hpp:105</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details.</p>
 <h1>Searching in more detail</h1>
 <p>We can perform the search manually by constructing a <code>Searcher</code> instance and looping over the elements of interest. Continuing with the same variables defined in the previous section, we could replace the <code>find_nearest_neighbors()</code> call with:</p>
@@ -163,65 +179,63 @@ $(function(){ initResizable(false); });
 <div class="line">    searcher-&gt;search_all(query.data(), 0.5, &amp;indices, &amp;distances);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This method is optional so developers of <code>Searcher</code> subclasses may choose to not implement it. Applications should check <code>Searcher::can_search_all()</code> before attempting a call, as shown above. Otherwise, the default method will raise an exception.</p>
-<h1>Tuning index construction</h1>
-<p>Some algorithms allow the user to modify the parameters of the search by passing options in the relevant <code>Builder</code> constructor. For example, the KMKNN method has several options for the k-means clustering step. We could, say, specify which initialization algorithm to use:</p>
-<div class="fragment"><div class="line">knncolle::KmknnOptions&lt;&gt; kk_opt;</div>
-<div class="line">kk_opt.initialize_algorithm.reset(</div>
-<div class="line">    <span class="keyword">new</span> <a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html">kmeans::InitializeRandom</a>&lt;<a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix&lt;double, int, int&gt;</a>, <span class="keywordtype">int</span>, <span class="keywordtype">double</span>&gt;</div>
-<div class="line">);</div>
-<div class="ttc" id="aclasskmeans_1_1InitializeRandom_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html">kmeans::InitializeRandom</a></div></div>
-<div class="ttc" id="aclasskmeans_1_1SimpleMatrix_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix</a></div></div>
-</div><!-- fragment --><p>Or modify the behavior of the refinement algorithm:</p>
-<div class="fragment"><div class="line"><a class="code hl_structRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html">kmeans::RefineLloydOptions</a> ll_opt;</div>
-<div class="line">ll_opt.<a class="code hl_variableRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a">max_iterations</a> = 20;</div>
-<div class="line">ll_opt.<a class="code hl_variableRef" href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#a016c4d237bde819fa8d5c5631c52360b">num_threads</a> = 5;</div>
-<div class="line">kk_opt.refine_algorithm.reset(</div>
-<div class="line">    <span class="keyword">new</span> <a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1RefineLloyd.html">kmeans::RefineLloyd</a>&lt;<a class="code hl_classRef" href="https://ltla.github.io/CppKmeans/classkmeans_1_1SimpleMatrix.html">kmeans::SimpleMatrix&lt;double, int, int&gt;</a>, <span class="keywordtype">int</span>, <span class="keywordtype">double</span>&gt;(ll_opt)</div>
-<div class="line">);</div>
-<div class="ttc" id="aclasskmeans_1_1RefineLloyd_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/classkmeans_1_1RefineLloyd.html">kmeans::RefineLloyd</a></div></div>
-<div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html">kmeans::RefineLloydOptions</a></div></div>
-<div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html_a016c4d237bde819fa8d5c5631c52360b"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#a016c4d237bde819fa8d5c5631c52360b">kmeans::RefineLloydOptions::num_threads</a></div><div class="ttdeci">int num_threads</div></div>
-<div class="ttc" id="astructkmeans_1_1RefineLloydOptions_html_ac927615927b93f499bbabb24cfc3fb9a"><div class="ttname"><a href="https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a">kmeans::RefineLloydOptions::max_iterations</a></div><div class="ttdeci">int max_iterations</div></div>
-</div><!-- fragment --><p>After which, we construct our <code>KmknnBuilder</code>, build our <code>KmknnPrebuilt</code> index, and proceed with the nearest-neighbor search.</p>
-<div class="fragment"><div class="line">knncolle::KmknnBuilder&lt;&gt; kk_builder(kk_opt);</div>
-<div class="line"><span class="keyword">auto</span> kk_prebuilt = kk_builder.build_unique(mat);</div>
-<div class="line"><span class="keyword">auto</span> kk_results = <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*kk_prebuilt, 10); </div>
-</div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for the available options in each algorithm's <code>Builder</code>.</p>
-<h1>Polymorphism</h1>
-<p>All methods implement the <code>Builder</code>, <code>Prebuilt</code> and <code>Searcher</code> interfaces via inheritance. This means that users can swap algorithms at run-time:</p>
-<div class="fragment"><div class="line">std::unique_ptr&lt;<a class="code hl_class" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt;<span class="keyword">decltype</span>(mat), <span class="keywordtype">double</span>&gt; &gt; ptr;</div>
+<h1>Polymoprhism via interfaces</h1>
+<p>All KNN search algorithms implement the <code>Builder</code>, <code>Prebuilt</code> and <code>Searcher</code> interfaces via inheritance. This means that users can swap algorithms at run-time:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> dist_type = std::make_shared&lt;knncolle::EuclideanDistance&lt;double, double&gt; &gt;();</div>
+<div class="line"> </div>
+<div class="line">std::unique_ptr&lt;knncolle::Builder&lt;int, double, double&gt; &gt; ptr;</div>
 <div class="line"><span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;brute-force&quot;</span>) {</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt;&gt;</a>);</div>
-<div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;kmknn&quot;</span>) {</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> knncolle::KmknnBuilder&lt;&gt;);</div>
+<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder&lt;int, double, double&gt;</a>(dist_type));</div>
+<div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (algorithm == <span class="stringliteral">&quot;vp-tree&quot;</span>) {</div>
+<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;int, double, double&gt;</a>(dist_type));</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;&gt;</a>);</div>
+<div class="line">    <span class="comment">// do something else</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">auto</span> some_prebuilt = ptr-&gt;<a class="code hl_function" href="classknncolle_1_1Builder.html#afeda432debae999f988f32f147055251">build_unique</a>(mat);</div>
-<div class="line"><span class="keyword">auto</span> some_results = <a class="code hl_function" href="namespaceknncolle.html#a22e035b2d5eb293fd828a67e61f3213d">knncolle::find_nearest_neighbors</a>(*some_prebuilt, 10); </div>
-<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:218</div></div>
-<div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="classknncolle_1_1Builder.html">knncolle::Builder</a></div><div class="ttdoc">Interface to build nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Builder.hpp:22</div></div>
-</div><!-- fragment --><p>Each class is also heavily templated to enable compile-time polymorphism. We default to <code>int</code>s for the indices and <code>double</code>s for the distances. If precision is not a concern, one can often achieve greater speed by swapping all <code>double</code>s with <code>float</code>s. The choice of distance calculation is also a compile-time parameter for most subclasses, and users can define their own classes to use a custom distance.</p>
-<p>The choice of input data is another compile-time paramter, as defined by the <code>MockMatrix</code> interface. Advanced users can define their own inputs to, e.g., read from file-backed or sparse matrices. For example, we implement the <code>L2NormalizedMatrix</code> class to apply on-the-fly L2 normalization of each observation's vector of coordinates. We then combine this with the <code>L2NormalizedBuilder</code> class to transform an existing neighbor search method from Euclidean to cosine distances.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">bool</span> use_cosine = <span class="keyword">true</span>;</div>
-<div class="line">std::unique_ptr&lt;<a class="code hl_class" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt;<span class="keyword">decltype</span>(mat), <span class="keywordtype">double</span>&gt; &gt; ptr;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordflow">if</span> (use_cosine) {</div>
-<div class="line">    <span class="keyword">typedef</span> <a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a>:VptreeBuilder&lt;</div>
-<div class="line">        <a class="code hl_struct" href="structknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a>,</div>
-<div class="line">        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix&lt;&gt;</a> <span class="comment">// only use as a template argument.</span></div>
-<div class="line">    &gt; L2VptreeBuilder;</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a>(<span class="keyword">new</span> L2VptreeBuilder));</div>
+<div class="line"><span class="keyword">auto</span> some_prebuilt = ptr-&gt;build_unique(mat);</div>
+<div class="line"><span class="keyword">auto</span> some_results = <a class="code hl_function" href="namespaceknncolle.html#a2c6d8b116464bab254bda34216338c3c">knncolle::find_nearest_neighbors</a>(*some_prebuilt, 10); </div>
+<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:220</div></div>
+</div><!-- fragment --><p>Similarly, for algorithms that accept a <code>DistanceMetric</code>, we can switch between distances at run-time:</p>
+<div class="fragment"><div class="line">std::shared_ptr&lt;knncolle::DistanceMetric&lt;double, double&gt; &gt; distptr;</div>
+<div class="line"><span class="keywordflow">if</span> (distance == <span class="stringliteral">&quot;euclidean&quot;</span>) {</div>
+<div class="line">    distptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance&lt;double, double&gt;</a>);</div>
+<div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (distance == <span class="stringliteral">&quot;manhattan&quot;</span>) {</div>
+<div class="line">    distptr.reset(<span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1ManhattanDistance.html">knncolle::ManhattanDistance&lt;double, double&gt;</a>);</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
-<div class="line">    ptr.reset(<span class="keyword">new</span> <a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a>:VptreeBuilder&lt;&gt;);</div>
+<div class="line">    <span class="comment">// do something else.</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:212</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix</a></div><div class="ttdoc">Wrapper around a matrix with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:160</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:22</div></div>
-<div class="ttc" id="astructknncolle_1_1EuclideanDistance_html"><div class="ttname"><a href="structknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a></div><div class="ttdoc">Compute Euclidean distances between two input vectors.</div><div class="ttdef"><b>Definition</b> distances.hpp:68</div></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder&lt;int, double, double&gt;</a> vp_builder(std::move(distptr));</div>
+<div class="ttc" id="aclassknncolle_1_1ManhattanDistance_html"><div class="ttname"><a href="classknncolle_1_1ManhattanDistance.html">knncolle::ManhattanDistance</a></div><div class="ttdoc">Compute Manhattan distances between two input vectors.</div><div class="ttdef"><b>Definition</b> distances.hpp:104</div></div>
+</div><!-- fragment --><p>We can even switch between input matrix representations at run-time, as long as they follow the <code>Matrix</code> interface. This allows the various <code>Builder</code> classes to accept input data in other formats (e.g., sparse, file-backed). For example, <b>knncolle</b> implements the <code>L2NormalizedMatrix</code> subclass to apply on-the-fly L2 normalization of each observation's vector of coordinates. This is used inside the <code>L2NormalizedBuilder</code> class to transform an existing neighbor search method from Euclidean to cosine distances.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> builder = std::make_shared&lt;knncolle::VptreeBuilder&lt;int, double, double&gt; &gt;(</div>
+<div class="line">    <span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance&lt;double, double&gt;</a></div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> l2builder = std::make_shared&lt;<a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a>&lt;</div>
+<div class="line">    <span class="comment">/* observation index */</span> int,</div>
+<div class="line">    <span class="comment">/* data type */</span> double,</div>
+<div class="line">    <span class="comment">/* distance type */</span> double,</div>
+<div class="line">    <span class="comment">/* normalized type */</span> <span class="keywordtype">double</span></div>
+<div class="line">&gt; &gt;(std::move(builder));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Any Matrix &#39;mat&#39; is automatically wrapped in a L2NormalizedMatrix</span></div>
+<div class="line"><span class="comment">// before being passed to &#39;builder-&gt;build_unique&#39;.</span></div>
+<div class="line"><span class="keyword">auto</span> l2index = l2builder-&gt;<a class="code hl_function" href="classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a>(mat);</div>
+<div class="ttc" id="aclassknncolle_1_1Builder_html_a93cac638de3e4ad31919bc5d677d16b7"><div class="ttname"><a href="classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">knncolle::Builder::build_unique</a></div><div class="ttdeci">std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt; build_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Builder.hpp:61</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:253</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
-<h1>Building projects with <b>knncolle</b></h1>
+<h1>Modifying template parameters</h1>
+<p>Each interface has a few template parameters to define its types. In general, we recommend using <code>int</code>s for the observation indices and <code>double</code>s for the data and distances. If precision is not a concern, we can achieve greater speed by swapping <code>double</code>s with <code>float</code>s. We may also need to swap <code>int</code> with <code>size_t</code> for larger datasets, e.g., more than 2 billion observations.</p>
+<p>Advanced users can set up the templates to bypass virtual dispatch at the cost of more compile-time complexity. For example, we could parametrize the <code>VptreeBuilder</code> so that it is hard-coded to use Euclidean distances and to only accept column-major in-memory matrices. This gives the compiler an opportunity to devirtualize the relevant method calls for a potential performance improvement.</p>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a>&lt;</div>
+<div class="line">    int,</div>
+<div class="line">    double,</div>
+<div class="line">    double,</div>
+<div class="line">    kncolle::SimpleMatrix&lt;int, double&gt;,</div>
+<div class="line">    <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance&lt;double, double&gt;</a></div>
+<div class="line">&gt; VptreeEuclideanSimple;</div>
+</div><!-- fragment --><h1>Building projects with <b>knncolle</b></h1>
 <h2>CMake with <code>FetchContent</code></h2>
 <p>If you're using CMake, you just need to add something like this to your <code>CMakeLists.txt</code>:</p>
 <div class="fragment"><div class="line">include(FetchContent)</div>

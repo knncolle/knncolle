@@ -1,3 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structknncolle_1_1MockMatrix_1_1Workspace.html" title="Workspace for consecutive access to all observations." alt="" coords="5,5,148,46"/>
+<area shape="rect" id="Node000000" href="$classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
+<area shape="rect" id="Node000001" href="$classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute&#45;force nearest neighbor search." alt="" coords="251,5,430,61"/>
+<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="176,85,253,59,255,64,178,90"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1L2NormalizedPrebuilt.html" title="Wrapper around a prebuilt index with L2 normalization." alt="" coords="241,85,440,141"/>
+<area shape="poly" id="edge11_Node000000_Node000002" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1VptreePrebuilt.html" title="Index for a VP&#45;tree search." alt="" coords="256,165,425,221"/>
+<area shape="poly" id="edge12_Node000000_Node000003" title=" " alt="" coords="178,136,256,163,254,168,176,141"/>
 </map>

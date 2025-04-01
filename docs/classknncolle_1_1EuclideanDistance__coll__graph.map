@@ -1,0 +1,5 @@
+<map id="knncolle::EuclideanDistance&lt; Data_, Distance_ &gt;" name="knncolle::EuclideanDistance&lt; Data_, Distance_ &gt;">
+<area shape="rect" id="Node000001" title="Compute Euclidean distances between two input vectors." alt="" coords="5,94,188,135"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1DistanceMetric.html" title="Interface for a distance metric." alt="" coords="15,5,178,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,62,99,94,94,94,94,62"/>
+</map>

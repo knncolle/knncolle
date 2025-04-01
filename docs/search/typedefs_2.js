@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a72beeaa95281de7a5cf16937ccbae47f',1,'knncolle']]]
+  ['index_5ftype_0',['index_type',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html#a0777fb08a869fbfcc4254f8ec4eb0da6',1,'kmeans::MockMatrix']]]
 ];

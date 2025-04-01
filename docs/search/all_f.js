@@ -2,7 +2,7 @@ var searchData=
 [
   ['randomaccessworkspace_0',['RandomAccessWorkspace',['https://ltla.github.io/CppKmeans/structkmeans_1_1MockMatrix_1_1RandomAccessWorkspace.html',1,'kmeans::MockMatrix']]],
   ['range_2ehpp_1',['range.hpp',['https://ltla.github.io/subpar/range_8hpp.html',1,'']]],
-  ['raw_5fdistance_2',['raw_distance',['../structknncolle_1_1MockDistance.html#a7cfc77c0fd9806f9030a617404a5f954',1,'knncolle::MockDistance::raw_distance()'],['../structknncolle_1_1EuclideanDistance.html#a0d6936a53ba4ed0e0ca33c9ac2515d06',1,'knncolle::EuclideanDistance::raw_distance()'],['../structknncolle_1_1ManhattanDistance.html#ac782b1cfdb76e144a3d84d674e661456',1,'knncolle::ManhattanDistance::raw_distance()']]],
+  ['raw_2',['raw',['../classknncolle_1_1DistanceMetric.html#a2124334e18679dc06dc8cfe8baee4bc5',1,'knncolle::DistanceMetric']]],
   ['refine_3',['Refine',['https://ltla.github.io/CppKmeans/classkmeans_1_1Refine.html',1,'kmeans']]],
   ['refine_2ehpp_4',['Refine.hpp',['https://ltla.github.io/CppKmeans/Refine_8hpp.html',1,'']]],
   ['refine_3c_20matrix_5f_2c_20cluster_5f_2c_20float_5f_20_3e_5',['Refine&lt; Matrix_, Cluster_, Float_ &gt;',['https://ltla.github.io/CppKmeans/classkmeans_1_1Refine.html',1,'kmeans']]],

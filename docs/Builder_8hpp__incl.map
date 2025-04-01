@@ -1,9 +1,13 @@
 <map id="knncolle/Builder.hpp" name="knncolle/Builder.hpp">
-<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor indices." alt="" coords="12,5,149,31"/>
+<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor indices." alt="" coords="108,5,245,31"/>
 <area shape="rect" id="Node000002" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="77,79,166,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,30,109,64,105,67,85,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,33,142,68,138,65,165,30"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,153,73,178"/>
-<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="80,32,49,138,44,137,74,31"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="139,34,101,53,83,65,68,81,52,109,45,138,39,137,47,107,64,77,80,61,99,48,137,29"/>
+<area shape="rect" id="Node000007" href="$Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="191,79,271,105"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="187,30,215,65,211,68,183,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="295,79,346,105"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="202,29,284,69,281,74,200,34"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,107,66,144,63,140,106,103"/>
 <area shape="rect" id="Node000004" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="97,153,194,178"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="128,104,139,137,134,139,123,106"/>

@@ -1,9 +1,9 @@
-<map id="knncolle::Searcher&lt; Index_, Float_ &gt;" name="knncolle::Searcher&lt; Index_, Float_ &gt;">
-<area shape="rect" id="Node000001" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,85,133,126"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="191,5,378,61"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,77,198,59,200,64,147,82"/>
-<area shape="rect" id="Node000003" href="$classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="181,85,388,126"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,102,180,102,180,108,148,108"/>
-<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="202,149,367,205"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,128,202,147,200,152,145,133"/>
+<map id="knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;" name="knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;">
+<area shape="rect" id="Node000001" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="251,5,438,61"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,85,256,59,258,64,179,90"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="241,85,448,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
+<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="260,165,429,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="179,136,260,163,258,168,177,141"/>
 </map>

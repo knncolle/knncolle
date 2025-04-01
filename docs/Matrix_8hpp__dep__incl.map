@@ -1,0 +1,20 @@
+<map id="knncolle/Matrix.hpp" name="knncolle/Matrix.hpp">
+<area shape="rect" id="Node000001" title="Interface for the input matrix." alt="" coords="163,5,296,31"/>
+<area shape="rect" id="Node000002" href="$Bruteforce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="29,153,187,178"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,42,172,59,150,81,127,119,114,153,109,151,123,116,146,77,168,55,192,38"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="151,226,297,252"/>
+<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="171,39,107,62,47,94,25,113,12,133,9,154,20,177,39,191,71,204,152,224,150,229,70,209,36,196,15,180,4,155,7,131,21,109,44,90,105,57,169,34"/>
+<area shape="rect" id="Node000004" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="161,79,298,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="232,46,232,79,227,79,227,46"/>
+<area shape="rect" id="Node000005" href="$L2Normalized_8hpp.html" title="Wrapper for L2 normalization prior to search." alt="" coords="262,153,439,178"/>
+<area shape="poly" id="edge10_Node000001_Node000005" title=" " alt="" coords="266,38,291,55,313,77,336,116,350,151,345,153,332,119,309,81,287,59,263,42"/>
+<area shape="rect" id="Node000006" href="$Vptree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="463,153,598,178"/>
+<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="269,36,507,150,504,154,267,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="142,184,206,223,203,228,139,189"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="197,115,130,154,127,150,194,111"/>
+<area shape="poly" id="edge9_Node000004_Node000003" title=" " alt="" coords="231,120,227,226,222,226,226,120"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="265,111,331,150,329,154,262,115"/>
+<area shape="poly" id="edge7_Node000004_Node000006" title=" " alt="" coords="296,106,480,149,479,155,295,111"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="317,189,247,228,244,223,315,184"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="464,185,277,228,276,223,463,180"/>
+</map>

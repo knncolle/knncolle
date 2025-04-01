@@ -1,9 +1,9 @@
-<map id="knncolle::Builder&lt; Matrix_, Float_ &gt;" name="knncolle::Builder&lt; Matrix_, Float_ &gt;">
-<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor search indices." alt="" coords="5,71,129,111"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforceBuilder.html" title="Perform a brute&#45;force nearest neighbor search." alt="" coords="178,5,371,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,64,207,44,208,49,144,70"/>
-<area shape="rect" id="Node000003" href="$classknncolle_1_1L2NormalizedBuilder.html" title="Wrapper around a builder with L2 normalization." alt="" coords="177,71,372,111"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="144,88,176,88,176,94,144,94"/>
-<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreeBuilder.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="198,135,351,191"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="143,114,198,134,196,139,141,119"/>
+<map id="knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;" name="knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;">
+<area shape="rect" id="Node000001" title="Interface to build nearest&#45;neighbor search indices." alt="" coords="5,85,167,141"/>
+<area shape="rect" id="Node000002" href="$classknncolle_1_1BruteforceBuilder.html" title="Perform a brute&#45;force nearest neighbor search." alt="" coords="218,5,407,61"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,77,230,59,232,64,182,82"/>
+<area shape="rect" id="Node000003" href="$classknncolle_1_1L2NormalizedBuilder.html" title="Wrapper around a builder with L2 normalization." alt="" coords="215,85,410,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="182,110,214,110,214,116,182,116"/>
+<area shape="rect" id="Node000004" href="$classknncolle_1_1VptreeBuilder.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree." alt="" coords="218,165,407,221"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="182,144,232,162,230,167,180,149"/>
 </map>

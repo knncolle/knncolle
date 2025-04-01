@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt; Class Template Reference</title>
+<title>knncolle: knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1Prebuilt-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -102,55 +102,55 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;:</div>
+Inheritance diagram for knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1Prebuilt__inherit__graph.png" border="0" usemap="#aknncolle_1_1Prebuilt_3_01Dim___00_01Index___00_01Float___01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1Prebuilt_3_01Dim___00_01Index___00_01Float___01_4_inherit__map" id="aknncolle_1_1Prebuilt_3_01Dim___00_01Index___00_01Float___01_4_inherit__map">
-<area shape="rect" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="5,85,167,126"/>
-<area shape="rect" href="classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute&#45;force nearest neighbor search." alt="" coords="225,5,404,61"/>
-<area shape="poly" title=" " alt="" coords="166,77,224,59,225,64,168,82"/>
-<area shape="rect" href="classknncolle_1_1L2NormalizedPrebuilt.html" title="Wrapper around a prebuilt index with L2 normalization." alt="" coords="215,85,414,126"/>
-<area shape="poly" title=" " alt="" coords="182,102,214,102,214,108,182,108"/>
-<area shape="rect" href="classknncolle_1_1VptreePrebuilt.html" title="Index for a VP&#45;tree search." alt="" coords="232,149,397,205"/>
-<area shape="poly" title=" " alt="" coords="168,128,232,148,230,154,166,133"/>
+<div class="center"><img src="classknncolle_1_1Prebuilt__inherit__graph.png" border="0" usemap="#aknncolle_1_1Prebuilt_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="aknncolle_1_1Prebuilt_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" id="aknncolle_1_1Prebuilt_3_01Index___00_01Data___00_01Distance___01_4_inherit__map">
+<area shape="rect" title="Interface for prebuilt nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
+<area shape="rect" href="classknncolle_1_1BruteforcePrebuilt.html" title="Index for a brute&#45;force nearest neighbor search." alt="" coords="251,5,430,61"/>
+<area shape="poly" title=" " alt="" coords="176,85,253,59,255,64,178,90"/>
+<area shape="rect" href="classknncolle_1_1L2NormalizedPrebuilt.html" title="Wrapper around a prebuilt index with L2 normalization." alt="" coords="241,85,440,141"/>
+<area shape="poly" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
+<area shape="rect" href="classknncolle_1_1VptreePrebuilt.html" title="Index for a VP&#45;tree search." alt="" coords="256,165,425,221"/>
+<area shape="poly" title=" " alt="" coords="178,136,256,163,254,168,176,141"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6dd837344267241384206661df28e1ab" id="r_a6dd837344267241384206661df28e1ab"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dd837344267241384206661df28e1ab">num_observations</a> () const =0</td></tr>
-<tr class="separator:a6dd837344267241384206661df28e1ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99412339915bc2ff0a6cd58ef4012d74" id="r_a99412339915bc2ff0a6cd58ef4012d74"><td class="memItemLeft" align="right" valign="top">virtual Dim_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99412339915bc2ff0a6cd58ef4012d74">num_dimensions</a> () const =0</td></tr>
-<tr class="separator:a99412339915bc2ff0a6cd58ef4012d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71b757b154aa2713d732afd2d9444bb9" id="r_a71b757b154aa2713d732afd2d9444bb9"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Float_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71b757b154aa2713d732afd2d9444bb9">initialize</a> () const =0</td></tr>
-<tr class="separator:a71b757b154aa2713d732afd2d9444bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a560fec57d6ec36d288b6cd80e9f4c7bd" id="r_a560fec57d6ec36d288b6cd80e9f4c7bd"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a560fec57d6ec36d288b6cd80e9f4c7bd">num_observations</a> () const =0</td></tr>
+<tr class="separator:a560fec57d6ec36d288b6cd80e9f4c7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad08cdf5cdab27db326fb7883d1458e8e" id="r_ad08cdf5cdab27db326fb7883d1458e8e"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad08cdf5cdab27db326fb7883d1458e8e">num_dimensions</a> () const =0</td></tr>
+<tr class="separator:ad08cdf5cdab27db326fb7883d1458e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacc8819b7962ce27294cf0d42f6c6e68" id="r_aacc8819b7962ce27294cf0d42f6c6e68"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacc8819b7962ce27294cf0d42f6c6e68">initialize</a> () const =0</td></tr>
+<tr class="separator:aacc8819b7962ce27294cf0d42f6c6e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Dim_, typename Index_, typename Float_&gt;<br />
-class knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</div><p>Interface for prebuilt nearest-neighbor search indices. </p>
-<p>Instances of <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclasses are typically constructed with <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>. Note that a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance may outlive the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> object used to generate it, so the former should not hold any references to the latter.</p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Data_, typename Distance_&gt;<br />
+class knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;</div><p>Interface for prebuilt nearest-neighbor search indices. </p>
+<p>Instances of <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclasses are typically constructed with <code><a class="el" href="classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c">Builder::build_raw()</a></code>. Note that a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance may outlive the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> object used to generate it, so the former should not hold any references to the latter.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Dim_</td><td>Integer type for the number of dimensions. For the output of <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>, this is set to <code>Matrix_::dimension_type</code>. </td></tr>
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. For the output of <code><a class="el" href="classknncolle_1_1Builder.html#aa1c84ac7bd4120f5539be1320b74f5f4">Builder::build_raw()</a></code>, this is set to <code>Matrix_::index_type</code>. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a71b757b154aa2713d732afd2d9444bb9" name="a71b757b154aa2713d732afd2d9444bb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71b757b154aa2713d732afd2d9444bb9">&#9670;&#160;</a></span>initialize()</h2>
+<a id="aacc8819b7962ce27294cf0d42f6c6e68" name="aacc8819b7962ce27294cf0d42f6c6e68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacc8819b7962ce27294cf0d42f6c6e68">&#9670;&#160;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Float_ &gt; &gt; <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Dim_, Index_, Float_ &gt;::initialize </td>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Data_, Distance_ &gt; &gt; <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Data_, Distance_ &gt;::initialize </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -164,23 +164,23 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
 </div><div class="memdoc">
 <p>Create a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> for searching the index. </p><dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance. </dd></dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#a591b94e2c5f4a0fe404cf89dcc20d0de">knncolle::BruteforcePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, <a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html#a0879ea8c8512d04a2f73fb7afd7eae56">knncolle::L2NormalizedPrebuilt&lt; Dim_, Index_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#a583eeead36f94b77d5ceb46c47fd8aa3">knncolle::VptreePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#aeac9a8865d093e6d019f7383ec556ec6">knncolle::BruteforcePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, <a class="el" href="classknncolle_1_1L2NormalizedPrebuilt.html#afb014f25024603b63877e5dee3ad3459">knncolle::L2NormalizedPrebuilt&lt; Index_, Data_, Distance_, Normalized_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#aa81f5ca04707010f2b8e56aac81f9196">knncolle::VptreePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a99412339915bc2ff0a6cd58ef4012d74" name="a99412339915bc2ff0a6cd58ef4012d74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99412339915bc2ff0a6cd58ef4012d74">&#9670;&#160;</a></span>num_dimensions()</h2>
+<a id="ad08cdf5cdab27db326fb7883d1458e8e" name="ad08cdf5cdab27db326fb7883d1458e8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad08cdf5cdab27db326fb7883d1458e8e">&#9670;&#160;</a></span>num_dimensions()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Dim_ <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Dim_, Index_, Float_ &gt;::num_dimensions </td>
+          <td class="memname">virtual size_t <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Data_, Distance_ &gt;::num_dimensions </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -194,23 +194,23 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Number of dimensions. </dd></dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#a8623475e148b181f29623cf4b3c7a5f4">knncolle::BruteforcePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#aa3945048112b06bcbf9a4039f55581fe">knncolle::VptreePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#afcf08a0b0063213de28652097738bd2d">knncolle::BruteforcePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#a142a6ce78e805b280137a9b4dfe85f49">knncolle::VptreePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a6dd837344267241384206661df28e1ab" name="a6dd837344267241384206661df28e1ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dd837344267241384206661df28e1ab">&#9670;&#160;</a></span>num_observations()</h2>
+<a id="a560fec57d6ec36d288b6cd80e9f4c7bd" name="a560fec57d6ec36d288b6cd80e9f4c7bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a560fec57d6ec36d288b6cd80e9f4c7bd">&#9670;&#160;</a></span>num_observations()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Dim_, Index_, Float_ &gt;::num_observations </td>
+          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Data_, Distance_ &gt;::num_observations </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -224,7 +224,7 @@ template&lt;typename Dim_ , typename Index_ , typename Float_ &gt; </div>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Number of observations in the dataset to be searched. </dd></dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#a532a8a4fbe68d0df15f4618fd5d82983">knncolle::BruteforcePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#a3bee679a176256a7f7247e636c8c26af">knncolle::VptreePrebuilt&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforcePrebuilt.html#aa2058e2a905ac6c83389c5ad5b062049">knncolle::BruteforcePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreePrebuilt.html#a4ddff52bf80e043c07a43281b067a935">knncolle::VptreePrebuilt&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>

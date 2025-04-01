@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: knncolle::Searcher&lt; Index_, Float_ &gt; Class Template Reference</title>
+<title>knncolle: knncolle::Searcher&lt; Index_, Data_, Distance_ &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classknncolle_1_1Searcher-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">knncolle::Searcher&lt; Index_, Float_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">knncolle::Searcher&lt; Index_, Data_, Distance_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -102,58 +102,59 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="Searcher_8hpp_source.html">Searcher.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for knncolle::Searcher&lt; Index_, Float_ &gt;:</div>
+Inheritance diagram for knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;:</div>
 <div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1Searcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map" id="aknncolle_1_1Searcher_3_01Index___00_01Float___01_4_inherit__map">
-<area shape="rect" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,85,133,126"/>
-<area shape="rect" href="classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="191,5,378,61"/>
-<area shape="poly" title=" " alt="" coords="145,77,198,59,200,64,147,82"/>
-<area shape="rect" href="classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="181,85,388,126"/>
-<area shape="poly" title=" " alt="" coords="148,102,180,102,180,108,148,108"/>
-<area shape="rect" href="classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="202,149,367,205"/>
-<area shape="poly" title=" " alt="" coords="147,128,202,147,200,152,145,133"/>
+<div class="center"><img src="classknncolle_1_1Searcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" id="aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map">
+<area shape="rect" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
+<area shape="rect" href="classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="251,5,438,61"/>
+<area shape="poly" title=" " alt="" coords="177,85,256,59,258,64,179,90"/>
+<area shape="rect" href="classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="241,85,448,141"/>
+<area shape="poly" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
+<area shape="rect" href="classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="260,165,429,221"/>
+<area shape="poly" title=" " alt="" coords="179,136,260,163,258,168,177,141"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6ad140ee93a7af57fdb722c16476aee4" id="r_a6ad140ee93a7af57fdb722c16476aee4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ad140ee93a7af57fdb722c16476aee4">search</a> (Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</td></tr>
-<tr class="separator:a6ad140ee93a7af57fdb722c16476aee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f4bac73a3dd958d1f09e1093bd1cf01" id="r_a9f4bac73a3dd958d1f09e1093bd1cf01"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f4bac73a3dd958d1f09e1093bd1cf01">search</a> (const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</td></tr>
-<tr class="separator:a9f4bac73a3dd958d1f09e1093bd1cf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8362d0f6ea1b7f6e09d26a9188d31d1d" id="r_a8362d0f6ea1b7f6e09d26a9188d31d1d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8362d0f6ea1b7f6e09d26a9188d31d1d">can_search_all</a> () const</td></tr>
-<tr class="separator:a8362d0f6ea1b7f6e09d26a9188d31d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fb8a8e436303c5917f3717393cf056" id="r_ae7fb8a8e436303c5917f3717393cf056"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7fb8a8e436303c5917f3717393cf056">search_all</a> (Index_ i, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
-<tr class="separator:ae7fb8a8e436303c5917f3717393cf056"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbe92827aebee347f57257591712d093" id="r_adbe92827aebee347f57257591712d093"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adbe92827aebee347f57257591712d093">search_all</a> (const Float_ *query, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</td></tr>
-<tr class="separator:adbe92827aebee347f57257591712d093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f6c2ce78952dd555f7f1a8fb3ac208" id="r_ab0f6c2ce78952dd555f7f1a8fb3ac208"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0f6c2ce78952dd555f7f1a8fb3ac208">search</a> (Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</td></tr>
+<tr class="separator:ab0f6c2ce78952dd555f7f1a8fb3ac208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6968d65276d81f47c92f6351ec786150" id="r_a6968d65276d81f47c92f6351ec786150"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6968d65276d81f47c92f6351ec786150">search</a> (const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</td></tr>
+<tr class="separator:a6968d65276d81f47c92f6351ec786150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a175ab05c339e3aa39b974f1ceebc21a3" id="r_a175ab05c339e3aa39b974f1ceebc21a3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a175ab05c339e3aa39b974f1ceebc21a3">can_search_all</a> () const</td></tr>
+<tr class="separator:a175ab05c339e3aa39b974f1ceebc21a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef8c1bf087751bff46af346bda2feb3" id="r_a3ef8c1bf087751bff46af346bda2feb3"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ef8c1bf087751bff46af346bda2feb3">search_all</a> (Index_ i, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
+<tr class="separator:a3ef8c1bf087751bff46af346bda2feb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c88e638622eadc5f3c0328e8a1c5f1" id="r_a37c88e638622eadc5f3c0328e8a1c5f1"><td class="memItemLeft" align="right" valign="top">virtual Index_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37c88e638622eadc5f3c0328e8a1c5f1">search_all</a> (const Data_ *query, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
+<tr class="separator:a37c88e638622eadc5f3c0328e8a1c5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Float_&gt;<br />
-class knncolle::Searcher&lt; Index_, Float_ &gt;</div><p>Interface for searching nearest-neighbor search indices. </p>
-<p>Instances of <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> subclasses are typically constructed with <code><a class="el" href="classknncolle_1_1Prebuilt.html#a71b757b154aa2713d732afd2d9444bb9">Prebuilt::initialize()</a></code>. This is intended to allow re-use of data allocations across different calls to <code><a class="el" href="#a6ad140ee93a7af57fdb722c16476aee4">search()</a></code>. Users should ensure that a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance does not outlive the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object used to generate it; this allows developers of the former to hold references to the latter.</p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Data_, typename Distance_&gt;<br />
+class knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;</div><p>Interface for searching nearest-neighbor search indices. </p>
+<p>Instances of <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> subclasses are typically constructed with <code><a class="el" href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">Prebuilt::initialize()</a></code>. This is intended to allow re-use of data allocations across different calls to <code><a class="el" href="#ab0f6c2ce78952dd555f7f1a8fb3ac208">search()</a></code>. Users should ensure that a <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance does not outlive the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object used to generate it; this allows developers of the former to hold references to the latter.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the indices. For the output of <code>Builder::build</code>, this is set to <code><a class="el" href="classknncolle_1_1MockMatrix.html#a66b87f03e9440cb519167209b89366fc">MockMatrix::index_type</a></code>. </td></tr>
-    <tr><td class="paramname">Float_</td><td>Floating point type for the query data and output distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8362d0f6ea1b7f6e09d26a9188d31d1d" name="a8362d0f6ea1b7f6e09d26a9188d31d1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8362d0f6ea1b7f6e09d26a9188d31d1d">&#9670;&#160;</a></span>can_search_all()</h2>
+<a id="a175ab05c339e3aa39b974f1ceebc21a3" name="a175ab05c339e3aa39b974f1ceebc21a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a175ab05c339e3aa39b974f1ceebc21a3">&#9670;&#160;</a></span>can_search_all()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Float_ &gt;::can_search_all </td>
+          <td class="memname">virtual bool <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Data_, Distance_ &gt;::can_search_all </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -166,27 +167,27 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>It is expected that the return value of this method should be constant throughout the lifetime of any <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance.</p>
-<dl class="section return"><dt>Returns</dt><dd>Whether this instance has an implementation of the <code><a class="el" href="#ae7fb8a8e436303c5917f3717393cf056">search_all()</a></code> method. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether this instance has an implementation of the <code><a class="el" href="#a3ef8c1bf087751bff46af346bda2feb3">search_all()</a></code> method. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a9c7cd8e9f01f5798d5b98a1d5318e8f4">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac7a0f11645ab4f57b9991602339e0e15">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a7ae415a6fa177b498359371211c007a1">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a8df5ca5cd6c2f305da615f7839ba7894">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a9f4bac73a3dd958d1f09e1093bd1cf01" name="a9f4bac73a3dd958d1f09e1093bd1cf01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f4bac73a3dd958d1f09e1093bd1cf01">&#9670;&#160;</a></span>search() <span class="overload">[1/2]</span></h2>
+<a id="a6968d65276d81f47c92f6351ec786150" name="a6968d65276d81f47c92f6351ec786150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6968d65276d81f47c92f6351ec786150">&#9670;&#160;</a></span>search() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Float_ &gt;::search </td>
+          <td class="memname">virtual void <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Data_, Distance_ &gt;::search </td>
           <td>(</td>
-          <td class="paramtype">const Float_ *</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+          <td class="paramtype">const Data_ *</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -201,7 +202,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; Float_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -213,31 +214,31 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 <p>Find the nearest neighbors of a new observation.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Prebuilt.html#a99412339915bc2ff0a6cd58ef4012d74">Prebuilt::num_dimensions()</a></code>, containing the coordinates of the query point. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. This should be a non-negative integer that is no greater than the number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. On output, the length of the vector should be equal to <code>k</code>. All entries should be unique and less than <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. Optionally NULL, in which case no indices are returned. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e">Prebuilt::num_dimensions()</a></code>, containing the coordinates of the query point. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. This should be a non-negative integer that is no greater than the number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. On output, the length of the vector should be equal to <code>k</code>. All entries should be unique and less than <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. Optionally NULL, in which case no indices are returned. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#afef023240ea7ddcc28561c0f71c54601">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ac86dd5bf34f233d04502e789224eb44a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#af66acefa137de424974cabfc2cc624fb">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="a6ad140ee93a7af57fdb722c16476aee4" name="a6ad140ee93a7af57fdb722c16476aee4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ad140ee93a7af57fdb722c16476aee4">&#9670;&#160;</a></span>search() <span class="overload">[2/2]</span></h2>
+<a id="ab0f6c2ce78952dd555f7f1a8fb3ac208" name="ab0f6c2ce78952dd555f7f1a8fb3ac208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0f6c2ce78952dd555f7f1a8fb3ac208">&#9670;&#160;</a></span>search() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Float_ &gt;::search </td>
+          <td class="memname">virtual void <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Data_, Distance_ &gt;::search </td>
           <td>(</td>
           <td class="paramtype">Index_</td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
         </tr>
@@ -254,7 +255,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; Float_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -266,38 +267,38 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 <p>Find the nearest neighbors of the <code>i</code>-th observation in the dataset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">i</td><td>The index of the observation of interest. This should be non-negative and less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. This should be a non-negative integer that is less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. (Except if <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a> == 0</code>, in which case the only valid choice for <code>k</code> is also zero.) Users can call <code><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">cap_k()</a></code> to easily cap <code>k</code> based on <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. On output, the length of the vector should be equal to <code>k</code>. All entries should be unique and less than <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. This vector is guaranteed to not contain <code>i</code> itself. Optionally NULL, in which case no indices are returned. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">i</td><td>The index of the observation of interest. This should be non-negative and less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">k</td><td>The number of neighbors to identify. This should be a non-negative integer that is less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. (Except if <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a> == 0</code>, in which case the only valid choice for <code>k</code> is also zero.) Users can call <code><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">cap_k()</a></code> to easily cap <code>k</code> based on <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. On output, the length of the vector should be equal to <code>k</code>. All entries should be unique and less than <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. This vector is guaranteed to not contain <code>i</code> itself. Optionally NULL, in which case no indices are returned. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a5250b4ce7176fbe1a60783bc4dd324f0">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a3b2a7c230cfdf88cf1fa42896ca5909a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a053545a8000d3a7ad9ff81c8315e20a2">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a2f9935e30b1541aaa19e1cad9f8448e5">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="adbe92827aebee347f57257591712d093" name="adbe92827aebee347f57257591712d093"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbe92827aebee347f57257591712d093">&#9670;&#160;</a></span>search_all() <span class="overload">[1/2]</span></h2>
+<a id="a37c88e638622eadc5f3c0328e8a1c5f1" name="a37c88e638622eadc5f3c0328e8a1c5f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37c88e638622eadc5f3c0328e8a1c5f1">&#9670;&#160;</a></span>search_all() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Float_ &gt;::search_all </td>
+          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Data_, Distance_ &gt;::search_all </td>
           <td>(</td>
-          <td class="paramtype">const Float_ *</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
+          <td class="paramtype">const Data_ *</td>          <td class="paramname"><span class="paramname"><em>query</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Float_</td>          <td class="paramname"><span class="paramname"><em>distance</em></span>, </td>
+          <td class="paramtype">Distance_</td>          <td class="paramname"><span class="paramname"><em>distance</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -307,7 +308,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; Float_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -316,10 +317,10 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Find all neighbors of a new observation within a certain distance. This method is optional and may not be implemented by subclasses, so applications should check <code><a class="el" href="#a8362d0f6ea1b7f6e09d26a9188d31d1d">can_search_all()</a></code> before attempting a call. A run-time exception is thrown if this method is called on a subclass that does not implement it.</p>
+<p>Find all neighbors of a new observation within a certain distance. This method is optional and may not be implemented by subclasses, so applications should check <code><a class="el" href="#a175ab05c339e3aa39b974f1ceebc21a3">can_search_all()</a></code> before attempting a call. A run-time exception is thrown if this method is called on a subclass that does not implement it.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Prebuilt.html#a99412339915bc2ff0a6cd58ef4012d74">Prebuilt::num_dimensions()</a></code>, containing the coordinates of the query point. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">query</td><td>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e">Prebuilt::num_dimensions()</a></code>, containing the coordinates of the query point. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">distance</td><td>The distance in which to consider neighbors. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. Optionally NULL, in which case no indices are returned. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned.</td></tr>
@@ -328,30 +329,30 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>query</code>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#aae68bf23ca7d80dbf0a6138cb8cb6d15">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a51594cb79d1ea89aea64359690e5301e">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#ac1ead06e7eaf03df9cec271e9a64fbee">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a53b639f9025699af8fc45487c26ed800">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
-<a id="ae7fb8a8e436303c5917f3717393cf056" name="ae7fb8a8e436303c5917f3717393cf056"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7fb8a8e436303c5917f3717393cf056">&#9670;&#160;</a></span>search_all() <span class="overload">[2/2]</span></h2>
+<a id="a3ef8c1bf087751bff46af346bda2feb3" name="a3ef8c1bf087751bff46af346bda2feb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef8c1bf087751bff46af346bda2feb3">&#9670;&#160;</a></span>search_all() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Float_ &gt; </div>
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Float_ &gt;::search_all </td>
+          <td class="memname">virtual Index_ <a class="el" href="classknncolle_1_1Searcher.html">knncolle::Searcher</a>&lt; Index_, Data_, Distance_ &gt;::search_all </td>
           <td>(</td>
           <td class="paramtype">Index_</td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Float_</td>          <td class="paramname"><span class="paramname"><em>distance</em></span>, </td>
+          <td class="paramtype">Distance_</td>          <td class="paramname"><span class="paramname"><em>distance</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -361,7 +362,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; Float_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -370,10 +371,10 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Find all neighbors of the <code>i</code>-th observation within a certain distance. This method is optional and may not be implemented by subclasses, so applications should check <code><a class="el" href="#a8362d0f6ea1b7f6e09d26a9188d31d1d">can_search_all()</a></code> before attempting a call. A run-time exception is thrown if this method is called on a subclass that does not implement it.</p>
+<p>Find all neighbors of the <code>i</code>-th observation within a certain distance. This method is optional and may not be implemented by subclasses, so applications should check <code><a class="el" href="#a175ab05c339e3aa39b974f1ceebc21a3">can_search_all()</a></code> before attempting a call. A run-time exception is thrown if this method is called on a subclass that does not implement it.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">i</td><td>The index of the observation of interest. This should be non-negative and less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a6dd837344267241384206661df28e1ab">Prebuilt::num_observations()</a></code>. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">i</td><td>The index of the observation of interest. This should be non-negative and less than the total number of observations in <code><a class="el" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">Prebuilt::num_observations()</a></code>. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">distance</td><td>The distance in which to consider neighbors. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance. This vector is guaranteed to not contain <code>i</code> itself. Optionally NULL, in which case no indices are returned. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector, to be filled with the distances of the nearest neighbors. This corresponds to the indices reported in <code>output_indices</code>. Optionally NULL, in which case no distances are returned.</td></tr>
@@ -382,7 +383,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>i</code>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a1164e4e1e627b716f9db91e8931872e9">knncolle::BruteforceSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#ab1cdb331dcde946b831446f219979d3a">knncolle::VptreeSearcher&lt; Distance_, Dim_, Index_, Store_, Float_ &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a73547f377d2bab4860d0aa07839b1046">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a146e00c6e6d2de4080e902b12eaf2475">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>

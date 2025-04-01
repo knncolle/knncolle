@@ -8,7 +8,7 @@
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
+    <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceBuilder</class>
@@ -19,6 +19,7 @@
     <path>knncolle/</path>
     <filename>Builder_8hpp.html</filename>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
+    <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <class kind="class">knncolle::Builder</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -26,9 +27,9 @@
     <name>distances.hpp</name>
     <path>knncolle/</path>
     <filename>distances_8hpp.html</filename>
-    <class kind="struct">knncolle::MockDistance</class>
-    <class kind="struct">knncolle::EuclideanDistance</class>
-    <class kind="struct">knncolle::ManhattanDistance</class>
+    <class kind="class">knncolle::DistanceMetric</class>
+    <class kind="class">knncolle::EuclideanDistance</class>
+    <class kind="class">knncolle::ManhattanDistance</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -44,7 +45,7 @@
     <filename>knncolle_8hpp.html</filename>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
+    <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
     <includes id="L2Normalized_8hpp" name="L2Normalized.hpp" local="yes" import="no" module="no" objc="no">L2Normalized.hpp</includes>
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
@@ -59,19 +60,21 @@
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
+    <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <class kind="class">knncolle::L2NormalizedSearcher</class>
     <class kind="class">knncolle::L2NormalizedPrebuilt</class>
+    <class kind="class">knncolle::L2NormalizedMatrixExtractor</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
-    <name>MockMatrix.hpp</name>
+    <name>Matrix.hpp</name>
     <path>knncolle/</path>
-    <filename>MockMatrix_8hpp.html</filename>
-    <class kind="class">knncolle::MockMatrix</class>
-    <class kind="struct">knncolle::MockMatrix::Workspace</class>
+    <filename>Matrix_8hpp.html</filename>
+    <class kind="class">knncolle::MatrixExtractor</class>
+    <class kind="class">knncolle::Matrix</class>
+    <class kind="class">knncolle::SimpleMatrixExtractor</class>
     <class kind="class">knncolle::SimpleMatrix</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -97,7 +100,7 @@
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
-    <includes id="MockMatrix_8hpp" name="MockMatrix.hpp" local="yes" import="no" module="no" objc="no">MockMatrix.hpp</includes>
+    <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <class kind="class">knncolle::VptreeSearcher</class>
     <class kind="class">knncolle::VptreePrebuilt</class>
     <class kind="class">knncolle::VptreeBuilder</class>
@@ -106,198 +109,246 @@
   <compound kind="class">
     <name>knncolle::BruteforceBuilder</name>
     <filename>classknncolle_1_1BruteforceBuilder.html</filename>
-    <templarg>class Distance_</templarg>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
     <templarg>class Matrix_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</base>
     <member kind="function">
-      <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
+      <type></type>
+      <name>BruteforceBuilder</name>
+      <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
+      <anchor>a4a7b4fa0a5301677f340b64875969929</anchor>
+      <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>BruteforceBuilder</name>
+      <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
+      <anchor>ad1aa49199fb139df6d7ffa5fff46289c</anchor>
+      <arglist>(const DistanceMetric_ *metric)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>build_raw</name>
       <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
-      <anchor>a491f8b75d24452615248da7c236b7759</anchor>
+      <anchor>a96c9cd26d07b09768dc73b2e73899510</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::BruteforcePrebuilt</name>
     <filename>classknncolle_1_1BruteforcePrebuilt.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
-      <type>Dim_</type>
+      <type>size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1BruteforcePrebuilt.html</anchorfile>
-      <anchor>a8623475e148b181f29623cf4b3c7a5f4</anchor>
+      <anchor>afcf08a0b0063213de28652097738bd2d</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
       <name>num_observations</name>
       <anchorfile>classknncolle_1_1BruteforcePrebuilt.html</anchorfile>
-      <anchor>a532a8a4fbe68d0df15f4618fd5d82983</anchor>
+      <anchor>aa2058e2a905ac6c83389c5ad5b062049</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
+      <type>std::unique_ptr&lt; Searcher&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>initialize</name>
       <anchorfile>classknncolle_1_1BruteforcePrebuilt.html</anchorfile>
-      <anchor>a591b94e2c5f4a0fe404cf89dcc20d0de</anchor>
+      <anchor>aeac9a8865d093e6d019f7383ec556ec6</anchor>
       <arglist>() const</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::BruteforceSearcher</name>
     <filename>classknncolle_1_1BruteforceSearcher.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>a5250b4ce7176fbe1a60783bc4dd324f0</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a053545a8000d3a7ad9ff81c8315e20a2</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>afef023240ea7ddcc28561c0f71c54601</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>af66acefa137de424974cabfc2cc624fb</anchor>
+      <arglist>(const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>can_search_all</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>a9c7cd8e9f01f5798d5b98a1d5318e8f4</anchor>
+      <anchor>a7ae415a6fa177b498359371211c007a1</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>a1164e4e1e627b716f9db91e8931872e9</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a73547f377d2bab4860d0aa07839b1046</anchor>
+      <arglist>(Index_ i, Distance_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1BruteforceSearcher.html</anchorfile>
-      <anchor>aae68bf23ca7d80dbf0a6138cb8cb6d15</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>ac1ead06e7eaf03df9cec271e9a64fbee</anchor>
+      <arglist>(const Data_ *query, Distance_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::Builder</name>
     <filename>classknncolle_1_1Builder.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
     <templarg>class Matrix_</templarg>
-    <templarg>typename Float_</templarg>
     <member kind="function" virtualness="pure">
-      <type>virtual Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
+      <type>virtual Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>build_raw</name>
       <anchorfile>classknncolle_1_1Builder.html</anchorfile>
-      <anchor>aa1c84ac7bd4120f5539be1320b74f5f4</anchor>
+      <anchor>acd18a78af362f948ede3ddd8d5f6e88c</anchor>
       <arglist>(const Matrix_ &amp;data) const =0</arglist>
     </member>
     <member kind="function">
-      <type>std::shared_ptr&lt; Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; &gt;</type>
+      <type>std::shared_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>build_shared</name>
       <anchorfile>classknncolle_1_1Builder.html</anchorfile>
-      <anchor>afe899198735bd5f9d1921283fa65ff3a</anchor>
+      <anchor>a9a7a0cb39688bedba6ab406e59da6c90</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
     <member kind="function">
-      <type>std::unique_ptr&lt; Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; &gt;</type>
+      <type>std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>build_unique</name>
       <anchorfile>classknncolle_1_1Builder.html</anchorfile>
-      <anchor>afeda432debae999f988f32f147055251</anchor>
+      <anchor>a93cac638de3e4ad31919bc5d677d16b7</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
   </compound>
-  <compound kind="struct">
-    <name>knncolle::EuclideanDistance</name>
-    <filename>structknncolle_1_1EuclideanDistance.html</filename>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>raw_distance</name>
-      <anchorfile>structknncolle_1_1EuclideanDistance.html</anchorfile>
-      <anchor>a0d6936a53ba4ed0e0ca33c9ac2515d06</anchor>
-      <arglist>(const DataX_ *x, const DataY_ *y, Dim_ num_dimensions)</arglist>
+  <compound kind="class">
+    <name>knncolle::DistanceMetric</name>
+    <filename>classknncolle_1_1DistanceMetric.html</filename>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <member kind="function" virtualness="pure">
+      <type>virtual Distance_</type>
+      <name>raw</name>
+      <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
+      <anchor>a2124334e18679dc06dc8cfe8baee4bc5</anchor>
+      <arglist>(size_t num_dimensions, const Data_ *x, const Data_ *y) const =0</arglist>
     </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
+    <member kind="function" virtualness="pure">
+      <type>virtual Distance_</type>
       <name>normalize</name>
-      <anchorfile>structknncolle_1_1EuclideanDistance.html</anchorfile>
-      <anchor>a79fdf3c2dde43bd0e9103486b8a4839b</anchor>
-      <arglist>(Output_ raw)</arglist>
+      <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
+      <anchor>a4a468569d0823bf3211b2ee5c46a81d9</anchor>
+      <arglist>(Distance_ raw) const =0</arglist>
     </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
+    <member kind="function" virtualness="pure">
+      <type>virtual Distance_</type>
       <name>denormalize</name>
-      <anchorfile>structknncolle_1_1EuclideanDistance.html</anchorfile>
-      <anchor>a1bb3cf480fc39ebb740c9f840626a6a5</anchor>
-      <arglist>(Output_ norm)</arglist>
+      <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
+      <anchor>a8810b699e11a1c354470dee9051c935b</anchor>
+      <arglist>(Distance_ norm) const =0</arglist>
     </member>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::EuclideanDistance</name>
+    <filename>classknncolle_1_1EuclideanDistance.html</filename>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <base>knncolle::DistanceMetric&lt; Data_, Distance_ &gt;</base>
   </compound>
   <compound kind="class">
     <name>knncolle::L2NormalizedBuilder</name>
     <filename>classknncolle_1_1L2NormalizedBuilder.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>typename Normalized_</templarg>
     <templarg>class Matrix_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
-    <member kind="function">
-      <type></type>
-      <name>L2NormalizedBuilder</name>
+    <base>knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</base>
+    <member kind="typedef">
+      <type>L2NormalizedMatrix&lt; Index_, Data_, Normalized_, Matrix_ &gt;</type>
+      <name>NormalizedMatrix</name>
       <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
-      <anchor>a7f3702fbbf54bbbaceb925aa2936bd45</anchor>
-      <arglist>(std::unique_ptr&lt; Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; &gt; builder)</arglist>
+      <anchor>a1098d7699574f9d509508b6a1fe23a32</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::conditional&lt; std::is_base_of&lt; Matrix_, NormalizedMatrix &gt;::value, Matrix_, NormalizedMatrix &gt;::type</type>
+      <name>BuilderMatrix</name>
+      <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
+      <anchor>abeaefcb9c85ef73693defd5f59503ff2</anchor>
+      <arglist></arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>L2NormalizedBuilder</name>
       <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
-      <anchor>a16df727021e97c341b7ef957eb79dd23</anchor>
-      <arglist>(Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; *builder)</arglist>
+      <anchor>a387250ea0ae7654b186545814cd51da3</anchor>
+      <arglist>(std::shared_ptr&lt; const Builder&lt; Index_, Normalized_, Distance_, BuilderMatrix &gt; &gt; builder)</arglist>
     </member>
     <member kind="function">
-      <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>build_raw</name>
       <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
-      <anchor>a9747f9c49d62c8d0c47c017586e0b297</anchor>
+      <anchor>a437ca7f6f9a3b82fa32762edba0cd08b</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::L2NormalizedMatrix</name>
     <filename>classknncolle_1_1L2NormalizedMatrix.html</filename>
-    <templarg>class Matrix_</templarg>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Normalized_</templarg>
+    <templarg>typename Matrix_</templarg>
+    <base>knncolle::Matrix&lt; Index_, Normalized_ &gt;</base>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::L2NormalizedMatrixExtractor</name>
+    <filename>classknncolle_1_1L2NormalizedMatrixExtractor.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Normalized_</templarg>
+    <base>knncolle::MatrixExtractor&lt; Normalized_ &gt;</base>
   </compound>
   <compound kind="class">
     <name>knncolle::L2NormalizedPrebuilt</name>
     <filename>classknncolle_1_1L2NormalizedPrebuilt.html</filename>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>typename Normalized_</templarg>
+    <base>knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>L2NormalizedPrebuilt</name>
       <anchorfile>classknncolle_1_1L2NormalizedPrebuilt.html</anchorfile>
-      <anchor>a43c889080f754e44c6085cc10a46f32b</anchor>
-      <arglist>(std::unique_ptr&lt; Prebuilt&lt; Dim_, Index_, Float_ &gt; &gt; prebuilt)</arglist>
+      <anchor>a8e358a3bffddb15ea58428af9e475db0</anchor>
+      <arglist>(std::unique_ptr&lt; Prebuilt&lt; Index_, Normalized_, Distance_ &gt; &gt; prebuilt)</arglist>
     </member>
     <member kind="function">
-      <type>std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
+      <type>std::unique_ptr&lt; Searcher&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>initialize</name>
       <anchorfile>classknncolle_1_1L2NormalizedPrebuilt.html</anchorfile>
-      <anchor>a0879ea8c8512d04a2f73fb7afd7eae56</anchor>
+      <anchor>afb014f25024603b63877e5dee3ad3459</anchor>
       <arglist>() const</arglist>
     </member>
   </compound>
@@ -305,145 +356,89 @@
     <name>knncolle::L2NormalizedSearcher</name>
     <filename>classknncolle_1_1L2NormalizedSearcher.html</filename>
     <templarg>typename Index_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>typename Normalized_</templarg>
+    <base>knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>L2NormalizedSearcher</name>
       <anchorfile>classknncolle_1_1L2NormalizedSearcher.html</anchorfile>
-      <anchor>ad97e99e0fd85202cce0357333a78a2a4</anchor>
-      <arglist>(std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt; searcher, size_t num_dimensions)</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>knncolle::ManhattanDistance</name>
-    <filename>structknncolle_1_1ManhattanDistance.html</filename>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>raw_distance</name>
-      <anchorfile>structknncolle_1_1ManhattanDistance.html</anchorfile>
-      <anchor>ac782b1cfdb76e144a3d84d674e661456</anchor>
-      <arglist>(const DataX_ *x, const DataY_ *y, Dim_ num_dimensions)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>normalize</name>
-      <anchorfile>structknncolle_1_1ManhattanDistance.html</anchorfile>
-      <anchor>a4dea393df5acd96968fa6476ee6d6ad0</anchor>
-      <arglist>(Output_ raw)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>denormalize</name>
-      <anchorfile>structknncolle_1_1ManhattanDistance.html</anchorfile>
-      <anchor>a4cae134de658e4b96433db80b62a549e</anchor>
-      <arglist>(Output_ norm)</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>knncolle::MockDistance</name>
-    <filename>structknncolle_1_1MockDistance.html</filename>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>raw_distance</name>
-      <anchorfile>structknncolle_1_1MockDistance.html</anchorfile>
-      <anchor>a7cfc77c0fd9806f9030a617404a5f954</anchor>
-      <arglist>(const DataX_ *x, const DataY_ *y, Dim_ num_dimensions)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>normalize</name>
-      <anchorfile>structknncolle_1_1MockDistance.html</anchorfile>
-      <anchor>acf139f39a2c07856820442a8e12701cd</anchor>
-      <arglist>(Output_ raw)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static Output_</type>
-      <name>denormalize</name>
-      <anchorfile>structknncolle_1_1MockDistance.html</anchorfile>
-      <anchor>ae3456039934506172efe9d6bde895d96</anchor>
-      <arglist>(Output_ norm)</arglist>
+      <anchor>a267a48a9a523918eec6cc74407489e95</anchor>
+      <arglist>(std::unique_ptr&lt; Searcher&lt; Index_, Normalized_, Distance_ &gt; &gt; searcher, size_t num_dimensions)</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>knncolle::MockMatrix</name>
-    <filename>classknncolle_1_1MockMatrix.html</filename>
-    <class kind="struct">knncolle::MockMatrix::Workspace</class>
-    <member kind="typedef">
-      <type>double</type>
-      <name>data_type</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>ad8b1a8a42200caf3985f6e6c3ab225fd</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>int</type>
-      <name>index_type</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>a66b87f03e9440cb519167209b89366fc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>int</type>
-      <name>dimension_type</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>a9ed79174a6f3737ea75da393073e3d79</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>index_type</type>
+    <name>knncolle::ManhattanDistance</name>
+    <filename>classknncolle_1_1ManhattanDistance.html</filename>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <base>knncolle::DistanceMetric&lt; Data_, Distance_ &gt;</base>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::Matrix</name>
+    <filename>classknncolle_1_1Matrix.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <member kind="function" virtualness="pure">
+      <type>virtual Index_</type>
       <name>num_observations</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>ac3af3babb476ddf204a94e77a7b2196a</anchor>
-      <arglist>() const</arglist>
+      <anchorfile>classknncolle_1_1Matrix.html</anchorfile>
+      <anchor>a7b0961f03e8b232a1bfb9d86e171eaab</anchor>
+      <arglist>() const =0</arglist>
     </member>
-    <member kind="function">
-      <type>dimension_type</type>
+    <member kind="function" virtualness="pure">
+      <type>virtual size_t</type>
       <name>num_dimensions</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>accf6389be4fd0d9a9f0c6ed3c73d30d6</anchor>
-      <arglist>() const</arglist>
+      <anchorfile>classknncolle_1_1Matrix.html</anchorfile>
+      <anchor>af606bb88f445cac8ebf6dc540c083759</anchor>
+      <arglist>() const =0</arglist>
     </member>
-    <member kind="function">
-      <type>Workspace</type>
-      <name>create_workspace</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>ab67d03fc96f29ca6d37fb00a1d7fddc3</anchor>
-      <arglist>() const</arglist>
+    <member kind="function" virtualness="pure">
+      <type>virtual std::unique_ptr&lt; MatrixExtractor&lt; Data_ &gt; &gt;</type>
+      <name>new_extractor</name>
+      <anchorfile>classknncolle_1_1Matrix.html</anchorfile>
+      <anchor>a4ab89fa80a485216d6890c4ca97ac51e</anchor>
+      <arglist>() const =0</arglist>
     </member>
-    <member kind="function">
-      <type>const data_type *</type>
-      <name>get_observation</name>
-      <anchorfile>classknncolle_1_1MockMatrix.html</anchorfile>
-      <anchor>a4c8aeb3684c8163c9ed3bbfcb688e400</anchor>
-      <arglist>(Workspace &amp;workspace) const</arglist>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::MatrixExtractor</name>
+    <filename>classknncolle_1_1MatrixExtractor.html</filename>
+    <templarg>typename Data_</templarg>
+    <member kind="function" virtualness="pure">
+      <type>virtual const Data_ *</type>
+      <name>next</name>
+      <anchorfile>classknncolle_1_1MatrixExtractor.html</anchorfile>
+      <anchor>a3d82e911202727619399f7dec238b28a</anchor>
+      <arglist>()=0</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::Prebuilt</name>
     <filename>classknncolle_1_1Prebuilt.html</filename>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Float_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
     <member kind="function" virtualness="pure">
       <type>virtual Index_</type>
       <name>num_observations</name>
       <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
-      <anchor>a6dd837344267241384206661df28e1ab</anchor>
+      <anchor>a560fec57d6ec36d288b6cd80e9f4c7bd</anchor>
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
-      <type>virtual Dim_</type>
+      <type>virtual size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
-      <anchor>a99412339915bc2ff0a6cd58ef4012d74</anchor>
+      <anchor>ad08cdf5cdab27db326fb7883d1458e8e</anchor>
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
-      <type>virtual std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
+      <type>virtual std::unique_ptr&lt; Searcher&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>initialize</name>
       <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
-      <anchor>a71b757b154aa2713d732afd2d9444bb9</anchor>
+      <anchor>aacc8819b7962ce27294cf0d42f6c6e68</anchor>
       <arglist>() const =0</arglist>
     </member>
   </compound>
@@ -451,158 +446,196 @@
     <name>knncolle::Searcher</name>
     <filename>classknncolle_1_1Searcher.html</filename>
     <templarg>typename Index_</templarg>
-    <templarg>typename Float_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>a6ad140ee93a7af57fdb722c16476aee4</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</arglist>
+      <anchor>ab0f6c2ce78952dd555f7f1a8fb3ac208</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>a9f4bac73a3dd958d1f09e1093bd1cf01</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)=0</arglist>
+      <anchor>a6968d65276d81f47c92f6351ec786150</anchor>
+      <arglist>(const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual bool</type>
       <name>can_search_all</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>a8362d0f6ea1b7f6e09d26a9188d31d1d</anchor>
+      <anchor>a175ab05c339e3aa39b974f1ceebc21a3</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>ae7fb8a8e436303c5917f3717393cf056</anchor>
-      <arglist>(Index_ i, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a3ef8c1bf087751bff46af346bda2feb3</anchor>
+      <arglist>(Index_ i, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1Searcher.html</anchorfile>
-      <anchor>adbe92827aebee347f57257591712d093</anchor>
-      <arglist>(const Float_ *query, Float_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a37c88e638622eadc5f3c0328e8a1c5f1</anchor>
+      <arglist>(const Data_ *query, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::SimpleMatrix</name>
     <filename>classknncolle_1_1SimpleMatrix.html</filename>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
     <templarg>typename Data_</templarg>
+    <base>knncolle::Matrix&lt; Index_, Data_ &gt;</base>
     <member kind="function">
       <type></type>
       <name>SimpleMatrix</name>
       <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
-      <anchor>a5ff473e3597354a19a09456f6580121a</anchor>
-      <arglist>(Dim_ num_dimensions, Index_ num_observations, const Data_ *data)</arglist>
+      <anchor>a19a44ed725c5672b6892f8b34dbb04cc</anchor>
+      <arglist>(size_t num_dimensions, Index_ num_observations, const Data_ *data)</arglist>
+    </member>
+    <member kind="function">
+      <type>Index_</type>
+      <name>num_observations</name>
+      <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
+      <anchor>a9f504a7ae05efc06f4d69510df9a3daa</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>size_t</type>
+      <name>num_dimensions</name>
+      <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
+      <anchor>aaae847bdcdf4de01cd6d32f6dff306c9</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::unique_ptr&lt; MatrixExtractor&lt; Data_ &gt; &gt;</type>
+      <name>new_extractor</name>
+      <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
+      <anchor>a4d4300b24909ffd9916a29b095a8edb5</anchor>
+      <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>knncolle::SimpleMatrixExtractor</name>
+    <filename>classknncolle_1_1SimpleMatrixExtractor.html</filename>
+    <templarg>typename Data_</templarg>
+    <base>knncolle::MatrixExtractor&lt; Data_ &gt;</base>
+    <member kind="function">
+      <type>const Data_ *</type>
+      <name>next</name>
+      <anchorfile>classknncolle_1_1SimpleMatrixExtractor.html</anchorfile>
+      <anchor>a41129e636ddcf0dcf5f80dd21568e72b</anchor>
+      <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::VptreeBuilder</name>
     <filename>classknncolle_1_1VptreeBuilder.html</filename>
-    <templarg>class Distance_</templarg>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
     <templarg>class Matrix_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Builder&lt; Matrix_, Float_ &gt;</base>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</base>
     <member kind="function">
-      <type>Prebuilt&lt; typename Matrix_::dimension_type, typename Matrix_::index_type, Float_ &gt; *</type>
+      <type></type>
+      <name>VptreeBuilder</name>
+      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
+      <anchor>a13f00af67d227d117fa4b9910861a438</anchor>
+      <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>VptreeBuilder</name>
+      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
+      <anchor>a29abc6777bdd31820ef66a6ee518a8aa</anchor>
+      <arglist>(const DistanceMetric_ *metric)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>build_raw</name>
       <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
-      <anchor>a0c25ca5b2d7a812032d7cf1d42e3ad3a</anchor>
+      <anchor>aafa5db0eecf99ebab88d21f038b6b15a</anchor>
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::VptreePrebuilt</name>
     <filename>classknncolle_1_1VptreePrebuilt.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
       <type>Index_</type>
       <name>num_observations</name>
       <anchorfile>classknncolle_1_1VptreePrebuilt.html</anchorfile>
-      <anchor>a3bee679a176256a7f7247e636c8c26af</anchor>
+      <anchor>a4ddff52bf80e043c07a43281b067a935</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>Dim_</type>
+      <type>size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1VptreePrebuilt.html</anchorfile>
-      <anchor>aa3945048112b06bcbf9a4039f55581fe</anchor>
+      <anchor>a142a6ce78e805b280137a9b4dfe85f49</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type></type>
-      <name>VptreePrebuilt</name>
-      <anchorfile>classknncolle_1_1VptreePrebuilt.html</anchorfile>
-      <anchor>a5391976fe1e6b957181229a8590a6ca3</anchor>
-      <arglist>(Dim_ num_dim, Index_ num_obs, std::vector&lt; Store_ &gt; data)</arglist>
-    </member>
-    <member kind="function">
-      <type>std::unique_ptr&lt; Searcher&lt; Index_, Float_ &gt; &gt;</type>
+      <type>std::unique_ptr&lt; Searcher&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>initialize</name>
       <anchorfile>classknncolle_1_1VptreePrebuilt.html</anchorfile>
-      <anchor>a583eeead36f94b77d5ceb46c47fd8aa3</anchor>
+      <anchor>aa81f5ca04707010f2b8e56aac81f9196</anchor>
       <arglist>() const</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>knncolle::VptreeSearcher</name>
     <filename>classknncolle_1_1VptreeSearcher.html</filename>
-    <templarg>class Distance_</templarg>
-    <templarg>typename Dim_</templarg>
     <templarg>typename Index_</templarg>
-    <templarg>typename Store_</templarg>
-    <templarg>typename Float_</templarg>
-    <base>knncolle::Searcher&lt; Index_, Float_ &gt;</base>
+    <templarg>typename Data_</templarg>
+    <templarg>typename Distance_</templarg>
+    <templarg>class DistanceMetric_</templarg>
+    <base>knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>a3b2a7c230cfdf88cf1fa42896ca5909a</anchor>
-      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a2f9935e30b1541aaa19e1cad9f8448e5</anchor>
+      <arglist>(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>search</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>ac86dd5bf34f233d04502e789224eb44a</anchor>
-      <arglist>(const Float_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a4cbc643bf6cbce5c718d5bf3fb820580</anchor>
+      <arglist>(const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>can_search_all</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>ac7a0f11645ab4f57b9991602339e0e15</anchor>
+      <anchor>a8df5ca5cd6c2f305da615f7839ba7894</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>ab1cdb331dcde946b831446f219979d3a</anchor>
-      <arglist>(Index_ i, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a146e00c6e6d2de4080e902b12eaf2475</anchor>
+      <arglist>(Index_ i, Distance_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
       <name>search_all</name>
       <anchorfile>classknncolle_1_1VptreeSearcher.html</anchorfile>
-      <anchor>a51594cb79d1ea89aea64359690e5301e</anchor>
-      <arglist>(const Float_ *query, Float_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Float_ &gt; *output_distances)</arglist>
+      <anchor>a53b639f9025699af8fc45487c26ed800</anchor>
+      <arglist>(const Data_ *query, Distance_ d, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
-  </compound>
-  <compound kind="struct">
-    <name>knncolle::MockMatrix::Workspace</name>
-    <filename>structknncolle_1_1MockMatrix_1_1Workspace.html</filename>
   </compound>
   <compound kind="namespace">
     <name>knncolle</name>
@@ -611,25 +644,28 @@
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::Builder</class>
-    <class kind="struct">knncolle::EuclideanDistance</class>
+    <class kind="class">knncolle::DistanceMetric</class>
+    <class kind="class">knncolle::EuclideanDistance</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
+    <class kind="class">knncolle::L2NormalizedMatrixExtractor</class>
     <class kind="class">knncolle::L2NormalizedPrebuilt</class>
     <class kind="class">knncolle::L2NormalizedSearcher</class>
-    <class kind="struct">knncolle::ManhattanDistance</class>
-    <class kind="struct">knncolle::MockDistance</class>
-    <class kind="class">knncolle::MockMatrix</class>
+    <class kind="class">knncolle::ManhattanDistance</class>
+    <class kind="class">knncolle::Matrix</class>
+    <class kind="class">knncolle::MatrixExtractor</class>
     <class kind="class">knncolle::Prebuilt</class>
     <class kind="class">knncolle::Searcher</class>
     <class kind="class">knncolle::SimpleMatrix</class>
+    <class kind="class">knncolle::SimpleMatrixExtractor</class>
     <class kind="class">knncolle::VptreeBuilder</class>
     <class kind="class">knncolle::VptreePrebuilt</class>
     <class kind="class">knncolle::VptreeSearcher</class>
     <member kind="typedef">
-      <type>std::vector&lt; std::vector&lt; std::pair&lt; Index_, Float_ &gt; &gt; &gt;</type>
+      <type>std::vector&lt; std::vector&lt; std::pair&lt; Index_, Distance_ &gt; &gt; &gt;</type>
       <name>NeighborList</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a72beeaa95281de7a5cf16937ccbae47f</anchor>
+      <anchor>a97693d779b6041859ffa0ef2d9c1500b</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -647,18 +683,18 @@
       <arglist>(int k, Index_ num_observations)</arglist>
     </member>
     <member kind="function">
-      <type>NeighborList&lt; Index_, Float_ &gt;</type>
+      <type>NeighborList&lt; Index_, Distance_ &gt;</type>
       <name>find_nearest_neighbors</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a22e035b2d5eb293fd828a67e61f3213d</anchor>
-      <arglist>(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+      <anchor>a2c6d8b116464bab254bda34216338c3c</anchor>
+      <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
     </member>
     <member kind="function">
       <type>std::vector&lt; std::vector&lt; Index_ &gt; &gt;</type>
       <name>find_nearest_neighbors_index_only</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a0b726765329530a709095ba304033a0d</anchor>
-      <arglist>(const Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+      <anchor>a8406dfe7aac78dee986262a5f6bceee7</anchor>
+      <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
     </member>
   </compound>
   <compound kind="page">
