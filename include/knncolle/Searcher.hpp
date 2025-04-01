@@ -30,6 +30,11 @@ public:
     /**
      * @cond
      */
+    Searcher() = default;
+    Searcher(Searcher&&) = default;
+    Searcher(const Searcher&) = default;
+    Searcher& operator=(Searcher&&) = default;
+    Searcher& operator=(const Searcher&) = default;
     virtual ~Searcher() = default;
     /**
      * @endcond

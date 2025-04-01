@@ -28,11 +28,18 @@ public:
     /**
      * @cond
      */
+    // Rule of 5 all of this.
+    Builder() = default;
+    Builder(Builder&&) = default;
+    Builder(const Builder&) = default;
+    Builder& operator=(Builder&&) = default;
+    Builder& operator=(const Builder&) = default;
     virtual ~Builder() = default;
     /**
      * @endcond
      */
 
+public:
     /**
      * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
      * @return Pointer to a pre-built search index.

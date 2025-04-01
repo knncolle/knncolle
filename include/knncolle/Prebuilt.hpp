@@ -26,6 +26,20 @@ template<typename Index_, typename Data_, typename Distance_>
 class Prebuilt {
 public:
     /**
+     * @cond
+     */
+    Prebuilt() = default;
+    Prebuilt(const Prebuilt&) = default;
+    Prebuilt(Prebuilt&&) = default;
+    Prebuilt& operator=(const Prebuilt&) = default;
+    Prebuilt& operator=(Prebuilt&&) = default;
+    virtual ~Prebuilt() = default;
+    /**
+     * @endcond
+     */
+
+public:
+    /**
      * @return Number of observations in the dataset to be searched.
      */
     virtual Index_ num_observations() const = 0;
@@ -34,14 +48,6 @@ public:
      * @return Number of dimensions.
      */
     virtual size_t num_dimensions() const = 0;
-
-    /**
-     * @cond
-     */
-    virtual ~Prebuilt() = default;
-    /**
-     * @endcond
-     */
 
 public:
     /**

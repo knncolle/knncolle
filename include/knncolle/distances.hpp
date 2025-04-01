@@ -21,6 +21,20 @@ template<typename Data_, typename Distance_>
 class DistanceMetric {
 public:
     /**
+     * @cond
+     */
+    DistanceMetric() = default;
+    DistanceMetric(const DistanceMetric&) = default;
+    DistanceMetric(DistanceMetric&&) = default;
+    DistanceMetric& operator=(const DistanceMetric&) = default;
+    DistanceMetric& operator=(DistanceMetric&&) = default;
+    virtual ~DistanceMetric() = default;
+    /**
+     * @endcond
+     */
+
+public:
+    /**
      * The raw distance `r` for a distance `d` is defined so that `r(x, y) > r(x, z)` iff `d(x, y) > d(x, z)`.
      * `r(x, y)` is converted to `d(x, z)` via a monotonic transform in `normalize()`, and vice versa for `denormalize()`.
      * We separate out these two steps to avoid, e.g., a costly root operation for a Euclidean distance when only the relative values are of interest.
