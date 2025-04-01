@@ -201,7 +201,8 @@ public:
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the original matrix data.
  * @tparam Normalized_ Floating-point type for the L2-normalized data.
- * @tparam Matrix_ Class that satisfies the `Matrix` interface.
+ * @tparam Matrix_ Class of the input data matrix. 
+ * This should satisfy the `Matrix` interface.
  * 
  * This class satisfies the `Matrix` interface and performs L2 normalization of each observation's data vector in its implementation of `MatrixExtractor::next()`.
  * It is mainly intended for use as a template argument when defining a `builder` for the `L2NormalizedBuilder` constructor.
@@ -250,7 +251,8 @@ public:
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
  * @tparam Normalized_ Floating-point type for the L2-normalized data.
- * @tparam Matrix_ Class that satisfies the `Matrix` interface.
+ * @tparam Matrix_ Class of the input data matrix. 
+ * This should satisfy the `Matrix` interface.
  */
 template<typename Index_, typename Data_, typename Distance_, typename Normalized_, class Matrix_ = Matrix<Index_, Data_> >
 class L2NormalizedBuilder final : public Builder<Index_, Data_, Distance_, Matrix_> {

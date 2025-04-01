@@ -33,7 +33,8 @@ class BruteforcePrebuilt;
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
+ * @tparam DistanceMetric_ Class implementing the distance metric calculation.
+ * This should satisfy the `DistanceMetric` interface.
  */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforceSearcher final : public Searcher<Index_, Data_, Distance_> {
@@ -125,7 +126,8 @@ public:
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
+ * @tparam DistanceMetric_ Class implementing the distance metric calculation.
+ * This should satisfy the `DistanceMetric` interface.
  */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforcePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
@@ -207,8 +209,10 @@ public:
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam Matrix_ Class that satisfies the `Matrix` interface.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric` interface.
+ * @tparam Matrix_ Class of the input data matrix. 
+ * This should satisfy the `Matrix` interface.
+ * @tparam DistanceMetric_ Class implementing the distance metric calculation.
+ * This should satisfy the `DistanceMetric` interface.
  */
 template<
     typename Index_,

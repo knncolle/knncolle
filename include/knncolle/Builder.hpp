@@ -21,7 +21,8 @@ namespace knncolle {
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam Matrix_ Class that satisfies the `Matrix` interface.
+ * @tparam Matrix_ Class of the input data matrix. 
+ * This should satisfy the `Matrix` interface.
  */
 template<typename Index_, typename Data_, typename Distance_, class Matrix_ = Matrix<Index_, Data_> >
 class Builder {
