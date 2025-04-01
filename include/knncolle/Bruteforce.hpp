@@ -22,7 +22,7 @@
 
 namespace knncolle {
 
-template<class DistanceMetric_, typename Dim_, typename Index_, typename Data_, typename Distance_, typename Store_>
+template<typename Index_, typename Data_, typename Distance_, typename DistanceMetric_>
 class BruteforcePrebuilt;
 
 /**
@@ -30,27 +30,24 @@ class BruteforcePrebuilt;
  *
  * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize()`.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
  * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
+template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforceSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    BruteforceSearcher(const BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& parent) : my_parent(parent) {}
+    BruteforceSearcher(const BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
     /**
      * @endcond
      */
 
 private:                
-    const BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& my_parent;
+    const BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
     internal::NeighborQueue<Index_, Distance_> my_nearest;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
@@ -66,7 +63,7 @@ private:
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
-        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_long_ndim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
         my_parent.search(ptr, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
         normalize(output_distances);
@@ -88,7 +85,7 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_long_ndim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
@@ -125,35 +122,31 @@ public:
  *
  * Instances of this class are usually constructed using `BruteforceBuilder::build_raw()`.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
  * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
-class BruteforcePrebuilt final : public Prebuilt<Dim_, Index_, Data_, Distance_> {
+template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
+class BruteforcePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
-    Dim_ my_dim;
+    size_t my_dim;
     Index_ my_obs;
-    size_t my_long_ndim;
-    std::vector<Store_> my_data;
+    std::vector<Data_> my_data;
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
     /**
      * @cond
      */
-    BruteforcePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, std::shared_ptr<const DistanceMetric_> metric) : 
-        my_dim(num_dim), my_obs(num_obs), my_long_ndim(num_dim), my_data(std::move(data)), my_metric(std::move(metric)) {}
+    BruteforcePrebuilt(size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
+        my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)), my_metric(std::move(metric)) {}
     /**
      * @endcond
      */
 
 public:
-    Dim_ num_dimensions() const {
+    size_t num_dimensions() const {
         return my_dim;
     }
 
@@ -192,14 +185,14 @@ private:
         }
     }
 
-    friend class BruteforceSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>;
+    friend class BruteforceSearcher<Index_, Data_, Distance_, DistanceMetric_>;
 
 public:
     /**
      * Creates a `BruteforceSearcher` instance.
      */
     std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
-        return std::make_unique<BruteforceSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_> >(*this);
+        return std::make_unique<BruteforceSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
     }
 };
 
@@ -211,25 +204,20 @@ public:
  * however, it has effectively no overhead from constructing or querying indexing structures, 
  * potentially making it faster in cases where indexing provides little benefit (e.g., few data points, high dimensionality).
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
  * @tparam Matrix_ Class that satisfies the `Matrix` interface.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric` interface.
  */
 template<
-    typename Dim_,
     typename Index_,
     typename Data_,
     typename Distance_,
-    class DistanceMetric_ = DistanceMetric<Dim_, Data_, Distance_>,
-    typename Store_ = Data_,
-    class Matrix_ = Matrix<Dim_, Index_, Data_>
+    class Matrix_ = Matrix<Index_, Data_>,
+    class DistanceMetric_ = DistanceMetric<Data_, Distance_>
 >
-class BruteforceBuilder final : public Builder<Dim_, Index_, Data_, Distance_, Matrix_> {
+class BruteforceBuilder final : public Builder<Index_, Data_, Distance_, Matrix_> {
 public:
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
@@ -248,17 +236,17 @@ public:
     /**
      * Creates a `BruteforcePrebuilt` instance.
      */
-    Prebuilt<Dim_, Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
+    Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
         size_t ndim = data.num_dimensions();
         size_t nobs = data.num_observations();
         auto work = data.new_extractor();
 
-        std::vector<Store_> store(ndim * nobs);
+        std::vector<Data_> store(ndim * nobs);
         for (size_t o = 0; o < nobs; ++o) {
             std::copy_n(work->next(), ndim, store.begin() + o * ndim);
         }
 
-        return new BruteforcePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>(ndim, nobs, std::move(store), my_metric);
+        return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);
     }
 };
 

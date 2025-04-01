@@ -5,7 +5,7 @@
 #include "NeighborQueue.hpp"
 #include "Prebuilt.hpp"
 #include "Builder.hpp"
-#include "MockMatrix.hpp"
+#include "Matrix.hpp"
 #include "report_all_neighbors.hpp"
 
 #include <vector>
@@ -25,7 +25,7 @@ namespace knncolle {
 /**
  * @cond
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
+template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt;
 /**
  * @endcond
@@ -36,36 +36,33 @@ class VptreePrebuilt;
  *
  * Instances of this class are usually constructed using `VptreePrebuilt::initialize()`.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
  * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
+template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    VptreeSearcher(const VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& parent) : my_parent(parent) {}
+    VptreeSearcher(const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
     /**
      * @endcond
      */
 
 private:                
-    const VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>& my_parent;
+    const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
     internal::NeighborQueue<Index_, Distance_> my_nearest;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
-        auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
+        auto iptr = my_parent.my_data.data() + static_cast<size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
         Distance_ max_dist = std::numeric_limits<Distance_>::max();
-        my_parent->search_nn(0, iptr, max_dist, my_nearest);
+        my_parent.search_nn(0, iptr, max_dist, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
     }
 
@@ -75,7 +72,7 @@ public:
         } else {
             my_nearest.reset(k);
             Distance_ max_dist = std::numeric_limits<Distance_>::max();
-            my_parent->search_nn(0, query, max_dist, my_nearest);
+            my_parent.search_nn(0, query, max_dist, my_nearest);
             my_nearest.report(output_indices, output_distances);
         }
     }
@@ -85,16 +82,16 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto iptr = my_parent->my_data.data() + static_cast<size_t>(my_parent->my_new_locations[i]) * my_parent->my_long_ndim; // cast to avoid overflow.
+        auto iptr = my_parent.my_data.data() + static_cast<size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent->template search_all<true>(0, iptr, d, count);
+            my_parent.template search_all<true>(0, iptr, d, count);
             return internal::safe_remove_self(count);
 
         } else {
             my_all_neighbors.clear();
-            my_parent->template search_all<false>(0, iptr, d, my_all_neighbors);
+            my_parent.template search_all<false>(0, iptr, d, my_all_neighbors);
             internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
             return internal::safe_remove_self(my_all_neighbors.size());
         }
@@ -103,12 +100,12 @@ public:
     Index_ search_all(const Data_* query, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent->template search_all<true>(0, query, d, count);
+            my_parent.template search_all<true>(0, query, d, count);
             return count;
 
         } else {
             my_all_neighbors.clear();
-            my_parent->template search_all<false>(0, query, d, my_all_neighbors);
+            my_parent.template search_all<false>(0, query, d, my_all_neighbors);
             internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             return my_all_neighbors.size();
         }
@@ -120,21 +117,17 @@ public:
  *
  * Instances of this class are usually constructed using `VptreeBuilder::build_raw()`.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric` interface.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_, class DistanceMetric_, typename Store_>
-class VptreePrebuilt final : public Prebuilt<Dim_, Index_, Data_, Distance_> {
+template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
+class VptreePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
-    Dim_ my_dim;
+    size_t my_dim;
     Index_ my_obs;
-    size_t my_long_ndim;
-    std::vector<Store_> my_data;
+    std::vector<Data_> my_data;
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
@@ -142,7 +135,7 @@ public:
         return my_obs;
     } 
 
-    Dim_ num_dimensions() const {
+    size_t num_dimensions() const {
         return my_dim;
     }
 
@@ -171,7 +164,7 @@ private:
     typedef std::pair<Distance_, Index_> DataPoint; 
 
     template<class Rng_>
-    Index_ build(Index_ lower, Index_ upper, const Store_* coords, std::vector<DataPoint>& items, Rng_& rng) {
+    Index_ build(Index_ lower, Index_ upper, const Data_* coords, std::vector<DataPoint>& items, Rng_& rng) {
         /* 
          * We're assuming that lower < upper at each point within this
          * recursion. This requires some protection at the call site
@@ -197,12 +190,12 @@ private:
             std::swap(items[lower], items[i]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
-            const Store_* vantage_ptr = coords + static_cast<size_t>(vantage.second) * my_long_ndim; // cast to avoid overflow.
+            const Data_* vantage_ptr = coords + static_cast<size_t>(vantage.second) * my_dim; // cast to avoid overflow.
 
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
-                const Store_* loc = coords + static_cast<size_t>(items[i].second) * my_long_ndim; // cast to avoid overflow.
-                items[i].first = my_metric->raw(vantage_ptr, loc, my_dim);
+                const Data_* loc = coords + static_cast<size_t>(items[i].second) * my_dim; // cast to avoid overflow.
+                items[i].first = my_metric->raw(my_dim, vantage_ptr, loc);
             }
 
             // Partition around the median distance from the vantage point.
@@ -238,10 +231,9 @@ public:
      * @param num_obs Number of observations.
      * @param data Vector of length equal to `num_dim * num_obs`, containing a column-major matrix where rows are dimensions and columns are observations.
      */
-    VptreePrebuilt(Dim_ num_dim, Index_ num_obs, std::vector<Store_> data, std::shared_ptr<const DistanceMetric_> metric) : 
+    VptreePrebuilt(size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim),
         my_obs(num_obs),
-        my_long_ndim(my_dim),
         my_data(std::move(data)),
         my_metric(std::move(metric))
     {
@@ -266,7 +258,7 @@ public:
             // Resorting data in place to match order of occurrence within
             // 'nodes', for better cache locality.
             std::vector<uint8_t> used(my_obs);
-            std::vector<Store_> buffer(my_dim);
+            std::vector<Data_> buffer(my_dim);
             my_new_locations.resize(my_obs);
             auto host = my_data.data();
 
@@ -281,12 +273,12 @@ public:
                     continue;
                 }
 
-                auto optr = host + static_cast<size_t>(o) * my_long_ndim;
+                auto optr = host + static_cast<size_t>(o) * my_dim;
                 std::copy_n(optr, my_dim, buffer.begin());
                 Index_ replacement = current.index;
 
                 do {
-                    auto rptr = host + static_cast<size_t>(replacement) * my_long_ndim;
+                    auto rptr = host + static_cast<size_t>(replacement) * my_dim;
                     std::copy_n(rptr, my_dim, optr);
                     used[replacement] = 1;
 
@@ -304,7 +296,7 @@ public:
 
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, internal::NeighborQueue<Index_, Distance_>& nearest) const { 
-        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
+        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_dim; // cast to avoid overflow.
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -338,7 +330,7 @@ private:
 
     template<bool count_only_, typename Output_>
     void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
-        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_long_ndim; // cast to avoid overflow.
+        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_dim; // cast to avoid overflow.
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -371,14 +363,14 @@ private:
         }
     }
 
-    friend class VptreeSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>;
+    friend class VptreeSearcher<Index_, Data_, Distance_, DistanceMetric_>;
 
 public:
     /**
      * Creates a `VptreeSearcher` instance.
      */
-    std::unique_ptr<Searcher<Index_, Distance_> > initialize() const {
-        return std::make_unique<VptreeSearcher<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_> >(this);
+    std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
+        return std::make_unique<VptreeSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
     }
 };
 
@@ -396,14 +388,11 @@ public:
  * This reduces the memory usage of the tree and total number of distance calculations for any search.
  * It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for **knncolle**.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
- * @tparam Index_ Integer type for the indices.
+ * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric_` interface.
- * @tparam Store_ Numeric type for the stored data.
- * This may be a lower-precision type than `Data_` to reduce memory usage.
  * @tparam Matrix_ Class that satisfies the `Matrix` interface.
+ * @tparam DistanceMetric_ Class that satisfies the `DistanceMetric` interface.
  *
  * @see
  * Yianilos PN (1993).
@@ -416,15 +405,13 @@ public:
  * http://stevehanov.ca/blog/index.php?id=130
  */
 template<
-    typename Dim_,
     typename Index_,
     typename Data_,
     typename Distance_,
-    class DistanceMetric_ = DistanceMetric<Dim_, Data_, Distance_>,
-    typename Store_ = Data_ = Data_,
-    class Matrix_ = SimpleMatrix<Dim_, Index_, Data_>
+    class Matrix_ = Matrix<Index_, Data_>,
+    class DistanceMetric_ = DistanceMetric<Data_, Distance_>
 >
-class VptreeBuilder final : public Builder<Dim_, Index_, Data_, Distance_, Matrix_> {
+class VptreeBuilder final : public Builder<Index_, Data_, Distance_, Matrix_> {
 public:
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
@@ -443,17 +430,17 @@ public:
     /**
      * Creates a `VptreePrebuilt` instance.
      */
-    Prebuilt<Dim_, Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
+    Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
         size_t ndim = data.num_dimensions();
         size_t nobs = data.num_observations();
         auto work = data.new_extractor();
 
-        std::vector<Store_> store(ndim * nobs);
+        std::vector<Data_> store(ndim * nobs);
         for (size_t o = 0; o < nobs; ++o) {
             std::copy_n(work->next(), ndim, store.begin() + o * ndim);
         }
 
-        return new VptreePrebuilt<Dim_, Index_, Data_, Distance_, DistanceMetric_, Store_>(ndim, nobs, std::move(store), my_metric);
+        return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);
     }
 };
 

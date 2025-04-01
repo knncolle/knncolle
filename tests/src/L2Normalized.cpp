@@ -10,15 +10,14 @@ TEST(L2Normalized, Basic) {
     {
         std::vector<double> empty(5);
         std::vector<double> buffer(5, 123456);
-        auto ptr = knncolle::internal::l2norm(empty.data(), 5, buffer.data());
-        EXPECT_EQ(ptr, empty.data());
+        knncolle::internal::l2norm(empty.data(), 5, buffer.data());
+        EXPECT_EQ(buffer, empty);
     }
 
     {
         std::vector<double> input { 3, 4 };
         std::vector<double> output(2);
-        auto ptr = knncolle::internal::l2norm(input.data(), 2, output.data());
-        EXPECT_EQ(ptr, output.data());
+        knncolle::internal::l2norm(input.data(), 2, output.data());
         EXPECT_FLOAT_EQ(output[0], 0.6);
         EXPECT_FLOAT_EQ(output[1], 0.8);
     }
@@ -50,11 +49,11 @@ TEST_P(L2NormalizedTest, Find) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
 
-    knncolle::VptreeBuilder<> bb;
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, normalized.data()));
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
-    knncolle::L2NormalizedBuilder<> lb(std::make_unique<knncolle::VptreeBuilder<knncolle::EuclideanDistance, knncolle::L2NormalizedMatrix<> > >());
-    auto lptr = lb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
+    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
 
@@ -77,12 +76,11 @@ TEST_P(L2NormalizedTest, Query) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
 
-    knncolle::VptreeBuilder<> bb;
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, normalized.data()));
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
-    // Try the other constructor for some variety.
-    knncolle::L2NormalizedBuilder<> lb(new knncolle::VptreeBuilder<knncolle::EuclideanDistance, knncolle::L2NormalizedMatrix<> >);
-    auto lptr = lb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
+    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
 
@@ -108,11 +106,11 @@ TEST_P(L2NormalizedTest, All) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
 
-    knncolle::VptreeBuilder<> bb;
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, nobs, normalized.data()));
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
-    knncolle::L2NormalizedBuilder<> lb(std::make_unique<knncolle::VptreeBuilder<knncolle::EuclideanDistance, knncolle::L2NormalizedMatrix<> > >());
-    auto lptr = lb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
+    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
 

@@ -20,7 +20,7 @@ namespace knncolle {
  * Users should ensure that a `Searcher` instance does not outlive the `Prebuilt` object used to generate it;
  * this allows developers of the former to hold references to the latter.
  *
- * @tparam Index_ Integer type for the indices.
+ * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Floating point type for the distances.
  */

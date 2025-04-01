@@ -46,9 +46,10 @@ public:
  *
  * This defines the expectations for a matrix of observation-level data to be used in `Builder::build_raw()`.
  *
- * @tparam Dim_ Integer type for the dimensions.
+ * @tparam Index_ Integer type of the observation indices.
+ * @tparam Data_ Numeric type of the data.
  */
-template<typename Dim_, typename Index_, typename Data_>
+template<typename Index_, typename Data_>
 class Matrix {
 public:
     /**
@@ -73,7 +74,7 @@ public:
     /**
      * @return Number of dimensions.
      */
-    virtual Dim_ num_dimensions() const = 0;
+    virtual size_t num_dimensions() const = 0;
 
 public:
     /**
@@ -117,12 +118,11 @@ public:
  * This defines a simple column-major matrix of observations where the columns are observations and the rows are dimensions.
  * It is compatible with the compile-time interface described in `MockMatrix`.
  *
- * @tparam Dim_ Integer type of the dimensions.
  * @tparam Index_ Integer type of the observation indices.
  * @tparam Data_ Numeric type of the data.
  */
-template<typename Dim_, typename Index_, typename Data_>
-class SimpleMatrix final : public Matrix<Dim_, Index_, Data_> {
+template<typename Index_, typename Data_>
+class SimpleMatrix final : public Matrix<Index_, Data_> {
 public:
     /**
      * @param num_dimensions Number of dimensions.
@@ -130,11 +130,11 @@ public:
      * @param[in] data Pointer to an array of length `num_dim * num_obs`, containing a column-major matrix of observation data.
      * It is expected that the array will not be deallocated during the lifetime of this `SimpleMatrix` instance.
      */
-    SimpleMatrix(Dim_ num_dimensions, Index_ num_observations, const Data_* data) : 
+    SimpleMatrix(size_t num_dimensions, Index_ num_observations, const Data_* data) : 
         my_num_dim(num_dimensions), my_num_obs(num_observations), my_data(data) {}
 
 private:
-    Dim_ my_num_dim;
+    size_t my_num_dim;
     Index_ my_num_obs;
     const Data_* my_data;
 
@@ -143,7 +143,7 @@ public:
         return my_num_obs;
     }
 
-    Dim_ num_dimensions() const {
+    size_t num_dimensions() const {
         return my_num_dim;
     }
 

@@ -17,19 +17,19 @@ protected:
 TEST_P(VptreeTest, FindEuclidean) {
     int k = std::get<1>(GetParam());
 
-    knncolle::SimpleMatrix mat(ndim, nobs, data.data());
-    knncolle::VptreeBuilder<> vb;
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
     auto vptr = vb.build_unique(mat);
     EXPECT_EQ(ndim, vptr->num_dimensions());
     EXPECT_EQ(nobs, vptr->num_observations());
 
     // Building a brute-force reference.
-    knncolle::BruteforceBuilder<> bb;
+    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
     auto bptr = bb.build_unique(mat);
 
     // Testing other types. 
-    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
-    knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float> vb2;
+    knncolle::SimpleMatrix<size_t, double> mat2(ndim, nobs, data.data());
+    knncolle::VptreeBuilder<size_t, double, float> vb2(new knncolle::EuclideanDistance<double, float>);
     auto vptr2 = vb2.build_unique(mat2);
 
     std::vector<int> vres_i, ref_i;
@@ -64,12 +64,12 @@ TEST_P(VptreeTest, FindEuclidean) {
 TEST_P(VptreeTest, FindManhattan) {
     int k = std::get<1>(GetParam());    
 
-    knncolle::SimpleMatrix mat(ndim, nobs, data.data());
-    knncolle::BruteforceBuilder<knncolle::ManhattanDistance> bb;
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::ManhattanDistance<double, double>);
     auto bptr = bb.build_unique(mat);
 
     // Injecting some more interesting options.
-    knncolle::VptreeBuilder<knncolle::ManhattanDistance> vb;
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::ManhattanDistance<double, double>);
     auto vptr = vb.build_unique(mat);
 
     std::vector<int> vres_i, ref_i;
@@ -88,10 +88,10 @@ TEST_P(VptreeTest, FindManhattan) {
 TEST_P(VptreeTest, QueryEuclidean) {
     int k = std::get<1>(GetParam());    
 
-    knncolle::SimpleMatrix mat(ndim, nobs, data.data());
-    knncolle::VptreeBuilder<> vb;
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
     auto vptr = vb.build_unique(mat);
-    knncolle::BruteforceBuilder<> bb;
+    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
     auto bptr = bb.build_unique(mat);
 
     std::vector<int> vres_i, ref_i;
@@ -120,8 +120,8 @@ TEST_P(VptreeTest, QueryEuclidean) {
 TEST_P(VptreeTest, AllEuclidean) {
     int k = std::get<1>(GetParam());    
 
-    knncolle::VptreeBuilder<> vb;
-    auto vptr = vb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto vsptr = vptr->initialize();
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;
@@ -206,9 +206,9 @@ TEST_P(VptreeDuplicateTest, Basic) {
         dup.insert(dup.end(), data.begin(), data.end());
     }
 
-    knncolle::VptreeBuilder<> bb;
+    knncolle::VptreeBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
     int actual_nobs = nobs * duplication;
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix(ndim, actual_nobs, dup.data()));
+    auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, actual_nobs, dup.data()));
     auto bsptr = bptr->initialize();
     std::vector<int> ires;
     std::vector<double> dres;
@@ -244,8 +244,8 @@ TEST(Vptree, Empty) {
     int nobs = 0;
     std::vector<double> data;
 
-    knncolle::VptreeBuilder<> vb;
-    auto vptr = vb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto vsptr = vptr->initialize();
     std::vector<int> res_i(10);
     std::vector<double> res_d(10);
@@ -263,8 +263,8 @@ TEST(Vptree, Ties) {
     std::fill(data.begin() + nobs * ndim / 2, data.end(), 2);
     const double delta = std::sqrt(ndim);
 
-    knncolle::VptreeBuilder<> vb;
-    auto vptr = vb.build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto vsptr = vptr->initialize();
     std::vector<int> output_indices;
     std::vector<double> output_distances;

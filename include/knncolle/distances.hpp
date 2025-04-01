@@ -16,9 +16,8 @@ namespace knncolle {
  *
  * @tparam Distance_ Floating-point type for the output distance.
  * @tparam Data_ Numeric type for the input data.
- * @tparam Dim_ Integer type for the vector length.
  */
-template<typename Dim_, typename Data_, typename Distance_>
+template<typename Data_, typename Distance_>
 class DistanceMetric {
 public:
     /**
@@ -32,7 +31,7 @@ public:
      *
      * @return The raw distance between `x` and `y`.
      */
-    virtual Distance_ raw(Dim_ num_dimensions, const Data_* x, const Data_* y) const = 0;
+    virtual Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const = 0;
 
     /**
      * @param raw Raw distance.
@@ -52,17 +51,16 @@ public:
  *
  * @tparam Distance_ Floating-point type for the output distance.
  * @tparam Data_ Numeric type for the input data.
- * @tparam Dim_ Integer type for the vector length.
  */
-template<typename Dim_, typename Data_, typename Distance_>
-class EuclideanDistance final : public DistanceMetric<Dim_, Data_, Distance_> {
+template<typename Data_, typename Distance_>
+class EuclideanDistance final : public DistanceMetric<Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    Distance_ raw(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
-        for (Dim_ d = 0; d < num_dimensions; ++d) {
+        for (size_t d = 0; d < num_dimensions; ++d) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
             output += delta * delta;
         }
@@ -87,17 +85,16 @@ public:
  *
  * @tparam Distance_ Floating-point type for the output distance.
  * @tparam Data_ Numeric type for the input data.
- * @tparam Dim_ Integer type for the vector length.
  */
-template<typename Dim_, typename Data_, typename Distance_>
-class ManhattanDistance final : public DistanceMetric<Dim_, Data_, Distance_> {
+template<typename Data_, typename Distance_>
+class ManhattanDistance final : public DistanceMetric<Data_, Distance_> {
 public:
     /**
      * @cond
      */
-    Distance_ raw(Dim_ num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
-        for (Dim_ d = 0; d < num_dimensions; ++d, ++x, ++y) {
+        for (size_t d = 0; d < num_dimensions; ++d, ++x, ++y) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
             output += std::abs(delta);
         }

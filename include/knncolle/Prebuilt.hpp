@@ -18,12 +18,11 @@ namespace knncolle {
  * Instances of `Prebuilt` subclasses are typically constructed with `Builder::build_raw()`.
  * Note that a `Prebuilt` instance may outlive the `Builder` object used to generate it, so the former should not hold any references to the latter.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
- * @tparam Index_ Integer type for the indices.
+ * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Floating point type for the distances.
  */
-template<typename Dim_, typename Index_, typename Data_, typename Distance_>
+template<typename Index_, typename Data_, typename Distance_>
 class Prebuilt {
 public:
     /**
@@ -34,7 +33,7 @@ public:
     /**
      * @return Number of dimensions.
      */
-    virtual Dim_ num_dimensions() const = 0;
+    virtual size_t num_dimensions() const = 0;
 
     /**
      * @cond
