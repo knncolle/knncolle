@@ -3,7 +3,7 @@
 
 #include "Builder.hpp"
 #include "Prebuilt.hpp"
-#include "MockMatrix.hpp"
+#include "Matrix.hpp"
 
 #include "distances.hpp"
 #include "L2Normalized.hpp"

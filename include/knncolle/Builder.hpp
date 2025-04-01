@@ -2,7 +2,9 @@
 #define KNNCOLLE_BUILDER_HPP
 
 #include "Prebuilt.hpp"
+#include "Matrix.hpp"
 #include <memory>
+#include <utility>
 
 /**
  * @file Builder.hpp
@@ -15,40 +17,49 @@ namespace knncolle {
 /**
  * @brief Interface to build nearest-neighbor search indices.
  *
- * @tparam Matrix_ Matrix-like type that satisfies the `MockMatrix` interface.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating point type for the distances.
+ * @tparam Matrix_ Class that satisfies the `Matrix` interface.
  */
-template<class Matrix_, typename Float_>
+template<typename Index_, typename Data_, typename Distance_, class Matrix_ = Matrix<Index_, Data_> >
 class Builder {
 public:
     /**
      * @cond
      */
+    // Rule of 5 all of this.
+    Builder() = default;
+    Builder(Builder&&) = default;
+    Builder(const Builder&) = default;
+    Builder& operator=(Builder&&) = default;
+    Builder& operator=(const Builder&) = default;
     virtual ~Builder() = default;
     /**
      * @endcond
      */
 
+public:
     /**
-     * @param data Matrix-like object (see `MockMatrix`) containing observations in columns and dimensions in rows.
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
      * @return Pointer to a pre-built search index.
      */
-    virtual Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_>* build_raw(const Matrix_& data) const = 0;
+    virtual Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const = 0;
 
     /**
-     * @param data Matrix-like object (see `MockMatrix`) containing observations in columns and dimensions in rows.
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
      * @return Shared pointer to a pre-built search index.
      */
-    std::shared_ptr<Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_> > build_shared(const Matrix_& data) const {
-        return std::shared_ptr<Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_> >(build_raw(data));
+    std::shared_ptr<Prebuilt<Index_, Data_, Distance_> > build_shared(const Matrix_& data) const {
+        return std::shared_ptr<Prebuilt<Index_, Data_, Distance_> >(build_raw(data));
     }
 
     /**
-     * @param data Matrix-like object (see `MockMatrix`) containing observations in columns and dimensions in rows.
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
      * @return Unique pointer to a pre-built search index.
      */
-    std::unique_ptr<Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_> > build_unique(const Matrix_& data) const {
-        return std::unique_ptr<Prebuilt<typename Matrix_::dimension_type, typename Matrix_::index_type, Float_> >(build_raw(data));
+    std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > build_unique(const Matrix_& data) const {
+        return std::unique_ptr<Prebuilt<Index_, Data_, Distance_> >(build_raw(data));
     }
 };
 

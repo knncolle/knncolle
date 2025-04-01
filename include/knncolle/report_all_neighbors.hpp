@@ -16,8 +16,8 @@ Index_ safe_remove_self(Index_ count) {
 
 // These functions clean up the output for the search_all() functions.
 
-template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
-void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances, Index_ i) {
+template<bool do_indices_, bool do_distances_, typename Distance_, typename Index_>
+void report_all_neighbors_raw(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ i) {
     std::sort(all_neighbors.begin(), all_neighbors.end());
 
     size_t target_size = safe_remove_self(all_neighbors.size());
@@ -42,8 +42,8 @@ void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neigh
     }
 }
 
-template<typename Float_, typename Index_>
-void report_all_neighbors(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances, Index_ i) {
+template<typename Distance_, typename Index_>
+void report_all_neighbors(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ i) {
     if (output_indices && output_distances) {
         report_all_neighbors_raw<true, true>(all_neighbors, output_indices, output_distances, i);
     } else if (output_indices) {
@@ -53,8 +53,8 @@ void report_all_neighbors(std::vector<std::pair<Float_, Index_> >& all_neighbors
     }
 }
 
-template<bool do_indices_, bool do_distances_, typename Float_, typename Index_>
-void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+template<bool do_indices_, bool do_distances_, typename Distance_, typename Index_>
+void report_all_neighbors_raw(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
     std::sort(all_neighbors.begin(), all_neighbors.end());
 
     size_t target_size = all_neighbors.size();
@@ -77,8 +77,8 @@ void report_all_neighbors_raw(std::vector<std::pair<Float_, Index_> >& all_neigh
     }
 }
 
-template<typename Float_, typename Index_>
-void report_all_neighbors(std::vector<std::pair<Float_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) {
+template<typename Distance_, typename Index_>
+void report_all_neighbors(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
     if (output_indices && output_distances) {
         report_all_neighbors_raw<true, true>(all_neighbors, output_indices, output_distances);
     } else if (output_indices) {

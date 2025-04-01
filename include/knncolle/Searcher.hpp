@@ -20,16 +20,21 @@ namespace knncolle {
  * Users should ensure that a `Searcher` instance does not outlive the `Prebuilt` object used to generate it;
  * this allows developers of the former to hold references to the latter.
  *
- * @tparam Index_ Integer type for the indices.
- * For the output of `Builder::build`, this is set to `MockMatrix::index_type`.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Data_ Numeric type for the query data.
+ * @tparam Distance_ Floating point type for the distances.
  */
-template<typename Index_, typename Float_>
+template<typename Index_, typename Data_, typename Distance_>
 class Searcher {
 public:
     /**
      * @cond
      */
+    Searcher() = default;
+    Searcher(Searcher&&) = default;
+    Searcher(const Searcher&) = default;
+    Searcher& operator=(Searcher&&) = default;
+    Searcher& operator=(const Searcher&) = default;
     virtual ~Searcher() = default;
     /**
      * @endcond
@@ -53,7 +58,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) = 0;
+    virtual void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) = 0;
 
     /** 
      * Find the nearest neighbors of a new observation.
@@ -69,7 +74,7 @@ public:
      * This corresponds to the indices reported in `output_indices`.
      * Optionally NULL, in which case no distances are returned.
      */
-    virtual void search(const Float_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Float_>* output_distances) = 0;
+    virtual void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) = 0;
 
 public:
     /**
@@ -98,7 +103,7 @@ public:
      *
      * @return Number of neighbors within `distance` of `i`.
      */
-    virtual Index_ search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
+    virtual Index_ search_all([[maybe_unused]] Index_ i, [[maybe_unused]] Distance_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Distance_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
         return 0;
     }
@@ -118,7 +123,7 @@ public:
      *
      * @return Number of neighbors within `distance` of `query`.
      */
-    virtual Index_ search_all([[maybe_unused]] const Float_* query, [[maybe_unused]] Float_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Float_>* output_distances) {
+    virtual Index_ search_all([[maybe_unused]] const Data_* query, [[maybe_unused]] Distance_ distance, [[maybe_unused]] std::vector<Index_>* output_indices, [[maybe_unused]] std::vector<Distance_>* output_distances) {
         throw std::runtime_error("distance-based searches not supported");
         return 0;
     }

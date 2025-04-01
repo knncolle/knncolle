@@ -18,14 +18,26 @@ namespace knncolle {
  * Instances of `Prebuilt` subclasses are typically constructed with `Builder::build_raw()`.
  * Note that a `Prebuilt` instance may outlive the `Builder` object used to generate it, so the former should not hold any references to the latter.
  *
- * @tparam Dim_ Integer type for the number of dimensions.
- * For the output of `Builder::build_raw()`, this is set to `Matrix_::dimension_type`.
- * @tparam Index_ Integer type for the indices.
- * For the output of `Builder::build_raw()`, this is set to `Matrix_::index_type`.
- * @tparam Float_ Floating point type for the query data and output distances.
+ * @tparam Index_ Integer type for the observation indices.
+ * @tparam Data_ Numeric type for the query data.
+ * @tparam Distance_ Floating point type for the distances.
  */
-template<typename Dim_, typename Index_, typename Float_>
+template<typename Index_, typename Data_, typename Distance_>
 class Prebuilt {
+public:
+    /**
+     * @cond
+     */
+    Prebuilt() = default;
+    Prebuilt(const Prebuilt&) = default;
+    Prebuilt(Prebuilt&&) = default;
+    Prebuilt& operator=(const Prebuilt&) = default;
+    Prebuilt& operator=(Prebuilt&&) = default;
+    virtual ~Prebuilt() = default;
+    /**
+     * @endcond
+     */
+
 public:
     /**
      * @return Number of observations in the dataset to be searched.
@@ -35,22 +47,14 @@ public:
     /**
      * @return Number of dimensions.
      */
-    virtual Dim_ num_dimensions() const = 0;
-
-    /**
-     * @cond
-     */
-    virtual ~Prebuilt() = default;
-    /**
-     * @endcond
-     */
+    virtual size_t num_dimensions() const = 0;
 
 public:
     /**
      * Create a `Searcher` for searching the index.
      * @return Pointer to a `Searcher` instance.
      */
-    virtual std::unique_ptr<Searcher<Index_, Float_> > initialize() const = 0;
+    virtual std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const = 0;
 };
 
 }

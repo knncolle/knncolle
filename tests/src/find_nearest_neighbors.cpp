@@ -21,7 +21,8 @@ protected:
 TEST_P(FindNearestNeighborsTest, Basic) {
     int k = std::get<1>(GetParam());
 
-    auto base = knncolle::VptreeBuilder<>().build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto out = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
     EXPECT_EQ(out.size(), nobs);
@@ -48,12 +49,12 @@ TEST_P(FindNearestNeighborsTest, Basic) {
 TEST_P(FindNearestNeighborsTest, DifferentType) {
     int k = std::get<1>(GetParam());
 
-    knncolle::SimpleMatrix mat(ndim, nobs, data.data());
-    auto base = knncolle::VptreeBuilder<>().build_unique(mat);
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
-    knncolle::SimpleMatrix<int, size_t, double> mat2(ndim, nobs, data.data());
-    auto base2 = knncolle::VptreeBuilder<knncolle::EuclideanDistance, decltype(mat2), float>().build_unique(mat2);
+    knncolle::VptreeBuilder<size_t, double, double> vb2(new knncolle::EuclideanDistance<double, double>);
+    auto base2 = vb2.build_unique(knncolle::SimpleMatrix<size_t, double>(ndim, nobs, data.data()));
     auto out2 = knncolle::find_nearest_neighbors(*base2, k, 1);
 
     EXPECT_EQ(out2.size(), nobs);
@@ -72,7 +73,8 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
 TEST_P(FindNearestNeighborsTest, IndexOnly) {
     int k = std::get<1>(GetParam());
 
-    auto base = knncolle::VptreeBuilder<>().build_unique(knncolle::SimpleMatrix(ndim, nobs, data.data()));
+    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
     auto out = knncolle::find_nearest_neighbors_index_only<>(*base, k, 1);
 
