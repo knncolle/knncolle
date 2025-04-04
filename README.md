@@ -264,10 +264,6 @@ The external dependencies listed in [`extern/CMakeLists.txt`](extern/CMakeLists.
 
 ## References
 
-Wang X (2012). 
-A fast exact k-nearest neighbors algorithm for high dimensional search using k-means clustering and triangle inequality. 
-_Proc Int Jt Conf Neural Netw_, 43, 6:2351-2358.
-
 Hanov S (2011).
 VP trees: A data structure for finding stuff fast.
 http://stevehanov.ca/blog/index.php?id=130
