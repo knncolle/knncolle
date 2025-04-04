@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['prebuilt_2ehpp_0',['Prebuilt.hpp',['../Prebuilt_8hpp.html',1,'']]]
+  ['neighborqueue_2ehpp_0',['NeighborQueue.hpp',['../NeighborQueue_8hpp.html',1,'']]]
 ];

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['vptree_2ehpp_0',['Vptree.hpp',['../Vptree_8hpp.html',1,'']]]
+  ['searcher_2ehpp_0',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
+  ['simple_2ehpp_1',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
+  ['subpar_2ehpp_2',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
 ];

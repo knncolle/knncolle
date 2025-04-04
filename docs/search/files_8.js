@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['searcher_2ehpp_0',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
-  ['simple_2ehpp_1',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
-  ['subpar_2ehpp_2',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
+  ['range_2ehpp_0',['range.hpp',['https://ltla.github.io/subpar/range_8hpp.html',1,'']]],
+  ['report_5fall_5fneighbors_2ehpp_1',['report_all_neighbors.hpp',['../report__all__neighbors_8hpp.html',1,'']]]
 ];

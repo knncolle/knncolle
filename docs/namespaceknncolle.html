@@ -141,6 +141,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1MatrixExtractor.html">MatrixExtractor</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extractor interface for matrix data.  <a href="classknncolle_1_1MatrixExtractor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1NeighborQueue.html">NeighborQueue</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to track nearest neighbors.  <a href="classknncolle_1_1NeighborQueue.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for prebuilt nearest-neighbor search indices.  <a href="classknncolle_1_1Prebuilt.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,6 +186,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a8406dfe7aac78dee986262a5f6bceee7" id="r_a8406dfe7aac78dee986262a5f6bceee7"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a8406dfe7aac78dee986262a5f6bceee7"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; Index_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8406dfe7aac78dee986262a5f6bceee7">find_nearest_neighbors_index_only</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a8406dfe7aac78dee986262a5f6bceee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab636bced615a3a669ef0e207b5d848cc" id="r_ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
+<tr class="memitem:ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplItemLeft" align="right" valign="top">Index_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab636bced615a3a669ef0e207b5d848cc">count_all_neighbors_without_self</a> (Index_ count)</td></tr>
+<tr class="separator:ab636bced615a3a669ef0e207b5d848cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af24a311775039654985b447c85d03782" id="r_af24a311775039654985b447c85d03782"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ , typename Index_ &gt; </td></tr>
+<tr class="memitem:af24a311775039654985b447c85d03782"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af24a311775039654985b447c85d03782">report_all_neighbors</a> (std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)</td></tr>
+<tr class="separator:af24a311775039654985b447c85d03782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab42206db56aa02366c741249e609465c" id="r_ab42206db56aa02366c741249e609465c"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ , typename Index_ &gt; </td></tr>
+<tr class="memitem:ab42206db56aa02366c741249e609465c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab42206db56aa02366c741249e609465c">report_all_neighbors</a> (std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
+<tr class="separator:ab42206db56aa02366c741249e609465c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collection of KNN algorithms. </p>
@@ -247,6 +259,33 @@ template&lt;typename Index_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Capped number of neighbors to search for. This is equal to <code>k</code> if it is less than <code>num_observations</code>; otherwise it is equal to <code>num_observations - 1</code> if <code>num_observations &gt; 0</code>; otherwise it is equal to zero. </dd></dl>
+
+</div>
+</div>
+<a id="ab636bced615a3a669ef0e207b5d848cc" name="ab636bced615a3a669ef0e207b5d848cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab636bced615a3a669ef0e207b5d848cc">&#9670;&#160;</a></span>count_all_neighbors_without_self()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Index_ knncolle::count_all_neighbors_without_self </td>
+          <td>(</td>
+          <td class="paramtype">Index_</td>          <td class="paramname"><span class="paramname"><em>count</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Count the number of neighbors from a range-based search, after removing the observation being searched. This is intended for developer use in implementations of <code><a class="el" href="classknncolle_1_1Searcher.html#a3ef8c1bf087751bff46af346bda2feb3">Searcher::search_all()</a></code>, and protects against pathological situations where an observation fails to be detected as its own neighbor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">count</td><td>Number of neighbors within range of the specified observation, including the observation itself. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>count - 1</code> in most cases, otherwise zero. </dd></dl>
 
 </div>
 </div>
@@ -383,6 +422,100 @@ template&lt;typename Task_ , class Run_ &gt; </div>
   </dd>
 </dl>
 <p>By default, this is an alias to <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">subpar::parallelize_range()</a></code>. However, if the <code>KNNCOLLE_CUSTOM_PARALLEL</code> function-like macro is defined, it is called instead. Any user-defined macro should accept the same arguments as <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a9c64cc17f4f8d1fadbba6d25053a8dbe">subpar::parallelize_range()</a></code>. </p>
+
+</div>
+</div>
+<a id="ab42206db56aa02366c741249e609465c" name="ab42206db56aa02366c741249e609465c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab42206db56aa02366c741249e609465c">&#9670;&#160;</a></span>report_all_neighbors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Distance_ , typename Index_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void knncolle::report_all_neighbors </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>all_neighbors</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Index_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Report the indices and distances of all neighbors in range of an observation of interest. It is assumed that the observation of interest is not detected as its own neighbor, presumably as it does not exist in the original input dataset.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">all_neighbors</td><td>Vector of (distance, index) pairs for all neighbors within range of the observation of interest. This may include the observation itself. Note that this will be sorted on output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector in which to store the indices of all neighbors in range, sorted by distance. If <code>NULL</code>, the indices will not be reported. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector in which to store the (sorted) distances to all neighbors in range. If <code>NULL</code>, the distances will not be reported. Otherwise, on output, this will have the same length as <code>*output_indices</code> and contain distances to each of those neighbors. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af24a311775039654985b447c85d03782" name="af24a311775039654985b447c85d03782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af24a311775039654985b447c85d03782">&#9670;&#160;</a></span>report_all_neighbors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Distance_ , typename Index_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void knncolle::report_all_neighbors </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>all_neighbors</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Index_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_indices</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; Distance_ &gt; *</td>          <td class="paramname"><span class="paramname"><em>output_distances</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Index_</td>          <td class="paramname"><span class="paramname"><em>self</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Report the indices and distances of all neighbors in range of an observation of interest. If the observation of interest is detected as its own neighbor, it will be removed from the output vectors.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">all_neighbors</td><td>Vector of (distance, index) pairs for all neighbors within range of the observation of interest. This may include the observation itself. Note that this will be sorted on output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector in which to store the indices of all neighbors in range, sorted by distance. If <code>NULL</code>, the indices will not be reported. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output_distances</td><td>Pointer to a vector in which to store the (sorted) distances to all neighbors in range. If <code>NULL</code>, the distances will not be reported. Otherwise, on output, this will have the same length as <code>*output_indices</code> and contain distances to each of those neighbors. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">self</td><td>Index of the observation of interest, i.e., for which neighbors are to be identified. If present in <code>all_neighbors</code>, this will be removed from <code>output_indices</code> and <code>output_distances</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

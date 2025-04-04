@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['can_5fsearch_5fall_0',['can_search_all',['../classknncolle_1_1BruteforceSearcher.html#a7ae415a6fa177b498359371211c007a1',1,'knncolle::BruteforceSearcher::can_search_all()'],['../classknncolle_1_1Searcher.html#a175ab05c339e3aa39b974f1ceebc21a3',1,'knncolle::Searcher::can_search_all()'],['../classknncolle_1_1VptreeSearcher.html#a8df5ca5cd6c2f305da615f7839ba7894',1,'knncolle::VptreeSearcher::can_search_all()']]],
-  ['cap_5fk_1',['cap_k',['../namespaceknncolle.html#a926c81cd626de7081b073a891d352543',1,'knncolle']]]
+  ['bruteforcebuilder_0',['BruteforceBuilder',['../classknncolle_1_1BruteforceBuilder.html#a4a7b4fa0a5301677f340b64875969929',1,'knncolle::BruteforceBuilder::BruteforceBuilder(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)'],['../classknncolle_1_1BruteforceBuilder.html#ad1aa49199fb139df6d7ffa5fff46289c',1,'knncolle::BruteforceBuilder::BruteforceBuilder(const DistanceMetric_ *metric)']]],
+  ['build_5fraw_1',['build_raw',['../classknncolle_1_1BruteforceBuilder.html#a96c9cd26d07b09768dc73b2e73899510',1,'knncolle::BruteforceBuilder::build_raw()'],['../classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c',1,'knncolle::Builder::build_raw()'],['../classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b',1,'knncolle::L2NormalizedBuilder::build_raw()'],['../classknncolle_1_1VptreeBuilder.html#aafa5db0eecf99ebab88d21f038b6b15a',1,'knncolle::VptreeBuilder::build_raw()']]],
+  ['build_5fshared_2',['build_shared',['../classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90',1,'knncolle::Builder']]],
+  ['build_5funique_3',['build_unique',['../classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7',1,'knncolle::Builder']]]
 ];

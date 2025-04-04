@@ -5,10 +5,12 @@
     <path>knncolle/</path>
     <filename>Bruteforce_8hpp.html</filename>
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
+    <includes id="NeighborQueue_8hpp" name="NeighborQueue.hpp" local="yes" import="no" module="no" objc="no">NeighborQueue.hpp</includes>
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
+    <includes id="report__all__neighbors_8hpp" name="report_all_neighbors.hpp" local="yes" import="no" module="no" objc="no">report_all_neighbors.hpp</includes>
     <class kind="class">knncolle::BruteforceSearcher</class>
     <class kind="class">knncolle::BruteforcePrebuilt</class>
     <class kind="class">knncolle::BruteforceBuilder</class>
@@ -79,11 +81,24 @@
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
+    <name>NeighborQueue.hpp</name>
+    <path>knncolle/</path>
+    <filename>NeighborQueue_8hpp.html</filename>
+    <class kind="class">knncolle::NeighborQueue</class>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
     <name>Prebuilt.hpp</name>
     <path>knncolle/</path>
     <filename>Prebuilt_8hpp.html</filename>
     <includes id="Searcher_8hpp" name="Searcher.hpp" local="yes" import="no" module="no" objc="no">Searcher.hpp</includes>
     <class kind="class">knncolle::Prebuilt</class>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
+    <name>report_all_neighbors.hpp</name>
+    <path>knncolle/</path>
+    <filename>report__all__neighbors_8hpp.html</filename>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -98,9 +113,11 @@
     <path>knncolle/</path>
     <filename>Vptree_8hpp.html</filename>
     <includes id="distances_8hpp" name="distances.hpp" local="yes" import="no" module="no" objc="no">distances.hpp</includes>
+    <includes id="NeighborQueue_8hpp" name="NeighborQueue.hpp" local="yes" import="no" module="no" objc="no">NeighborQueue.hpp</includes>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
+    <includes id="report__all__neighbors_8hpp" name="report_all_neighbors.hpp" local="yes" import="no" module="no" objc="no">report_all_neighbors.hpp</includes>
     <class kind="class">knncolle::VptreeSearcher</class>
     <class kind="class">knncolle::VptreePrebuilt</class>
     <class kind="class">knncolle::VptreeBuilder</class>
@@ -415,6 +432,61 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>knncolle::NeighborQueue</name>
+    <filename>classknncolle_1_1NeighborQueue.html</filename>
+    <templarg>typename Index_</templarg>
+    <templarg>typename Distance_</templarg>
+    <member kind="function">
+      <type></type>
+      <name>NeighborQueue</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>abc66097ed7fa8f7cbbd0ee82328b9152</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>ae75692355310f09d163bf20b19b3ef36</anchor>
+      <arglist>(Index_ k)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_full</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>ae459f76b2e81b65b7f437e01eea1689b</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Distance_</type>
+      <name>limit</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>ade4febddacc0e5725caa3c683486dcb0</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>ac0add776502ad89cc532ede0da9e7559</anchor>
+      <arglist>(Index_ i, Distance_ d)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>report</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>a611b8233976b0b5f930deac74c2b68c3</anchor>
+      <arglist>(std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>report</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>a8eae6afd23a9b4a3106b64f16e78c852</anchor>
+      <arglist>(std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>knncolle::Prebuilt</name>
     <filename>classknncolle_1_1Prebuilt.html</filename>
     <templarg>typename Index_</templarg>
@@ -654,6 +726,7 @@
     <class kind="class">knncolle::ManhattanDistance</class>
     <class kind="class">knncolle::Matrix</class>
     <class kind="class">knncolle::MatrixExtractor</class>
+    <class kind="class">knncolle::NeighborQueue</class>
     <class kind="class">knncolle::Prebuilt</class>
     <class kind="class">knncolle::Searcher</class>
     <class kind="class">knncolle::SimpleMatrix</class>
@@ -695,6 +768,27 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a8406dfe7aac78dee986262a5f6bceee7</anchor>
       <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+    </member>
+    <member kind="function">
+      <type>Index_</type>
+      <name>count_all_neighbors_without_self</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ab636bced615a3a669ef0e207b5d848cc</anchor>
+      <arglist>(Index_ count)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>report_all_neighbors</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>af24a311775039654985b447c85d03782</anchor>
+      <arglist>(std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>report_all_neighbors</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ab42206db56aa02366c741249e609465c</anchor>
+      <arglist>(std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
     </member>
   </compound>
   <compound kind="page">

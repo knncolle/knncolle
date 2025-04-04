@@ -1,0 +1,10 @@
+<map id="knncolle/NeighborQueue.hpp" name="knncolle/NeighborQueue.hpp">
+<area shape="rect" id="Node000001" title="Helper class to track nearest neighbors." alt="" coords="76,5,263,31"/>
+<area shape="rect" id="Node000002" href="$Bruteforce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="5,79,163,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,43,100,81,97,77,142,39"/>
+<area shape="rect" id="Node000004" href="$Vptree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="187,79,322,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="197,39,242,77,239,81,194,43"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="97,153,242,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,113,157,150,153,154,108,117"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="230,117,185,154,182,150,227,113"/>
+</map>
