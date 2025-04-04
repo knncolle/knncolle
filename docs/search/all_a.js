@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['manhattandistance_0',['ManhattanDistance',['../classknncolle_1_1ManhattanDistance.html',1,'knncolle']]],
-  ['matrix_1',['Matrix',['../classknncolle_1_1Matrix.html',1,'knncolle']]],
-  ['matrix_2ehpp_2',['Matrix.hpp',['../Matrix_8hpp.html',1,'']]],
-  ['matrix_3c_20index_5f_2c_20normalized_5f_20_3e_3',['Matrix&lt; Index_, Normalized_ &gt;',['../classknncolle_1_1Matrix.html',1,'knncolle']]],
-  ['matrixextractor_4',['MatrixExtractor',['../classknncolle_1_1MatrixExtractor.html',1,'knncolle']]],
-  ['matrixextractor_3c_20normalized_5f_20_3e_5',['MatrixExtractor&lt; Normalized_ &gt;',['../classknncolle_1_1MatrixExtractor.html',1,'knncolle']]],
-  ['max_5fchange_5fproportion_6',['max_change_proportion',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html#a8facb9fb31d589bb41fa9e196e1e15e4',1,'kmeans::RefineMiniBatchOptions']]],
-  ['max_5fiterations_7',['max_iterations',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineHartiganWongOptions.html#a84e571b7448c1fc74dec8419feb0b0c9',1,'kmeans::RefineHartiganWongOptions::max_iterations'],['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineLloydOptions.html#ac927615927b93f499bbabb24cfc3fb9a',1,'kmeans::RefineLloydOptions::max_iterations'],['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineMiniBatchOptions.html#a8a4b7d596a2c1780d645739904948bd4',1,'kmeans::RefineMiniBatchOptions::max_iterations']]],
-  ['max_5fquick_5ftransfer_5fiterations_8',['max_quick_transfer_iterations',['https://ltla.github.io/CppKmeans/structkmeans_1_1RefineHartiganWongOptions.html#adcae86d661845e96ee5406638c9b1a83',1,'kmeans::RefineHartiganWongOptions']]],
-  ['mockmatrix_9',['MockMatrix',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html',1,'kmeans']]],
-  ['mockmatrix_2ehpp_10',['MockMatrix.hpp',['https://ltla.github.io/CppKmeans/MockMatrix_8hpp.html',1,'']]]
+  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a97693d779b6041859ffa0ef2d9c1500b',1,'knncolle']]],
+  ['new_5fextractor_1',['new_extractor',['../classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e',1,'knncolle::Matrix::new_extractor()'],['../classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5',1,'knncolle::SimpleMatrix::new_extractor()']]],
+  ['next_2',['next',['../classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a',1,'knncolle::MatrixExtractor::next()'],['../classknncolle_1_1SimpleMatrixExtractor.html#a41129e636ddcf0dcf5f80dd21568e72b',1,'knncolle::SimpleMatrixExtractor::next()']]],
+  ['normalize_3',['normalize',['../classknncolle_1_1DistanceMetric.html#a4a468569d0823bf3211b2ee5c46a81d9',1,'knncolle::DistanceMetric']]],
+  ['normalizedmatrix_4',['NormalizedMatrix',['../classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32',1,'knncolle::L2NormalizedBuilder']]],
+  ['num_5fdimensions_5',['num_dimensions',['../classknncolle_1_1BruteforcePrebuilt.html#afcf08a0b0063213de28652097738bd2d',1,'knncolle::BruteforcePrebuilt::num_dimensions()'],['../classknncolle_1_1Matrix.html#af606bb88f445cac8ebf6dc540c083759',1,'knncolle::Matrix::num_dimensions()'],['../classknncolle_1_1SimpleMatrix.html#aaae847bdcdf4de01cd6d32f6dff306c9',1,'knncolle::SimpleMatrix::num_dimensions()'],['../classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e',1,'knncolle::Prebuilt::num_dimensions()'],['../classknncolle_1_1VptreePrebuilt.html#a142a6ce78e805b280137a9b4dfe85f49',1,'knncolle::VptreePrebuilt::num_dimensions()']]],
+  ['num_5fobservations_6',['num_observations',['../classknncolle_1_1BruteforcePrebuilt.html#aa2058e2a905ac6c83389c5ad5b062049',1,'knncolle::BruteforcePrebuilt::num_observations()'],['../classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab',1,'knncolle::Matrix::num_observations()'],['../classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa',1,'knncolle::SimpleMatrix::num_observations()'],['../classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd',1,'knncolle::Prebuilt::num_observations()'],['../classknncolle_1_1VptreePrebuilt.html#a4ddff52bf80e043c07a43281b067a935',1,'knncolle::VptreePrebuilt::num_observations()']]]
 ];

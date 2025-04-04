@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['parallelize_2ehpp_0',['parallelize.hpp',['https://ltla.github.io/CppKmeans/parallelize_8hpp.html',1,'']]],
-  ['prebuilt_2ehpp_1',['Prebuilt.hpp',['../Prebuilt_8hpp.html',1,'']]]
+  ['searcher_2ehpp_0',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
+  ['simple_2ehpp_1',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
+  ['subpar_2ehpp_2',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['details_2ehpp_0',['Details.hpp',['https://ltla.github.io/CppKmeans/Details_8hpp.html',1,'']]],
-  ['distances_2ehpp_1',['distances.hpp',['../distances_8hpp.html',1,'']]]
+  ['find_5fnearest_5fneighbors_2ehpp_0',['find_nearest_neighbors.hpp',['../find__nearest__neighbors_8hpp.html',1,'']]]
 ];

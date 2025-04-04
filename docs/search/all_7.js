@@ -1,21 +1,6 @@
 var searchData=
 [
-  ['index_5ftype_0',['index_type',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html#a0777fb08a869fbfcc4254f8ec4eb0da6',1,'kmeans::MockMatrix']]],
-  ['indexedaccessworkspace_1',['IndexedAccessWorkspace',['https://ltla.github.io/CppKmeans/structkmeans_1_1MockMatrix_1_1IndexedAccessWorkspace.html',1,'kmeans::MockMatrix']]],
-  ['initialize_2',['Initialize',['https://ltla.github.io/CppKmeans/classkmeans_1_1Initialize.html',1,'kmeans']]],
-  ['initialize_3',['initialize',['../classknncolle_1_1BruteforcePrebuilt.html#aeac9a8865d093e6d019f7383ec556ec6',1,'knncolle::BruteforcePrebuilt::initialize()'],['../classknncolle_1_1L2NormalizedPrebuilt.html#afb014f25024603b63877e5dee3ad3459',1,'knncolle::L2NormalizedPrebuilt::initialize()'],['../classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68',1,'knncolle::Prebuilt::initialize()'],['../classknncolle_1_1VptreePrebuilt.html#aa81f5ca04707010f2b8e56aac81f9196',1,'knncolle::VptreePrebuilt::initialize()']]],
-  ['initialize_2ehpp_4',['Initialize.hpp',['https://ltla.github.io/CppKmeans/Initialize_8hpp.html',1,'']]],
-  ['initialize_3c_20matrix_5f_2c_20cluster_5f_2c_20float_5f_20_3e_5',['Initialize&lt; Matrix_, Cluster_, Float_ &gt;',['https://ltla.github.io/CppKmeans/classkmeans_1_1Initialize.html',1,'kmeans']]],
-  ['initializekmeanspp_6',['InitializeKmeanspp',['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeKmeanspp.html',1,'kmeans::InitializeKmeanspp&lt; typename Matrix_, typename Cluster_, typename Float_ &gt;'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeKmeanspp.html#a1c22523b6848531771c3056e6db44f31',1,'kmeans::InitializeKmeanspp::InitializeKmeanspp(InitializeKmeansppOptions options)'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeKmeanspp.html#a16ee2db4571dce8fa1639fbf003b997c',1,'kmeans::InitializeKmeanspp::InitializeKmeanspp()=default']]],
-  ['initializekmeanspp_2ehpp_7',['InitializeKmeanspp.hpp',['https://ltla.github.io/CppKmeans/InitializeKmeanspp_8hpp.html',1,'']]],
-  ['initializekmeansppoptions_8',['InitializeKmeansppOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1InitializeKmeansppOptions.html',1,'kmeans']]],
-  ['initializenone_9',['InitializeNone',['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeNone.html',1,'kmeans']]],
-  ['initializenone_2ehpp_10',['InitializeNone.hpp',['https://ltla.github.io/CppKmeans/InitializeNone_8hpp.html',1,'']]],
-  ['initializerandom_11',['InitializeRandom',['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html',1,'kmeans::InitializeRandom&lt; class Matrix_, typename Cluster_, typename Float_ &gt;'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html#a666141f5963775f2a5a3b9db248ad347',1,'kmeans::InitializeRandom::InitializeRandom(InitializeRandomOptions options)'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeRandom.html#aeb65e9b5002be1a5d2772ca03a713d85',1,'kmeans::InitializeRandom::InitializeRandom()=default']]],
-  ['initializerandom_2ehpp_12',['InitializeRandom.hpp',['https://ltla.github.io/CppKmeans/InitializeRandom_8hpp.html',1,'']]],
-  ['initializerandomoptions_13',['InitializeRandomOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1InitializeRandomOptions.html',1,'kmeans']]],
-  ['initializevariancepartition_14',['InitializeVariancePartition',['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeVariancePartition.html',1,'kmeans::InitializeVariancePartition&lt; typename Matrix_, typename Cluster_, typename Float_ &gt;'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeVariancePartition.html#a1651c5fb4c462341f10cc766aa5a339d',1,'kmeans::InitializeVariancePartition::InitializeVariancePartition(InitializeVariancePartitionOptions options)'],['https://ltla.github.io/CppKmeans/classkmeans_1_1InitializeVariancePartition.html#a863b3001c14cc044f04a683c04a6b6c7',1,'kmeans::InitializeVariancePartition::InitializeVariancePartition()=default']]],
-  ['initializevariancepartition_2ehpp_15',['InitializeVariancePartition.hpp',['https://ltla.github.io/CppKmeans/InitializeVariancePartition_8hpp.html',1,'']]],
-  ['initializevariancepartitionoptions_16',['InitializeVariancePartitionOptions',['https://ltla.github.io/CppKmeans/structkmeans_1_1InitializeVariancePartitionOptions.html',1,'kmeans']]],
-  ['iterations_17',['iterations',['https://ltla.github.io/CppKmeans/structkmeans_1_1Details.html#a899c7cad07aebcf16ca6d09ab0734f5a',1,'kmeans::Details']]]
+  ['knn_20algorithms_0',['Collection of KNN algorithms',['../index.html',1,'']]],
+  ['knncolle_1',['knncolle',['../namespaceknncolle.html',1,'']]],
+  ['knncolle_2ehpp_2',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]]
 ];

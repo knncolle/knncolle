@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['data_5ftype_0',['data_type',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html#a62a8e51202b58a8136b9815d1316dfc2',1,'kmeans::MockMatrix']]],
-  ['dimension_5ftype_1',['dimension_type',['https://ltla.github.io/CppKmeans/classkmeans_1_1MockMatrix.html#ae8c8ab38b08e8de633e0bbfffcbfcb28',1,'kmeans::MockMatrix']]]
+  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a97693d779b6041859ffa0ef2d9c1500b',1,'knncolle']]],
+  ['normalizedmatrix_1',['NormalizedMatrix',['../classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32',1,'knncolle::L2NormalizedBuilder']]]
 ];
