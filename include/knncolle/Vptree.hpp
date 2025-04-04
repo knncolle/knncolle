@@ -68,13 +68,16 @@ public:
     }
 
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        if (k == 0) { // protect the NeighborQueue from k = 0.
+        // Protect the NeighborQueue from k = 0. This also protects search_nn()
+        // when there are no observations (and no node 0 to start recursion). 
+        if (k == 0) {
             if (output_indices) {
                 output_indices->clear();
             }
             if (output_distances) {
                 output_distances->clear();
             }
+
         } else {
             my_nearest.reset(k);
             Distance_ max_dist = std::numeric_limits<Distance_>::max();
@@ -104,6 +107,12 @@ public:
     }
 
     Index_ search_all(const Data_* query, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        if (my_parent.my_data.empty()) { // protect the search_all() method when there is not even a node 0 to start the recursion.
+            my_all_neighbors.clear();
+            report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+            return 0;
+        }
+
         if (!output_indices && !output_distances) {
             Index_ count = 0;
             my_parent.template search_all<true>(0, query, d, count);

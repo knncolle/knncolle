@@ -255,6 +255,12 @@ TEST(Vptree, Empty) {
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
 
+    res_i.resize(10);
+    res_d.resize(10);
+    EXPECT_EQ(vsptr->search_all(target.data(), 0, &res_i, &res_d), 0);
+    EXPECT_TRUE(res_i.empty());
+    EXPECT_TRUE(res_d.empty());
+
     // For coverage purposes:
     vsptr->search(target.data(), 0, NULL, NULL);
 }
