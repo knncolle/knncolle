@@ -247,13 +247,16 @@ TEST(Vptree, Empty) {
     knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
     auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto vsptr = vptr->initialize();
+
     std::vector<int> res_i(10);
     std::vector<double> res_d(10);
-
     std::vector<double> target(ndim);
     vsptr->search(target.data(), 0, &res_i, &res_d);
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
+
+    // For coverage purposes:
+    vsptr->search(target.data(), 0, NULL, NULL);
 }
 
 TEST(Vptree, Ties) {

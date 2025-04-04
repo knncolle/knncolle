@@ -49,7 +49,7 @@ public:
 
 private:                
     const BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
-    internal::NeighborQueue<Index_, Distance_> my_nearest;
+    NeighborQueue<Index_, Distance_> my_nearest;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 private:
@@ -72,7 +72,12 @@ public:
 
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         if (k == 0) { // protect the NeighborQueue from k = 0.
-            internal::flush_output(output_indices, output_distances, 0);
+            if (output_indices) {
+                output_indices->clear();
+            }
+            if (output_distances) {
+                output_distances->clear();
+            }
         } else {
             my_nearest.reset(k);
             my_parent.search(query, my_nearest);
@@ -91,14 +96,14 @@ public:
         if (!output_indices && !output_distances) {
             Index_ count = 0;
             my_parent.template search_all<true>(ptr, d, count);
-            return internal::safe_remove_self(count);
+            return count_all_neighbors_without_self(count);
 
         } else {
             my_all_neighbors.clear();
             my_parent.template search_all<false>(ptr, d, my_all_neighbors);
-            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
+            report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
             normalize(output_distances);
-            return internal::safe_remove_self(my_all_neighbors.size());
+            return count_all_neighbors_without_self(my_all_neighbors.size());
         }
     }
 
@@ -111,7 +116,7 @@ public:
         } else {
             my_all_neighbors.clear();
             my_parent.template search_all<false>(query, d, my_all_neighbors);
-            internal::report_all_neighbors(my_all_neighbors, output_indices, output_distances);
+            report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             normalize(output_distances);
             return my_all_neighbors.size();
         }
@@ -157,7 +162,7 @@ public:
     }
 
 private:
-    void search(const Data_* query, internal::NeighborQueue<Index_, Distance_>& nearest) const {
+    void search(const Data_* query, NeighborQueue<Index_, Distance_>& nearest) const {
         auto copy = my_data.data();
         Distance_ threshold_raw = std::numeric_limits<Distance_>::infinity();
         for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {

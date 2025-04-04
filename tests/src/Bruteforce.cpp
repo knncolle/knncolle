@@ -255,17 +255,22 @@ TEST(Bruteforce, Empty) {
     knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto bsptr = bptr->initialize();
+
     std::vector<int> res_i(10);
     std::vector<double> res_d(10);
-
     std::vector<double> target(ndim);
     bsptr->search(target.data(), 0, &res_i, &res_d);
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
 
-    bsptr->search_all(target.data(), 0, &res_i, &res_d);
+    res_i.resize(10);
+    res_d.resize(10);
+    EXPECT_EQ(bsptr->search_all(target.data(), 0, &res_i, &res_d), 0);
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
+
+    // For coverage purposes:
+    bsptr->search(target.data(), 0, NULL, NULL);
 }
 
 TEST(BruteForce, Ties) {
