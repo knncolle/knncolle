@@ -16,11 +16,6 @@ jobs:
       with:
         args: -O docs/doxygen-awesome.css https://raw.githubusercontent.com/jothepro/doxygen-awesome-css/main/doxygen-awesome.css
 
-    - name: Add kmeans tagfile
-      uses: wei/wget@v1
-      with:
-        args: -O docs/kmeans.tag https://ltla.github.io/CppKmeans/kmeans.tag
-
     - name: Add subpar tagfile
       uses: wei/wget@v1
       with:
