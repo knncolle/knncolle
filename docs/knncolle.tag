@@ -140,13 +140,6 @@
       <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
     </member>
     <member kind="function">
-      <type></type>
-      <name>BruteforceBuilder</name>
-      <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
-      <anchor>ad1aa49199fb139df6d7ffa5fff46289c</anchor>
-      <arglist>(const DistanceMetric_ *metric)</arglist>
-    </member>
-    <member kind="function">
       <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>build_raw</name>
       <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
@@ -619,13 +612,6 @@
       <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
       <anchor>a13f00af67d227d117fa4b9910861a438</anchor>
       <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>VptreeBuilder</name>
-      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
-      <anchor>a29abc6777bdd31820ef66a6ee518a8aa</anchor>
-      <arglist>(const DistanceMetric_ *metric)</arglist>
     </member>
     <member kind="function">
       <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>

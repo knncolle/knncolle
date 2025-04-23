@@ -120,16 +120,15 @@ $(function(){ initResizable(false); });
 <div class="line">&gt; mat(ndim, nobs, matrix.data());</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Build a VP-tree index with double-precision Euclidean distances.</span></div>
+<div class="line"><span class="keyword">auto</span> edist = std::make_shared&lt;<a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a>&lt;</div>
+<div class="line">    <span class="comment">/* data type = */</span> double,</div>
+<div class="line">    <span class="comment">/* distance type = */</span> <span class="keywordtype">double</span></div>
+<div class="line">&gt; &gt;();</div>
 <div class="line"><a class="code hl_class" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a>&lt;</div>
 <div class="line">    <span class="comment">/* observation index */</span> int, </div>
 <div class="line">    <span class="comment">/* data type */</span> double, </div>
 <div class="line">    <span class="comment">/* distance type */</span> <span class="keywordtype">double</span></div>
-<div class="line">&gt; vp_builder(</div>
-<div class="line">    <span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance</a>&lt;</div>
-<div class="line">        <span class="comment">/* data type = */</span> <span class="keywordtype">double</span>,</div>
-<div class="line">        <span class="comment">/* distance type = */</span> <span class="keywordtype">double</span></div>
-<div class="line">    &gt;</div>
-<div class="line">);</div>
+<div class="line">&gt; vp_builder(std::move(edist));</div>
 <div class="line"><span class="keyword">auto</span> vp_index = vp_builder.build_unique(mat);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Find 10 nearest neighbors of every observation.</span></div>
@@ -209,7 +208,7 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclassknncolle_1_1ManhattanDistance_html"><div class="ttname"><a href="classknncolle_1_1ManhattanDistance.html">knncolle::ManhattanDistance</a></div><div class="ttdoc">Compute Manhattan distances between two input vectors.</div><div class="ttdef"><b>Definition</b> distances.hpp:104</div></div>
 </div><!-- fragment --><p>We can even switch between input matrix representations at run-time, as long as they follow the <code>Matrix</code> interface. This allows the various <code>Builder</code> classes to accept input data in other formats (e.g., sparse, file-backed). For example, <b>knncolle</b> implements the <code>L2NormalizedMatrix</code> subclass to apply on-the-fly L2 normalization of each observation's vector of coordinates. This is used inside the <code>L2NormalizedBuilder</code> class to transform an existing neighbor search method from Euclidean to cosine distances.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> builder = std::make_shared&lt;knncolle::VptreeBuilder&lt;int, double, double&gt; &gt;(</div>
-<div class="line">    <span class="keyword">new</span> <a class="code hl_class" href="classknncolle_1_1EuclideanDistance.html">knncolle::EuclideanDistance&lt;double, double&gt;</a></div>
+<div class="line">    std::make_shared&lt;knncolle::EuclideanDistance&lt;double, double&gt; &gt;()</div>
 <div class="line">);</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> l2builder = std::make_shared&lt;<a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a>&lt;</div>
@@ -221,8 +220,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="comment">// Any Matrix &#39;mat&#39; is automatically wrapped in a L2NormalizedMatrix</span></div>
 <div class="line"><span class="comment">// before being passed to &#39;builder-&gt;build_unique&#39;.</span></div>
-<div class="line"><span class="keyword">auto</span> l2index = l2builder-&gt;<a class="code hl_function" href="classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a>(mat);</div>
-<div class="ttc" id="aclassknncolle_1_1Builder_html_a93cac638de3e4ad31919bc5d677d16b7"><div class="ttname"><a href="classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">knncolle::Builder::build_unique</a></div><div class="ttdeci">std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt; build_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Builder.hpp:66</div></div>
+<div class="line"><span class="keyword">auto</span> l2index = l2builder-&gt;build_unique(mat);</div>
 <div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:258</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
 <h1>Modifying template parameters</h1>

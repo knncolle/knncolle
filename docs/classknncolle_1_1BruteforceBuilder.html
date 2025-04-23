@@ -126,8 +126,6 @@ Collaboration diagram for knncolle::BruteforceBuilder&lt; Index_, Data_, Distanc
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a4a7b4fa0a5301677f340b64875969929" id="r_a4a7b4fa0a5301677f340b64875969929"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a7b4fa0a5301677f340b64875969929">BruteforceBuilder</a> (std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</td></tr>
 <tr class="separator:a4a7b4fa0a5301677f340b64875969929"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1aa49199fb139df6d7ffa5fff46289c" id="r_ad1aa49199fb139df6d7ffa5fff46289c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1aa49199fb139df6d7ffa5fff46289c">BruteforceBuilder</a> (const DistanceMetric_ *metric)</td></tr>
-<tr class="separator:ad1aa49199fb139df6d7ffa5fff46289c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96c9cd26d07b09768dc73b2e73899510" id="r_a96c9cd26d07b09768dc73b2e73899510"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96c9cd26d07b09768dc73b2e73899510">build_raw</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:a96c9cd26d07b09768dc73b2e73899510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classknncolle_1_1Builder"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classknncolle_1_1Builder')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1Builder.html">knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</a></td></tr>
@@ -152,7 +150,7 @@ class knncolle::BruteforceBuilder&lt; Index_, Data_, Distance_, Matrix_, Distanc
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4a7b4fa0a5301677f340b64875969929" name="a4a7b4fa0a5301677f340b64875969929"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a7b4fa0a5301677f340b64875969929">&#9670;&#160;</a></span>BruteforceBuilder() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a7b4fa0a5301677f340b64875969929">&#9670;&#160;</a></span>BruteforceBuilder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,39 +164,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix
           <td class="memname"><a class="el" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a>&lt; Index_, Data_, Distance_, Matrix_, DistanceMetric_ &gt;::BruteforceBuilder </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; const DistanceMetric_ &gt;</td>          <td class="paramname"><span class="paramname"><em>metric</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">metric</td><td>Pointer to a distance metric instance, e.g., <code><a class="el" href="classknncolle_1_1EuclideanDistance.html" title="Compute Euclidean distances between two input vectors.">EuclideanDistance</a></code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad1aa49199fb139df6d7ffa5fff46289c" name="ad1aa49199fb139df6d7ffa5fff46289c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1aa49199fb139df6d7ffa5fff46289c">&#9670;&#160;</a></span>BruteforceBuilder() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;, class DistanceMetric_  = DistanceMetric&lt;Data_, Distance_&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a>&lt; Index_, Data_, Distance_, Matrix_, DistanceMetric_ &gt;::BruteforceBuilder </td>
-          <td>(</td>
-          <td class="paramtype">const DistanceMetric_ *</td>          <td class="paramname"><span class="paramname"><em>metric</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
