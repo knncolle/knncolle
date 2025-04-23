@@ -1,5 +1,7 @@
 <map id="knncolle/distances.hpp" name="knncolle/distances.hpp">
 <area shape="rect" id="Node000001" title="Classes for distance calculations." alt="" coords="5,5,159,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="53,79,111,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,31,85,63,79,63,79,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="11,79,68,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,33,57,67,52,64,73,30"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="92,79,157,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="91,30,112,64,107,67,87,33"/>
 </map>

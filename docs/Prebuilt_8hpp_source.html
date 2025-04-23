@@ -97,39 +97,41 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define KNNCOLLE_PREBUILT_HPP</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="Searcher_8hpp.html">Searcher.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_&gt;</div>
-<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html">   26</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a> {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>(<a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp; operator=(<a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">~Prebuilt</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">   45</a></span>    <span class="keyword">virtual</span> Index_ <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">num_observations</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e">   50</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e">num_dimensions</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">   57</a></span>    <span class="keyword">virtual</span> std::unique_ptr&lt;Searcher&lt;Index_, Data_, Distance_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">initialize</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>};</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="Searcher_8hpp.html">Searcher.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_&gt;</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html">   28</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a> {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>(<a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp; operator=(<a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">~Prebuilt</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">   47</a></span>    <span class="keyword">virtual</span> Index_ <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">num_observations</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#ac041712392f74d5fd8f030e2c0adcdc6">   52</a></span>    <span class="keyword">virtual</span> std::size_t <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#ac041712392f74d5fd8f030e2c0adcdc6">num_dimensions</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">   59</a></span>    <span class="keyword">virtual</span> std::unique_ptr&lt;Searcher&lt;Index_, Data_, Distance_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">initialize</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>};</div>
 </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aSearcher_8hpp_html"><div class="ttname"><a href="Searcher_8hpp.html">Searcher.hpp</a></div><div class="ttdoc">Interface for searching nearest-neighbor indices.</div></div>
-<div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:26</div></div>
+<div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:28</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html_a560fec57d6ec36d288b6cd80e9f4c7bd"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">knncolle::Prebuilt::num_observations</a></div><div class="ttdeci">virtual Index_ num_observations() const =0</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html_aacc8819b7962ce27294cf0d42f6c6e68"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#aacc8819b7962ce27294cf0d42f6c6e68">knncolle::Prebuilt::initialize</a></div><div class="ttdeci">virtual std::unique_ptr&lt; Searcher&lt; Index_, Data_, Distance_ &gt; &gt; initialize() const =0</div></div>
-<div class="ttc" id="aclassknncolle_1_1Prebuilt_html_ad08cdf5cdab27db326fb7883d1458e8e"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#ad08cdf5cdab27db326fb7883d1458e8e">knncolle::Prebuilt::num_dimensions</a></div><div class="ttdeci">virtual size_t num_dimensions() const =0</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:23</div></div>
+<div class="ttc" id="aclassknncolle_1_1Prebuilt_html_ac041712392f74d5fd8f030e2c0adcdc6"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html#ac041712392f74d5fd8f030e2c0adcdc6">knncolle::Prebuilt::num_dimensions</a></div><div class="ttdeci">virtual std::size_t num_dimensions() const =0</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -6,7 +6,7 @@ var searchData=
   ['searcher_3',['Searcher',['../classknncolle_1_1Searcher.html',1,'knncolle']]],
   ['searcher_2ehpp_4',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
   ['simple_2ehpp_5',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
-  ['simplematrix_6',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#a19a44ed725c5672b6892f8b34dbb04cc',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
+  ['simplematrix_6',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
   ['simplematrixextractor_7',['SimpleMatrixExtractor',['../classknncolle_1_1SimpleMatrixExtractor.html',1,'knncolle']]],
   ['subpar_8',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
   ['subpar_2ehpp_9',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]

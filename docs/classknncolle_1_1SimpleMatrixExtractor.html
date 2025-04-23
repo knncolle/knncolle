@@ -163,7 +163,7 @@ template&lt;typename Data_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Matrix.html#af606bb88f445cac8ebf6dc540c083759">Matrix::num_dimensions()</a></code>, containing the coordinates for the next observation.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">Matrix::num_dimensions()</a></code>, containing the coordinates for the next observation.</dd></dl>
 <p>For a newly created <code><a class="el" href="classknncolle_1_1MatrixExtractor.html" title="Extractor interface for matrix data.">MatrixExtractor</a></code>, the first call to <code><a class="el" href="#a41129e636ddcf0dcf5f80dd21568e72b">next()</a></code> should return the coordinates of the first observation in the matrix; the next call should return the coordinates of the second observation; and so on, for up to <code><a class="el" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">Matrix::num_observations()</a></code> calls, after which the <code><a class="el" href="classknncolle_1_1MatrixExtractor.html" title="Extractor interface for matrix data.">MatrixExtractor</a></code> should no longer be used. </p>
 
 <p>Implements <a class="el" href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">knncolle::MatrixExtractor&lt; Data_ &gt;</a>.</p>

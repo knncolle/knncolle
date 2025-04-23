@@ -156,10 +156,10 @@
     <templarg>class DistanceMetric_</templarg>
     <base>knncolle::Prebuilt&lt; Index_, Data_, Distance_ &gt;</base>
     <member kind="function">
-      <type>size_t</type>
+      <type>std::size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1BruteforcePrebuilt.html</anchorfile>
-      <anchor>afcf08a0b0063213de28652097738bd2d</anchor>
+      <anchor>af1f2788bc10105e686b9ed2ab831d154</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -259,8 +259,8 @@
       <type>virtual Distance_</type>
       <name>raw</name>
       <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
-      <anchor>a2124334e18679dc06dc8cfe8baee4bc5</anchor>
-      <arglist>(size_t num_dimensions, const Data_ *x, const Data_ *y) const =0</arglist>
+      <anchor>a8ce1cf96534fffbc989ae0141cf74ef4</anchor>
+      <arglist>(std::size_t num_dimensions, const Data_ *x, const Data_ *y) const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual Distance_</type>
@@ -374,8 +374,8 @@
       <type></type>
       <name>L2NormalizedSearcher</name>
       <anchorfile>classknncolle_1_1L2NormalizedSearcher.html</anchorfile>
-      <anchor>a267a48a9a523918eec6cc74407489e95</anchor>
-      <arglist>(std::unique_ptr&lt; Searcher&lt; Index_, Normalized_, Distance_ &gt; &gt; searcher, size_t num_dimensions)</arglist>
+      <anchor>a5904180535cf1b42a6e986080d633355</anchor>
+      <arglist>(std::unique_ptr&lt; Searcher&lt; Index_, Normalized_, Distance_ &gt; &gt; searcher, std::size_t num_dimensions)</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -398,10 +398,10 @@
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
-      <type>virtual size_t</type>
+      <type>virtual std::size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1Matrix.html</anchorfile>
-      <anchor>af606bb88f445cac8ebf6dc540c083759</anchor>
+      <anchor>a3c1fdc018a4e777cb69945c0861d56e9</anchor>
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
@@ -493,10 +493,10 @@
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
-      <type>virtual size_t</type>
+      <type>virtual std::size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
-      <anchor>ad08cdf5cdab27db326fb7883d1458e8e</anchor>
+      <anchor>ac041712392f74d5fd8f030e2c0adcdc6</anchor>
       <arglist>() const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
@@ -559,8 +559,8 @@
       <type></type>
       <name>SimpleMatrix</name>
       <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
-      <anchor>a19a44ed725c5672b6892f8b34dbb04cc</anchor>
-      <arglist>(size_t num_dimensions, Index_ num_observations, const Data_ *data)</arglist>
+      <anchor>afe415d2e6adc07aecffab4e8b75ca9e5</anchor>
+      <arglist>(std::size_t num_dimensions, Index_ num_observations, const Data_ *data)</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
@@ -570,10 +570,10 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>size_t</type>
+      <type>std::size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1SimpleMatrix.html</anchorfile>
-      <anchor>aaae847bdcdf4de01cd6d32f6dff306c9</anchor>
+      <anchor>a1503a47fa9b74ad63d780aaec2943c04</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -637,10 +637,10 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>size_t</type>
+      <type>std::size_t</type>
       <name>num_dimensions</name>
       <anchorfile>classknncolle_1_1VptreePrebuilt.html</anchorfile>
-      <anchor>a142a6ce78e805b280137a9b4dfe85f49</anchor>
+      <anchor>a137105c6ffa68f8aef6c7b864623e302</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
