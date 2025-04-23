@@ -49,8 +49,9 @@ protected:
 TEST_P(L2NormalizedTest, Find) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
     knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
@@ -76,8 +77,9 @@ TEST_P(L2NormalizedTest, Find) {
 TEST_P(L2NormalizedTest, Query) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
     knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
@@ -106,8 +108,9 @@ TEST_P(L2NormalizedTest, Query) {
 TEST_P(L2NormalizedTest, All) {
     int k = std::get<1>(GetParam());    
     auto normalized = l2normalize(ndim, nobs, data);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto bb = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
     knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
@@ -164,9 +167,11 @@ protected:
 };
 
 TEST_F(L2NormalizedTypeTest, NonBaseMatrix) {
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+
     // Works correctly with a non-base Matrix_ class.
     typedef knncolle::L2NormalizedMatrix<int, double, double, knncolle::SimpleMatrix<int, double> > NormalizedMatrix;
-    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(new knncolle::EuclideanDistance<double, double>);
+    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(eucdist);
     knncolle::L2NormalizedBuilder<int, double, double, double, knncolle::SimpleMatrix<int, double> > lb(vb);
 
     auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
@@ -174,7 +179,7 @@ TEST_F(L2NormalizedTypeTest, NonBaseMatrix) {
     EXPECT_EQ(lptr->num_dimensions(), ndim);
 
     // Comparing to the reference calculation.
-    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     knncolle::L2NormalizedBuilder<int, double, double, double> lbref(vbref);
     auto lrefptr = lbref.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
 
@@ -193,6 +198,8 @@ TEST_F(L2NormalizedTypeTest, NonBaseMatrix) {
 }
 
 TEST_F(L2NormalizedTypeTest, NonIdenticalNormalized) {
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+
     std::vector<double> rounded(data.begin(), data.end());
     for (auto& r : rounded) {
         r = std::round(r);
@@ -200,7 +207,7 @@ TEST_F(L2NormalizedTypeTest, NonIdenticalNormalized) {
 
     // Works correctly when Normalized_ != Data_.
     typedef knncolle::L2NormalizedMatrix<int, int, double> NormalizedMatrix;
-    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(new knncolle::EuclideanDistance<double, double>);
+    auto vb = std::make_shared<knncolle::VptreeBuilder<int, double, double, NormalizedMatrix> >(eucdist);
     knncolle::L2NormalizedBuilder<int, int, double, double> lb(vb);
 
     std::vector<int> idata(rounded.begin(), rounded.end());
@@ -209,7 +216,7 @@ TEST_F(L2NormalizedTypeTest, NonIdenticalNormalized) {
     EXPECT_EQ(lptr->num_dimensions(), ndim);
 
     // Comparing to the reference calculation.
-    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(new knncolle::EuclideanDistance<double, double>);
+    auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     knncolle::L2NormalizedBuilder<int, double, double, double> lbref(vbref);
     auto lrefptr = lbref.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, rounded.data()));
 

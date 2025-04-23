@@ -41,16 +41,15 @@ knncolle::SimpleMatrix<
 > mat(ndim, nobs, matrix.data());
 
 // Build a VP-tree index with double-precision Euclidean distances.
+auto edist = std::make_shared<knncolle::EuclideanDistance<
+    /* data type = */ double,
+    /* distance type = */ double
+> >();
 knncolle::VptreeBuilder<
     /* observation index */ int, 
     /* data type */ double, 
     /* distance type */ double
-> vp_builder(
-    new knncolle::EuclideanDistance<
-        /* data type = */ double,
-        /* distance type = */ double
-    >
-);
+> vp_builder(std::move(edist));
 auto vp_index = vp_builder.build_unique(mat);
 
 // Find 10 nearest neighbors of every observation.
@@ -171,7 +170,7 @@ This is used inside the `L2NormalizedBuilder` class to transform an existing nei
 
 ```cpp
 auto builder = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(
-    new knncolle::EuclideanDistance<double, double>
+    std::make_shared<knncolle::EuclideanDistance<double, double> >()
 );
 
 auto l2builder = std::make_shared<knncolle::L2NormalizedBuilder<

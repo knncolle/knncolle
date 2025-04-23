@@ -20,8 +20,9 @@ protected:
 
 TEST_P(FindNearestNeighborsTest, Basic) {
     int k = std::get<1>(GetParam());
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::VptreeBuilder<int, double, double> vb(eucdist);
     auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto out = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
@@ -48,12 +49,13 @@ TEST_P(FindNearestNeighborsTest, Basic) {
 
 TEST_P(FindNearestNeighborsTest, DifferentType) {
     int k = std::get<1>(GetParam());
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::VptreeBuilder<int, double, double> vb(eucdist);
     auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
 
-    knncolle::VptreeBuilder<size_t, double, double> vb2(new knncolle::EuclideanDistance<double, double>);
+    knncolle::VptreeBuilder<size_t, double, double> vb2(eucdist);
     auto base2 = vb2.build_unique(knncolle::SimpleMatrix<size_t, double>(ndim, nobs, data.data()));
     auto out2 = knncolle::find_nearest_neighbors(*base2, k, 1);
 
@@ -72,8 +74,9 @@ TEST_P(FindNearestNeighborsTest, DifferentType) {
 
 TEST_P(FindNearestNeighborsTest, IndexOnly) {
     int k = std::get<1>(GetParam());
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::VptreeBuilder<int, double, double> vb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::VptreeBuilder<int, double, double> vb(eucdist);
     auto base = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto ref = knncolle::find_nearest_neighbors<>(*base, k, 1);
     auto out = knncolle::find_nearest_neighbors_index_only<>(*base, k, 1);

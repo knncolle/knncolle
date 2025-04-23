@@ -14,15 +14,16 @@ protected:
 
 TEST_P(BruteforceTest, FindEuclidean) {
     int k = std::get<1>(GetParam());    
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     EXPECT_EQ(ndim, bptr->num_dimensions());
     EXPECT_EQ(nobs, bptr->num_observations());
 
     // Testing other types. 
     knncolle::SimpleMatrix<size_t, double> mat2(ndim, nobs, data.data());
-    knncolle::BruteforceBuilder<size_t, double, float> bb2(new knncolle::EuclideanDistance<double, float>);
+    knncolle::BruteforceBuilder<size_t, double, float> bb2(std::make_shared<knncolle::EuclideanDistance<double, float> >());
     auto bptr2 = bb2.build_unique(mat2);
 
     auto bsptr = bptr->initialize();
@@ -54,8 +55,9 @@ TEST_P(BruteforceTest, FindEuclidean) {
 
 TEST_P(BruteforceTest, FindManhattan) {
     int k = std::get<1>(GetParam());    
+    auto mandist = std::make_shared<knncolle::ManhattanDistance<double, double> >();
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::ManhattanDistance<double, double>);
+    knncolle::BruteforceBuilder<int, double, double> bb(mandist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
 
     auto bsptr = bptr->initialize();
@@ -70,8 +72,9 @@ TEST_P(BruteforceTest, FindManhattan) {
 
 TEST_P(BruteforceTest, QueryEuclidean) {
     int k = std::get<1>(GetParam());    
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_shared(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // building a shared one for some variety.
 
     auto bsptr = bptr->initialize();
@@ -101,8 +104,9 @@ TEST_P(BruteforceTest, QueryEuclidean) {
 
 TEST_P(BruteforceTest, AllEuclidean) {
     int k = std::get<1>(GetParam());    
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto bsptr = bptr->initialize();
     std::vector<int> output_i, ref_i;
@@ -160,9 +164,10 @@ TEST_P(BruteforceTest, AllEuclidean) {
 
 TEST_P(BruteforceTest, AllManhattan) {
     int k = std::get<1>(GetParam());    
+    auto mandist = std::make_shared<knncolle::ManhattanDistance<double, double> >();
 
     // Using Manhattan to test that no-op denormalization is done correctly.
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::ManhattanDistance<double, double>);
+    knncolle::BruteforceBuilder<int, double, double> bb(mandist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto bsptr = bptr->initialize();
     std::vector<int> output_i, ref_i;
@@ -215,7 +220,8 @@ TEST_P(BruteforceDuplicateTest, Basic) {
         dup.insert(dup.end(), data.begin(), data.end());
     }
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     int actual_nobs = nobs * duplication;
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, actual_nobs, dup.data()));
     auto bsptr = bptr->initialize();
@@ -252,7 +258,8 @@ TEST(Bruteforce, Empty) {
     int nobs = 0;
     std::vector<double> data;
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto bsptr = bptr->initialize();
 
@@ -280,7 +287,8 @@ TEST(BruteForce, Ties) {
     std::fill(data.begin() + nobs * ndim / 2, data.end(), 2);
     const double delta = std::sqrt(ndim);
 
-    knncolle::BruteforceBuilder<int, double, double> bb(new knncolle::EuclideanDistance<double, double>);
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
     auto bsptr = bptr->initialize();
     std::vector<int> output_indices;

@@ -233,11 +233,6 @@ public:
      */
     BruteforceBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
 
-    /**
-     * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
-     */
-    BruteforceBuilder(const DistanceMetric_* metric) : BruteforceBuilder(std::shared_ptr<const DistanceMetric_>(metric)) {}
-
 private:
     std::shared_ptr<const DistanceMetric_> my_metric;
 
