@@ -13,6 +13,7 @@
 #include <type_traits>
 #include <limits>
 #include <memory>
+#include <cstddef>
 
 /**
  * @file Bruteforce.hpp
@@ -64,7 +65,7 @@ private:
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
-        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<std::size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
         my_parent.search(ptr, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
         normalize(output_distances);
@@ -91,7 +92,7 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto ptr = my_parent.my_data.data() + static_cast<size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + static_cast<std::size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
@@ -137,7 +138,7 @@ public:
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforcePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
-    size_t my_dim;
+    std::size_t my_dim;
     Index_ my_obs;
     std::vector<Data_> my_data;
     std::shared_ptr<const DistanceMetric_> my_metric;
@@ -146,14 +147,14 @@ public:
     /**
      * @cond
      */
-    BruteforcePrebuilt(size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
+    BruteforcePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)), my_metric(std::move(metric)) {}
     /**
      * @endcond
      */
 
 public:
-    size_t num_dimensions() const {
+    std::size_t num_dimensions() const {
         return my_dim;
     }
 
@@ -241,13 +242,13 @@ public:
      * Creates a `BruteforcePrebuilt` instance.
      */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
-        size_t ndim = data.num_dimensions();
-        size_t nobs = data.num_observations();
+        std::size_t ndim = data.num_dimensions();
+        Index_ nobs = data.num_observations();
         auto work = data.new_extractor();
 
-        std::vector<Data_> store(ndim * nobs);
-        for (size_t o = 0; o < nobs; ++o) {
-            std::copy_n(work->next(), ndim, store.begin() + o * ndim);
+        std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
+        for (Index_ o = 0; o < nobs; ++o) {
+            std::copy_n(work->next(), ndim, store.begin() + static_cast<std::size_t>(o) * ndim); // cast to size_t to avoid overflow.
         }
 
         return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);

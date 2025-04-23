@@ -2,6 +2,8 @@
 #define KNNCOLLE_PREBUILT_HPP
 
 #include <memory>
+#include <cstddef>
+
 #include "Searcher.hpp"
 
 /**
@@ -47,7 +49,7 @@ public:
     /**
      * @return Number of dimensions.
      */
-    virtual size_t num_dimensions() const = 0;
+    virtual std::size_t num_dimensions() const = 0;
 
 public:
     /**

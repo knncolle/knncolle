@@ -13,6 +13,7 @@
 #include <limits>
 #include <tuple>
 #include <memory>
+#include <cstddef>
 
 /**
  * @file Vptree.hpp
@@ -61,7 +62,7 @@ private:
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1);
-        auto iptr = my_parent.my_data.data() + static_cast<size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
+        auto iptr = my_parent.my_data.data() + static_cast<std::size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
         Distance_ max_dist = std::numeric_limits<Distance_>::max();
         my_parent.search_nn(0, iptr, max_dist, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
@@ -91,7 +92,7 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto iptr = my_parent.my_data.data() + static_cast<size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
+        auto iptr = my_parent.my_data.data() + static_cast<std::size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
@@ -141,7 +142,7 @@ public:
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
-    size_t my_dim;
+    std::size_t my_dim;
     Index_ my_obs;
     std::vector<Data_> my_data;
     std::shared_ptr<const DistanceMetric_> my_metric;
@@ -151,7 +152,7 @@ public:
         return my_obs;
     } 
 
-    size_t num_dimensions() const {
+    std::size_t num_dimensions() const {
         return my_dim;
     }
 
@@ -206,11 +207,11 @@ private:
             std::swap(items[lower], items[i]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
-            const Data_* vantage_ptr = coords + static_cast<size_t>(vantage.second) * my_dim; // cast to avoid overflow.
+            const Data_* vantage_ptr = coords + static_cast<std::size_t>(vantage.second) * my_dim; // cast to avoid overflow.
 
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
-                const Data_* loc = coords + static_cast<size_t>(items[i].second) * my_dim; // cast to avoid overflow.
+                const Data_* loc = coords + static_cast<std::size_t>(items[i].second) * my_dim; // cast to avoid overflow.
                 items[i].first = my_metric->raw(my_dim, vantage_ptr, loc);
             }
 
@@ -245,7 +246,7 @@ public:
     /**
      * @cond
      */
-    VptreePrebuilt(size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
+    VptreePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim),
         my_obs(num_obs),
         my_data(std::move(data)),
@@ -287,12 +288,12 @@ public:
                     continue;
                 }
 
-                auto optr = host + static_cast<size_t>(o) * my_dim;
+                auto optr = host + static_cast<std::size_t>(o) * my_dim;
                 std::copy_n(optr, my_dim, buffer.begin());
                 Index_ replacement = current.index;
 
                 do {
-                    auto rptr = host + static_cast<size_t>(replacement) * my_dim;
+                    auto rptr = host + static_cast<std::size_t>(replacement) * my_dim;
                     std::copy_n(rptr, my_dim, optr);
                     used[replacement] = 1;
 
@@ -313,7 +314,7 @@ public:
 
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, NeighborQueue<Index_, Distance_>& nearest) const { 
-        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_dim; // cast to avoid overflow.
+        auto nptr = my_data.data() + static_cast<std::size_t>(curnode_index) * my_dim; // cast to avoid overflow.
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -347,7 +348,7 @@ private:
 
     template<bool count_only_, typename Output_>
     void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
-        auto nptr = my_data.data() + static_cast<size_t>(curnode_index) * my_dim; // cast to avoid overflow.
+        auto nptr = my_data.data() + static_cast<std::size_t>(curnode_index) * my_dim; // cast to avoid overflow.
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -445,13 +446,13 @@ public:
      * Creates a `VptreePrebuilt` instance.
      */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
-        size_t ndim = data.num_dimensions();
-        size_t nobs = data.num_observations();
+        std::size_t ndim = data.num_dimensions();
+        Index_ nobs = data.num_observations();
         auto work = data.new_extractor();
 
-        std::vector<Data_> store(ndim * nobs);
-        for (size_t o = 0; o < nobs; ++o) {
-            std::copy_n(work->next(), ndim, store.begin() + o * ndim);
+        std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
+        for (Index_ o = 0; o < nobs; ++o) {
+            std::copy_n(work->next(), ndim, store.begin() + static_cast<std::size_t>(o) * ndim); // cast to avoid overflow.
         }
 
         return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);

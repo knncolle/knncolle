@@ -2,6 +2,7 @@
 #define KNNCOLLE_DISTANCES_HPP
 
 #include <cmath>
+#include <cstddef>
 
 /**
  * @file distances.hpp
@@ -45,7 +46,7 @@ public:
      *
      * @return The raw distance between `x` and `y`.
      */
-    virtual Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const = 0;
+    virtual Distance_ raw(std::size_t num_dimensions, const Data_* x, const Data_* y) const = 0;
 
     /**
      * @param raw Raw distance.
@@ -72,9 +73,9 @@ public:
     /**
      * @cond
      */
-    Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(std::size_t num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
-        for (size_t d = 0; d < num_dimensions; ++d) {
+        for (std::size_t d = 0; d < num_dimensions; ++d) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
             output += delta * delta;
         }
@@ -106,9 +107,9 @@ public:
     /**
      * @cond
      */
-    Distance_ raw(size_t num_dimensions, const Data_* x, const Data_* y) const {
+    Distance_ raw(std::size_t num_dimensions, const Data_* x, const Data_* y) const {
         Distance_ output = 0;
-        for (size_t d = 0; d < num_dimensions; ++d) {
+        for (std::size_t d = 0; d < num_dimensions; ++d) {
             auto delta = static_cast<Distance_>(x[d]) - static_cast<Distance_>(y[d]); // casting to ensure consistent precision/signedness regardless of Data_.
             output += std::abs(delta);
         }

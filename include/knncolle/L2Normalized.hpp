@@ -5,6 +5,7 @@
 #include <cmath>
 #include <memory>
 #include <limits>
+#include <cstddef>
 
 #include "Searcher.hpp"
 #include "Prebuilt.hpp"
@@ -24,9 +25,9 @@ namespace knncolle {
 namespace internal {
 
 template<typename Data_, typename Normalized_>
-void l2norm(const Data_* ptr, size_t ndim, Normalized_* buffer) {
+void l2norm(const Data_* ptr, std::size_t ndim, Normalized_* buffer) {
     Normalized_ l2 = 0;
-    for (size_t d = 0; d < ndim; ++d) {
+    for (std::size_t d = 0; d < ndim; ++d) {
         Normalized_ val = ptr[d]; // cast to Normalized_ to avoid issues with integer overflow.
         buffer[d] = val;
         l2 += val * val;
@@ -34,7 +35,7 @@ void l2norm(const Data_* ptr, size_t ndim, Normalized_* buffer) {
 
     if (l2 > 0) {
         l2 = std::sqrt(l2);
-        for (size_t d = 0; d < ndim; ++d) {
+        for (std::size_t d = 0; d < ndim; ++d) {
             buffer[d] /= l2;
         }
     }
@@ -63,7 +64,7 @@ public:
      * @param searcher Pointer to a `Searcher` class for the neighbor search that is to be wrapped.
      * @param num_dimensions Number of dimensions of the data.
      */
-    L2NormalizedSearcher(std::unique_ptr<Searcher<Index_, Normalized_, Distance_> > searcher, size_t num_dimensions) : 
+    L2NormalizedSearcher(std::unique_ptr<Searcher<Index_, Normalized_, Distance_> > searcher, std::size_t num_dimensions) : 
         my_searcher(std::move(searcher)),
         buffer(num_dimensions)
     {}
@@ -139,7 +140,7 @@ public:
         return my_prebuilt->num_observations();
     }
 
-    size_t num_dimensions() const {
+    std::size_t num_dimensions() const {
         return my_prebuilt->num_dimensions();
     }
     /**
@@ -176,7 +177,7 @@ public:
     /**
      * @cond
      */
-    L2NormalizedMatrixExtractor(std::unique_ptr<MatrixExtractor<Data_> > extractor, size_t dim) : 
+    L2NormalizedMatrixExtractor(std::unique_ptr<MatrixExtractor<Data_> > extractor, std::size_t dim) : 
         my_extractor(std::move(extractor)), buffer(dim) {}
 
 private:
@@ -223,7 +224,7 @@ private:
     const Matrix_& my_matrix;
 
 public:
-    size_t num_dimensions() const {
+    std::size_t num_dimensions() const {
         return my_matrix.num_dimensions();
     }
 

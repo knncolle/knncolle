@@ -33,7 +33,7 @@ template<bool do_indices_, bool do_distances_, typename Distance_, typename Inde
 void report_all_neighbors_raw(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ i) {
     std::sort(all_neighbors.begin(), all_neighbors.end());
 
-    size_t target_size = count_all_neighbors_without_self(all_neighbors.size());
+    auto target_size = count_all_neighbors_without_self(all_neighbors.size());
     if constexpr(do_indices_) {
         output_indices->clear();
         output_indices->reserve(target_size);
@@ -59,7 +59,7 @@ template<bool do_indices_, bool do_distances_, typename Distance_, typename Inde
 void report_all_neighbors_raw(std::vector<std::pair<Distance_, Index_> >& all_neighbors, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
     std::sort(all_neighbors.begin(), all_neighbors.end());
 
-    size_t target_size = all_neighbors.size();
+    auto target_size = all_neighbors.size();
     if constexpr(do_indices_) {
         output_indices->clear();
         output_indices->reserve(target_size);

@@ -109,7 +109,7 @@ public:
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
         // We expect that nearest is non-empty, as a search should at least
         // find 'self' (or duplicates thereof).
-        size_t num_expected = my_nearest.size() - 1;
+        auto num_expected = my_nearest.size() - 1u;
         if (output_indices) {
             output_indices->clear();
             output_indices->reserve(num_expected);
@@ -168,7 +168,7 @@ public:
      * Otherwise, on output, this will have the same length as `*output_indices` and contain distances to each of those neighbors.
      */
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        size_t position = my_nearest.size();
+        auto position = my_nearest.size();
         if (output_indices) {
             output_indices->resize(position);
         }
@@ -190,9 +190,9 @@ public:
     } 
 
 private:
-    size_t my_neighbors = 1;
     bool my_full = false;
     std::priority_queue<std::pair<Distance_, Index_> > my_nearest;
+    decltype(my_nearest.size()) my_neighbors = 1;
 };
 
 }

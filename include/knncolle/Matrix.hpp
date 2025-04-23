@@ -1,6 +1,9 @@
 #ifndef KNNCOLLE_MATRIX_HPP
 #define KNNCOLLE_MATRIX_HPP
 
+#include <memory>
+#include <cstddef>
+
 /**
  * @file Matrix.hpp
  * @brief Interface for the input matrix.
@@ -74,7 +77,7 @@ public:
     /**
      * @return Number of dimensions.
      */
-    virtual size_t num_dimensions() const = 0;
+    virtual std::size_t num_dimensions() const = 0;
 
 public:
     /**
@@ -96,19 +99,19 @@ public:
     /**
      * @cond
      */
-    SimpleMatrixExtractor(const Data_* data, size_t dim) : my_data(data), my_dim(dim) {}
+    SimpleMatrixExtractor(const Data_* data, std::size_t dim) : my_data(data), my_dim(dim) {}
     /**
      * @endcond
      */
 
 private:
     const Data_* my_data;
-    size_t my_dim;
-    size_t at = 0;
+    std::size_t my_dim;
+    std::size_t at = 0;
 
 public:
     const Data_* next() {
-        return my_data + (at++) * my_dim; // already size_t's to avoid overflow during multiplication.
+        return my_data + (at++) * my_dim; // already std::size_t's to avoid overflow during multiplication.
     } 
 };
 
@@ -130,11 +133,11 @@ public:
      * @param[in] data Pointer to an array of length `num_dim * num_obs`, containing a column-major matrix of observation data.
      * It is expected that the array will not be deallocated during the lifetime of this `SimpleMatrix` instance.
      */
-    SimpleMatrix(size_t num_dimensions, Index_ num_observations, const Data_* data) : 
+    SimpleMatrix(std::size_t num_dimensions, Index_ num_observations, const Data_* data) : 
         my_num_dim(num_dimensions), my_num_obs(num_observations), my_data(data) {}
 
 private:
-    size_t my_num_dim;
+    std::size_t my_num_dim;
     Index_ my_num_obs;
     const Data_* my_data;
 
@@ -143,7 +146,7 @@ public:
         return my_num_obs;
     }
 
-    size_t num_dimensions() const {
+    std::size_t num_dimensions() const {
         return my_num_dim;
     }
 
