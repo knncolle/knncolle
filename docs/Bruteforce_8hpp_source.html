@@ -297,7 +297,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        Index_ nobs = data.num_observations();</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keyword">auto</span> work = data.new_extractor();</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        std::vector&lt;Data_&gt; store(ndim * nobs);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        std::vector&lt;Data_&gt; store(ndim * <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(nobs)); <span class="comment">// cast to avoid overflow.</span></div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="keywordflow">for</span> (Index_ o = 0; o &lt; nobs; ++o) {</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            std::copy_n(work-&gt;next(), ndim, store.begin() + <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(o) * ndim); <span class="comment">// cast to size_t to avoid overflow.</span></div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        }</div>
