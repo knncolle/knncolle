@@ -93,16 +93,16 @@ $(function(){ initResizable(false); });
 <p><img src="https://github.com/knncolle/knncolle/actions/workflows/run-tests.yaml/badge.svg" alt="Unit tests" style="pointer-events: none;" class="inline"/> <img src="https://github.com/knncolle/knncolle/actions/workflows/doxygenate.yaml/badge.svg" alt="Documentation" style="pointer-events: none;" class="inline"/> <a href="https://codecov.io/gh/knncolle/knncolle"><img src="https://codecov.io/gh/knncolle/knncolle/branch/master/graph/badge.svg" alt="Codecov" style="pointer-events: none;" class="inline"/></a></p>
 <h1>Overview</h1>
 <p><b>knncolle</b> is a header-only C++ library that collects a variety of different k-nearest neighbor algorithms under a consistent interface. The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag, or by just swapping out the relevant constructors at compile time.</p>
-<p>The core library supports the following methods:</p>
+<p>The core library implements various interfaces along with the following methods:</p>
 <ul>
 <li><a href="http://stevehanov.ca/blog/?id=130">Vantage point tree</a>, an exact search that uses the tree of the same name.</li>
 <li>Brute force search, mostly implemented for testing.</li>
 </ul>
-<p>This framework is extended by various add-on libraries to more algorithms:</p>
+<p>Additional libraries extend the <b>knncolle</b> framework to more algorithms:</p>
 <ul>
-<li><a href="https://github.com/knncolle/knncolle_kmknn"><b>knncolle_kmknn</b></a> supports <a href="https://pubmed.ncbi.nlm.nih.gov/22247818/">K-means with k-nearest neighbors</a>, an exact search based on k-means clustering.</li>
-<li><a href="https://github.com/knncolle/knncolle_annoy"><b>knncolle_annoy</b></a> supports <a href="https://github.com/spotify/annoy/">Annoy</a>, an approximate search based on random projections.</li>
-<li><a href="https://github.com/knncolle/knncolle_hnsw"><b>knncolle_hnsw</b></a> supports <a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
+<li><a href="https://github.com/knncolle/knncolle_kmknn"><b>knncolle_kmknn</b></a> wraps <a href="https://pubmed.ncbi.nlm.nih.gov/22247818/">KMKNN</a>, an exact search based on k-means clustering.</li>
+<li><a href="https://github.com/knncolle/knncolle_annoy"><b>knncolle_annoy</b></a> wraps <a href="https://github.com/spotify/annoy/">Annoy</a>, an approximate search based on random projections.</li>
+<li><a href="https://github.com/knncolle/knncolle_hnsw"><b>knncolle_hnsw</b></a> wraps <a href="https://github.com/nmslib/hnswlib/">HNSW</a>, an approximate search based on hierarchical graphs.</li>
 </ul>
 <p>Most of the code in this library is derived from the <a href="https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html"><b>BiocNeighbors</b> R package</a>.</p>
 <h1>Quick start</h1>
