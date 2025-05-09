@@ -2,7 +2,7 @@
 
 #ifdef TEST_CUSTOM_PARALLEL
 #include "subpar/subpar.hpp"
-#define KNNCOLLE_CUSTOM_PARALLEL(nw, nt, fun) ::subpar::test_parallelize_range(nw, nt, std::move(fun));
+#define KNNCOLLE_CUSTOM_PARALLEL(nw, nt, fun) ::subpar::parallelize_range(nw, nt, std::move(fun));
 #endif
 
 #include "knncolle/knncolle.hpp"
