@@ -10,16 +10,16 @@
 The aim is to enable downstream libraries to easily switch between different methods with a single runtime flag,
 or by just swapping out the relevant constructors at compile time.
 
-The core library supports the following methods:
+The core library implements various interfaces along with the following methods:
 
 - [Vantage point tree](http://stevehanov.ca/blog/?id=130), an exact search that uses the tree of the same name.
 - Brute force search, mostly implemented for testing.
 
-This framework is extended by various add-on libraries to more algorithms:
+Additional libraries extend the **knncolle** framework to more algorithms:
 
-- [**knncolle_kmknn**](https://github.com/knncolle/knncolle_kmknn) supports [K-means with k-nearest neighbors](https://pubmed.ncbi.nlm.nih.gov/22247818/), an exact search based on k-means clustering.
-- [**knncolle_annoy**](https://github.com/knncolle/knncolle_annoy) supports [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
-- [**knncolle_hnsw**](https://github.com/knncolle/knncolle_hnsw) supports [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
+- [**knncolle_kmknn**](https://github.com/knncolle/knncolle_kmknn) wraps [KMKNN](https://pubmed.ncbi.nlm.nih.gov/22247818/), an exact search based on k-means clustering.
+- [**knncolle_annoy**](https://github.com/knncolle/knncolle_annoy) wraps [Annoy](https://github.com/spotify/annoy/), an approximate search based on random projections.
+- [**knncolle_hnsw**](https://github.com/knncolle/knncolle_hnsw) wraps [HNSW](https://github.com/nmslib/hnswlib/), an approximate search based on hierarchical graphs.
 
 Most of the code in this library is derived from the [**BiocNeighbors** R package](https://bioconductor.org/packages/release/bioc/html/BiocNeighbors.html).
 
