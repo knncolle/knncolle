@@ -71,7 +71,7 @@ public:
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         // Protect the NeighborQueue from k = 0. This also protects search_nn()
         // when there are no observations (and no node 0 to start recursion). 
-        if (k == 0) {
+        if (k == 0 || my_parent.my_data.empty()) {
             if (output_indices) {
                 output_indices->clear();
             }
