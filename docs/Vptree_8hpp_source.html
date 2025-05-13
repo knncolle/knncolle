@@ -139,7 +139,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">   71</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">search</a>(<span class="keyword">const</span> Data_* query, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">// Protect the NeighborQueue from k = 0. This also protects search_nn()</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">// when there are no observations (and no node 0 to start recursion). </span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (k == 0) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (k == 0 || my_parent.my_data.empty()) {</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">if</span> (output_indices) {</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                output_indices-&gt;clear();</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            }</div>
