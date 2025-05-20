@@ -1,7 +1,6 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(ltla_kmeans 3.0.0 CONFIG REQUIRED)
-find_dependency(ltla_subpar 0.3.0 CONFIG REQUIRED)
+find_dependency(ltla_subpar 0.4.0 CONFIG REQUIRED)
 
 include("${CMAKE_CURRENT_LIST_DIR}/knncolle_knncolleTargets.cmake")

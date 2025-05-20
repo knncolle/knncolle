@@ -220,7 +220,7 @@ include(FetchContent)
 FetchContent_Declare(
   knncolle
   GIT_REPOSITORY https://github.com/knncolle/knncolle
-  GIT_TAG master # or any version of interest
+  GIT_TAG master # replace with a pinned release
 )
 
 FetchContent_MakeAvailable(knncolle)
@@ -236,7 +236,13 @@ target_link_libraries(myexe knncolle::knncolle)
 target_link_libraries(mylib INTERFACE knncolle::knncolle)
 ```
 
+By default, this will use `FetchContent` to fetch all external dependencies.
+Applications are advised to pin the versions of each dependency for stability - see [`extern/CMakeLists.txt`](extern/CMakeLists.txt) to find suggested versions.
+If you want to install dependencies manually, set `-DKNNCOLLE_FETCH_EXTERN=OFF` in the Cmake configuration.
+
 ### CMake with `find_package()`
+
+If **knncolle** is already installed on the system, it can be discovered via:
 
 ```cmake
 find_package(knncolle_knncolle CONFIG REQUIRED)
@@ -251,15 +257,13 @@ cmake .. -DKNNCOLLE_TESTS=OFF
 cmake --build . --target install
 ```
 
-By default, this will use `FetchContent` to fetch all external dependencies.
-If you want to install them manually, use `-DKNNCOLLE_FETCH_EXTERN=OFF`.
-See [`extern/CMakeLists.txt`](extern/CMakeLists.txt) to find compatible versions of each dependency.
+Again, this will automatically acquire all its dependencies, see recommendations above.
 
 ### Manual
 
 If you're not using CMake, the simple approach is to just copy the files in `include/` - either directly or with Git submodules - 
 and include their path during compilation with, e.g., GCC's `-I`.
-The external dependencies listed in [`extern/CMakeLists.txt`](extern/CMakeLists.txt) also need to be made available during compilation.
+This will also require the external dependencies listed in [`extern/CMakeLists.txt`](extern/CMakeLists.txt). 
 
 ## References
 
