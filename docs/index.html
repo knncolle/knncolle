@@ -241,7 +241,7 @@ $(function(){ initResizable(false); });
 <div class="line">FetchContent_Declare(</div>
 <div class="line">  knncolle</div>
 <div class="line">  GIT_REPOSITORY https://github.com/knncolle/knncolle</div>
-<div class="line">  GIT_TAG master # or any version of interest</div>
+<div class="line">  GIT_TAG master # replace with a pinned release</div>
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line">FetchContent_MakeAvailable(knncolle)</div>
@@ -251,16 +251,18 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"># For libaries</div>
 <div class="line">target_link_libraries(mylib INTERFACE knncolle::knncolle)</div>
-</div><!-- fragment --><h2>CMake with <code>find_package()</code></h2>
+</div><!-- fragment --><p>By default, this will use <code>FetchContent</code> to fetch all external dependencies. Applications are advised to pin the versions of each dependency for stability - see <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> to find suggested versions. If you want to install dependencies manually, set <code>-DKNNCOLLE_FETCH_EXTERN=OFF</code> in the Cmake configuration.</p>
+<h2>CMake with <code>find_package()</code></h2>
+<p>If <b>knncolle</b> is already installed on the system, it can be discovered via:</p>
 <div class="fragment"><div class="line">find_package(knncolle_knncolle CONFIG REQUIRED)</div>
 <div class="line">target_link_libraries(mylib INTERFACE knncolle::knncolle)</div>
 </div><!-- fragment --><p>To install the library, use:</p>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake .. -DKNNCOLLE_TESTS=OFF</div>
 <div class="line">cmake --build . --target install</div>
-</div><!-- fragment --><p>By default, this will use <code>FetchContent</code> to fetch all external dependencies. If you want to install them manually, use <code>-DKNNCOLLE_FETCH_EXTERN=OFF</code>. See <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> to find compatible versions of each dependency.</p>
+</div><!-- fragment --><p>Again, this will automatically acquire all its dependencies, see recommendations above.</p>
 <h2>Manual</h2>
-<p>If you're not using CMake, the simple approach is to just copy the files in <code>include/</code> - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. The external dependencies listed in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a> also need to be made available during compilation.</p>
+<p>If you're not using CMake, the simple approach is to just copy the files in <code>include/</code> - either directly or with Git submodules - and include their path during compilation with, e.g., GCC's <code>-I</code>. This will also require the external dependencies listed in <a href="extern/CMakeLists.txt"><code>extern/CMakeLists.txt</code></a>.</p>
 <h1>References</h1>
 <p>Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a></p>
 <p>Yianilos PN (1993). Data structures and algorithms for nearest neighbor search in general metric spaces. <em>Proceedings of the Fourth Annual ACM-SIAM Symposium on Discrete Algorithms</em>, 311-321. </p>
