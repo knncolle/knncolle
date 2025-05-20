@@ -66,6 +66,7 @@ public:
      * @param query Pointer to an array of length equal to `Prebuilt::num_dimensions()`, containing the coordinates of the query point.
      * @param k The number of neighbors to identify.
      * This should be a non-negative integer that is no greater than the number of observations in `Prebuilt::num_observations()`.
+     * Users can call `cap_k_query()` to easily cap `k` based on `Prebuilt::num_observations()`.
      * @param[out] output_indices Pointer to a vector, to be filled with the identities of the nearest neighbors in order of increasing distance.
      * On output, the length of the vector should be equal to `k`.
      * All entries should be unique and less than `Prebuilt::num_observations()`.

@@ -83,6 +83,30 @@ int cap_k(int k, Index_ num_observations) {
 }
 
 /**
+ * Cap the number of neighbors to use in `Searcher::search()` with a pointer `query`.
+ *
+ * @tparam Index_ Integer type for the number of observations.
+ * @param k Number of nearest neighbors, should be non-negative.
+ * @param num_observations Number of observations in the dataset.
+ *
+ * @return Capped number of neighbors to query.
+ * This is equal to the smaller of `k` and `num_observations`.
+ */
+template<typename Index_>
+int cap_k_query(int k, Index_ num_observations) {
+    if constexpr(std::is_signed<Index_>::value) {
+        if (k <= num_observations) {
+            return k;
+        }
+    } else {
+        if (static_cast<typename std::make_unsigned<Index_>::type>(k) <= num_observations) {
+            return k;
+        }
+    }
+    return num_observations;
+}
+
+/**
  * Find the nearest neighbors within a pre-built index.
  * This is a convenient wrapper around `Searcher::search` that saves the caller the trouble of writing a loop.
  *
