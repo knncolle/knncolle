@@ -742,6 +742,13 @@
       <arglist>(int k, Index_ num_observations)</arglist>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>cap_k_query</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a918d96e82ead9e67d7c008bde1e22505</anchor>
+      <arglist>(int k, Index_ num_observations)</arglist>
+    </member>
+    <member kind="function">
       <type>NeighborList&lt; Index_, Distance_ &gt;</type>
       <name>find_nearest_neighbors</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
