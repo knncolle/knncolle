@@ -71,7 +71,7 @@ public:
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         // Protect the NeighborQueue from k = 0. This also protects search_nn()
         // when there are no observations (and no node 0 to start recursion). 
-        if (k == 0 || my_parent.my_data.empty()) {
+        if (k == 0 || my_parent.my_nodes.empty()) {
             if (output_indices) {
                 output_indices->clear();
             }
@@ -108,7 +108,7 @@ public:
     }
 
     Index_ search_all(const Data_* query, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        if (my_parent.my_data.empty()) { // protect the search_all() method when there is not even a node 0 to start the recursion.
+        if (my_parent.my_nodes.empty()) { // protect the search_all() method when there is not even a node 0 to start the recursion.
             my_all_neighbors.clear();
             report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             return 0;
@@ -193,7 +193,7 @@ private:
         Node& node = my_nodes.back(); // this is safe during recursion because we reserved 'nodes' already to the number of observations, see the constructor.
 
         Index_ gap = upper - lower;
-        if (gap > 1) { // not yet at a leaft.
+        if (gap > 1) { // not yet at a leaf.
 
             /* Choose an arbitrary point and move it to the start of the [lower, upper)
              * interval in 'items'; this is our new vantage point.
