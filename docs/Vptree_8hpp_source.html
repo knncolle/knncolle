@@ -139,7 +139,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">   71</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">search</a>(<span class="keyword">const</span> Data_* query, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">// Protect the NeighborQueue from k = 0. This also protects search_nn()</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">// when there are no observations (and no node 0 to start recursion). </span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (k == 0 || my_parent.my_data.empty()) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (k == 0 || my_parent.my_nodes.empty()) {</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">if</span> (output_indices) {</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                output_indices-&gt;clear();</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            }</div>
@@ -182,7 +182,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="foldopen" id="foldopen00110" data-start="{" data-end="}">
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classknncolle_1_1VptreeSearcher.html#a53b639f9025699af8fc45487c26ed800">  110</a></span>    Index_ <a class="code hl_function" href="classknncolle_1_1VptreeSearcher.html#a53b639f9025699af8fc45487c26ed800">search_all</a>(<span class="keyword">const</span> Data_* query, Distance_ d, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">if</span> (my_parent.my_data.empty()) { <span class="comment">// protect the search_all() method when there is not even a node 0 to start the recursion.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">if</span> (my_parent.my_nodes.empty()) { <span class="comment">// protect the search_all() method when there is not even a node 0 to start the recursion.</span></div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            my_all_neighbors.clear();</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <a class="code hl_function" href="namespaceknncolle.html#af24a311775039654985b447c85d03782">report_all_neighbors</a>(my_all_neighbors, output_indices, output_distances);</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="keywordflow">return</span> 0;</div>
@@ -263,7 +263,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        Node&amp; node = my_nodes.back(); <span class="comment">// this is safe during recursion because we reserved &#39;nodes&#39; already to the number of observations, see the constructor.</span></div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        Index_ gap = upper - lower;</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">if</span> (gap &gt; 1) { <span class="comment">// not yet at a leaft.</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">if</span> (gap &gt; 1) { <span class="comment">// not yet at a leaf.</span></div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="comment">/* Choose an arbitrary point and move it to the start of the [lower, upper)</span></div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment">             * interval in &#39;items&#39;; this is our new vantage point.</span></div>
