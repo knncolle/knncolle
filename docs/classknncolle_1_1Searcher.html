@@ -101,20 +101,6 @@ $(function(){ initResizable(false); });
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Searcher_8hpp_source.html">Searcher.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for knncolle::Searcher&lt; Index_, Data_, Distance_ &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1Searcher__inherit__graph.png" border="0" usemap="#aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map" id="aknncolle_1_1Searcher_3_01Index___00_01Data___00_01Distance___01_4_inherit__map">
-<area shape="rect" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
-<area shape="rect" href="classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="251,5,438,61"/>
-<area shape="poly" title=" " alt="" coords="177,85,256,59,258,64,179,90"/>
-<area shape="rect" href="classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="241,85,448,141"/>
-<area shape="poly" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
-<area shape="rect" href="classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="260,165,429,221"/>
-<area shape="poly" title=" " alt="" coords="179,136,260,163,258,168,177,141"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -169,8 +155,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 <p>It is expected that the return value of this method should be constant throughout the lifetime of any <code><a class="el" href="classknncolle_1_1Searcher.html" title="Interface for searching nearest-neighbor search indices.">Searcher</a></code> instance.</p>
 <dl class="section return"><dt>Returns</dt><dd>Whether this instance has an implementation of the <code><a class="el" href="#a3ef8c1bf087751bff46af346bda2feb3">search_all()</a></code> method. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a7ae415a6fa177b498359371211c007a1">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a8df5ca5cd6c2f305da615f7839ba7894">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
-
 </div>
 </div>
 <a id="a6968d65276d81f47c92f6351ec786150" name="a6968d65276d81f47c92f6351ec786150"></a>
@@ -222,8 +206,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#af66acefa137de424974cabfc2cc624fb">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a4cbc643bf6cbce5c718d5bf3fb820580">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
-
 </div>
 </div>
 <a id="ab0f6c2ce78952dd555f7f1a8fb3ac208" name="ab0f6c2ce78952dd555f7f1a8fb3ac208"></a>
@@ -274,8 +256,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-
-<p>Implemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a053545a8000d3a7ad9ff81c8315e20a2">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a2f9935e30b1541aaa19e1cad9f8448e5">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -329,8 +309,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>query</code>. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#ac1ead06e7eaf03df9cec271e9a64fbee">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a53b639f9025699af8fc45487c26ed800">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
-
 </div>
 </div>
 <a id="a3ef8c1bf087751bff46af346bda2feb3" name="a3ef8c1bf087751bff46af346bda2feb3"></a>
@@ -382,8 +360,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of neighbors within <code>distance</code> of <code>i</code>. </dd></dl>
-
-<p>Reimplemented in <a class="el" href="classknncolle_1_1BruteforceSearcher.html#a73547f377d2bab4860d0aa07839b1046">knncolle::BruteforceSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>, and <a class="el" href="classknncolle_1_1VptreeSearcher.html#a146e00c6e6d2de4080e902b12eaf2475">knncolle::VptreeSearcher&lt; Index_, Data_, Distance_, DistanceMetric_ &gt;</a>.</p>
 
 </div>
 </div>

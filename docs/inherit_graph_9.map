@@ -1,9 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classknncolle_1_1Searcher.html" title="Interface for searching nearest&#45;neighbor search indices." alt="" coords="5,93,193,134"/>
-<area shape="rect" id="Node000001" href="$classknncolle_1_1BruteforceSearcher.html" title="Brute&#45;force nearest neighbor searcher." alt="" coords="251,5,438,61"/>
-<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="177,85,256,59,258,64,179,90"/>
-<area shape="rect" id="Node000002" href="$classknncolle_1_1L2NormalizedSearcher.html" title="Wrapper around a search interface with L2 normalization." alt="" coords="241,85,448,141"/>
-<area shape="poly" id="edge14_Node000000_Node000002" title=" " alt="" coords="208,110,240,110,240,116,208,116"/>
-<area shape="rect" id="Node000003" href="$classknncolle_1_1VptreeSearcher.html" title="VP&#45;tree searcher." alt="" coords="260,165,429,221"/>
-<area shape="poly" id="edge15_Node000000_Node000003" title=" " alt="" coords="179,136,260,163,258,168,177,141"/>
-</map>

@@ -124,6 +124,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9a7a0cb39688bedba6ab406e59da6c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93cac638de3e4ad31919bc5d677d16b7" id="r_a93cac638de3e4ad31919bc5d677d16b7"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:a93cac638de3e4ad31919bc5d677d16b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc68e3710b3c15c348d00901d93d1296" id="r_acc68e3710b3c15c348d00901d93d1296"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc68e3710b3c15c348d00901d93d1296">build_known_raw</a> (const Matrix_ &amp;data) const</td></tr>
+<tr class="separator:acc68e3710b3c15c348d00901d93d1296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7a5c7a427e0ecd6c86e532045d5fd2c" id="r_aa7a5c7a427e0ecd6c86e532045d5fd2c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7a5c7a427e0ecd6c86e532045d5fd2c">build_known_unique</a> (const Matrix_ &amp;data) const</td></tr>
+<tr class="separator:aa7a5c7a427e0ecd6c86e532045d5fd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae16c113aa9e6d91d8f077fe57326bd3a" id="r_ae16c113aa9e6d91d8f077fe57326bd3a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae16c113aa9e6d91d8f077fe57326bd3a">build_known_shared</a> (const Matrix_ &amp;data) const</td></tr>
+<tr class="separator:ae16c113aa9e6d91d8f077fe57326bd3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Data_, typename Distance_, class Matrix_ = Matrix&lt;Index_, Data_&gt;&gt;<br />
@@ -138,6 +144,111 @@ class knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</div><p>Inter
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="acc68e3710b3c15c348d00901d93d1296" name="acc68e3710b3c15c348d00901d93d1296"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc68e3710b3c15c348d00901d93d1296">&#9670;&#160;</a></span>build_known_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Data_, Distance_, Matrix_ &gt;::build_known_raw </td>
+          <td>(</td>
+          <td class="paramtype">const Matrix_ &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Object satisfying the <code><a class="el" href="classknncolle_1_1Matrix.html" title="Interface for matrix data.">Matrix</a></code> interface, containing observations in columns and dimensions in rows. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass.</dd></dl>
+<p>Subclasses may override this method to return a pointer to a specific <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass. This is used for devirtualization in other <b>knncolle</b> functions. If no override is provided, <code><a class="el" href="#acd18a78af362f948ede3ddd8d5f6e88c">build_raw()</a></code> is called instead. </p>
+
+</div>
+</div>
+<a id="ae16c113aa9e6d91d8f077fe57326bd3a" name="ae16c113aa9e6d91d8f077fe57326bd3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16c113aa9e6d91d8f077fe57326bd3a">&#9670;&#160;</a></span>build_known_shared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Data_, Distance_, Matrix_ &gt;::build_known_shared </td>
+          <td>(</td>
+          <td class="paramtype">const Matrix_ &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Object satisfying the <code><a class="el" href="classknncolle_1_1Matrix.html" title="Interface for matrix data.">Matrix</a></code> interface, containing observations in columns and dimensions in rows. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass.</dd></dl>
+<p>Subclasses may override this method to return a pointer to a specific <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass. This is used for devirtualization in other <b>knncolle</b> functions. If no override is provided, <code><a class="el" href="#a9a7a0cb39688bedba6ab406e59da6c90">build_shared()</a></code> is called instead. </p>
+
+</div>
+</div>
+<a id="aa7a5c7a427e0ecd6c86e532045d5fd2c" name="aa7a5c7a427e0ecd6c86e532045d5fd2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7a5c7a427e0ecd6c86e532045d5fd2c">&#9670;&#160;</a></span>build_known_unique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Data_, Distance_, Matrix_ &gt;::build_known_unique </td>
+          <td>(</td>
+          <td class="paramtype">const Matrix_ &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Object satisfying the <code><a class="el" href="classknncolle_1_1Matrix.html" title="Interface for matrix data.">Matrix</a></code> interface, containing observations in columns and dimensions in rows. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass.</dd></dl>
+<p>Subclasses may override this method to return a pointer to a specific <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> subclass. This is used for devirtualization in other <b>knncolle</b> functions. If no override is provided, <code><a class="el" href="#a93cac638de3e4ad31919bc5d677d16b7">build_unique()</a></code> is called instead. </p>
+
+</div>
+</div>
 <a id="acd18a78af362f948ede3ddd8d5f6e88c" name="acd18a78af362f948ede3ddd8d5f6e88c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acd18a78af362f948ede3ddd8d5f6e88c">&#9670;&#160;</a></span>build_raw()</h2>
 

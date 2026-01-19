@@ -101,16 +101,6 @@ $(function(){ initResizable(false); });
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Matrix_8hpp_source.html">Matrix.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for knncolle::MatrixExtractor&lt; Data_ &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="classknncolle_1_1MatrixExtractor__inherit__graph.png" border="0" usemap="#aknncolle_1_1MatrixExtractor_3_01Data___01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aknncolle_1_1MatrixExtractor_3_01Data___01_4_inherit__map" id="aknncolle_1_1MatrixExtractor_3_01Data___01_4_inherit__map">
-<area shape="rect" title="Extractor interface for matrix data." alt="" coords="25,5,187,46"/>
-<area shape="rect" href="classknncolle_1_1SimpleMatrixExtractor.html" title="Extractor for a SimpleMatrix." alt="" coords="5,94,207,135"/>
-<area shape="poly" title=" " alt="" coords="109,62,109,94,103,94,103,62"/>
-</map>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -153,8 +143,6 @@ template&lt;typename Data_ &gt; </div>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Pointer to an array of length equal to <code><a class="el" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">Matrix::num_dimensions()</a></code>, containing the coordinates for the next observation.</dd></dl>
 <p>For a newly created <code><a class="el" href="classknncolle_1_1MatrixExtractor.html" title="Extractor interface for matrix data.">MatrixExtractor</a></code>, the first call to <code><a class="el" href="#a3d82e911202727619399f7dec238b28a">next()</a></code> should return the coordinates of the first observation in the matrix; the next call should return the coordinates of the second observation; and so on, for up to <code><a class="el" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">Matrix::num_observations()</a></code> calls, after which the <code><a class="el" href="classknncolle_1_1MatrixExtractor.html" title="Extractor interface for matrix data.">MatrixExtractor</a></code> should no longer be used. </p>
-
-<p>Implemented in <a class="el" href="classknncolle_1_1SimpleMatrixExtractor.html#a41129e636ddcf0dcf5f80dd21568e72b">knncolle::SimpleMatrixExtractor&lt; Data_ &gt;</a>.</p>
 
 </div>
 </div>
