@@ -66,6 +66,43 @@ public:
     std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > build_unique(const Matrix_& data) const {
         return std::unique_ptr<Prebuilt<Index_, Data_, Distance_> >(build_raw(data));
     }
+
+public:
+    /**
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
+     * @return Pointer to a `Prebuilt` subclass. 
+     *
+     * Subclasses may override this method to return a pointer to a specific `Prebuilt` subclass.
+     * This is used for devirtualization in other **knncolle** functions. 
+     * If no override is provided, `build_raw()` is called instead.
+     */
+    auto build_known_raw(const Matrix_& data) const {
+        return build_raw(data);
+    }
+
+    /**
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
+     * @return Unique pointer to a `Prebuilt` subclass. 
+     *
+     * Subclasses may override this method to return a pointer to a specific `Prebuilt` subclass.
+     * This is used for devirtualization in other **knncolle** functions. 
+     * If no override is provided, `build_unique()` is called instead.
+     */
+    auto build_known_unique(const Matrix_& data) const {
+        return std::unique_ptr(build_raw(data));
+    }
+
+    /**
+     * @param data Object satisfying the `Matrix` interface, containing observations in columns and dimensions in rows.
+     * @return Shared pointer to a `Prebuilt` subclass. 
+     *
+     * Subclasses may override this method to return a pointer to a specific `Prebuilt` subclass.
+     * This is used for devirtualization in other **knncolle** functions. 
+     * If no override is provided, `build_shared()` is called instead.
+     */
+    auto build_known_shared(const Matrix_& data) const {
+        return std::shared_ptr(build_raw(data));
+    }
 };
 
 }

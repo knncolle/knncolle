@@ -24,6 +24,30 @@ TEST(L2Normalized, Basic) {
     }
 }
 
+class L2NormalizedMatrixTest : public TestCore, public ::testing::Test {
+protected:
+    void SetUp() {
+        assemble({ 10, 20 });
+    }
+};
+
+TEST_F(L2NormalizedMatrixTest, Matrix) {
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    knncolle::L2NormalizedMatrix<int, double, double> norm(mat);
+
+    std::vector<double> mbuffer(ndim), nbuffer(ndim);
+    auto mext = mat.new_extractor();
+    auto next = norm.new_extractor();
+
+    for (int i = 0; i < nobs; ++i) {
+        auto mptr = mext->next();
+        knncolle::internal::l2norm(mptr, ndim, mbuffer.data());
+        auto nptr = next->next();
+        std::copy_n(nptr, ndim, nbuffer.begin());
+        EXPECT_EQ(mbuffer, nbuffer);
+    }
+}
+
 class L2NormalizedTest : public TestCore, public ::testing::TestWithParam<std::tuple<std::tuple<int, int>, int> > {
 protected:
     void SetUp() {
@@ -83,7 +107,7 @@ TEST_P(L2NormalizedTest, Query) {
     auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
     knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
-    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto lptr = lb.build_shared(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // shared pointer for some variety.
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
 
@@ -114,7 +138,7 @@ TEST_P(L2NormalizedTest, All) {
     auto bptr = bb->build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, normalized.data()));
 
     knncolle::L2NormalizedBuilder<int, double, double, double> lb(bb);
-    auto lptr = lb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto lptr = lb.build_known_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // known override, for some variety.
     EXPECT_EQ(ndim, lptr->num_dimensions());
     EXPECT_EQ(nobs, lptr->num_observations());
 
@@ -181,7 +205,7 @@ TEST_F(L2NormalizedTypeTest, NonBaseMatrix) {
     // Comparing to the reference calculation.
     auto vbref  = std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist);
     knncolle::L2NormalizedBuilder<int, double, double, double> lbref(vbref);
-    auto lrefptr = lbref.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto lrefptr = lbref.build_known_shared(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // shared override, for some variety.
 
     auto lsptr = lptr->initialize();
     auto lsrefptr = lrefptr->initialize();

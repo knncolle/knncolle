@@ -132,7 +132,7 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Da
     NeighborList<Index_, Distance_> output(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
-        auto sptr = index.initialize();
+        auto sptr = index.initialize_known();
         std::vector<Index_> indices;
         std::vector<Distance_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
@@ -174,7 +174,7 @@ std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebui
     std::vector<std::vector<Index_> > output(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
-        auto sptr = index.initialize();
+        auto sptr = index.initialize_known();
         for (Index_ i = start, end = start + length; i < end; ++i) {
             sptr->search(i, k, &(output[i]), NULL);
         }

@@ -6,6 +6,7 @@
 #include <memory>
 #include <limits>
 #include <cstddef>
+#include <type_traits>
 
 #include "Searcher.hpp"
 #include "Prebuilt.hpp"
@@ -42,29 +43,11 @@ void l2norm(const Data_* ptr, std::size_t ndim, Normalized_* buffer) {
 }
 
 }
-/**
- * @endcond
- */
 
-/**
- * @brief Wrapper around a search interface with L2 normalization.
- * 
- * This applies L2 normalization to each query vector before running `search()` and `search_all()`, typically for calculation of cosine distances.
- * Instances of this class are typically constructed with `L2NormalizedPrebuilt::initialize()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating-point type for the distances.
- * @tparam Normalized_ Floating-point type for the L2-normalized data.
- */
-template<typename Index_, typename Data_, typename Distance_, typename Normalized_>
+template<typename Index_, typename Data_, typename Distance_, typename Normalized_, class Searcher_>
 class L2NormalizedSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
-    /**
-     * @param searcher Pointer to a `Searcher` class for the neighbor search that is to be wrapped.
-     * @param num_dimensions Number of dimensions of the data.
-     */
-    L2NormalizedSearcher(std::unique_ptr<Searcher<Index_, Normalized_, Distance_> > searcher, std::size_t num_dimensions) : 
+    L2NormalizedSearcher(std::unique_ptr<Searcher_> searcher, std::size_t num_dimensions) : 
         my_searcher(std::move(searcher)),
         buffer(num_dimensions)
     {}
@@ -74,11 +57,8 @@ private:
     // so the internal searcher must accept floats.
     static_assert(std::is_floating_point<Normalized_>::value);
 
-    std::unique_ptr<Searcher<Index_, Normalized_, Distance_> > my_searcher;
+    std::unique_ptr<Searcher_> my_searcher;
     std::vector<Normalized_> buffer;
-    /**
-     * @cond
-     */
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
@@ -105,37 +85,17 @@ public:
         internal::l2norm(ptr, buffer.size(), normalized);
         return my_searcher->search_all(normalized, threshold, output_indices, output_distances);
     }
-    /**
-     * @endcond
-     */
 };
 
-/**
- * @brief Wrapper around a prebuilt index with L2 normalization.
- * 
- * This class's `unique_raw()` method creates a `Searcher` instance that L2-normalizes each query vector, typically for calculation of cosine distances.
- * Instances of this class are typically constructed with `L2NormalizedBuilder::unique_raw()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Floating-point type for the input and query data.
- * @tparam Distance_ Floating-point type for the distances.
- * @tparam Normalized_ Floating-point type for the L2-normalized data.
- */
 template<typename Index_, typename Data_, typename Distance_, typename Normalized_>
 class L2NormalizedPrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 public:
-    /**
-     * @param prebuilt Pointer to a `Prebuilt` instance for the neighbor search that is to be wrapped.
-     */
     L2NormalizedPrebuilt(std::unique_ptr<Prebuilt<Index_, Normalized_, Distance_> > prebuilt) : my_prebuilt(std::move(prebuilt)) {}
 
 private:
     std::unique_ptr<Prebuilt<Index_, Normalized_, Distance_> > my_prebuilt;
 
 public:
-    /**
-     * @cond
-     */
     Index_ num_observations() const {
         return my_prebuilt->num_observations();
     }
@@ -143,45 +103,29 @@ public:
     std::size_t num_dimensions() const {
         return my_prebuilt->num_dimensions();
     }
-    /**
-     * @endcond
-     */
 
-    /**
-     * Creates a `L2NormalizedSearcher` instance.
-     */
+public:
     std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
-        return std::make_unique<L2NormalizedSearcher<Index_, Data_, Distance_, Normalized_> >(my_prebuilt->initialize(), my_prebuilt->num_dimensions());
+        return initialize_known();
+    }
+
+    auto initialize_known() const {
+        typedef std::remove_reference_t<decltype(*(my_prebuilt->initialize_known()))> KnownSearcher;
+        return std::make_unique<L2NormalizedSearcher<Index_, Data_, Distance_, Normalized_, KnownSearcher> >(my_prebuilt->initialize_known(), my_prebuilt->num_dimensions());
     }
 };
 
-/**
- * @cond
- */
 template<typename Index_, typename Data_, typename Normalized_, typename Matrix_>
 class L2NormalizedMatrix;
-/**
- * @endcond
- */
 
-/**
- * @brief Extractor for the `L2NormalizedMatrix`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the original matrix data.
- * @tparam Normalized_ Floating-point type for the L2-normalized data.
- */
-template<typename Index_, typename Data_, typename Normalized_>
+template<typename Index_, typename Data_, typename Normalized_, class Extractor_ = MatrixExtractor<Data_> >
 class L2NormalizedMatrixExtractor final : public MatrixExtractor<Normalized_> {
 public:
-    /**
-     * @cond
-     */
-    L2NormalizedMatrixExtractor(std::unique_ptr<MatrixExtractor<Data_> > extractor, std::size_t dim) : 
+    L2NormalizedMatrixExtractor(std::unique_ptr<Extractor_> extractor, std::size_t dim) : 
         my_extractor(std::move(extractor)), buffer(dim) {}
 
 private:
-    std::unique_ptr<MatrixExtractor<Data_> > my_extractor;
+    std::unique_ptr<Extractor_> my_extractor;
     std::vector<Normalized_> buffer;
 
 public:
@@ -191,10 +135,10 @@ public:
         internal::l2norm(raw, buffer.size(), normalized);
         return normalized;
     }
-    /**
-     * @endcond
-     */
 };
+/**
+ * @endcond
+ */
 
 /**
  * @brief Wrapper around a matrix with L2 normalization.
@@ -206,16 +150,19 @@ public:
  * This should satisfy the `Matrix` interface.
  * 
  * This class satisfies the `Matrix` interface and performs L2 normalization of each observation's data vector in its implementation of `MatrixExtractor::next()`.
- * It is mainly intended for use as a template argument when defining a `builder` for the `L2NormalizedBuilder` constructor.
- * In general, users should not be constructing an actual instance of this class.
+ * It is mainly intended for use within `L2NormalizedBuilder`.
+ * In general, users should not be manually constructing an instance of this class.
  */
 template<typename Index_, typename Data_, typename Normalized_, typename Matrix_ = Matrix<Index_, Data_> >
 class L2NormalizedMatrix final : public Matrix<Index_, Normalized_> {
+public:
 /**
  * @cond
  */
-public:
     L2NormalizedMatrix(const Matrix_& matrix) : my_matrix(matrix) {}
+/**
+ * @endcond
+ */
 
 private:
     static_assert(std::is_same<decltype(std::declval<Matrix_>().num_observations()), Index_>::value);
@@ -232,12 +179,17 @@ public:
         return my_matrix.num_observations();
     }
 
-    std::unique_ptr<MatrixExtractor<Normalized_> > new_extractor() const {
-        return std::make_unique<L2NormalizedMatrixExtractor<Index_, Data_, Normalized_> >(my_matrix.new_extractor(), num_dimensions());
+    /**
+     * Override to assist devirtualization. 
+     */
+    auto new_known_extractor() const {
+        typedef std::remove_reference_t<decltype(*(my_matrix.new_known_extractor()))> KnownExtractor;
+        return std::make_unique<L2NormalizedMatrixExtractor<Index_, Data_, Normalized_, KnownExtractor> >(my_matrix.new_known_extractor(), num_dimensions());
     }
-/**
- * @endcond
- */
+
+    std::unique_ptr<MatrixExtractor<Normalized_> > new_extractor() const {
+        return new_known_extractor();
+    }
 };
 
 /**
@@ -290,12 +242,31 @@ private:
     std::shared_ptr<const Builder<Index_, Normalized_, Distance_, BuilderMatrix> > my_builder;
 
 public:
-    /**
-     * Creates a `L2NormalizedPrebuilt` instance.
-     */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
+        return build_known_raw(data);
+    }
+
+public:
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_raw(const Matrix_& data) const {
         NormalizedMatrix normalized(data);
         return new L2NormalizedPrebuilt<Index_, Data_, Distance_, Normalized_>(my_builder->build_unique(normalized));
+    }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_unique(const Matrix_& data) const {
+        return std::unique_ptr<std::remove_reference_t<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
+    }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_shared(const Matrix_& data) const {
+        return std::shared_ptr<std::remove_reference_t<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
     }
 };
 

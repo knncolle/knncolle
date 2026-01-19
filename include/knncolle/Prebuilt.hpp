@@ -57,6 +57,18 @@ public:
      * @return Pointer to a `Searcher` instance.
      */
     virtual std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const = 0;
+
+public:
+    /**
+     * @return Unqiue pointer to a `Searcher` subclass.
+     *
+     * Subclasses may override this method to return a pointer to a specific `Searcher` subclass.
+     * This is used for devirtualization in other **knncolle** functions. 
+     * If no override is provided, `initialize()` is called instead.
+     */
+    auto initialize_known() const {
+        return initialize();
+    }
 };
 
 }

@@ -28,31 +28,11 @@ namespace knncolle {
  */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt;
-/**
- * @endcond
- */
 
-/**
- * @brief VP-tree searcher.
- *
- * Instances of this class are usually constructed using `VptreePrebuilt::initialize()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class implementing the distance metric calculation.
- * This should satisfy the `DistanceMetric` interface.
- */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
-    /**
-     * @cond
-     */
     VptreeSearcher(const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
-    /**
-     * @endcond
-     */
 
 private:                
     const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
@@ -128,17 +108,6 @@ public:
     }
 };
 
-/**
- * @brief Index for a VP-tree search.
- *
- * Instances of this class are usually constructed using `VptreeBuilder::build_raw()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class implementing the distance metric calculation.
- * This should satisfy the `DistanceMetric` interface.
- */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
@@ -243,9 +212,6 @@ private:
     std::vector<Index_> my_new_locations;
 
 public:
-    /**
-     * @cond
-     */
     VptreePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim),
         my_obs(num_obs),
@@ -308,9 +274,6 @@ public:
             }
         }
     }
-    /**
-     * @endcond
-     */
 
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, NeighborQueue<Index_, Distance_>& nearest) const { 
@@ -384,13 +347,17 @@ private:
     friend class VptreeSearcher<Index_, Data_, Distance_, DistanceMetric_>;
 
 public:
-    /**
-     * Creates a `VptreeSearcher` instance.
-     */
     std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
+        return initialize_known();
+    }
+
+    auto initialize_known() const {
         return std::make_unique<VptreeSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
     }
 };
+/**
+ * @endcond
+ */
 
 /**
  * @brief Perform a nearest neighbor search based on a vantage point (VP) tree.
@@ -442,13 +409,18 @@ private:
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
-    /**
-     * Creates a `VptreePrebuilt` instance.
-     */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
+        return build_known_raw(data);
+    }
+
+public:
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_raw(const Matrix_& data) const {
         std::size_t ndim = data.num_dimensions();
         Index_ nobs = data.num_observations();
-        auto work = data.new_extractor();
+        auto work = data.new_known_extractor();
 
         std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
         for (Index_ o = 0; o < nobs; ++o) {
@@ -457,8 +429,22 @@ public:
 
         return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);
     }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_unique(const Matrix_& data) const {
+        return std::unique_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
+    }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_shared(const Matrix_& data) const {
+        return std::shared_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
+    }
 };
 
-};
+}
 
 #endif

@@ -107,7 +107,7 @@ TEST_P(BruteforceTest, AllEuclidean) {
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto bptr = bb.build_known_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // trying out the overrides for some variety.
     auto bsptr = bptr->initialize();
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;
@@ -168,7 +168,7 @@ TEST_P(BruteforceTest, AllManhattan) {
 
     // Using Manhattan to test that no-op denormalization is done correctly.
     knncolle::BruteforceBuilder<int, double, double> bb(mandist);
-    auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto bptr = bb.build_known_shared(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // trying the overrides for some variety.
     auto bsptr = bptr->initialize();
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;

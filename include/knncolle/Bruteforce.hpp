@@ -23,30 +23,16 @@
 
 namespace knncolle {
 
+/**
+ * @cond
+ */
 template<typename Index_, typename Data_, typename Distance_, typename DistanceMetric_>
 class BruteforcePrebuilt;
 
-/**
- * @brief Brute-force nearest neighbor searcher.
- *
- * Instances of this class are usually constructed using `BruteforcePrebuilt::initialize()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class implementing the distance metric calculation.
- * This should satisfy the `DistanceMetric` interface.
- */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforceSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
-    /**
-     * @cond
-     */
     BruteforceSearcher(const BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
-    /**
-     * @endcond
-     */
 
 private:                
     const BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
@@ -124,17 +110,6 @@ public:
     }
 };
 
-/**
- * @brief Index for a brute-force nearest neighbor search.
- *
- * Instances of this class are usually constructed using `BruteforceBuilder::build_raw()`.
- *
- * @tparam Index_ Integer type for the indices.
- * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
- * @tparam DistanceMetric_ Class implementing the distance metric calculation.
- * This should satisfy the `DistanceMetric` interface.
- */
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class BruteforcePrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 private:
@@ -144,14 +119,8 @@ private:
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
-    /**
-     * @cond
-     */
     BruteforcePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
         my_dim(num_dim), my_obs(num_obs), my_data(std::move(data)), my_metric(std::move(metric)) {}
-    /**
-     * @endcond
-     */
 
 public:
     std::size_t num_dimensions() const {
@@ -196,13 +165,17 @@ private:
     friend class BruteforceSearcher<Index_, Data_, Distance_, DistanceMetric_>;
 
 public:
-    /**
-     * Creates a `BruteforceSearcher` instance.
-     */
     std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const {
+        return initialize_known();
+    }
+
+    auto initialize_known() const {
         return std::make_unique<BruteforceSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
     }
 };
+/**
+ * @endcond
+ */
 
 /**
  * @brief Perform a brute-force nearest neighbor search.
@@ -238,13 +211,18 @@ private:
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
-    /**
-     * Creates a `BruteforcePrebuilt` instance.
-     */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
+        return build_known_raw(data);
+    }
+
+public:
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_raw(const Matrix_& data) const {
         std::size_t ndim = data.num_dimensions();
         Index_ nobs = data.num_observations();
-        auto work = data.new_extractor();
+        auto work = data.new_known_extractor();
 
         std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
         for (Index_ o = 0; o < nobs; ++o) {
@@ -252,6 +230,20 @@ public:
         }
 
         return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);
+    }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_unique(const Matrix_& data) const {
+        return std::unique_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
+    }
+
+    /**
+     * Override to assist devirtualization.
+     */
+    auto build_known_shared(const Matrix_& data) const {
+        return std::shared_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
     }
 };
 

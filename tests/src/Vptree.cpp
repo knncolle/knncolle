@@ -70,7 +70,7 @@ TEST_P(VptreeTest, FindManhattan) {
     knncolle::BruteforceBuilder<int, double, double> bb(mandist);
     auto bptr = bb.build_unique(mat);
     knncolle::VptreeBuilder<int, double, double> vb(mandist);
-    auto vptr = vb.build_unique(mat);
+    auto vptr = vb.build_shared(mat); // trying the shared method, for some variety.
 
     std::vector<int> vres_i, ref_i;
     std::vector<double> vres_d, ref_d;
@@ -91,7 +91,7 @@ TEST_P(VptreeTest, QueryEuclidean) {
 
     knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
     knncolle::VptreeBuilder<int, double, double> vb(eucdist);
-    auto vptr = vb.build_unique(mat);
+    auto vptr = vb.build_known_unique(mat); // trying the overrides for some variety.
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(mat);
 
@@ -123,7 +123,7 @@ TEST_P(VptreeTest, AllEuclidean) {
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::VptreeBuilder<int, double, double> vb(eucdist);
-    auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+    auto vptr = vb.build_known_shared(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data())); // trying the overrides for some variety.
     auto vsptr = vptr->initialize();
     std::vector<int> output_i, ref_i;
     std::vector<double> output_d, ref_d;

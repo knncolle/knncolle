@@ -1,9 +1,13 @@
 #include <gtest/gtest.h>
+
 #include "knncolle/Searcher.hpp"
 #include "knncolle/distances.hpp"
+#include "knncolle/Matrix.hpp"
 
 #include <vector>
 #include <random>
+
+#include "TestCore.hpp"
 
 class DummyAlgorithm : public knncolle::Searcher<int, double, double> {
 public:
@@ -22,4 +26,24 @@ TEST(SearcherDefaults, Basic) {
     EXPECT_FALSE(tmp.can_search_all());
     EXPECT_ANY_THROW(tmp.search_all(0, 1, &tmp_i, &tmp_d));
     EXPECT_ANY_THROW(tmp.search_all(static_cast<double*>(NULL), 1, &tmp_i, &tmp_d));
+}
+
+class SimpleMatrixTest : public TestCore, public ::testing::Test {
+protected:
+    void SetUp() {
+        assemble({ 10, 20 });
+    }
+};
+
+TEST_F(SimpleMatrixTest, Basic) {
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    std::vector<double> ref(ndim);
+    std::vector<double> nbuffer(ndim);
+    auto mext = mat.new_extractor();
+
+    for (int i = 0; i < nobs; ++i) {
+        std::copy_n(data.data() + static_cast<std::size_t>(i) * static_cast<std::size_t>(ndim), ndim, ref.data());
+        std::copy_n(mext->next(), ndim, nbuffer.begin());
+        EXPECT_EQ(ref, nbuffer);
+    }
 }
