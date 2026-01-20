@@ -112,109 +112,109 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_class" href="classknncolle_1_1MatrixExtractor.html">MatrixExtractor</a>&amp; operator=(<a class="code hl_class" href="classknncolle_1_1MatrixExtractor.html">MatrixExtractor</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classknncolle_1_1MatrixExtractor.html">~MatrixExtractor</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">   43</a></span>    <span class="keyword">virtual</span> <span class="keyword">const</span> Data_* <a class="code hl_function" href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">next</a>() = 0;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">   44</a></span>    <span class="keyword">virtual</span> <span class="keyword">const</span> Data_* <a class="code hl_function" href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">next</a>() = 0;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>};</div>
 </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_&gt;</div>
-<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html">   56</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a> {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>(<a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp; operator=(<a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">~Matrix</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">   75</a></span>    <span class="keyword">virtual</span> Index_ <a class="code hl_function" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">num_observations</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">   80</a></span>    <span class="keyword">virtual</span> std::size_t <a class="code hl_function" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">num_dimensions</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">   86</a></span>    <span class="keyword">virtual</span> std::unique_ptr&lt;MatrixExtractor&lt;Data_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">new_extractor</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">   95</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">new_extractor</a>();</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_&gt;</div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="};">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html">   57</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>(<a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp; operator=(<a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">~Matrix</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">   76</a></span>    <span class="keyword">virtual</span> Index_ <a class="code hl_function" href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">num_observations</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">   81</a></span>    <span class="keyword">virtual</span> std::size_t <a class="code hl_function" href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">num_dimensions</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">   87</a></span>    <span class="keyword">virtual</span> std::unique_ptr&lt;MatrixExtractor&lt;Data_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">new_extractor</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">   96</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">new_extractor</a>();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
 </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>};</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>};</div>
 </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data_&gt;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">class </span>SimpleMatrixExtractor final : <span class="keyword">public</span> MatrixExtractor&lt;Data_&gt; {</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    SimpleMatrixExtractor(<span class="keyword">const</span> Data_* data, std::size_t dim) : my_data(data), my_dim(dim) {}</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keyword">const</span> Data_* my_data;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    std::size_t my_dim;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    std::size_t at = 0;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">const</span> Data_* next() {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keywordflow">return</span> my_data + (at++) * my_dim; <span class="comment">// already std::size_t&#39;s to avoid overflow during multiplication.</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    } </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>};</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_&gt;</div>
-<div class="foldopen" id="foldopen00132" data-start="{" data-end="};">
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html">  132</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1SimpleMatrix.html">SimpleMatrix</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&lt;Index_, Data_&gt; {</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00140" data-start="{" data-end="}">
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">  140</a></span>    <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">SimpleMatrix</a>(std::size_t <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>, Index_ <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>, <span class="keyword">const</span> Data_* data) : </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        my_num_dim(<a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>), my_num_obs(<a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>), my_data(data) {}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data_&gt;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keyword">class </span>SimpleMatrixExtractor final : <span class="keyword">public</span> MatrixExtractor&lt;Data_&gt; {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    SimpleMatrixExtractor(<span class="keyword">const</span> Data_* data, std::size_t dim) : my_data(data), my_dim(dim) {}</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keyword">const</span> Data_* my_data;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    std::size_t my_dim;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    std::size_t at = 0;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keyword">const</span> Data_* next() {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">return</span> my_data + (at++) * my_dim; <span class="comment">// already std::size_t&#39;s to avoid overflow during multiplication.</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    } </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_&gt;</div>
+<div class="foldopen" id="foldopen00133" data-start="{" data-end="};">
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html">  133</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1SimpleMatrix.html">SimpleMatrix</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&lt;Index_, Data_&gt; {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00141" data-start="{" data-end="}">
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">  141</a></span>    <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">SimpleMatrix</a>(std::size_t <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>, Index_ <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>, <span class="keyword">const</span> Data_* data) : </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        my_num_dim(<a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>), my_num_obs(<a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>), my_data(data) {}</div>
 </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    std::size_t my_num_dim;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    Index_ my_num_obs;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">const</span> Data_* my_data;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00149" data-start="{" data-end="}">
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">  149</a></span>    Index_ <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="keywordflow">return</span> my_num_obs;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    }</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    std::size_t my_num_dim;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    Index_ my_num_obs;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keyword">const</span> Data_* my_data;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">  150</a></span>    Index_ <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">num_observations</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">return</span> my_num_obs;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    }</div>
 </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="foldopen" id="foldopen00153" data-start="{" data-end="}">
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">  153</a></span>    std::size_t <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keywordflow">return</span> my_num_dim;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="foldopen" id="foldopen00154" data-start="{" data-end="}">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">  154</a></span>    std::size_t <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">num_dimensions</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="keywordflow">return</span> my_num_dim;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    }</div>
 </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="foldopen" id="foldopen00157" data-start="{" data-end="}">
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">  157</a></span>    std::unique_ptr&lt;MatrixExtractor&lt;Data_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">new_extractor</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">new_known_extractor</a>();</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">  158</a></span>    std::unique_ptr&lt;MatrixExtractor&lt;Data_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">new_extractor</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">new_known_extractor</a>();</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
 </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">  164</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> std::make_unique&lt;SimpleMatrixExtractor&lt;Data_&gt; &gt;(my_data, my_num_dim);</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="foldopen" id="foldopen00165" data-start="{" data-end="}">
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">  165</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keywordflow">return</span> std::make_unique&lt;SimpleMatrixExtractor&lt;Data_&gt; &gt;(my_data, my_num_dim);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    }</div>
 </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>};</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
 </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">#endif </span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>}</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">#endif </span></div>
 <div class="ttc" id="aclassknncolle_1_1MatrixExtractor_html"><div class="ttname"><a href="classknncolle_1_1MatrixExtractor.html">knncolle::MatrixExtractor</a></div><div class="ttdoc">Extractor interface for matrix data.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:20</div></div>
 <div class="ttc" id="aclassknncolle_1_1MatrixExtractor_html_a3d82e911202727619399f7dec238b28a"><div class="ttname"><a href="classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a">knncolle::MatrixExtractor::next</a></div><div class="ttdeci">virtual const Data_ * next()=0</div></div>
-<div class="ttc" id="aclassknncolle_1_1Matrix_html"><div class="ttname"><a href="classknncolle_1_1Matrix.html">knncolle::Matrix</a></div><div class="ttdoc">Interface for matrix data.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:56</div></div>
+<div class="ttc" id="aclassknncolle_1_1Matrix_html"><div class="ttname"><a href="classknncolle_1_1Matrix.html">knncolle::Matrix</a></div><div class="ttdoc">Interface for matrix data.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:57</div></div>
 <div class="ttc" id="aclassknncolle_1_1Matrix_html_a3c1fdc018a4e777cb69945c0861d56e9"><div class="ttname"><a href="classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9">knncolle::Matrix::num_dimensions</a></div><div class="ttdeci">virtual std::size_t num_dimensions() const =0</div></div>
 <div class="ttc" id="aclassknncolle_1_1Matrix_html_a4ab89fa80a485216d6890c4ca97ac51e"><div class="ttname"><a href="classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e">knncolle::Matrix::new_extractor</a></div><div class="ttdeci">virtual std::unique_ptr&lt; MatrixExtractor&lt; Data_ &gt; &gt; new_extractor() const =0</div></div>
-<div class="ttc" id="aclassknncolle_1_1Matrix_html_a79981fd6487633c7b5b61dedf8955fc8"><div class="ttname"><a href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">knncolle::Matrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:95</div></div>
+<div class="ttc" id="aclassknncolle_1_1Matrix_html_a79981fd6487633c7b5b61dedf8955fc8"><div class="ttname"><a href="classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8">knncolle::Matrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:96</div></div>
 <div class="ttc" id="aclassknncolle_1_1Matrix_html_a7b0961f03e8b232a1bfb9d86e171eaab"><div class="ttname"><a href="classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab">knncolle::Matrix::num_observations</a></div><div class="ttdeci">virtual Index_ num_observations() const =0</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div><div class="ttdoc">Simple wrapper for an in-memory matrix.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:132</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a1503a47fa9b74ad63d780aaec2943c04"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">knncolle::SimpleMatrix::num_dimensions</a></div><div class="ttdeci">std::size_t num_dimensions() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:153</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a4d4300b24909ffd9916a29b095a8edb5"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">knncolle::SimpleMatrix::new_extractor</a></div><div class="ttdeci">std::unique_ptr&lt; MatrixExtractor&lt; Data_ &gt; &gt; new_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:157</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a9f504a7ae05efc06f4d69510df9a3daa"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">knncolle::SimpleMatrix::num_observations</a></div><div class="ttdeci">Index_ num_observations() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:149</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_adf24731be76af7dac5b5dbabab86e0be"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">knncolle::SimpleMatrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:164</div></div>
-<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_afe415d2e6adc07aecffab4e8b75ca9e5"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">knncolle::SimpleMatrix::SimpleMatrix</a></div><div class="ttdeci">SimpleMatrix(std::size_t num_dimensions, Index_ num_observations, const Data_ *data)</div><div class="ttdef"><b>Definition</b> Matrix.hpp:140</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div><div class="ttdoc">Simple wrapper for an in-memory matrix.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:133</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a1503a47fa9b74ad63d780aaec2943c04"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04">knncolle::SimpleMatrix::num_dimensions</a></div><div class="ttdeci">std::size_t num_dimensions() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:154</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a4d4300b24909ffd9916a29b095a8edb5"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5">knncolle::SimpleMatrix::new_extractor</a></div><div class="ttdeci">std::unique_ptr&lt; MatrixExtractor&lt; Data_ &gt; &gt; new_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:158</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_a9f504a7ae05efc06f4d69510df9a3daa"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa">knncolle::SimpleMatrix::num_observations</a></div><div class="ttdeci">Index_ num_observations() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:150</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_adf24731be76af7dac5b5dbabab86e0be"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be">knncolle::SimpleMatrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> Matrix.hpp:165</div></div>
+<div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html_afe415d2e6adc07aecffab4e8b75ca9e5"><div class="ttname"><a href="classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5">knncolle::SimpleMatrix::SimpleMatrix</a></div><div class="ttdeci">SimpleMatrix(std::size_t num_dimensions, Index_ num_observations, const Data_ *data)</div><div class="ttdef"><b>Definition</b> Matrix.hpp:141</div></div>
 <div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
