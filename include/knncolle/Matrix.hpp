@@ -39,6 +39,7 @@ public:
      * For a newly created `MatrixExtractor`, the first call to `next()` should return the coordinates of the first observation in the matrix;
      * the next call should return the coordinates of the second observation;
      * and so on, for up to `Matrix::num_observations()` calls, after which the `MatrixExtractor` should no longer be used.
+     * The pointer returned by each call to `next()` is only guaranteed to be valid until the next call to `next()` or the `MatrixExtractor` is destroyed.
      */
     virtual const Data_* next() = 0;
 };
