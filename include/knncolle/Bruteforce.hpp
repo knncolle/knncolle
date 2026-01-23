@@ -14,6 +14,9 @@
 #include <limits>
 #include <memory>
 #include <cstddef>
+#include <string>
+#include <fstream>
+#include <cassert>
 
 /**
  * @file Bruteforce.hpp
@@ -171,6 +174,59 @@ public:
 
     auto initialize_known() const {
         return std::make_unique<BruteforceSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
+    }
+
+public:
+    void save(const std::string& prefix) const {
+        {
+            const std::string method_name = "knncolle::Bruteforce";
+            std::ofstream output(prefix + "ALGORITHM");
+            output.write(method_name.c_str(), method_name.size());
+        }
+
+        {
+            std::ofstream output(prefix + "data");
+            output.write(reinterpret_cast<const char*>(my_data.data()), sizeof(Data_) * my_data.size());
+        }
+
+        {
+            std::ofstream output(prefix + "num_obs");
+            output.write(reinterpret_cast<const char*>(&my_obs), sizeof(Index_));
+        }
+
+        {
+            std::ofstream output(prefix + "num_dim");
+            output.write(reinterpret_cast<const char*>(&my_dim), sizeof(std::size_t));
+        }
+
+        {
+            my_metric->save(prefix + "distance_");
+        }
+    }
+
+    BruteforcePrebuilt(const std::string& prefix) {
+        {
+            std::ifstream input(prefix + "num_obs");
+            input.read(reinterpret_cast<char*>(&my_obs), sizeof(Index_));
+        }
+
+        {
+            std::ifstream input(prefix + "num_dim");
+            input.read(reinterpret_cast<char*>(&my_dim), sizeof(std::size_t));
+        }
+
+        {
+            std::ifstream input(prefix + "data");
+            my_data.resize(static_cast<std::size_t>(my_obs) * my_dim);
+            input.read(reinterpret_cast<char*>(my_data.data()), sizeof(Data_) * my_data.size());
+        }
+
+        {
+            auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
+            auto xptr = dynamic_cast<DistanceMetric_>(dptr);
+            assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
+            my_metric.reset(xptr);
+        }
     }
 };
 /**
