@@ -58,6 +58,36 @@ public:
      */
     virtual std::unique_ptr<Searcher<Index_, Data_, Distance_> > initialize() const = 0;
 
+    /**
+     * Save the prebuilt index to disk, to be reloaded with `load_raw()` and friends.
+     *
+     * It is expected that `load_raw()` should create an object that is "equivalent" to the object that was saved with `save()`.
+     * That is, any neighbor search results should be the same across the original and reloaded object.
+     * It is also expected that the relevant template parameters used in `load_raw()` should be the same as those in the original `Prebuilt` object.
+     * 
+     * An implementation of this method should create a `<prefix>METHOD` file that contains the method name.
+     * This should be an ASCII file with no newlines, where the method name should follow the `<library>::<algorithm>` format, e.g., `knncolle::Vptree`.
+     * This will be used by `load_raw()` to determine the exact loader function to call. 
+     * Other than the `METHOD` file, each implementation may create any number of additional files of any format, as long as they start with `prefix`.
+     *
+     * An implementation of this method is not required to use portable file formats.
+     * `load_raw()` is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the `save()` call.
+     * Any additional portability is at the discretion of the implementation, e.g., it is common to assume IEEE floating-point and two's-complement integers.
+     *
+     * An implementation of this method is not required to create files that are readable by different versions of the implementation. 
+     * Thus, the files created by this method are generally unsuitable for archival storage.
+     * However, implementations are recommended to at least provide enough information to throw an exception if an incompatible version of `load_raw()` is used.
+     *
+     * If a subclass does not implement this method, an error is thrown by default.
+     *
+     * @param prefix Prefix of the file path(s) in which to save the index.
+     * All files created by this method should start with this prefix. 
+     * Any directories required to write a file starting with `prefix` should already have been created.
+     */
+    virtual void save([[maybe_unused]] const std::string& prefix) const {
+        throw std::runtime_error("saving is not supported");
+    }
+
 public:
     /**
      * @return Unqiue pointer to a `Searcher` subclass.
