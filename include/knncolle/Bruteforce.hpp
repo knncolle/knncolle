@@ -223,7 +223,7 @@ public:
 
         {
             auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
-            auto xptr = dynamic_cast<DistanceMetric_>(dptr);
+            auto xptr = dynamic_cast<DistanceMetric_*>(dptr);
             assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
             my_metric.reset(xptr);
         }

@@ -111,7 +111,7 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
  * @return Shared pointer to a `Prebuilt` instance, created from the files at `prefix`.
  */
 template<typename Index_, typename Data_, typename Distance_>
-std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_shared(const std::string& prefix) {
+std::shared_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_shared(const std::string& prefix) {
     return std::shared_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(prefix));
 }
 

@@ -188,12 +188,8 @@ using LoadDistanceMetricFunction = std::function<DistanceMetric<Data_, Distance_
 template<typename Data_, typename Distance_>
 auto default_distance_metric_registry() {
     std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distance_> > registry;
-    registry["knncolle::Euclidean"] = [](const std::string& prefix) -> DistanceMetric<Data_, Distance_>* {
-        return new EuclideanDistance<Data_, Distance_>;
-    };
-    registry["knncolle::Manhattan"] = [](const std::string& prefix) -> DistanceMetric<Data_, Distance_>* {
-        return new ManhattanDistance<Data_, Distance_>;
-    };
+    registry["knncolle::Euclidean"] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new EuclideanDistance<Data_, Distance_>; };
+    registry["knncolle::Manhattan"] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new ManhattanDistance<Data_, Distance_>; };
     return registry;
 }
 /**
