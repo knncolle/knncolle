@@ -1,21 +1,23 @@
 #ifndef KNNCOLLE_FIND_NEAREST_NEIGHBORS_HPP
 #define KNNCOLLE_FIND_NEAREST_NEIGHBORS_HPP
 
+#include "Prebuilt.hpp"
+
 #include <vector>
 #include <utility>
 #include <type_traits>
 
-#include "Prebuilt.hpp"
+#include "sanisizer/sanisizer.hpp"
+#ifndef KNNCOLLE_CUSTOM_PARALLEL
+#include "subpar/subpar.hpp"
+#endif
+
 
 /**
  * @file find_nearest_neighbors.hpp
  *
  * @brief Find nearest neighbors from an existing index.
  */
-
-#ifndef KNNCOLLE_CUSTOM_PARALLEL
-#include "subpar/subpar.hpp"
-#endif
 
 namespace knncolle {
 
@@ -67,19 +69,13 @@ using NeighborList = std::vector<std::vector<std::pair<Index_, Distance_> > >;
  */
 template<typename Index_>
 int cap_k(int k, Index_ num_observations) {
-    if constexpr(std::is_signed<Index_>::value) {
-        if (k < num_observations) {
-            return k;
-        }
-    } else {
-        if (static_cast<typename std::make_unsigned<Index_>::type>(k) < num_observations) {
-            return k;
-        }
-    }
-    if (num_observations) {
+    if (sanisizer::is_less_than(sanisizer::attest_gez(k), sanisizer::attest_gez(num_observations))) {
+        return k;
+    } else if (num_observations) {
         return num_observations - 1;
+    } else {
+        return 0;
     }
-    return 0;
 }
 
 /**
@@ -94,16 +90,7 @@ int cap_k(int k, Index_ num_observations) {
  */
 template<typename Index_>
 int cap_k_query(int k, Index_ num_observations) {
-    if constexpr(std::is_signed<Index_>::value) {
-        if (k <= num_observations) {
-            return k;
-        }
-    } else {
-        if (static_cast<typename std::make_unsigned<Index_>::type>(k) <= num_observations) {
-            return k;
-        }
-    }
-    return num_observations;
+    return sanisizer::min(sanisizer::attest_gez(k), sanisizer::attest_gez(num_observations));
 }
 
 /**
@@ -129,7 +116,7 @@ template<typename Index_, typename Data_, typename Distance_>
 NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
-    NeighborList<Index_, Distance_> output(nobs);
+    auto output = sanisizer::create<NeighborList<Index_, Distance_> >(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize_known();
@@ -137,9 +124,9 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Da
         std::vector<Distance_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
             sptr->search(i, k, &indices, &distances);
-            int actual_k = indices.size();
+            const auto actual_k = indices.size();
             output[i].reserve(actual_k);
-            for (int j = 0; j < actual_k; ++j) {
+            for (I<decltype(actual_k)> j = 0; j < actual_k; ++j) {
                 output[i].emplace_back(indices[j], distances[j]);
             }
         }
@@ -171,7 +158,7 @@ template<typename Index_, typename Data_, typename Distance_>
 std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
     Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
-    std::vector<std::vector<Index_> > output(nobs);
+    auto output = sanisizer::create<std::vector<std::vector<Index_> > >(nobs);
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize_known();

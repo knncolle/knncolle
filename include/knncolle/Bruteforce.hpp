@@ -17,6 +17,8 @@
 #include <string>
 #include <cassert>
 
+#include "sanisizer/sanisizer.hpp"
+
 /**
  * @file Bruteforce.hpp
  *
@@ -52,8 +54,8 @@ private:
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        my_nearest.reset(k + 1);
-        auto ptr = my_parent.my_data.data() + static_cast<std::size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
+        my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
+        auto ptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(i, my_parent.my_dim);
         my_parent.search(ptr, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
         normalize(output_distances);
@@ -80,7 +82,7 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto ptr = my_parent.my_data.data() + static_cast<std::size_t>(i) * my_parent.my_dim; // cast to avoid overflow.
+        auto ptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(i, my_parent.my_dim);
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
@@ -135,10 +137,9 @@ public:
 
 private:
     void search(const Data_* query, NeighborQueue<Index_, Distance_>& nearest) const {
-        auto copy = my_data.data();
         Distance_ threshold_raw = std::numeric_limits<Distance_>::infinity();
-        for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            auto dist_raw = my_metric->raw(my_dim, query, copy);
+        for (Index_ x = 0; x < my_obs; ++x) {
+            auto dist_raw = my_metric->raw(my_dim, query, my_data.data() + sanisizer::product_unsafe<std::size_t>(x, my_dim));
             if (dist_raw <= threshold_raw) {
                 nearest.add(x, dist_raw);
                 if (nearest.is_full()) {
@@ -151,9 +152,8 @@ private:
     template<bool count_only_, typename Output_>
     void search_all(const Data_* query, Distance_ threshold, Output_& all_neighbors) const {
         Distance_ threshold_raw = my_metric->denormalize(threshold);
-        auto copy = my_data.data();
-        for (Index_ x = 0; x < my_obs; ++x, copy += my_dim) {
-            Distance_ raw = my_metric->raw(my_dim, query, copy);
+        for (Index_ x = 0; x < my_obs; ++x) {
+            Distance_ raw = my_metric->raw(my_dim, query, my_data.data() + sanisizer::product_unsafe<std::size_t>(x, my_dim));
             if (threshold_raw >= raw) {
                 if constexpr(count_only_) {
                     ++all_neighbors; // expect this to be an integer.
@@ -189,7 +189,7 @@ public:
         quick_load(prefix + "num_obs", &my_obs, 1);
         quick_load(prefix + "num_dim", &my_dim, 1);
 
-        my_data.resize(static_cast<std::size_t>(my_obs) * my_dim);
+        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(my_obs, my_dim));
         quick_load(prefix + "data", my_data.data(), my_data.size());
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
@@ -249,9 +249,10 @@ public:
         Index_ nobs = data.num_observations();
         auto work = data.new_known_extractor();
 
-        std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
+        // We assume that that vector::size_type <= size_t, otherwise data() wouldn't be a contiguous array.
+        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, nobs));
         for (Index_ o = 0; o < nobs; ++o) {
-            std::copy_n(work->next(), ndim, store.begin() + static_cast<std::size_t>(o) * ndim); // cast to size_t to avoid overflow.
+            std::copy_n(work->next(), ndim, store.data() + sanisizer::product_unsafe<std::size_t>(o, ndim));
         }
 
         return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);

@@ -19,6 +19,8 @@
 #include <fstream>
 #include <cassert>
 
+#include "sanisizer/sanisizer.hpp"
+
 /**
  * @file Vptree.hpp
  *
@@ -45,8 +47,8 @@ private:
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        my_nearest.reset(k + 1);
-        auto iptr = my_parent.my_data.data() + static_cast<std::size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
+        my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
+        auto iptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(my_parent.my_new_locations[i], my_parent.my_dim);
         Distance_ max_dist = std::numeric_limits<Distance_>::max();
         my_parent.search_nn(0, iptr, max_dist, my_nearest);
         my_nearest.report(output_indices, output_distances, i);
@@ -76,7 +78,7 @@ public:
     }
 
     Index_ search_all(Index_ i, Distance_ d, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto iptr = my_parent.my_data.data() + static_cast<std::size_t>(my_parent.my_new_locations[i]) * my_parent.my_dim; // cast to avoid overflow.
+        auto iptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(my_parent.my_new_locations[i], my_parent.my_dim);
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
@@ -180,11 +182,11 @@ private:
             std::swap(items[lower], items[i]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
-            const Data_* vantage_ptr = coords + static_cast<std::size_t>(vantage.second) * my_dim; // cast to avoid overflow.
+            const Data_* vantage_ptr = coords + sanisizer::product_unsafe<std::size_t>(vantage.second, my_dim);
 
             // Compute distances to the new vantage point.
             for (Index_ i = lower + 1; i < upper; ++i) {
-                const Data_* loc = coords + static_cast<std::size_t>(items[i].second) * my_dim; // cast to avoid overflow.
+                const Data_* loc = coords + sanisizer::product_unsafe<std::size_t>(items[i].second, my_dim);
                 items[i].first = my_metric->raw(my_dim, vantage_ptr, loc);
             }
 
@@ -235,16 +237,16 @@ public:
             // so we'll just use a deterministically 'random' number to ensure
             // we get the same ties for any given dataset but a different stream
             // of numbers between datasets. Casting to get well-defined overflow. 
-            uint64_t base = 1234567890, m1 = my_obs, m2 = my_dim;
-            std::mt19937_64 rand(base * m1 +  m2);
+            const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
+            std::mt19937_64 rand(base * m1 + m2);
 
             build(0, my_obs, my_data.data(), items, rand);
 
             // Resorting data in place to match order of occurrence within
             // 'nodes', for better cache locality.
-            std::vector<uint8_t> used(my_obs);
-            std::vector<Data_> buffer(my_dim);
-            my_new_locations.resize(my_obs);
+            auto used = sanisizer::create<std::vector<uint8_t> >(my_obs);
+            auto buffer = sanisizer::create<std::vector<Data_> >(my_dim);
+            sanisizer::resize(my_new_locations, my_obs);
             auto host = my_data.data();
 
             for (Index_ o = 0; o < num_obs; ++o) {
@@ -258,12 +260,12 @@ public:
                     continue;
                 }
 
-                auto optr = host + static_cast<std::size_t>(o) * my_dim;
+                auto optr = host + sanisizer::product_unsafe<std::size_t>(o, my_dim);
                 std::copy_n(optr, my_dim, buffer.begin());
                 Index_ replacement = current.index;
 
                 do {
-                    auto rptr = host + static_cast<std::size_t>(replacement) * my_dim;
+                    auto rptr = host + sanisizer::product_unsafe<std::size_t>(replacement, my_dim);
                     std::copy_n(rptr, my_dim, optr);
                     used[replacement] = 1;
 
@@ -281,7 +283,7 @@ public:
 
 private:
     void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, NeighborQueue<Index_, Distance_>& nearest) const { 
-        auto nptr = my_data.data() + static_cast<std::size_t>(curnode_index) * my_dim; // cast to avoid overflow.
+        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -315,7 +317,7 @@ private:
 
     template<bool count_only_, typename Output_>
     void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
-        auto nptr = my_data.data() + static_cast<std::size_t>(curnode_index) * my_dim; // cast to avoid overflow.
+        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
         Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
         // If current node is within the maximum distance:
@@ -375,13 +377,13 @@ public:
         quick_load(prefix + "num_obs", &my_obs, 1);
         quick_load(prefix + "num_dim", &my_dim, 1);
 
-        my_data.resize(static_cast<std::size_t>(my_obs) * my_dim);
+        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(my_obs, my_dim));
         quick_load(prefix + "data", my_data.data(), my_data.size());
 
-        my_nodes.resize(my_obs);
+        sanisizer::resize(my_nodes, my_obs);
         quick_load(prefix + "nodes", my_nodes.data(), my_nodes.size());
 
-        my_new_locations.resize(my_obs);
+        sanisizer::resize(my_new_locations, my_obs);
         quick_load(prefix + "new_locations", my_new_locations.data(), my_new_locations.size());
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
@@ -457,9 +459,10 @@ public:
         Index_ nobs = data.num_observations();
         auto work = data.new_known_extractor();
 
-        std::vector<Data_> store(ndim * static_cast<std::size_t>(nobs)); // cast to avoid overflow.
+        // We assume that that vector::size_type <= size_t, otherwise data() wouldn't be a contiguous array.
+        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, nobs));
         for (Index_ o = 0; o < nobs; ++o) {
-            std::copy_n(work->next(), ndim, store.begin() + static_cast<std::size_t>(o) * ndim); // cast to avoid overflow.
+            std::copy_n(work->next(), ndim, store.data() + sanisizer::product_unsafe<std::size_t>(o, ndim));
         }
 
         return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);

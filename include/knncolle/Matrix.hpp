@@ -4,6 +4,8 @@
 #include <memory>
 #include <cstddef>
 
+#include "sanisizer/sanisizer.hpp"
+
 /**
  * @file Matrix.hpp
  * @brief Interface for the input matrix.
@@ -113,7 +115,7 @@ private:
 
 public:
     const Data_* next() {
-        return my_data + (at++) * my_dim; // already std::size_t's to avoid overflow during multiplication.
+        return my_data + sanisizer::product_unsafe<std::size_t>(at++, my_dim);
     } 
 };
 /**

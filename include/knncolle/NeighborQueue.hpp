@@ -1,9 +1,14 @@
 #ifndef KNNCOLLE_NEIGHBOR_QUEUE_HPP
 #define KNNCOLLE_NEIGHBOR_QUEUE_HPP
 
+#include "utils.hpp"
+
 #include <queue>
 #include <vector>
 #include <algorithm>
+#include <cassert>
+
+#include "sanisizer/sanisizer.hpp"
 
 /**
  * @file NeighborQueue.hpp
@@ -44,7 +49,7 @@ public:
      * This should be a positive integer.
      */
     void reset(Index_ k) {
-        my_neighbors = k;
+        my_neighbors = sanisizer::cast<I<decltype(my_neighbors)> >(sanisizer::attest_gez(k));
         my_full = false;
 
         // Popping any existing elements out, just in case. This shouldn't
@@ -109,7 +114,9 @@ public:
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
         // We expect that nearest is non-empty, as a search should at least
         // find 'self' (or duplicates thereof).
-        auto num_expected = my_nearest.size() - 1u;
+        assert(!my_nearest.empty());
+        auto num_expected = my_nearest.size() - 1;
+
         if (output_indices) {
             output_indices->clear();
             output_indices->reserve(num_expected);
@@ -169,11 +176,12 @@ public:
      */
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         auto position = my_nearest.size();
+
         if (output_indices) {
-            output_indices->resize(position);
+            sanisizer::resize(*output_indices, position);
         }
         if (output_distances) {
-            output_distances->resize(position);
+            sanisizer::resize(*output_distances, position);
         }
 
         while (!my_nearest.empty()) {

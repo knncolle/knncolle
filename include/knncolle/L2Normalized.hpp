@@ -50,7 +50,7 @@ class L2NormalizedSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     L2NormalizedSearcher(std::unique_ptr<Searcher_> searcher, std::size_t num_dimensions) : 
         my_searcher(std::move(searcher)),
-        buffer(num_dimensions)
+        buffer(sanisizer::cast<I<decltype(buffer.size())> >(num_dimensions))
     {}
 
 private:
@@ -123,7 +123,9 @@ template<typename Index_, typename Data_, typename Normalized_, class Extractor_
 class L2NormalizedMatrixExtractor final : public MatrixExtractor<Normalized_> {
 public:
     L2NormalizedMatrixExtractor(std::unique_ptr<Extractor_> extractor, std::size_t dim) : 
-        my_extractor(std::move(extractor)), buffer(dim) {}
+        my_extractor(std::move(extractor)),
+        buffer(sanisizer::cast<I<decltype(buffer.size())> >(dim))
+    {}
 
 private:
     std::unique_ptr<Extractor_> my_extractor;
