@@ -80,3 +80,18 @@ TEST_F(DistanceMetricSaveTest, Manhattan) {
     std::shared_ptr<knncolle::DistanceMetric<double, double> > reloaded(knncolle::load_distance_metric_raw<double, double>(prefix));
     EXPECT_EQ(metric.raw(10, buf1, buf2), reloaded->raw(10, buf1, buf2));
 }
+
+class FakeDistanceMetric final : public knncolle::DistanceMetric<double, double> {
+public:
+    double raw(std::size_t, const double*, const double*) const { return 0; }
+    double normalize(double) const { return 0; }
+    double denormalize(double) const { return 0; }
+};
+
+TEST_F(DistanceMetricSaveTest, Error) {
+    FakeDistanceMetric faker;
+    EXPECT_EQ(faker.raw(0, NULL, NULL), 0);
+    EXPECT_EQ(faker.normalize(0), 0);
+    EXPECT_EQ(faker.denormalize(0), 0);
+    EXPECT_ANY_THROW(faker.save("FOO"));
+}

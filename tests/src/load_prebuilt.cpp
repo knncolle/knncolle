@@ -106,6 +106,13 @@ TEST_F(LoadPrebuiltTest, VptreeManhattan) {
     }
 }
 
+class FakePrebuilt final : public knncolle::Prebuilt<int, double, double> {
+public:
+    int num_observations() const { return 0; }
+    std::size_t num_dimensions() const { return 0; }
+    std::unique_ptr<knncolle::Searcher<int, double, double> > initialize() const { return NULL; }
+};
+
 TEST_F(LoadPrebuiltTest, Errors) {
     const auto prefix = savedir / "error_";
     {
@@ -122,4 +129,10 @@ TEST_F(LoadPrebuiltTest, Errors) {
         msg = e.what();
     }
     EXPECT_TRUE(msg.find("superfoobar") != std::string::npos);
+
+    FakePrebuilt faker;
+    EXPECT_EQ(faker.num_observations(), 0);
+    EXPECT_EQ(faker.num_dimensions(), 0);
+    EXPECT_FALSE(faker.initialize());
+    EXPECT_ANY_THROW(faker.save("FOO"));
 }
