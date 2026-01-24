@@ -11,6 +11,11 @@
 #include "Bruteforce.hpp"
 #include "Vptree.hpp"
 
+/**
+ * @file load_prebuilt.hpp
+ * @brief Load prebuilt search indices from disk.
+ */
+
 namespace knncolle {
 
 /**
