@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cstddef>
+#include <type_traits>
 
 namespace knncolle {
 
@@ -20,6 +21,9 @@ void quick_load(const std::string& path, Input_* const contents, const Size_ len
     input.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     input.read(reinterpret_cast<char*>(contents), sizeof(Input_) * length);
 }
+
+template<typename Input_>
+using I = std::remove_cv_t<std::remove_reference_t<Input_> >;
 
 }
 

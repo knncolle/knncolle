@@ -469,14 +469,14 @@ public:
      * Override to assist devirtualization.
      */
     auto build_known_unique(const Matrix_& data) const {
-        return std::unique_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
+        return std::unique_ptr<I<decltype(*build_known_raw(data))> >(build_known_raw(data));
     }
 
     /**
      * Override to assist devirtualization.
      */
     auto build_known_shared(const Matrix_& data) const {
-        return std::shared_ptr<std::remove_reference_t<decltype(*build_known_raw(data))> >(build_known_raw(data));
+        return std::shared_ptr<I<decltype(*build_known_raw(data))> >(build_known_raw(data));
     }
 };
 

@@ -12,6 +12,7 @@
 #include "Prebuilt.hpp"
 #include "Builder.hpp"
 #include "Matrix.hpp"
+#include "utils.hpp"
 
 /**
  * @file L2Normalized.hpp
@@ -110,7 +111,7 @@ public:
     }
 
     auto initialize_known() const {
-        typedef std::remove_reference_t<decltype(*(my_prebuilt->initialize_known()))> KnownSearcher;
+        typedef I<decltype(*(my_prebuilt->initialize_known()))> KnownSearcher;
         return std::make_unique<L2NormalizedSearcher<Index_, Data_, Distance_, Normalized_, KnownSearcher> >(my_prebuilt->initialize_known(), my_prebuilt->num_dimensions());
     }
 };
@@ -183,7 +184,7 @@ public:
      * Override to assist devirtualization. 
      */
     auto new_known_extractor() const {
-        typedef std::remove_reference_t<decltype(*(my_matrix.new_known_extractor()))> KnownExtractor;
+        typedef I<decltype(*(my_matrix.new_known_extractor()))> KnownExtractor;
         return std::make_unique<L2NormalizedMatrixExtractor<Index_, Data_, Normalized_, KnownExtractor> >(my_matrix.new_known_extractor(), num_dimensions());
     }
 
@@ -259,14 +260,14 @@ public:
      * Override to assist devirtualization.
      */
     auto build_known_unique(const Matrix_& data) const {
-        return std::unique_ptr<std::remove_reference_t<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
+        return std::unique_ptr<I<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
     }
 
     /**
      * Override to assist devirtualization.
      */
     auto build_known_shared(const Matrix_& data) const {
-        return std::shared_ptr<std::remove_reference_t<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
+        return std::shared_ptr<I<decltype(*(build_known_raw(data)))> >(build_known_raw(data));
     }
 };
 
