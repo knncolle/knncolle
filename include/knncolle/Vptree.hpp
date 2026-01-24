@@ -374,8 +374,14 @@ public:
     VptreePrebuilt(const std::string& prefix) {
         quick_load(prefix + "num_obs", &my_obs, 1);
         quick_load(prefix + "num_dim", &my_dim, 1);
+
+        my_data.resize(static_cast<std::size_t>(my_obs) * my_dim);
         quick_load(prefix + "data", my_data.data(), my_data.size());
+
+        my_nodes.resize(my_obs);
         quick_load(prefix + "nodes", my_nodes.data(), my_nodes.size());
+
+        my_new_locations.resize(my_obs);
         quick_load(prefix + "new_locations", my_new_locations.data(), my_new_locations.size());
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
