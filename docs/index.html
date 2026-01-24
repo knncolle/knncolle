@@ -193,7 +193,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> some_prebuilt = ptr-&gt;build_unique(mat);</div>
 <div class="line"><span class="keyword">auto</span> some_results = <a class="code hl_function" href="namespaceknncolle.html#a2c6d8b116464bab254bda34216338c3c">knncolle::find_nearest_neighbors</a>(*some_prebuilt, 10); </div>
-<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:229</div></div>
+<div class="ttc" id="aclassknncolle_1_1BruteforceBuilder_html"><div class="ttname"><a href="classknncolle_1_1BruteforceBuilder.html">knncolle::BruteforceBuilder</a></div><div class="ttdoc">Perform a brute-force nearest neighbor search.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:228</div></div>
 </div><!-- fragment --><p>Similarly, for algorithms that accept a <code>DistanceMetric</code>, we can switch between distances at run-time:</p>
 <div class="fragment"><div class="line">std::shared_ptr&lt;knncolle::DistanceMetric&lt;double, double&gt; &gt; distptr;</div>
 <div class="line"><span class="keywordflow">if</span> (distance == <span class="stringliteral">&quot;euclidean&quot;</span>) {</div>
@@ -221,7 +221,7 @@ $(function(){ initResizable(false); });
 <div class="line"><span class="comment">// Any Matrix &#39;mat&#39; is automatically wrapped in a L2NormalizedMatrix</span></div>
 <div class="line"><span class="comment">// before being passed to &#39;builder-&gt;build_unique&#39;.</span></div>
 <div class="line"><span class="keyword">auto</span> l2index = l2builder-&gt;build_unique(mat);</div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:211</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:212</div></div>
 </div><!-- fragment --><p>Check out the <a href="https://knncolle.github.io/knncolle/">reference documentation</a> for more details on these interfaces.</p>
 <h1>Modifying template parameters</h1>
 <p>Each interface has a few template parameters to define its types. In general, we recommend using <code>int</code>s for the observation indices and <code>double</code>s for the data and distances. If precision is not a concern, we can achieve greater speed by swapping <code>double</code>s with <code>float</code>s. We may also need to swap <code>int</code> with <code>size_t</code> for larger datasets, e.g., more than 2 billion observations.</p>
