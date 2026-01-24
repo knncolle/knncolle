@@ -113,73 +113,80 @@ $(function(){ initResizable(false); });
 <code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
+<code>#include &quot;sanisizer/sanisizer.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Bruteforce.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="Bruteforce_8hpp__incl.png" border="0" usemap="#aknncolle_2Bruteforce_8hpp" alt=""/></div>
 <map name="aknncolle_2Bruteforce_8hpp" id="aknncolle_2Bruteforce_8hpp">
-<area shape="rect" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="912,5,1069,31"/>
-<area shape="rect" href="distances_8hpp.html" title="Classes for distance calculations." alt="" coords="340,79,441,105"/>
-<area shape="poly" title=" " alt="" coords="912,32,457,85,456,80,911,26"/>
-<area shape="rect" title=" " alt="" coords="858,226,923,252"/>
-<area shape="poly" title=" " alt="" coords="911,27,687,43,405,70,270,88,154,108,68,130,40,142,25,154,20,166,24,177,40,187,67,196,150,211,261,221,389,229,650,235,843,236,843,241,649,240,389,234,261,227,150,216,66,201,38,191,20,180,14,166,20,151,38,138,66,125,153,103,269,82,404,65,687,38,911,22"/>
-<area shape="rect" title=" " alt="" coords="542,153,596,178"/>
-<area shape="poly" title=" " alt="" coords="911,24,826,30,733,40,651,57,620,68,597,81,587,93,580,107,573,138,568,137,575,105,583,90,594,77,617,63,650,51,732,35,825,24,911,19"/>
-<area shape="rect" title=" " alt="" coords="983,226,1051,252"/>
-<area shape="poly" title=" " alt="" coords="995,31,1016,211,1011,211,989,32"/>
-<area shape="rect" href="NeighborQueue_8hpp.html" title="Helper class to track nearest neighbors." alt="" coords="792,79,927,105"/>
-<area shape="poly" title=" " alt="" coords="970,34,896,74,894,69,967,29"/>
-<area shape="rect" title=" " alt="" coords="679,300,736,326"/>
-<area shape="poly" title=" " alt="" coords="911,24,738,29,520,40,310,57,224,68,159,82,74,102,43,120,14,154,8,173,15,191,33,207,62,222,144,249,250,269,367,285,483,296,664,307,664,312,483,301,367,290,249,274,143,254,60,227,30,212,10,194,3,173,9,151,39,116,72,97,158,76,223,63,310,52,520,35,737,24,911,19"/>
-<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="1283,226,1380,252"/>
-<area shape="poly" title=" " alt="" coords="1070,17,1151,25,1195,33,1240,46,1284,63,1325,86,1362,115,1391,151,1396,170,1391,188,1379,204,1364,219,1360,215,1375,201,1386,185,1391,169,1387,154,1358,119,1322,90,1282,68,1239,51,1194,38,1150,30,1069,22"/>
-<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="1078,79,1164,105"/>
-<area shape="poly" title=" " alt="" coords="1014,29,1087,69,1085,74,1011,34"/>
-<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="1287,153,1376,178"/>
-<area shape="poly" title=" " alt="" coords="1037,29,1104,49,1177,77,1244,110,1301,142,1298,147,1242,114,1175,81,1102,54,1035,34"/>
-<area shape="rect" href="Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="900,153,980,178"/>
-<area shape="poly" title=" " alt="" coords="989,32,952,139,947,137,984,30"/>
-<area shape="rect" href="report__all__neighbors_8hpp.html" title="Format the output for Searcher::search_all()." alt="" coords="607,79,768,105"/>
-<area shape="poly" title=" " alt="" coords="939,34,755,78,753,72,938,29"/>
-<area shape="rect" title=" " alt="" coords="1402,79,1472,105"/>
-<area shape="poly" title=" " alt="" coords="1070,27,1216,48,1384,76,1388,77,1387,82,1383,82,1215,54,1069,33"/>
-<area shape="rect" title=" " alt="" coords="1496,79,1549,105"/>
-<area shape="poly" title=" " alt="" coords="1070,22,1254,40,1366,56,1482,76,1481,82,1366,61,1254,46,1069,28"/>
-<area shape="rect" title=" " alt="" coords="1573,79,1637,105"/>
-<area shape="poly" title=" " alt="" coords="1070,21,1286,39,1420,55,1558,76,1557,81,1420,60,1286,44,1069,27"/>
-<area shape="rect" title=" " alt="" coords="124,153,182,178"/>
-<area shape="poly" title=" " alt="" coords="351,108,198,154,196,149,349,103"/>
-<area shape="poly" title=" " alt="" coords="386,106,373,142,373,160,380,176,403,188,447,198,577,215,723,227,843,233,842,238,723,232,576,221,446,204,401,193,377,180,368,161,368,141,381,104"/>
-<area shape="poly" title=" " alt="" coords="422,103,529,145,527,150,420,108"/>
-<area shape="rect" title=" " alt="" coords="206,153,316,178"/>
-<area shape="poly" title=" " alt="" coords="370,108,298,147,295,142,367,103"/>
-<area shape="rect" title=" " alt="" coords="390,153,468,178"/>
-<area shape="poly" title=" " alt="" coords="399,104,418,138,413,140,394,106"/>
-<area shape="rect" title=" " alt="" coords="35,153,100,178"/>
-<area shape="poly" title=" " alt="" coords="340,106,116,154,115,149,339,101"/>
-<area shape="poly" title=" " alt="" coords="409,103,473,144,531,176,590,194,641,205,729,213,820,215,935,224,968,228,968,233,934,229,820,220,729,218,640,210,589,199,529,181,470,149,407,107"/>
-<area shape="rect" title=" " alt="" coords="820,153,876,178"/>
-<area shape="poly" title=" " alt="" coords="860,105,855,138,850,137,855,104"/>
-<area shape="poly" title=" " alt="" coords="850,107,810,154,761,226,724,288,720,285,757,223,806,151,846,103"/>
-<area shape="rect" title=" " alt="" coords="671,153,745,178"/>
-<area shape="poly" title=" " alt="" coords="835,108,749,148,746,143,833,103"/>
-<area shape="poly" title=" " alt="" coords="1283,249,752,309,752,304,1283,243"/>
-<area shape="rect" title=" " alt="" coords="1293,300,1370,326"/>
-<area shape="poly" title=" " alt="" coords="1334,252,1334,284,1329,284,1329,252"/>
-<area shape="poly" title=" " alt="" coords="1115,107,1037,215,1032,212,1110,103"/>
-<area shape="poly" title=" " alt="" coords="1158,103,1282,145,1281,150,1156,108"/>
-<area shape="poly" title=" " alt="" coords="1091,108,986,149,984,144,1089,103"/>
-<area shape="rect" title=" " alt="" coords="1211,153,1263,178"/>
-<area shape="poly" title=" " alt="" coords="1142,103,1206,142,1203,147,1139,107"/>
-<area shape="rect" title=" " alt="" coords="1106,153,1187,178"/>
-<area shape="poly" title=" " alt="" coords="1128,104,1140,137,1135,139,1123,106"/>
-<area shape="poly" title=" " alt="" coords="1287,179,1275,181,938,234,937,229,1274,176,1286,173"/>
-<area shape="poly" title=" " alt="" coords="1287,180,1066,229,1065,224,1286,174"/>
-<area shape="poly" title=" " alt="" coords="1334,179,1334,211,1329,211,1329,179"/>
-<area shape="poly" title=" " alt="" coords="934,180,909,215,905,212,929,177"/>
-<area shape="poly" title=" " alt="" coords="955,177,995,214,991,218,951,181"/>
-<area shape="poly" title=" " alt="" coords="682,107,670,128,661,153,661,178,677,236,698,285,693,287,672,238,656,179,656,152,665,126,677,104"/>
-<area shape="poly" title=" " alt="" coords="694,104,703,137,698,138,689,106"/>
+<area shape="rect" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="980,5,1137,31"/>
+<area shape="rect" href="distances_8hpp.html" title="Classes for distance calculations." alt="" coords="365,79,467,105"/>
+<area shape="poly" title=" " alt="" coords="980,31,482,86,482,81,979,26"/>
+<area shape="rect" title=" " alt="" coords="862,226,927,252"/>
+<area shape="poly" title=" " alt="" coords="980,31,881,50,827,64,775,82,705,106,680,123,657,154,650,177,658,195,677,209,705,220,777,232,847,236,846,241,776,238,704,225,675,214,654,198,645,178,652,151,676,119,703,102,774,76,826,59,879,44,979,26"/>
+<area shape="rect" title=" " alt="" coords="539,153,592,178"/>
+<area shape="poly" title=" " alt="" coords="979,24,883,29,775,39,677,56,639,68,612,81,599,93,589,108,574,139,570,137,584,105,595,90,609,77,637,63,676,51,774,34,882,24,979,19"/>
+<area shape="rect" title=" " alt="" coords="1313,226,1380,252"/>
+<area shape="poly" title=" " alt="" coords="1138,19,1178,25,1219,36,1259,52,1295,77,1319,107,1335,143,1344,179,1348,210,1343,211,1339,180,1330,145,1315,110,1291,81,1257,57,1218,41,1177,30,1137,24"/>
+<area shape="rect" href="NeighborQueue_8hpp.html" title="Helper class to track nearest neighbors." alt="" coords="835,79,970,105"/>
+<area shape="poly" title=" " alt="" coords="1033,34,944,75,942,70,1031,29"/>
+<area shape="rect" title=" " alt="" coords="667,153,736,178"/>
+<area shape="poly" title=" " alt="" coords="982,34,904,53,824,81,771,112,728,145,725,140,768,107,821,77,902,48,981,29"/>
+<area shape="rect" title=" " alt="" coords="954,300,1011,326"/>
+<area shape="poly" title=" " alt="" coords="979,26,739,41,434,67,287,85,161,105,67,129,37,141,19,154,11,167,8,179,10,190,16,201,42,220,83,238,137,253,203,266,357,285,526,298,692,305,939,309,939,314,692,310,526,303,356,291,202,271,136,258,81,243,39,225,12,204,5,192,3,179,6,165,15,151,34,137,65,124,160,100,286,79,433,62,739,36,979,21"/>
+<area shape="rect" title=" " alt="" coords="941,153,1005,178"/>
+<area shape="poly" title=" " alt="" coords="1054,33,990,140,986,138,1049,30"/>
+<area shape="rect" title=" " alt="" coords="1003,226,1154,252"/>
+<area shape="poly" title=" " alt="" coords="1064,31,1073,64,1088,103,1104,127,1112,137,1118,152,1120,169,1117,186,1101,215,1096,213,1112,184,1115,169,1113,153,1107,139,1100,130,1083,106,1068,66,1059,32"/>
+<area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="1611,226,1709,252"/>
+<area shape="poly" title=" " alt="" coords="1138,19,1224,25,1327,35,1438,52,1548,76,1602,87,1646,96,1666,102,1684,113,1702,129,1720,151,1725,170,1719,188,1707,204,1692,219,1688,215,1703,201,1714,185,1719,169,1715,154,1698,132,1681,117,1664,107,1645,101,1601,93,1547,82,1437,57,1326,41,1223,30,1138,25"/>
+<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="1401,79,1487,105"/>
+<area shape="poly" title=" " alt="" coords="1125,29,1386,77,1385,82,1124,34"/>
+<area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="1615,153,1705,178"/>
+<area shape="poly" title=" " alt="" coords="1138,19,1215,25,1306,35,1404,52,1499,76,1572,108,1631,142,1628,146,1569,112,1498,82,1403,57,1306,40,1215,30,1138,25"/>
+<area shape="rect" href="Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="1229,153,1309,178"/>
+<area shape="poly" title=" " alt="" coords="1138,29,1219,48,1252,62,1273,77,1280,92,1283,108,1280,138,1275,138,1278,108,1275,93,1268,81,1249,66,1217,53,1137,34"/>
+<area shape="rect" href="report__all__neighbors_8hpp.html" title="Format the output for Searcher::search_all()." alt="" coords="1097,79,1258,105"/>
+<area shape="poly" title=" " alt="" coords="1080,29,1145,68,1143,73,1077,34"/>
+<area shape="rect" title=" " alt="" coords="1780,79,1833,105"/>
+<area shape="poly" title=" " alt="" coords="1138,19,1414,36,1588,52,1762,76,1766,77,1765,82,1761,82,1587,58,1414,41,1137,25"/>
+<area shape="rect" title=" " alt="" coords="30,153,87,178"/>
+<area shape="poly" title=" " alt="" coords="365,104,249,125,103,155,102,150,248,119,364,99"/>
+<area shape="poly" title=" " alt="" coords="424,103,446,141,463,160,484,176,513,188,552,199,652,215,759,226,847,233,847,238,758,232,652,221,551,204,511,193,481,181,460,164,442,144,419,106"/>
+<area shape="poly" title=" " alt="" coords="442,103,527,143,525,148,440,108"/>
+<area shape="rect" title=" " alt="" coords="111,153,222,178"/>
+<area shape="poly" title=" " alt="" coords="374,108,224,151,222,145,373,103"/>
+<area shape="rect" title=" " alt="" coords="245,153,323,178"/>
+<area shape="poly" title=" " alt="" coords="395,108,321,147,318,143,392,103"/>
+<area shape="rect" title=" " alt="" coords="347,153,413,178"/>
+<area shape="poly" title=" " alt="" coords="412,106,395,140,390,138,408,104"/>
+<area shape="poly" title=" " alt="" coords="431,103,481,145,527,176,630,186,854,202,1298,232,1297,237,853,208,630,191,526,181,477,149,428,107"/>
+<area shape="poly" title=" " alt="" coords="869,108,751,150,749,144,867,103"/>
+<area shape="rect" title=" " alt="" coords="810,153,867,178"/>
+<area shape="poly" title=" " alt="" coords="894,107,861,143,857,139,890,103"/>
+<area shape="poly" title=" " alt="" coords="863,108,828,126,813,139,801,154,798,165,801,177,820,218,852,250,895,277,940,296,938,301,893,282,849,254,815,221,796,179,792,165,796,151,809,135,825,121,860,103"/>
+<area shape="rect" title=" " alt="" coords="1029,153,1104,178"/>
+<area shape="poly" title=" " alt="" coords="931,103,1026,144,1024,149,929,108"/>
+<area shape="poly" title=" " alt="" coords="916,103,952,140,949,143,912,107"/>
+<area shape="poly" title=" " alt="" coords="906,105,912,140,920,159,931,177,964,202,1002,219,999,224,961,206,927,180,915,162,907,142,900,106"/>
+<area shape="poly" title=" " alt="" coords="1611,248,1027,310,1026,304,1610,243"/>
+<area shape="rect" title=" " alt="" coords="1621,300,1699,326"/>
+<area shape="poly" title=" " alt="" coords="1663,252,1663,284,1657,284,1657,252"/>
+<area shape="poly" title=" " alt="" coords="1438,106,1365,215,1361,212,1434,104"/>
+<area shape="poly" title=" " alt="" coords="1481,103,1610,145,1608,150,1480,108"/>
+<area shape="poly" title=" " alt="" coords="1415,108,1314,149,1312,144,1413,103"/>
+<area shape="rect" title=" " alt="" coords="1434,153,1486,178"/>
+<area shape="poly" title=" " alt="" coords="1449,104,1456,137,1451,138,1444,105"/>
+<area shape="rect" title=" " alt="" coords="1510,153,1591,178"/>
+<area shape="poly" title=" " alt="" coords="1463,103,1521,141,1518,146,1460,107"/>
+<area shape="poly" title=" " alt="" coords="1615,179,1604,181,1432,201,1298,209,1163,216,991,229,942,234,941,229,990,224,1163,210,1298,204,1432,196,1603,176,1614,174"/>
+<area shape="poly" title=" " alt="" coords="1615,180,1396,229,1395,224,1614,174"/>
+<area shape="poly" title=" " alt="" coords="1663,179,1663,211,1657,211,1657,179"/>
+<area shape="poly" title=" " alt="" coords="1229,177,942,231,941,226,1228,172"/>
+<area shape="poly" title=" " alt="" coords="1284,177,1324,214,1321,218,1280,181"/>
+<area shape="poly" title=" " alt="" coords="1238,181,1126,223,1124,218,1236,176"/>
+<area shape="poly" title=" " alt="" coords="1183,105,1189,134,1192,173,1187,215,1180,235,1169,254,1138,281,1101,298,1062,309,1027,313,1026,308,1061,303,1099,293,1135,276,1164,250,1175,233,1182,214,1186,173,1183,134,1178,106"/>
+<area shape="poly" title=" " alt="" coords="1160,107,1099,146,1096,142,1157,103"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
