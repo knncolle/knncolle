@@ -51,6 +51,7 @@
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
+    <includes id="load__prebuilt_8hpp" name="load_prebuilt.hpp" local="yes" import="no" module="no" objc="no">load_prebuilt.hpp</includes>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -63,6 +64,15 @@
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
+    <name>load_prebuilt.hpp</name>
+    <path>knncolle/</path>
+    <filename>load__prebuilt_8hpp.html</filename>
+    <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
+    <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
+    <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -235,6 +245,13 @@
       <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
       <anchor>a8810b699e11a1c354470dee9051c935b</anchor>
       <arglist>(Distance_ norm) const =0</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>save</name>
+      <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
+      <anchor>a1afc3ebde534d693ef3ac82528de767d</anchor>
+      <arglist>(const std::string &amp;prefix) const</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -475,6 +492,13 @@
       <anchor>aacc8819b7962ce27294cf0d42f6c6e68</anchor>
       <arglist>() const =0</arglist>
     </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
+      <name>save</name>
+      <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
+      <anchor>a87930f878bf3a22297b851173caaf893</anchor>
+      <arglist>(const std::string &amp;prefix) const</arglist>
+    </member>
     <member kind="function">
       <type>auto</type>
       <name>initialize_known</name>
@@ -630,11 +654,39 @@
     <class kind="class">knncolle::SimpleMatrix</class>
     <class kind="class">knncolle::VptreeBuilder</class>
     <member kind="typedef">
+      <type>std::function&lt; DistanceMetric&lt; Data_, Distance_ &gt; *(const std::string &amp;)&gt;</type>
+      <name>LoadDistanceMetricFunction</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ac850c74c54af62105c165c458f7516b7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>std::vector&lt; std::vector&lt; std::pair&lt; Index_, Distance_ &gt; &gt; &gt;</type>
       <name>NeighborList</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a97693d779b6041859ffa0ef2d9c1500b</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::function&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; *(const std::string &amp;)&gt;</type>
+      <name>LoadPrebuiltFunction</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>af5bf682899b815f8e1d4a4c6ef80408a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>std::unordered_map&lt; std::string, LoadDistanceMetricFunction&lt; Data_, Distance_ &gt; &gt; &amp;</type>
+      <name>load_distance_metric_registry</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ad4af1d9292bd24d4bd3f72f4f99d9cbc</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>DistanceMetric&lt; Data_, Distance_ &gt; *</type>
+      <name>load_distance_metric_raw</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a5c0df62bd7206b0b3892aedadb2a962c</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -670,6 +722,34 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a8406dfe7aac78dee986262a5f6bceee7</anchor>
       <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::unordered_map&lt; std::string, LoadPrebuiltFunction&lt; Index_, Data_, Distance_ &gt; &gt; &amp;</type>
+      <name>load_prebuilt_registry</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>aa08de1eb1a23d5e13dc11e23ad7967ea</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
+      <name>load_prebuilt_raw</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>af261ec286ec7a275c3926ba0fdb8dc11</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
+      <name>load_prebuilt_unique</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>aa985f74dca21f1c23cfe914a25b2a412</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::shared_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
+      <name>load_prebuilt_shared</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ae60afb430cc5948b0c8e5c2d4a4a7f84</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>

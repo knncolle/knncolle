@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['neighborlist_0',['NeighborList',['../namespaceknncolle.html#a97693d779b6041859ffa0ef2d9c1500b',1,'knncolle']]],
-  ['normalizedmatrix_1',['NormalizedMatrix',['../classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32',1,'knncolle::L2NormalizedBuilder']]]
+  ['loaddistancemetricfunction_0',['LoadDistanceMetricFunction',['../namespaceknncolle.html#ac850c74c54af62105c165c458f7516b7',1,'knncolle']]],
+  ['loadprebuiltfunction_1',['LoadPrebuiltFunction',['../namespaceknncolle.html#af5bf682899b815f8e1d4a4c6ef80408a',1,'knncolle']]]
 ];

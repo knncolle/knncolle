@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac041712392f74d5fd8f030e2c0adcdc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc8819b7962ce27294cf0d42f6c6e68" id="r_aacc8819b7962ce27294cf0d42f6c6e68"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Searcher.html">Searcher</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacc8819b7962ce27294cf0d42f6c6e68">initialize</a> () const =0</td></tr>
 <tr class="separator:aacc8819b7962ce27294cf0d42f6c6e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87930f878bf3a22297b851173caaf893" id="r_a87930f878bf3a22297b851173caaf893"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87930f878bf3a22297b851173caaf893">save</a> (const std::string &amp;prefix) const</td></tr>
+<tr class="separator:a87930f878bf3a22297b851173caaf893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49d2dbfc4a463c396842875f26746ac4" id="r_a49d2dbfc4a463c396842875f26746ac4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49d2dbfc4a463c396842875f26746ac4">initialize_known</a> () const</td></tr>
 <tr class="separator:a49d2dbfc4a463c396842875f26746ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -236,6 +238,45 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Number of observations in the dataset to be searched. </dd></dl>
+
+</div>
+</div>
+<a id="a87930f878bf3a22297b851173caaf893" name="a87930f878bf3a22297b851173caaf893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87930f878bf3a22297b851173caaf893">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Data_, Distance_ &gt;::save </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Save the prebuilt index to disk, to be reloaded with <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> and friends.</p>
+<p>It is expected that <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> should create an object that is "equivalent" to the object that was saved with <code><a class="el" href="#a87930f878bf3a22297b851173caaf893">save()</a></code>. That is, any neighbor search results should be the same across the original and reloaded object. It is also expected that the relevant template parameters used in <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> should be the same as those in the original <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object.</p>
+<p>An implementation of this method should create a <code>&lt;prefix&gt;ALGORITHM</code> file that contains the search algorithm's name. This should be an ASCII file with no newlines, where the algorithm name should follow the <code>&lt;library&gt;::&lt;algorithm&gt;</code> format, e.g., <code>knncolle::Vptree</code>. This will be used by <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> to determine the exact loader function to call. Other than the <code>ALGORITHM</code> file, each implementation may create any number of additional files of any format, as long as they start with <code>prefix</code>.</p>
+<p>An implementation of this method is not required to use portable file formats. <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the <code><a class="el" href="#a87930f878bf3a22297b851173caaf893">save()</a></code> call. Any additional portability is at the discretion of the implementation, e.g., it is common to assume IEEE floating-point and two's-complement integers.</p>
+<p>An implementation of this method is not required to create files that are readable by different versions of the implementation. Thus, the files created by this method are generally unsuitable for archival storage. However, implementations are recommended to at least provide enough information to throw an exception if an incompatible version of <code><a class="el" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> is used.</p>
+<p>If a subclass does not implement this method, an error is thrown by default.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>Prefix of the file path(s) in which to save the index. All files created by this method should start with this prefix. Any directories required to write a file starting with <code>prefix</code> should already have been created. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -122,14 +122,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4a468569d0823bf3211b2ee5c46a81d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8810b699e11a1c354470dee9051c935b" id="r_a8810b699e11a1c354470dee9051c935b"><td class="memItemLeft" align="right" valign="top">virtual Distance_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8810b699e11a1c354470dee9051c935b">denormalize</a> (Distance_ norm) const =0</td></tr>
 <tr class="separator:a8810b699e11a1c354470dee9051c935b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1afc3ebde534d693ef3ac82528de767d" id="r_a1afc3ebde534d693ef3ac82528de767d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1afc3ebde534d693ef3ac82528de767d">save</a> (const std::string &amp;prefix) const</td></tr>
+<tr class="separator:a1afc3ebde534d693ef3ac82528de767d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Data_, typename Distance_&gt;<br />
 class knncolle::DistanceMetric&lt; Data_, Distance_ &gt;</div><p>Interface for a distance metric. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the output distance. </td></tr>
     <tr><td class="paramname">Data_</td><td>Numeric type for the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the output distance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -245,6 +247,44 @@ template&lt;typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The raw distance between <code>x</code> and <code>y</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a1afc3ebde534d693ef3ac82528de767d" name="a1afc3ebde534d693ef3ac82528de767d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1afc3ebde534d693ef3ac82528de767d">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data_ , typename Distance_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classknncolle_1_1DistanceMetric.html">knncolle::DistanceMetric</a>&lt; Data_, Distance_ &gt;::save </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Save the distance metric to disk, to be reloaded with <code><a class="el" href="namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c">load_distance_metric_raw()</a></code> and friends.</p>
+<p>An implementation of this method should create a <code>&lt;prefix&gt;DISTANCE</code> file that contains the distance metric's name. This should be an ASCII file with no newlines, where the method name should follow the <code>&lt;library&gt;::&lt;distance&gt;</code> format, e.g., <code>knncolle::Euclidean</code>. This will be used by <code><a class="el" href="namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c">load_distance_metric_raw()</a></code> to determine the exact loader function to call. Other than the <code>DISTANCE</code> file, each implementation may create any number of additional files of any format, as long as they start with <code>prefix</code>.</p>
+<p>An implementation of this method is not required to use portable file formats. <code><a class="el" href="namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c">load_distance_metric_raw()</a></code> is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the <code><a class="el" href="#a1afc3ebde534d693ef3ac82528de767d">save()</a></code> call. Any additional portability is at the discretion of the implementation, e.g., it is common to assume IEEE floating-point and two's-complement integers.</p>
+<p>An implementation of this method is not required to create files that are readable by different versions of the implementation. Thus, the files created by this method are generally unsuitable for archival storage. However, implementations are recommended to at least provide enough information to throw an exception if an incompatible version of <code><a class="el" href="namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c">load_distance_metric_raw()</a></code> is used.</p>
+<p>If a subclass does not implement this method, an error is thrown by default.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>Prefix of the file path(s) in which to save the index. All files created by this method should start with this prefix. Any directories required to write a file starting with <code>prefix</code> should already have been created. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

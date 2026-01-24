@@ -144,12 +144,24 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:ac850c74c54af62105c165c458f7516b7" id="r_ac850c74c54af62105c165c458f7516b7"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:ac850c74c54af62105c165c458f7516b7"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac850c74c54af62105c165c458f7516b7">LoadDistanceMetricFunction</a> = std::function&lt;<a class="el" href="classknncolle_1_1DistanceMetric.html">DistanceMetric</a>&lt;Data_, Distance_&gt;* (const std::string&amp;)&gt;</td></tr>
+<tr class="separator:ac850c74c54af62105c165c458f7516b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97693d779b6041859ffa0ef2d9c1500b" id="r_a97693d779b6041859ffa0ef2d9c1500b"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a97693d779b6041859ffa0ef2d9c1500b"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a97693d779b6041859ffa0ef2d9c1500b">NeighborList</a> = std::vector&lt;std::vector&lt;std::pair&lt;Index_, Distance_&gt; &gt; &gt;</td></tr>
 <tr class="separator:a97693d779b6041859ffa0ef2d9c1500b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5bf682899b815f8e1d4a4c6ef80408a" id="r_af5bf682899b815f8e1d4a4c6ef80408a"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:af5bf682899b815f8e1d4a4c6ef80408a"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af5bf682899b815f8e1d4a4c6ef80408a">LoadPrebuiltFunction</a> = std::function&lt;<a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt;Index_, Data_, Distance_&gt;* (const std::string&amp;)&gt;</td></tr>
+<tr class="separator:af5bf682899b815f8e1d4a4c6ef80408a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ad4af1d9292bd24d4bd3f72f4f99d9cbc" id="r_ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memTemplItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="#ac850c74c54af62105c165c458f7516b7">LoadDistanceMetricFunction</a>&lt; Data_, Distance_ &gt; &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad4af1d9292bd24d4bd3f72f4f99d9cbc">load_distance_metric_registry</a> ()</td></tr>
+<tr class="separator:ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c0df62bd7206b0b3892aedadb2a962c" id="r_a5c0df62bd7206b0b3892aedadb2a962c"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:a5c0df62bd7206b0b3892aedadb2a962c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1DistanceMetric.html">DistanceMetric</a>&lt; Data_, Distance_ &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5c0df62bd7206b0b3892aedadb2a962c">load_distance_metric_raw</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:a5c0df62bd7206b0b3892aedadb2a962c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073" id="r_a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplParams" colspan="2">template&lt;typename Task_ , class Run_ &gt; </td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5faf80c12bbfbab853c41f6d001fe073">parallelize</a> (int num_workers, Task_ num_tasks, Run_ run_task_range)</td></tr>
 <tr class="separator:a5faf80c12bbfbab853c41f6d001fe073"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,6 +177,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a8406dfe7aac78dee986262a5f6bceee7" id="r_a8406dfe7aac78dee986262a5f6bceee7"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a8406dfe7aac78dee986262a5f6bceee7"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; Index_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8406dfe7aac78dee986262a5f6bceee7">find_nearest_neighbors_index_only</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a8406dfe7aac78dee986262a5f6bceee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa08de1eb1a23d5e13dc11e23ad7967ea" id="r_aa08de1eb1a23d5e13dc11e23ad7967ea"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:aa08de1eb1a23d5e13dc11e23ad7967ea"><td class="memTemplItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="#af5bf682899b815f8e1d4a4c6ef80408a">LoadPrebuiltFunction</a>&lt; Index_, Data_, Distance_ &gt; &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa08de1eb1a23d5e13dc11e23ad7967ea">load_prebuilt_registry</a> ()</td></tr>
+<tr class="separator:aa08de1eb1a23d5e13dc11e23ad7967ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af261ec286ec7a275c3926ba0fdb8dc11" id="r_af261ec286ec7a275c3926ba0fdb8dc11"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:af261ec286ec7a275c3926ba0fdb8dc11"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:af261ec286ec7a275c3926ba0fdb8dc11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa985f74dca21f1c23cfe914a25b2a412" id="r_aa985f74dca21f1c23cfe914a25b2a412"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:aa985f74dca21f1c23cfe914a25b2a412"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa985f74dca21f1c23cfe914a25b2a412">load_prebuilt_unique</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:aa985f74dca21f1c23cfe914a25b2a412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84" id="r_ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae60afb430cc5948b0c8e5c2d4a4a7f84">load_prebuilt_shared</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab636bced615a3a669ef0e207b5d848cc" id="r_ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
 <tr class="memitem:ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplItemLeft" align="right" valign="top">Index_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab636bced615a3a669ef0e207b5d848cc">count_all_neighbors_without_self</a> (Index_ count)</td></tr>
 <tr class="separator:ab636bced615a3a669ef0e207b5d848cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +202,55 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collection of KNN algorithms. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="ac850c74c54af62105c165c458f7516b7" name="ac850c74c54af62105c165c458f7516b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac850c74c54af62105c165c458f7516b7">&#9670;&#160;</a></span>LoadDistanceMetricFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ac850c74c54af62105c165c458f7516b7">knncolle::LoadDistanceMetricFunction</a> = std::function&lt;<a class="el" href="classknncolle_1_1DistanceMetric.html">DistanceMetric</a>&lt;Data_, Distance_&gt;* (const std::string&amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Distance loading function. This accepts a file path prefix (see <code><a class="el" href="classknncolle_1_1DistanceMetric.html#a1afc3ebde534d693ef3ac82528de767d">DistanceMetric::save()</a></code>) and returns a pointer to a <code>Distance</code> instance.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Data_</td><td>Numeric type for the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the output distance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af5bf682899b815f8e1d4a4c6ef80408a" name="af5bf682899b815f8e1d4a4c6ef80408a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5bf682899b815f8e1d4a4c6ef80408a">&#9670;&#160;</a></span>LoadPrebuiltFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#af5bf682899b815f8e1d4a4c6ef80408a">knncolle::LoadPrebuiltFunction</a> = std::function&lt;<a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt;Index_, Data_, Distance_&gt;* (const std::string&amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a> loading function. This accepts a file path prefix (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) and returns a pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a97693d779b6041859ffa0ef2d9c1500b" name="a97693d779b6041859ffa0ef2d9c1500b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97693d779b6041859ffa0ef2d9c1500b">&#9670;&#160;</a></span>NeighborList</h2>
 
@@ -395,6 +468,216 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of vectors of length equal to the number of observations in <code>index</code>. Each vector contains the indices of (up to) the <code>k</code> nearest neighbors for each observation, sorted by increasing distance. The <code>i</code>-th entry is guaranteed to not contain <code>i</code> itself. </dd></dl>
+
+</div>
+</div>
+<a id="a5c0df62bd7206b0b3892aedadb2a962c" name="a5c0df62bd7206b0b3892aedadb2a962c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c0df62bd7206b0b3892aedadb2a962c">&#9670;&#160;</a></span>load_distance_metric_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classknncolle_1_1DistanceMetric.html">DistanceMetric</a>&lt; Data_, Distance_ &gt; * knncolle::load_distance_metric_raw </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load a distance metric from disk into a <code>Distance</code> object.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Data_</td><td>Numeric type for the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the output distance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>File path prefix for a distance index that was saved to disk by <code><a class="el" href="classknncolle_1_1DistanceMetric.html#a1afc3ebde534d693ef3ac82528de767d">DistanceMetric::save()</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a <code>Distance</code> instance, created from the files at <code>prefix</code>. </dd></dl>
+
+</div>
+</div>
+<a id="ad4af1d9292bd24d4bd3f72f4f99d9cbc" name="ad4af1d9292bd24d4bd3f72f4f99d9cbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4af1d9292bd24d4bd3f72f4f99d9cbc">&#9670;&#160;</a></span>load_distance_metric_registry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data_ , typename Distance_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt; std::string, <a class="el" href="#ac850c74c54af62105c165c458f7516b7">LoadDistanceMetricFunction</a>&lt; Data_, Distance_ &gt; &gt; &amp; knncolle::load_distance_metric_registry </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Data_</td><td>Numeric type for the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the output distance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of method names (see <code><a class="el" href="classknncolle_1_1DistanceMetric.html#a1afc3ebde534d693ef3ac82528de767d">DistanceMetric::save()</a></code>) to loading functions. </dd></dl>
+
+</div>
+</div>
+<a id="af261ec286ec7a275c3926ba0fdb8dc11" name="af261ec286ec7a275c3926ba0fdb8dc11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af261ec286ec7a275c3926ba0fdb8dc11">&#9670;&#160;</a></span>load_prebuilt_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; * knncolle::load_prebuilt_raw </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>File path prefix for a prebuilt index that was saved to disk by <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
+
+</div>
+</div>
+<a id="aa08de1eb1a23d5e13dc11e23ad7967ea" name="aa08de1eb1a23d5e13dc11e23ad7967ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08de1eb1a23d5e13dc11e23ad7967ea">&#9670;&#160;</a></span>load_prebuilt_registry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt; std::string, <a class="el" href="#af5bf682899b815f8e1d4a4c6ef80408a">LoadPrebuiltFunction</a>&lt; Index_, Data_, Distance_ &gt; &gt; &amp; knncolle::load_prebuilt_registry </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of method names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) to loading functions. </dd></dl>
+
+</div>
+</div>
+<a id="ae60afb430cc5948b0c8e5c2d4a4a7f84" name="ae60afb430cc5948b0c8e5c2d4a4a7f84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae60afb430cc5948b0c8e5c2d4a4a7f84">&#9670;&#160;</a></span>load_prebuilt_shared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt; knncolle::load_prebuilt_shared </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This calls <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> internally.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>File path prefix for a prebuilt index that was saved to disk by <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
+
+</div>
+</div>
+<a id="aa985f74dca21f1c23cfe914a25b2a412" name="aa985f74dca21f1c23cfe914a25b2a412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa985f74dca21f1c23cfe914a25b2a412">&#9670;&#160;</a></span>load_prebuilt_unique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt; knncolle::load_prebuilt_unique </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This calls <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> internally.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating point type for the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>File path prefix for a prebuilt index that was saved to disk by <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
 
 </div>
 </div>
