@@ -163,6 +163,31 @@ public:
         }
     } 
 
+private:
+    template<bool has_indices_, bool has_distances_>
+    void report_internal(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        auto position = my_nearest.size();
+
+        if constexpr(has_indices_) {
+            sanisizer::resize(*output_indices, position);
+        }
+        if constexpr(has_distances_) {
+            sanisizer::resize(*output_distances, position);
+        }
+
+        while (!my_nearest.empty()) {
+            const auto& top = my_nearest.top();
+            --position;
+            if constexpr(has_indices_) {
+                (*output_indices)[position] = top.second;
+            }
+            if constexpr(has_distances_) {
+                (*output_distances)[position] = top.first;
+            }
+            my_nearest.pop();
+        }
+    } 
+
 public:
     /**
      * Report the indices and distances of the nearest neighbors in the queue.
@@ -175,27 +200,14 @@ public:
      * Otherwise, on output, this will have the same length as `*output_indices` and contain distances to each of those neighbors.
      */
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
-        auto position = my_nearest.size();
-
-        if (output_indices) {
-            sanisizer::resize(*output_indices, position);
+        if (output_indices && output_distances) {
+            report_internal<true, true>(output_indices, output_distances);
+        } else if (output_indices) {
+            report_internal<true, false>(output_indices, NULL);
+        } else if (output_distances) {
+            report_internal<false, true>(NULL, output_distances);
         }
-        if (output_distances) {
-            sanisizer::resize(*output_distances, position);
-        }
-
-        while (!my_nearest.empty()) {
-            const auto& top = my_nearest.top();
-            --position;
-            if (output_indices) {
-                (*output_indices)[position] = top.second;
-            }
-            if (output_distances) {
-                (*output_distances)[position] = top.first;
-            }
-            my_nearest.pop();
-        }
-    } 
+    }
 
 private:
     bool my_full = false;
