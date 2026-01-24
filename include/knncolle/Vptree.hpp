@@ -7,6 +7,7 @@
 #include "Builder.hpp"
 #include "Matrix.hpp"
 #include "report_all_neighbors.hpp"
+#include "utils.hpp"
 
 #include <vector>
 #include <random>
@@ -14,6 +15,9 @@
 #include <tuple>
 #include <memory>
 #include <cstddef>
+#include <string>
+#include <fstream>
+#include <cassert>
 
 /**
  * @file Vptree.hpp
@@ -353,6 +357,37 @@ public:
 
     auto initialize_known() const {
         return std::make_unique<VptreeSearcher<Index_, Data_, Distance_, DistanceMetric_> >(*this);
+    }
+
+public:
+    void save(const std::string& prefix) const {
+        const std::string method_name = "knncolle::Vptree";
+        quick_save(prefix + "ALGORITHM", method_name.c_str(), method_name.size());
+        quick_save(prefix + "data", my_data.data(), my_data.size());
+        quick_save(prefix + "num_obs", &my_obs, 1);
+        quick_save(prefix + "num_dim", &my_dim, 1);
+        quick_save(prefix + "nodes", my_nodes.data(), my_nodes.size());
+        quick_save(prefix + "new_locations", my_new_locations.data(), my_new_locations.size());
+        my_metric->save(prefix + "distance_");
+    }
+
+    VptreePrebuilt(const std::string& prefix) {
+        quick_load(prefix + "num_obs", &my_obs, 1);
+        quick_load(prefix + "num_dim", &my_dim, 1);
+
+        my_data.resize(static_cast<std::size_t>(my_obs) * my_dim);
+        quick_load(prefix + "data", my_data.data(), my_data.size());
+
+        my_nodes.resize(my_obs);
+        quick_load(prefix + "nodes", my_nodes.data(), my_nodes.size());
+
+        my_new_locations.resize(my_obs);
+        quick_load(prefix + "new_locations", my_new_locations.data(), my_new_locations.size());
+
+        auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
+        auto xptr = dynamic_cast<DistanceMetric_*>(dptr);
+        assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
+        my_metric.reset(xptr);
     }
 };
 /**

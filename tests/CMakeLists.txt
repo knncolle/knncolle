@@ -45,6 +45,7 @@ add_executable(
     src/Vptree.cpp
     src/L2Normalized.cpp
     src/find_nearest_neighbors.cpp
+    src/load_prebuilt.cpp
     src/misc.cpp
 )
 decorate_test(libtest)

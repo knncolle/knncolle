@@ -2,6 +2,7 @@
 #include "knncolle/Bruteforce.hpp"
 
 #include <vector>
+#include <memory>
 
 #include "TestCore.hpp"
 
