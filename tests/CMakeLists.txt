@@ -44,6 +44,7 @@ add_executable(
     src/Bruteforce.cpp
     src/Vptree.cpp
     src/L2Normalized.cpp
+    src/distances.cpp
     src/find_nearest_neighbors.cpp
     src/load_prebuilt.cpp
     src/misc.cpp

@@ -2,18 +2,22 @@
 #include "knncolle/load_prebuilt.hpp"
 
 #include <filesystem>
+#include <memory>
+#include <vector>
+#include <cstddef>
+#include <string>
+#include <stdexcept>
 
 #include "TestCore.hpp"
 
 class LoadPrebuiltTest : public TestCore, public ::testing::Test {
 protected:
-    std::filesystem::path savedir;
+    inline static std::filesystem::path savedir;
 
-    void SetUp() {
+    static void SetUpTestSuite() {
         savedir = "save-prebuilt-tests";
         std::filesystem::remove_all(savedir);
         std::filesystem::create_directory(savedir);
-
         assemble({ 50, 5 });
     }
 };
