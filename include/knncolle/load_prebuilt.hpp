@@ -74,8 +74,7 @@ inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Dista
 template<typename Index_, typename Data_, typename Distance_>
 Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix) {
     const auto meth_path = prefix + "ALGORITHM";
-    std::ifstream input(meth_path);
-    std::string method( (std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()) );
+    auto method = quick_load_as_string(meth_path);
 
     const auto& reg = load_prebuilt_registry<Index_, Data_, Distance_>(); 
     auto it = reg.find(method);

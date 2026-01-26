@@ -64,6 +64,23 @@ void quick_load(const std::string& path, Input_* const contents, const Length_ l
 }
 
 /**
+ * Read the contents of a binary file as a string.
+ * This is intended for developer use in `load_prebuilt()` functions.
+ *
+ * @param path File path to read from.
+ * @return Contents of `path` as a string.
+ */
+inline std::string quick_load_as_string(const std::string& path) {
+    std::ifstream input(path, std::ifstream::binary);
+    if (!input) {
+        throw std::runtime_error("failed to open a binary file at '" + path + "'");
+    }
+
+    input.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    return std::string( (std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()) );
+}
+
+/**
  * @cond
  */
 template<typename Input_>

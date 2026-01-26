@@ -71,6 +71,16 @@ TEST(QuickSaveLoad, Errors) {
     }
 
     {
+        std::string errmsg;
+        try {
+            knncolle::quick_load_as_string("foo/bar");
+        } catch (std::exception& e) {
+            errmsg = e.what();
+        }
+        EXPECT_TRUE(errmsg.find("failed to open") != std::string::npos);
+    }
+
+    {
         auto path = std::filesystem::temp_directory_path() / "foobar-test";
         knncolle::quick_save(path.string(), "ABCD", 4);
         std::string errmsg;
