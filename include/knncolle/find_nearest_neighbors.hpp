@@ -114,9 +114,9 @@ int cap_k_query(int k, Index_ num_observations) {
  */
 template<typename Index_, typename Data_, typename Distance_>
 NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
-    Index_ nobs = index.num_observations();
+    const Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
-    auto output = sanisizer::create<NeighborList<Index_, Distance_> >(nobs);
+    auto output = sanisizer::create<NeighborList<Index_, Distance_> >(sanisizer::attest_gez(nobs));
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize_known();
@@ -156,9 +156,9 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Da
  */
 template<typename Index_, typename Data_, typename Distance_>
 std::vector<std::vector<Index_> > find_nearest_neighbors_index_only(const Prebuilt<Index_, Data_, Distance_>& index, int k, int num_threads = 1) {
-    Index_ nobs = index.num_observations();
+    const Index_ nobs = index.num_observations();
     k = cap_k(k, nobs);
-    auto output = sanisizer::create<std::vector<std::vector<Index_> > >(nobs);
+    auto output = sanisizer::create<std::vector<std::vector<Index_> > >(sanisizer::attest_gez(nobs));
 
     parallelize(num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto sptr = index.initialize_known();

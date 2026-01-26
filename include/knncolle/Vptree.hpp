@@ -244,9 +244,9 @@ public:
 
             // Resorting data in place to match order of occurrence within
             // 'nodes', for better cache locality.
-            auto used = sanisizer::create<std::vector<uint8_t> >(my_obs);
-            auto buffer = sanisizer::create<std::vector<Data_> >(my_dim);
-            sanisizer::resize(my_new_locations, my_obs);
+            auto used = sanisizer::create<std::vector<char> >(sanisizer::attest_gez(my_obs));
+            auto buffer = sanisizer::create<std::vector<Data_> >(sanisizer::attest_gez(my_dim));
+            sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));
             auto host = my_data.data();
 
             for (Index_ o = 0; o < num_obs; ++o) {
@@ -377,13 +377,13 @@ public:
         quick_load(prefix + "num_obs", &my_obs, 1);
         quick_load(prefix + "num_dim", &my_dim, 1);
 
-        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(my_obs, my_dim));
+        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(sanisizer::attest_gez(my_obs), my_dim));
         quick_load(prefix + "data", my_data.data(), my_data.size());
 
-        sanisizer::resize(my_nodes, my_obs);
+        sanisizer::resize(my_nodes, sanisizer::attest_gez(my_obs));
         quick_load(prefix + "nodes", my_nodes.data(), my_nodes.size());
 
-        sanisizer::resize(my_new_locations, my_obs);
+        sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));
         quick_load(prefix + "new_locations", my_new_locations.data(), my_new_locations.size());
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
@@ -460,7 +460,7 @@ public:
         auto work = data.new_known_extractor();
 
         // We assume that that vector::size_type <= size_t, otherwise data() wouldn't be a contiguous array.
-        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, nobs));
+        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, sanisizer::attest_gez(nobs)));
         for (Index_ o = 0; o < nobs; ++o) {
             std::copy_n(work->next(), ndim, store.data() + sanisizer::product_unsafe<std::size_t>(o, ndim));
         }
