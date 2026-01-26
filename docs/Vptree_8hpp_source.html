@@ -330,9 +330,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            <span class="comment">// Resorting data in place to match order of occurrence within</span></div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="comment">// &#39;nodes&#39;, for better cache locality.</span></div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keyword">auto</span> used = sanisizer::create&lt;std::vector&lt;uint8_t&gt; &gt;(my_obs);</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="keyword">auto</span> buffer = sanisizer::create&lt;std::vector&lt;Data_&gt; &gt;(my_dim);</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            sanisizer::resize(my_new_locations, my_obs);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keyword">auto</span> used = sanisizer::create&lt;std::vector&lt;char&gt; &gt;(sanisizer::attest_gez(my_obs));</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="keyword">auto</span> buffer = sanisizer::create&lt;std::vector&lt;Data_&gt; &gt;(sanisizer::attest_gez(my_dim));</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keyword">auto</span> host = my_data.data();</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            <span class="keywordflow">for</span> (Index_ o = 0; o &lt; num_obs; ++o) {</div>
@@ -463,13 +463,13 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(prefix + <span class="stringliteral">&quot;num_obs&quot;</span>, &amp;my_obs, 1);</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(prefix + <span class="stringliteral">&quot;num_dim&quot;</span>, &amp;my_dim, 1);</div>
 <div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        my_data.resize(sanisizer::product&lt;I&lt;<span class="keyword">decltype</span>(my_data.size())&gt; &gt;(my_obs, my_dim));</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        my_data.resize(sanisizer::product&lt;I&lt;<span class="keyword">decltype</span>(my_data.size())&gt; &gt;(sanisizer::attest_gez(my_obs), my_dim));</div>
 <div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(prefix + <span class="stringliteral">&quot;data&quot;</span>, my_data.data(), my_data.size());</div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        sanisizer::resize(my_nodes, my_obs);</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        sanisizer::resize(my_nodes, sanisizer::attest_gez(my_obs));</div>
 <div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(prefix + <span class="stringliteral">&quot;nodes&quot;</span>, my_nodes.data(), my_nodes.size());</div>
 <div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        sanisizer::resize(my_new_locations, my_obs);</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));</div>
 <div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(prefix + <span class="stringliteral">&quot;new_locations&quot;</span>, my_new_locations.data(), my_new_locations.size());</div>
 <div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> </div>
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        <span class="keyword">auto</span> dptr = load_distance_metric_raw&lt;Data_, Distance_&gt;(prefix + <span class="stringliteral">&quot;distance_&quot;</span>);</div>
@@ -508,7 +508,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        <span class="keyword">auto</span> work = data.new_known_extractor();</div>
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span> </div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        <span class="comment">// We assume that that vector::size_type &lt;= size_t, otherwise data() wouldn&#39;t be a contiguous array.</span></div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        std::vector&lt;Data_&gt; store(sanisizer::product&lt;<span class="keyword">typename</span> std::vector&lt;Data_&gt;::size_type&gt;(ndim, nobs));</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        std::vector&lt;Data_&gt; store(sanisizer::product&lt;<span class="keyword">typename</span> std::vector&lt;Data_&gt;::size_type&gt;(ndim, sanisizer::attest_gez(nobs)));</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>        <span class="keywordflow">for</span> (Index_ o = 0; o &lt; nobs; ++o) {</div>
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>            std::copy_n(work-&gt;next(), ndim, store.data() + sanisizer::product_unsafe&lt;std::size_t&gt;(o, ndim));</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>        }</div>
