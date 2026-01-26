@@ -768,7 +768,7 @@ template&lt;typename Input_ , typename Length_ &gt; </div>
   <table class="params">
     <tr><td class="paramname">path</td><td>File path to read from. </td></tr>
     <tr><td class="paramname">contents</td><td>Pointer to an array in which to store the contents of <code>path</code>. This should have at least <code>length</code> addressable elements. </td></tr>
-    <tr><td class="paramname">length</td><td>Number of elements (not bytes) to be read from <code>path</code>. </td></tr>
+    <tr><td class="paramname">length</td><td>Number of elements (not bytes) to be read from <code>path</code>. This should be non-negative. </td></tr>
   </table>
   </dd>
 </dl>
@@ -812,7 +812,7 @@ template&lt;typename Input_ , typename Length_ &gt; </div>
   <table class="params">
     <tr><td class="paramname">path</td><td>File path to save to. Any directories in the path should already exist. </td></tr>
     <tr><td class="paramname">contents</td><td>Pointer to an array of contents to be saved. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the array, in terms of the number of elements (not the number of bytes). </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the array, in terms of the number of elements (not the number of bytes). This should be non-negative. </td></tr>
   </table>
   </dd>
 </dl>

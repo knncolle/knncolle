@@ -105,40 +105,40 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Length_&gt;</div>
-<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">   31</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">quick_save</a>(<span class="keyword">const</span> std::string&amp; path, <span class="keyword">const</span> Input_* <span class="keyword">const</span> contents, <span class="keyword">const</span> Length_ length) {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    std::ofstream output(path, std::ofstream::binary);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">if</span> (!output) {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;failed to open a binary file at &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    }</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    output.exceptions(std::ofstream::failbit | std::ofstream::badbit);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    output.write(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(contents), sanisizer::product&lt;std::streamsize&gt;(<span class="keyword">sizeof</span>(Input_), length));</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>}</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Length_&gt;</div>
+<div class="foldopen" id="foldopen00032" data-start="{" data-end="}">
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">   32</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">quick_save</a>(<span class="keyword">const</span> std::string&amp; path, <span class="keyword">const</span> Input_* <span class="keyword">const</span> contents, <span class="keyword">const</span> Length_ length) {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    std::ofstream output(path, std::ofstream::binary);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">if</span> (!output) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;failed to open a binary file at &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    output.exceptions(std::ofstream::failbit | std::ofstream::badbit);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    output.write(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(contents), sanisizer::product&lt;std::streamsize&gt;(<span class="keyword">sizeof</span>(Input_), sanisizer::attest_gez(length)));</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
 </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Length_&gt;</div>
-<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">   54</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(<span class="keyword">const</span> std::string&amp; path, Input_* <span class="keyword">const</span> contents, <span class="keyword">const</span> Length_ length) {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    std::ifstream input(path, std::ifstream::binary);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">if</span> (!input) {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;failed to open a binary file at &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    input.exceptions(std::ifstream::failbit | std::ifstream::badbit);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    input.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(contents), sanisizer::product&lt;std::streamsize&gt;(<span class="keyword">sizeof</span>(Input_), length));</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Length_&gt;</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">   56</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a>(<span class="keyword">const</span> std::string&amp; path, Input_* <span class="keyword">const</span> contents, <span class="keyword">const</span> Length_ length) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    std::ifstream input(path, std::ifstream::binary);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">if</span> (!input) {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;failed to open a binary file at &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    input.exceptions(std::ifstream::failbit | std::ifstream::badbit);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    input.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(contents), sanisizer::product&lt;std::streamsize&gt;(<span class="keyword">sizeof</span>(Input_), sanisizer::attest_gez(length)));</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">using </span>I = std::remove_cv_t&lt;std::remove_reference_t&lt;Input_&gt; &gt;;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keyword">using </span>I = std::remove_cv_t&lt;std::remove_reference_t&lt;Input_&gt; &gt;;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:28</div></div>
-<div class="ttc" id="anamespaceknncolle_html_ac5079c0b39b7f9e10bd97341ccfad46c"><div class="ttname"><a href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">knncolle::quick_load</a></div><div class="ttdeci">void quick_load(const std::string &amp;path, Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:54</div></div>
-<div class="ttc" id="anamespaceknncolle_html_afc954146b2f7fe5cbd1c7f3a5610ba94"><div class="ttname"><a href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">knncolle::quick_save</a></div><div class="ttdeci">void quick_save(const std::string &amp;path, const Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:31</div></div>
+<div class="ttc" id="anamespaceknncolle_html_ac5079c0b39b7f9e10bd97341ccfad46c"><div class="ttname"><a href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">knncolle::quick_load</a></div><div class="ttdeci">void quick_load(const std::string &amp;path, Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:56</div></div>
+<div class="ttc" id="anamespaceknncolle_html_afc954146b2f7fe5cbd1c7f3a5610ba94"><div class="ttname"><a href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">knncolle::quick_save</a></div><div class="ttdeci">void quick_save(const std::string &amp;path, const Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
