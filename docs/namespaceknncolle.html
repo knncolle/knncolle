@@ -198,6 +198,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab42206db56aa02366c741249e609465c" id="r_ab42206db56aa02366c741249e609465c"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ , typename Index_ &gt; </td></tr>
 <tr class="memitem:ab42206db56aa02366c741249e609465c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab42206db56aa02366c741249e609465c">report_all_neighbors</a> (std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</td></tr>
 <tr class="separator:ab42206db56aa02366c741249e609465c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc954146b2f7fe5cbd1c7f3a5610ba94" id="r_afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
+<tr class="memitem:afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#afc954146b2f7fe5cbd1c7f3a5610ba94">quick_save</a> (const std::string &amp;path, const Input_ *const contents, const Length_ length)</td></tr>
+<tr class="separator:afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c" id="r_ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
+<tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a> (const std::string &amp;path, Input_ *const contents, const Length_ length)</td></tr>
+<tr class="separator:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collection of KNN algorithms. </p>
@@ -722,6 +728,94 @@ template&lt;typename Task_ , class Run_ &gt; </div>
   </dd>
 </dl>
 <p>By default, this is an alias to <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a6299ecb1a7d6184a37af21dfe09cc92e">subpar::parallelize_range()</a></code>. However, if the <code>KNNCOLLE_CUSTOM_PARALLEL</code> function-like macro is defined, it is called instead. Any user-defined macro should accept the same arguments as <code><a class="elRef" href="https://ltla.github.io/subpar/namespacesubpar.html#a6299ecb1a7d6184a37af21dfe09cc92e">subpar::parallelize_range()</a></code>. </p>
+
+</div>
+</div>
+<a id="ac5079c0b39b7f9e10bd97341ccfad46c" name="ac5079c0b39b7f9e10bd97341ccfad46c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5079c0b39b7f9e10bd97341ccfad46c">&#9670;&#160;</a></span>quick_load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Input_ , typename Length_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void knncolle::quick_load </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Input_ *const</td>          <td class="paramname"><span class="paramname"><em>contents</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Length_</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read an array from a binary file at <code>path</code>. This is intended for developer use in <code>load_prebuilt()</code> functions.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Input_</td><td>Type of values to be read. </td></tr>
+    <tr><td class="paramname">Length_</td><td>Integer type of the length of the array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>File path to read from. </td></tr>
+    <tr><td class="paramname">contents</td><td>Pointer to an array in which to store the contents of <code>path</code>. This should have at least <code>length</code> addressable elements. </td></tr>
+    <tr><td class="paramname">length</td><td>Number of elements (not bytes) to be read from <code>path</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afc954146b2f7fe5cbd1c7f3a5610ba94" name="afc954146b2f7fe5cbd1c7f3a5610ba94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc954146b2f7fe5cbd1c7f3a5610ba94">&#9670;&#160;</a></span>quick_save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Input_ , typename Length_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void knncolle::quick_save </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Input_ *const</td>          <td class="paramname"><span class="paramname"><em>contents</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Length_</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Saves an array to a binary file at <code>path</code>. This is intended for developer use in implementations of <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Input_</td><td>Type of values to be saved. </td></tr>
+    <tr><td class="paramname">Length_</td><td>Integer type of the length of the array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>File path to save to. Any directories in the path should already exist. </td></tr>
+    <tr><td class="paramname">contents</td><td>Pointer to an array of contents to be saved. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the array, in terms of the number of elements (not the number of bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -11,6 +11,7 @@
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <includes id="report__all__neighbors_8hpp" name="report_all_neighbors.hpp" local="yes" import="no" module="no" objc="no">report_all_neighbors.hpp</includes>
+    <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::BruteforceBuilder</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -62,6 +63,7 @@
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
+    <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <namespace>knncolle</namespace>
@@ -88,6 +90,7 @@
     <name>NeighborQueue.hpp</name>
     <path>knncolle/</path>
     <filename>NeighborQueue_8hpp.html</filename>
+    <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::NeighborQueue</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -113,6 +116,12 @@
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
+    <name>utils.hpp</name>
+    <path>knncolle/</path>
+    <filename>utils_8hpp.html</filename>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
     <name>Vptree.hpp</name>
     <path>knncolle/</path>
     <filename>Vptree_8hpp.html</filename>
@@ -122,6 +131,7 @@
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <includes id="report__all__neighbors_8hpp" name="report_all_neighbors.hpp" local="yes" import="no" module="no" objc="no">report_all_neighbors.hpp</includes>
+    <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::VptreeBuilder</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -771,6 +781,20 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>ab42206db56aa02366c741249e609465c</anchor>
       <arglist>(std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>quick_save</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>afc954146b2f7fe5cbd1c7f3a5610ba94</anchor>
+      <arglist>(const std::string &amp;path, const Input_ *const contents, const Length_ length)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>quick_load</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>ac5079c0b39b7f9e10bd97341ccfad46c</anchor>
+      <arglist>(const std::string &amp;path, Input_ *const contents, const Length_ length)</arglist>
     </member>
   </compound>
   <compound kind="page">

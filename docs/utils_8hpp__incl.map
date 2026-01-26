@@ -1,0 +1,13 @@
+<map id="knncolle/utils.hpp" name="knncolle/utils.hpp">
+<area shape="rect" id="Node000001" title="Miscellaneous utilities for knncolle" alt="" coords="144,5,265,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,71,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,34,81,75,79,70,175,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="95,79,149,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,34,149,71,146,67,189,30"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="172,79,237,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,31,207,63,202,63,202,31"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="261,79,343,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="223,29,275,68,272,72,220,34"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="366,79,518,105"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="246,29,388,71,386,77,244,34"/>
+</map>

@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['sanitize_5fnum_5fworkers_0',['sanitize_num_workers',['https://ltla.github.io/subpar/namespacesubpar.html#a7f48f62226f93e5bf735ce35220bcd09',1,'subpar']]],
-  ['save_1',['save',['../classknncolle_1_1DistanceMetric.html#a1afc3ebde534d693ef3ac82528de767d',1,'knncolle::DistanceMetric::save()'],['../classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893',1,'knncolle::Prebuilt::save()']]],
-  ['search_2',['search',['../classknncolle_1_1Searcher.html#ab0f6c2ce78952dd555f7f1a8fb3ac208',1,'knncolle::Searcher::search(Index_ i, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0'],['../classknncolle_1_1Searcher.html#a6968d65276d81f47c92f6351ec786150',1,'knncolle::Searcher::search(const Data_ *query, Index_ k, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)=0']]],
-  ['search_5fall_3',['search_all',['../classknncolle_1_1Searcher.html#a3ef8c1bf087751bff46af346bda2feb3',1,'knncolle::Searcher::search_all(Index_ i, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)'],['../classknncolle_1_1Searcher.html#a37c88e638622eadc5f3c0328e8a1c5f1',1,'knncolle::Searcher::search_all(const Data_ *query, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)']]],
-  ['searcher_4',['Searcher',['../classknncolle_1_1Searcher.html',1,'knncolle']]],
-  ['searcher_2ehpp_5',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
-  ['simple_2ehpp_6',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
-  ['simplematrix_7',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
-  ['subpar_8',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
-  ['subpar_2ehpp_9',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
+  ['range_2ehpp_0',['range.hpp',['https://ltla.github.io/subpar/range_8hpp.html',1,'']]],
+  ['raw_1',['raw',['../classknncolle_1_1DistanceMetric.html#a8ce1cf96534fffbc989ae0141cf74ef4',1,'knncolle::DistanceMetric']]],
+  ['report_2',['report',['../classknncolle_1_1NeighborQueue.html#a611b8233976b0b5f930deac74c2b68c3',1,'knncolle::NeighborQueue::report(std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)'],['../classknncolle_1_1NeighborQueue.html#a8eae6afd23a9b4a3106b64f16e78c852',1,'knncolle::NeighborQueue::report(std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)']]],
+  ['report_5fall_5fneighbors_3',['report_all_neighbors',['../namespaceknncolle.html#af24a311775039654985b447c85d03782',1,'knncolle::report_all_neighbors(std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)'],['../namespaceknncolle.html#ab42206db56aa02366c741249e609465c',1,'knncolle::report_all_neighbors(std::vector&lt; std::pair&lt; Distance_, Index_ &gt; &gt; &amp;all_neighbors, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)']]],
+  ['report_5fall_5fneighbors_2ehpp_4',['report_all_neighbors.hpp',['../report__all__neighbors_8hpp.html',1,'']]],
+  ['reset_5',['reset',['../classknncolle_1_1NeighborQueue.html#ae75692355310f09d163bf20b19b3ef36',1,'knncolle::NeighborQueue']]]
 ];
