@@ -2,9 +2,11 @@
 
 #include "knncolle/Searcher.hpp"
 #include "knncolle/Matrix.hpp"
+#include "knncolle/utils.hpp"
 
 #include <vector>
 #include <random>
+#include <filesystem>
 
 #include "TestCore.hpp"
 
@@ -44,5 +46,35 @@ TEST_F(SimpleMatrixTest, Basic) {
         std::copy_n(data.data() + static_cast<std::size_t>(i) * static_cast<std::size_t>(ndim), ndim, ref.data());
         std::copy_n(mext->next(), ndim, nbuffer.begin());
         EXPECT_EQ(ref, nbuffer);
+    }
+}
+
+TEST(QuickSaveLoad, Errors) {
+    {
+        std::string errmsg;
+        try {
+            knncolle::quick_save("foo/bar", static_cast<double*>(NULL), 0);
+        } catch (std::exception& e) {
+            errmsg = e.what();
+        }
+        EXPECT_TRUE(errmsg.find("failed to open") != std::string::npos);
+    }
+
+    {
+        std::string errmsg;
+        try {
+            knncolle::quick_load("foo/bar", static_cast<double*>(NULL), 0);
+        } catch (std::exception& e) {
+            errmsg = e.what();
+        }
+        EXPECT_TRUE(errmsg.find("failed to open") != std::string::npos);
+    }
+
+    {
+        auto path = std::filesystem::temp_directory_path() / "foobar-test";
+        knncolle::quick_save(path.string(), "ABCD", 4);
+        std::string errmsg;
+        std::vector<char> buffer(10);
+        EXPECT_ANY_THROW(knncolle::quick_load(path.string(), buffer.data(), buffer.size()));
     }
 }
