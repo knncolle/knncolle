@@ -204,6 +204,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c" id="r_ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
 <tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac5079c0b39b7f9e10bd97341ccfad46c">quick_load</a> (const std::string &amp;path, Input_ *const contents, const Length_ length)</td></tr>
 <tr class="separator:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e38fc963fa7d735ef8f0d11f1f5a4b" id="r_a83e38fc963fa7d735ef8f0d11f1f5a4b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83e38fc963fa7d735ef8f0d11f1f5a4b">quick_load_as_string</a> (const std::string &amp;path)</td></tr>
+<tr class="separator:a83e38fc963fa7d735ef8f0d11f1f5a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collection of KNN algorithms. </p>
@@ -772,6 +774,39 @@ template&lt;typename Input_ , typename Length_ &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a83e38fc963fa7d735ef8f0d11f1f5a4b" name="a83e38fc963fa7d735ef8f0d11f1f5a4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e38fc963fa7d735ef8f0d11f1f5a4b">&#9670;&#160;</a></span>quick_load_as_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string knncolle::quick_load_as_string </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Read the contents of a binary file as a string. This is intended for developer use in <code>load_prebuilt()</code> functions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>File path to read from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Contents of <code>path</code> as a string. </dd></dl>
 
 </div>
 </div>

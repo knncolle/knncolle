@@ -796,6 +796,13 @@
       <anchor>ac5079c0b39b7f9e10bd97341ccfad46c</anchor>
       <arglist>(const std::string &amp;path, Input_ *const contents, const Length_ length)</arglist>
     </member>
+    <member kind="function">
+      <type>std::string</type>
+      <name>quick_load_as_string</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a83e38fc963fa7d735ef8f0d11f1f5a4b</anchor>
+      <arglist>(const std::string &amp;path)</arglist>
+    </member>
   </compound>
   <compound kind="page">
     <name>index</name>
