@@ -48,6 +48,7 @@ add_executable(
     src/find_nearest_neighbors.cpp
     src/load_prebuilt.cpp
     src/misc.cpp
+    src/NumericType.cpp
 )
 decorate_test(libtest)
 
