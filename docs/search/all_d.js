@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['quick_5fload_0',['quick_load',['../namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c',1,'knncolle']]],
-  ['quick_5fload_5fas_5fstring_1',['quick_load_as_string',['../namespaceknncolle.html#a83e38fc963fa7d735ef8f0d11f1f5a4b',1,'knncolle']]],
-  ['quick_5fsave_2',['quick_save',['../namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94',1,'knncolle']]]
+  ['parallelize_0',['parallelize',['../namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073',1,'knncolle']]],
+  ['parallelize_5frange_1',['parallelize_range',['https://ltla.github.io/subpar/namespacesubpar.html#a6299ecb1a7d6184a37af21dfe09cc92e',1,'subpar']]],
+  ['parallelize_5fsimple_2',['parallelize_simple',['https://ltla.github.io/subpar/namespacesubpar.html#ab039ee0d9f8d12394d4c59bb994c98ca',1,'subpar']]],
+  ['prebuilt_3',['Prebuilt',['../classknncolle_1_1Prebuilt.html',1,'knncolle']]],
+  ['prebuilt_2ehpp_4',['Prebuilt.hpp',['../Prebuilt_8hpp.html',1,'']]]
 ];

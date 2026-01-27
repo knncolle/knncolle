@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">knncolle Namespace Reference</div></div>
 </div><!--header-->
@@ -154,6 +155,42 @@ Typedefs</h2></td></tr>
 <tr class="memitem:af5bf682899b815f8e1d4a4c6ef80408a"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af5bf682899b815f8e1d4a4c6ef80408a">LoadPrebuiltFunction</a> = std::function&lt;<a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt;Index_, Data_, Distance_&gt;* (const std::string&amp;)&gt;</td></tr>
 <tr class="separator:af5bf682899b815f8e1d4a4c6ef80408a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a9aa73a4ad540791a911eb9fa64b51de3" id="r_a9aa73a4ad540791a911eb9fa64b51de3"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9aa73a4ad540791a911eb9fa64b51de3">NumericType</a> : char { <br />
+&#160;&#160;<b>UINT8_T</b>
+, <b>INT8_T</b>
+, <b>UINT16_T</b>
+, <b>INT16_T</b>
+, <br />
+&#160;&#160;<b>UINT32_T</b>
+, <b>INT32_T</b>
+, <b>UINT64_T</b>
+, <b>INT64_T</b>
+, <br />
+&#160;&#160;<b>UNSIGNED_CHAR</b>
+, <b>SIGNED_CHAR</b>
+, <b>CHAR</b>
+, <b>UNSIGNED_SHORT</b>
+, <br />
+&#160;&#160;<b>SHORT</b>
+, <b>UNSIGNED_INT</b>
+, <b>INT</b>
+, <b>UNSIGNED_LONG</b>
+, <br />
+&#160;&#160;<b>LONG</b>
+, <b>UNSIGNED_LONG_LONG</b>
+, <b>LONG_LONG</b>
+, <b>SIZE_T</b>
+, <br />
+&#160;&#160;<b>PTRDIFF_T</b>
+, <b>FLOAT</b>
+, <b>DOUBLE</b>
+, <b>UNKNOWN</b>
+<br />
+ }</td></tr>
+<tr class="separator:a9aa73a4ad540791a911eb9fa64b51de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad4af1d9292bd24d4bd3f72f4f99d9cbc" id="r_ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
@@ -189,6 +226,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84" id="r_ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae60afb430cc5948b0c8e5c2d4a4a7f84">load_prebuilt_shared</a> (const std::string &amp;prefix)</td></tr>
 <tr class="separator:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84e640363d9246c58008c93166021f26" id="r_a84e640363d9246c58008c93166021f26"><td class="memTemplParams" colspan="2">template&lt;typename Type_ &gt; </td></tr>
+<tr class="memitem:a84e640363d9246c58008c93166021f26"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="#a9aa73a4ad540791a911eb9fa64b51de3">NumericType</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a84e640363d9246c58008c93166021f26">get_numeric_type</a> ()</td></tr>
+<tr class="separator:a84e640363d9246c58008c93166021f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab636bced615a3a669ef0e207b5d848cc" id="r_ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
 <tr class="memitem:ab636bced615a3a669ef0e207b5d848cc"><td class="memTemplItemLeft" align="right" valign="top">Index_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab636bced615a3a669ef0e207b5d848cc">count_all_neighbors_without_self</a> (Index_ count)</td></tr>
 <tr class="separator:ab636bced615a3a669ef0e207b5d848cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,6 +320,30 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a9aa73a4ad540791a911eb9fa64b51de3" name="a9aa73a4ad540791a911eb9fa64b51de3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aa73a4ad540791a911eb9fa64b51de3">&#9670;&#160;</a></span>NumericType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a9aa73a4ad540791a911eb9fa64b51de3">knncolle::NumericType</a> : char</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Standard numeric types, typically returned by <code><a class="el" href="#a84e640363d9246c58008c93166021f26">get_numeric_type()</a></code>. </p>
 
 </div>
 </div>
@@ -476,6 +540,33 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A vector of vectors of length equal to the number of observations in <code>index</code>. Each vector contains the indices of (up to) the <code>k</code> nearest neighbors for each observation, sorted by increasing distance. The <code>i</code>-th entry is guaranteed to not contain <code>i</code> itself. </dd></dl>
+
+</div>
+</div>
+<a id="a84e640363d9246c58008c93166021f26" name="a84e640363d9246c58008c93166021f26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84e640363d9246c58008c93166021f26">&#9670;&#160;</a></span>get_numeric_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a9aa73a4ad540791a911eb9fa64b51de3">NumericType</a> knncolle::get_numeric_type </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type_</td><td>Some integer or floating-point type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Identity of the numeric type.</dd></dl>
+<p>This function is intended for developers writing their own <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code> methods, where a subclass may have additional template types beyond those required by the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> template. In such cases, developers can convert the type into a <code>NumericType</code> that can be saved to disk. The corresponding loader function can then read this type information to accurately reconstitute the original <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. </p>
 
 </div>
 </div>

@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['neighborqueue_0',['NeighborQueue',['../classknncolle_1_1NeighborQueue.html#abc66097ed7fa8f7cbbd0ee82328b9152',1,'knncolle::NeighborQueue']]],
-  ['new_5fextractor_1',['new_extractor',['../classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d',1,'knncolle::L2NormalizedMatrix::new_extractor()'],['../classknncolle_1_1Matrix.html#a4ab89fa80a485216d6890c4ca97ac51e',1,'knncolle::Matrix::new_extractor()'],['../classknncolle_1_1SimpleMatrix.html#a4d4300b24909ffd9916a29b095a8edb5',1,'knncolle::SimpleMatrix::new_extractor()']]],
-  ['new_5fknown_5fextractor_2',['new_known_extractor',['../classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046',1,'knncolle::L2NormalizedMatrix::new_known_extractor()'],['../classknncolle_1_1Matrix.html#a79981fd6487633c7b5b61dedf8955fc8',1,'knncolle::Matrix::new_known_extractor()'],['../classknncolle_1_1SimpleMatrix.html#adf24731be76af7dac5b5dbabab86e0be',1,'knncolle::SimpleMatrix::new_known_extractor()']]],
-  ['next_3',['next',['../classknncolle_1_1MatrixExtractor.html#a3d82e911202727619399f7dec238b28a',1,'knncolle::MatrixExtractor']]],
-  ['normalize_4',['normalize',['../classknncolle_1_1DistanceMetric.html#a4a468569d0823bf3211b2ee5c46a81d9',1,'knncolle::DistanceMetric']]],
-  ['num_5fdimensions_5',['num_dimensions',['../classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee',1,'knncolle::L2NormalizedMatrix::num_dimensions()'],['../classknncolle_1_1Matrix.html#a3c1fdc018a4e777cb69945c0861d56e9',1,'knncolle::Matrix::num_dimensions()'],['../classknncolle_1_1SimpleMatrix.html#a1503a47fa9b74ad63d780aaec2943c04',1,'knncolle::SimpleMatrix::num_dimensions()'],['../classknncolle_1_1Prebuilt.html#ac041712392f74d5fd8f030e2c0adcdc6',1,'knncolle::Prebuilt::num_dimensions()']]],
-  ['num_5fobservations_6',['num_observations',['../classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407',1,'knncolle::L2NormalizedMatrix::num_observations()'],['../classknncolle_1_1Matrix.html#a7b0961f03e8b232a1bfb9d86e171eaab',1,'knncolle::Matrix::num_observations()'],['../classknncolle_1_1SimpleMatrix.html#a9f504a7ae05efc06f4d69510df9a3daa',1,'knncolle::SimpleMatrix::num_observations()'],['../classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd',1,'knncolle::Prebuilt::num_observations()']]]
+  ['l2normalizedbuilder_0',['L2NormalizedBuilder',['../classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3',1,'knncolle::L2NormalizedBuilder']]],
+  ['limit_1',['limit',['../classknncolle_1_1NeighborQueue.html#ade4febddacc0e5725caa3c683486dcb0',1,'knncolle::NeighborQueue']]],
+  ['load_5fdistance_5fmetric_5fraw_2',['load_distance_metric_raw',['../namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c',1,'knncolle']]],
+  ['load_5fdistance_5fmetric_5fregistry_3',['load_distance_metric_registry',['../namespaceknncolle.html#ad4af1d9292bd24d4bd3f72f4f99d9cbc',1,'knncolle']]],
+  ['load_5fprebuilt_5fraw_4',['load_prebuilt_raw',['../namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11',1,'knncolle']]],
+  ['load_5fprebuilt_5fregistry_5',['load_prebuilt_registry',['../namespaceknncolle.html#aa08de1eb1a23d5e13dc11e23ad7967ea',1,'knncolle']]],
+  ['load_5fprebuilt_5fshared_6',['load_prebuilt_shared',['../namespaceknncolle.html#ae60afb430cc5948b0c8e5c2d4a4a7f84',1,'knncolle']]],
+  ['load_5fprebuilt_5funique_7',['load_prebuilt_unique',['../namespaceknncolle.html#aa985f74dca21f1c23cfe914a25b2a412',1,'knncolle']]]
 ];

@@ -53,6 +53,7 @@
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
     <includes id="load__prebuilt_8hpp" name="load_prebuilt.hpp" local="yes" import="no" module="no" objc="no">load_prebuilt.hpp</includes>
+    <includes id="NumericType_8hpp" name="NumericType.hpp" local="yes" import="no" module="no" objc="no">NumericType.hpp</includes>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -92,6 +93,12 @@
     <filename>NeighborQueue_8hpp.html</filename>
     <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::NeighborQueue</class>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
+    <name>NumericType.hpp</name>
+    <path>knncolle/</path>
+    <filename>NumericType_8hpp.html</filename>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -684,6 +691,37 @@
       <anchor>af5bf682899b815f8e1d4a4c6ef80408a</anchor>
       <arglist></arglist>
     </member>
+    <member kind="enumeration">
+      <type></type>
+      <name>NumericType</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a9aa73a4ad540791a911eb9fa64b51de3</anchor>
+      <arglist></arglist>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a25185a78b19f8b194e2955929e32baca">UINT8_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3aa4ce26f417237ef0667dd68d978d9193">INT8_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3abd93e66a884d0291f3db5bb0eeb03ffe">UINT16_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a5e66c6e44fda6975bc1d1f10f4ea0436">INT16_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3abc0d406b455d82bfc780c67be1976fed">UINT32_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a1436af9feb7b630b48ac357f5157bbca">INT32_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a1ffe86dfa4f41564147b2fb8340c883a">UINT64_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3af9ac882f78f9c31f0a7cfb558ff6b7df">INT64_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3aa50a06389a9e2b28e818734a60a2f5b5">UNSIGNED_CHAR</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a8baa03c8db1826ac5f64e4e948bc1101">SIGNED_CHAR</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a027acd3aa6b1dd7f26119d3cf0f9a063">CHAR</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a765ef1b950ba8455b8992510ffa56895">UNSIGNED_SHORT</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3aa35c2b02966b1563e5bf7b81b8b0cf77">SHORT</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a9ba5b3da1d35e22e1680ddbe52d36ed5">UNSIGNED_INT</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a53f93baa3057821107c750323892fa92">INT</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a2a26ad8ee66f08d59e05a6c9a8e60fed">UNSIGNED_LONG</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3ac1fabfea54ec6011e694f211f3ffebf3">LONG</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a3c1f115f76d0dd87e6bc8364d9eafb6e">UNSIGNED_LONG_LONG</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a81d783829cf8f0f238c0f37194ae94cb">LONG_LONG</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a281dea8e27e21a83e47f92254e1f4d4d">SIZE_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a2b76fab4bd78a7d089445463c877ea9e">PTRDIFF_T</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3ae738c26bf4ce1037fa81b039a915cbf6">FLOAT</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3afd3e4ece78a7d422280d5ed379482229">DOUBLE</enumvalue>
+      <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</enumvalue>
+    </member>
     <member kind="function">
       <type>std::unordered_map&lt; std::string, LoadDistanceMetricFunction&lt; Data_, Distance_ &gt; &gt; &amp;</type>
       <name>load_distance_metric_registry</name>
@@ -760,6 +798,13 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>ae60afb430cc5948b0c8e5c2d4a4a7f84</anchor>
       <arglist>(const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>NumericType</type>
+      <name>get_numeric_type</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a84e640363d9246c58008c93166021f26</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>Index_</type>
