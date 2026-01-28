@@ -5,9 +5,10 @@ var indexSectionsWithContent =
   2: "ks",
   3: "bdfklmnprsuv",
   4: "abcdfgilnpqrsv",
-  5: "bln",
-  6: "n",
-  7: "acko"
+  5: "n",
+  6: "bln",
+  7: "n",
+  8: "acko"
 };
 
 var indexSectionNames =
@@ -17,9 +18,10 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "typedefs",
-  6: "enums",
-  7: "pages"
+  5: "variables",
+  6: "typedefs",
+  7: "enums",
+  8: "pages"
 };
 
 var indexSectionLabels =
@@ -29,8 +31,9 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Files",
   4: "Functions",
-  5: "Typedefs",
-  6: "Enumerations",
-  7: "Pages"
+  5: "Variables",
+  6: "Typedefs",
+  7: "Enumerations",
+  8: "Pages"
 };
 

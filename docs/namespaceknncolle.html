@@ -118,6 +118,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around a matrix with L2 normalization.  <a href="classknncolle_1_1L2NormalizedMatrix.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1L2NormalizedPrebuiltTypes.html">L2NormalizedPrebuiltTypes</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template type of a saved L2-normalized index.  <a href="structknncolle_1_1L2NormalizedPrebuiltTypes.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1ManhattanDistance.html">ManhattanDistance</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Manhattan distances between two input vectors.  <a href="classknncolle_1_1ManhattanDistance.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -226,6 +229,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84" id="r_ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae60afb430cc5948b0c8e5c2d4a4a7f84">load_prebuilt_shared</a> (const std::string &amp;prefix)</td></tr>
 <tr class="separator:ae60afb430cc5948b0c8e5c2d4a4a7f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde4204d68e33d9c9689528da1d9ae4c" id="r_acde4204d68e33d9c9689528da1d9ae4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1L2NormalizedPrebuiltTypes.html">L2NormalizedPrebuiltTypes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acde4204d68e33d9c9689528da1d9ae4c">load_l2normalized_prebuilt_types</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:acde4204d68e33d9c9689528da1d9ae4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac0563a38deda032558537ac3f2d304" id="r_a4ac0563a38deda032558537ac3f2d304"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Normalized_ &gt; </td></tr>
+<tr class="memitem:a4ac0563a38deda032558537ac3f2d304"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4ac0563a38deda032558537ac3f2d304">load_l2normalized_prebuilt</a> (const std::string &amp;prefix)</td></tr>
+<tr class="separator:a4ac0563a38deda032558537ac3f2d304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84e640363d9246c58008c93166021f26" id="r_a84e640363d9246c58008c93166021f26"><td class="memTemplParams" colspan="2">template&lt;typename Type_ &gt; </td></tr>
 <tr class="memitem:a84e640363d9246c58008c93166021f26"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="#a9aa73a4ad540791a911eb9fa64b51de3">NumericType</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a84e640363d9246c58008c93166021f26">get_numeric_type</a> ()</td></tr>
 <tr class="separator:a84e640363d9246c58008c93166021f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -639,6 +647,68 @@ template&lt;typename Data_ , typename Distance_ &gt; </div>
 
 </div>
 </div>
+<a id="a4ac0563a38deda032558537ac3f2d304" name="a4ac0563a38deda032558537ac3f2d304"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac0563a38deda032558537ac3f2d304">&#9670;&#160;</a></span>load_l2normalized_prebuilt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Normalized_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; * knncolle::load_l2normalized_prebuilt </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load an L2-normalized index, i.e., a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">knncolle::Prebuilt</a></code> created by <code><a class="el" href="classknncolle_1_1L2NormalizedBuilder.html" title="Wrapper around a builder with L2 normalization.">L2NormalizedBuilder</a></code>. This is not provided in the registry by default as its depends on the application's set of the acceptable <code>Normalized_</code> types. The <code>Normalized_</code> type in the saved index can be retrived by <code><a class="el" href="#acde4204d68e33d9c9689528da1d9ae4c">load_l2normalized_prebuilt_types()</a></code>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type for the indices. </td></tr>
+    <tr><td class="paramname">Data_</td><td>Numeric type for the input and query data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances. </td></tr>
+    <tr><td class="paramname">Normalized_</td><td>Floating-point type for the L2-normalized data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to an L2-normalized <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">knncolle::Prebuilt</a></code> instance. </dd></dl>
+
+</div>
+</div>
+<a id="acde4204d68e33d9c9689528da1d9ae4c" name="acde4204d68e33d9c9689528da1d9ae4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acde4204d68e33d9c9689528da1d9ae4c">&#9670;&#160;</a></span>load_l2normalized_prebuilt_types()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structknncolle_1_1L2NormalizedPrebuiltTypes.html">L2NormalizedPrebuiltTypes</a> knncolle::load_l2normalized_prebuilt_types </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>prefix</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prefix</td><td>Prefix of the file paths in which a prebuilt L2-normalized index was saved. An L2-normalized index is typically saved by calling the <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">knncolle::Prebuilt::save()</a></code> method of the L2-normalized subclass instance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Template types of the saved instance of a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">knncolle::Prebuilt</a></code> L2-normalized subclass. This is typically used to choose template parameters for <code><a class="el" href="#a4ac0563a38deda032558537ac3f2d304">load_l2normalized_prebuilt()</a></code>. </dd></dl>
+
+</div>
+</div>
 <a id="af261ec286ec7a275c3926ba0fdb8dc11" name="af261ec286ec7a275c3926ba0fdb8dc11"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af261ec286ec7a275c3926ba0fdb8dc11">&#9670;&#160;</a></span>load_prebuilt_raw()</h2>
 
@@ -655,7 +725,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object.</p>
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code>save()</code> was called.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
@@ -706,7 +776,8 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of method names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) to loading functions. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of method names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) to prebuilt loading functions.</dd></dl>
+<p>Note that no loading function is implemented by default for prebuilt indices created by <code>L2NormalizedBuilder()</code>. This should be added separately with <code>l2normalized_save_name</code>, <code><a class="el" href="#acde4204d68e33d9c9689528da1d9ae4c">load_l2normalized_prebuilt_types()</a></code>, and <code><a class="el" href="#a4ac0563a38deda032558537ac3f2d304">load_l2normalized_prebuilt()</a></code>. </p>
 
 </div>
 </div>
@@ -726,7 +797,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This calls <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> internally.</p>
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code>save()</code> was called.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
@@ -741,7 +812,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. This uses the return value of <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -761,7 +832,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This calls <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code> internally.</p>
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code>save()</code> was called.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
@@ -776,7 +847,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Unique pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. This uses the return value of <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code>. </dd></dl>
 
 </div>
 </div>

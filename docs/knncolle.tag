@@ -64,6 +64,7 @@
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Builder_8hpp" name="Builder.hpp" local="yes" import="no" module="no" objc="no">Builder.hpp</includes>
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
+    <includes id="NumericType_8hpp" name="NumericType.hpp" local="yes" import="no" module="no" objc="no">NumericType.hpp</includes>
     <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
@@ -76,6 +77,8 @@
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
+    <includes id="L2Normalized_8hpp" name="L2Normalized.hpp" local="yes" import="no" module="no" objc="no">L2Normalized.hpp</includes>
+    <class kind="struct">knncolle::L2NormalizedPrebuiltTypes</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -374,6 +377,17 @@
       <arglist>() const</arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>knncolle::L2NormalizedPrebuiltTypes</name>
+    <filename>structknncolle_1_1L2NormalizedPrebuiltTypes.html</filename>
+    <member kind="variable">
+      <type>knncolle::NumericType</type>
+      <name>normalized</name>
+      <anchorfile>structknncolle_1_1L2NormalizedPrebuiltTypes.html</anchorfile>
+      <anchor>ab1254d0f6e28152caaf3e560662f48c7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>knncolle::ManhattanDistance</name>
     <filename>classknncolle_1_1ManhattanDistance.html</filename>
@@ -662,6 +676,7 @@
     <class kind="class">knncolle::EuclideanDistance</class>
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
+    <class kind="struct">knncolle::L2NormalizedPrebuiltTypes</class>
     <class kind="class">knncolle::ManhattanDistance</class>
     <class kind="class">knncolle::Matrix</class>
     <class kind="class">knncolle::MatrixExtractor</class>
@@ -797,6 +812,20 @@
       <name>load_prebuilt_shared</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>ae60afb430cc5948b0c8e5c2d4a4a7f84</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>L2NormalizedPrebuiltTypes</type>
+      <name>load_l2normalized_prebuilt_types</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>acde4204d68e33d9c9689528da1d9ae4c</anchor>
+      <arglist>(const std::string &amp;prefix)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
+      <name>load_l2normalized_prebuilt</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a4ac0563a38deda032558537ac3f2d304</anchor>
       <arglist>(const std::string &amp;prefix)</arglist>
     </member>
     <member kind="function">

@@ -1,28 +1,29 @@
 <map id="knncolle/Prebuilt.hpp" name="knncolle/Prebuilt.hpp">
-<area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="225,5,367,31"/>
-<area shape="rect" id="Node000002" href="$Bruteforce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="24,153,181,178"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,41,202,81,154,120,116,154,113,150,150,116,198,77,260,37"/>
-<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="275,315,421,341"/>
-<area shape="poly" id="edge17_Node000001_Node000003" title=" " alt="" coords="210,34,134,52,96,64,62,80,34,99,16,122,8,147,14,177,34,211,60,239,92,263,128,281,204,306,275,319,274,324,203,311,126,286,90,267,57,243,30,214,9,179,3,147,11,119,31,95,59,76,94,59,132,46,209,28"/>
-<area shape="rect" id="Node000004" href="$load__prebuilt_8hpp.html" title="Load prebuilt search indices from disk." alt="" coords="140,234,310,260"/>
-<area shape="poly" id="edge18_Node000001_Node000004" title=" " alt="" coords="287,46,266,96,246,153,230,234,224,233,241,152,262,94,282,44"/>
-<area shape="rect" id="Node000005" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="334,79,471,105"/>
-<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="328,38,386,76,383,81,325,42"/>
-<area shape="rect" id="Node000006" href="$L2Normalized_8hpp.html" title="Wrapper for L2 normalization prior to search." alt="" coords="467,153,645,178"/>
-<area shape="poly" id="edge13_Node000001_Node000006" title=" " alt="" coords="381,33,434,50,485,77,507,94,525,115,551,151,547,154,521,118,503,98,482,81,432,55,379,38"/>
-<area shape="rect" id="Node000007" href="$Vptree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="256,153,392,178"/>
-<area shape="poly" id="edge14_Node000001_Node000007" title=" " alt="" coords="304,46,324,152,319,153,298,47"/>
-<area shape="rect" id="Node000008" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="583,226,726,267"/>
-<area shape="poly" id="edge15_Node000001_Node000008" title=" " alt="" coords="382,20,455,31,532,53,570,70,604,92,635,119,660,151,667,170,669,190,664,226,658,225,663,190,662,171,655,154,631,122,601,96,567,75,530,58,453,36,381,25"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,193,111,231,118,249,130,265,162,289,199,306,237,317,275,322,274,328,236,322,197,311,159,294,126,269,114,252,106,232,100,194"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="135,185,208,231,205,236,132,189"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="258,266,331,312,328,317,255,270"/>
-<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="337,111,154,155,153,149,336,106"/>
-<area shape="poly" id="edge12_Node000005_Node000003" title=" " alt="" coords="406,120,407,153,407,179,396,219,383,258,357,316,352,314,378,256,391,218,401,178,401,153,401,120"/>
-<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="444,109,531,150,529,154,441,114"/>
-<area shape="poly" id="edge9_Node000005_Node000007" title=" " alt="" coords="380,117,339,154,335,150,376,113"/>
-<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="536,191,497,229,450,269,410,296,373,317,370,312,407,291,446,265,494,225,533,188"/>
-<area shape="poly" id="edge10_Node000007_Node000003" title=" " alt="" coords="331,193,349,314,343,315,325,194"/>
-<area shape="poly" id="edge11_Node000007_Node000004" title=" " alt="" coords="299,190,242,235,239,231,296,186"/>
-<area shape="poly" id="edge16_Node000008_Node000003" title=" " alt="" coords="568,273,396,317,395,312,567,268"/>
+<area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="237,5,379,31"/>
+<area shape="rect" id="Node000002" href="$Bruteforce_8hpp.html" title="Implements a brute&#45;force search for nearest neighbors." alt="" coords="25,153,183,178"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,41,203,81,155,120,118,154,114,150,151,116,200,77,268,36"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="314,315,459,341"/>
+<area shape="poly" id="edge18_Node000001_Node000003" title=" " alt="" coords="223,33,141,50,100,63,64,79,35,98,15,121,8,147,16,177,40,214,72,244,109,268,150,287,193,301,236,311,314,322,313,327,235,316,191,306,148,292,106,273,68,248,36,217,11,179,3,147,11,118,31,94,62,74,99,58,139,45,222,28"/>
+<area shape="rect" id="Node000004" href="$load__prebuilt_8hpp.html" title="Load prebuilt search indices from disk." alt="" coords="179,234,349,260"/>
+<area shape="poly" id="edge19_Node000001_Node000004" title=" " alt="" coords="295,45,269,94,248,153,246,175,249,197,261,232,256,234,244,198,241,175,243,152,264,92,290,43"/>
+<area shape="rect" id="Node000005" href="$Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="346,79,483,105"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="340,38,398,76,395,81,337,42"/>
+<area shape="rect" id="Node000006" href="$L2Normalized_8hpp.html" title="Wrapper for L2 normalization prior to search." alt="" coords="258,153,435,178"/>
+<area shape="poly" id="edge14_Node000001_Node000006" title=" " alt="" coords="318,45,346,151,341,153,312,46"/>
+<area shape="rect" id="Node000007" href="$Vptree_8hpp.html" title="Implements a vantage point (VP) tree to search for nearest neighbors." alt="" coords="511,153,646,178"/>
+<area shape="poly" id="edge15_Node000001_Node000007" title=" " alt="" coords="388,33,443,51,497,77,521,94,542,115,572,151,568,154,538,118,518,98,495,81,441,55,387,38"/>
+<area shape="rect" id="Node000008" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="599,226,742,267"/>
+<area shape="poly" id="edge16_Node000001_Node000008" title=" " alt="" coords="395,22,464,35,537,58,573,75,606,96,636,121,661,151,670,170,674,190,676,226,670,226,669,190,665,171,656,154,632,125,603,100,570,79,535,63,462,40,394,28"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="116,191,137,230,151,249,168,265,202,285,240,300,314,318,313,323,238,305,200,290,165,269,147,252,132,233,111,194"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="143,183,241,231,238,236,141,188"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="297,266,369,312,366,317,294,270"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="348,111,157,155,156,149,346,106"/>
+<area shape="poly" id="edge13_Node000005_Node000003" title=" " alt="" coords="435,117,451,152,453,165,451,179,440,219,424,258,396,316,391,313,420,256,434,218,445,178,447,165,445,153,430,119"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="395,118,360,154,356,150,391,114"/>
+<area shape="poly" id="edge10_Node000005_Node000007" title=" " alt="" coords="458,109,552,150,550,155,456,114"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="356,193,386,314,381,315,351,194"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="325,191,279,235,275,231,321,187"/>
+<area shape="poly" id="edge11_Node000007_Node000003" title=" " alt="" coords="564,192,533,230,494,269,454,296,415,317,413,312,451,292,490,265,529,227,560,189"/>
+<area shape="poly" id="edge12_Node000007_Node000004" title=" " alt="" coords="516,185,313,236,312,231,515,180"/>
+<area shape="poly" id="edge17_Node000008_Node000003" title=" " alt="" coords="586,274,431,317,430,312,584,269"/>
 </map>
