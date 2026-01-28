@@ -7,11 +7,14 @@
 #include <limits>
 #include <cstddef>
 #include <type_traits>
+#include <cstring>
+#include <string>
 
 #include "Searcher.hpp"
 #include "Prebuilt.hpp"
 #include "Builder.hpp"
 #include "Matrix.hpp"
+#include "NumericType.hpp"
 #include "utils.hpp"
 
 /**
@@ -20,6 +23,11 @@
  */
 
 namespace knncolle {
+
+/**
+ * Name of the L2-normalized algorithm when registering a loading function to `load_prebuilt_registry()`.
+ */
+inline static const char* l2normalized_save_name = "knncolle::L2Normalized";
 
 /**
  * @cond
@@ -88,6 +96,9 @@ public:
     }
 };
 
+template<typename Index_, typename Data_, typename Distance_>
+Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string&);
+
 template<typename Index_, typename Data_, typename Distance_, typename Normalized_>
 class L2NormalizedPrebuilt final : public Prebuilt<Index_, Data_, Distance_> {
 public:
@@ -114,6 +125,16 @@ public:
         typedef I<decltype(*(my_prebuilt->initialize_known()))> KnownSearcher;
         return std::make_unique<L2NormalizedSearcher<Index_, Data_, Distance_, Normalized_, KnownSearcher> >(my_prebuilt->initialize_known(), my_prebuilt->num_dimensions());
     }
+
+public:
+    void save(const std::string& prefix) const {
+        quick_save(prefix + "ALGORITHM", l2normalized_save_name, std::strlen(l2normalized_save_name));
+        auto norm_type = get_numeric_type<Normalized_>();
+        quick_save(prefix + "normalized", &norm_type, 1);
+        my_prebuilt->save(prefix + "index_");
+    }
+
+    L2NormalizedPrebuilt(const std::string& prefix) : my_prebuilt(load_prebuilt_raw<Index_, Normalized_, Distance_>(prefix + "index_")) {}
 };
 
 template<typename Index_, typename Data_, typename Normalized_, typename Matrix_>
@@ -205,7 +226,7 @@ public:
  *
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Floating-point type for the distances.
  * @tparam Normalized_ Floating-point type for the L2-normalized data.
  * @tparam Matrix_ Class of the input data matrix. 
  * This should satisfy the `Matrix` interface.

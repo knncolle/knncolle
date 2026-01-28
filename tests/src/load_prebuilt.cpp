@@ -45,6 +45,7 @@ TEST_F(LoadPrebuiltTest, BruteforceEuclidean) {
 }
 
 TEST_F(LoadPrebuiltTest, BruteforceManhattan) {
+    // Trying other types for some variety.
     auto mandist = std::make_shared<knncolle::ManhattanDistance<double, float> >();
     knncolle::BruteforceBuilder<std::size_t, double, float> bb(mandist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<std::size_t, double>(ndim, nobs, data.data()));
@@ -89,6 +90,7 @@ TEST_F(LoadPrebuiltTest, VptreeEuclidean) {
 }
 
 TEST_F(LoadPrebuiltTest, VptreeManhattan) {
+    // Trying other types for some variety.
     auto mandist = std::make_shared<knncolle::ManhattanDistance<double, float> >();
     knncolle::VptreeBuilder<std::size_t, double, float> vb(mandist);
     auto vptr = vb.build_unique(knncolle::SimpleMatrix<std::size_t, double>(ndim, nobs, data.data()));
@@ -101,6 +103,35 @@ TEST_F(LoadPrebuiltTest, VptreeManhattan) {
     std::vector<float> output_d, output_d2;
 
     auto searcher = vptr->initialize();
+    auto researcher = reloaded->initialize();
+    for (int x = 0; x < nobs; ++x) {
+        searcher->search(x, 10, &output_i, &output_d);
+        researcher->search(x, 10, &output_i2, &output_d2);
+        EXPECT_EQ(output_i, output_i2);
+        EXPECT_EQ(output_d, output_d2);
+    }
+}
+
+TEST_F(LoadPrebuiltTest, L2NormalizedEuclidean) {
+    auto& reg = knncolle::load_prebuilt_registry<int, double, double>(); 
+    reg[knncolle::l2normalized_save_name] = [](const std::string& prefix) -> knncolle::Prebuilt<int, double, double>* {
+        auto config = knncolle::load_l2normalized_prebuilt_types(prefix);
+        EXPECT_EQ(config.normalized, knncolle::NumericType::DOUBLE);
+        return knncolle::load_l2normalized_prebuilt<int, double, double, double>(prefix);
+    };
+
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::L2NormalizedBuilder<int, double, double, double> l2b(std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist));
+    auto l2ptr = l2b.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
+
+    const auto prefix = (savedir / "vptree_l2norm_").string();
+    l2ptr->save(prefix);
+
+    auto reloaded = knncolle::load_prebuilt_unique<int, double, double>(prefix);
+    std::vector<int> output_i, output_i2;
+    std::vector<double> output_d, output_d2;
+
+    auto searcher = l2ptr->initialize();
     auto researcher = reloaded->initialize();
     for (int x = 0; x < nobs; ++x) {
         searcher->search(x, 10, &output_i, &output_d);

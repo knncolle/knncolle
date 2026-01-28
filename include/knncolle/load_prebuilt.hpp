@@ -10,6 +10,7 @@
 #include "Prebuilt.hpp"
 #include "Bruteforce.hpp"
 #include "Vptree.hpp"
+#include "L2Normalized.hpp"
 
 /**
  * @file load_prebuilt.hpp
@@ -52,7 +53,10 @@ auto default_prebuilt_registry() {
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Floating point type for the distances.
  *
- * @return Reference to a global map of method names (see `Prebuilt::save()`) to loading functions.
+ * @return Reference to a global map of method names (see `Prebuilt::save()`) to prebuilt loading functions.
+ *
+ * Note that no loading function is implemented by default for prebuilt indices created by `L2NormalizedBuilder()`.
+ * This should be added separately with `l2normalized_save_name`, `load_l2normalized_prebuilt_types()`, and `load_l2normalized_prebuilt()`.
  */
 template<typename Index_, typename Data_, typename Distance_>
 inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Distance_> >& load_prebuilt_registry() {
@@ -62,6 +66,7 @@ inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Dista
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
@@ -87,7 +92,7 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix)
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object. 
- * This calls `load_prebuilt_raw()` internally.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
@@ -96,6 +101,7 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix)
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
  * @return Unique pointer to a `Prebuilt` instance, created from the files at `prefix`.
+ * This uses the return value of `load_prebuilt_raw()`. 
  */
 template<typename Index_, typename Data_, typename Distance_>
 std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const std::string& prefix) {
@@ -104,7 +110,7 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object. 
- * This calls `load_prebuilt_raw()` internally.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
@@ -113,10 +119,53 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
  * @return Shared pointer to a `Prebuilt` instance, created from the files at `prefix`.
+ * This uses the return value of `load_prebuilt_raw()`. 
  */
 template<typename Index_, typename Data_, typename Distance_>
 std::shared_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_shared(const std::string& prefix) {
     return std::shared_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(prefix));
+}
+
+/**
+ * @brief Template type of a saved L2-normalized index.
+ *
+ * Instances are typically created by `load_l2normalized_prebuilt_types()`.
+ */
+struct L2NormalizedPrebuiltTypes {
+    /**
+     * Type of the L2-normalized data.
+     */
+    knncolle::NumericType normalized;
+};
+
+/**
+ * @param prefix Prefix of the file paths in which a prebuilt L2-normalized index was saved.
+ * An L2-normalized index is typically saved by calling the `knncolle::Prebuilt::save()` method of the L2-normalized subclass instance.
+ *
+ * @return Template types of the saved instance of a `knncolle::Prebuilt` L2-normalized subclass.
+ * This is typically used to choose template parameters for `load_l2normalized_prebuilt()`.
+ */
+inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::string& prefix) {
+    L2NormalizedPrebuiltTypes config;
+    quick_load(prefix + "normalized", &(config.normalized), 1);
+    return config;
+}
+
+/**
+ * Load an L2-normalized index, i.e., a `knncolle::Prebuilt` created by `L2NormalizedBuilder`.
+ * This is not provided in the registry by default as its depends on the application's set of the acceptable `Normalized_` types.
+ * The `Normalized_` type in the saved index can be retrived by `load_l2normalized_prebuilt_types()`.
+ *
+ * @tparam Index_ Integer type for the indices.
+ * @tparam Data_ Numeric type for the input and query data.
+ * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Normalized_ Floating-point type for the L2-normalized data.
+ * 
+ * @return Pointer to an L2-normalized `knncolle::Prebuilt` instance.
+ */
+template<typename Index_, typename Data_, typename Distance_, typename Normalized_>
+Prebuilt<Index_, Data_, Distance_>* load_l2normalized_prebuilt(const std::string& prefix) {
+    return new L2NormalizedPrebuilt<Index_, Data_, Distance_, Normalized_>(prefix);
 }
 
 }
