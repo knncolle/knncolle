@@ -130,11 +130,11 @@ public:
     void save(const std::string& prefix) const {
         quick_save(prefix + "ALGORITHM", l2normalized_prebuilt_save_name, std::strlen(l2normalized_prebuilt_save_name));
         auto norm_type = get_numeric_type<Normalized_>();
-        quick_save(prefix + "normalized", &norm_type, 1);
-        my_prebuilt->save(prefix + "index_");
+        quick_save(prefix + "NORMALIZED", &norm_type, 1);
+        my_prebuilt->save(prefix + "INDEX_");
     }
 
-    L2NormalizedPrebuilt(const std::string& prefix) : my_prebuilt(load_prebuilt_raw<Index_, Normalized_, Distance_>(prefix + "index_")) {}
+    L2NormalizedPrebuilt(const std::string& prefix) : my_prebuilt(load_prebuilt_raw<Index_, Normalized_, Distance_>(prefix + "INDEX_")) {}
 };
 
 template<typename Index_, typename Data_, typename Normalized_, typename Matrix_>

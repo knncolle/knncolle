@@ -184,20 +184,20 @@ public:
 public:
     void save(const std::string& prefix) const {
         quick_save(prefix + "ALGORITHM", bruteforce_prebuilt_save_name, std::strlen(bruteforce_prebuilt_save_name));
-        quick_save(prefix + "data", my_data.data(), my_data.size());
-        quick_save(prefix + "num_obs", &my_obs, 1);
-        quick_save(prefix + "num_dim", &my_dim, 1);
-        my_metric->save(prefix + "distance_");
+        quick_save(prefix + "DATA", my_data.data(), my_data.size());
+        quick_save(prefix + "NUM_OBS", &my_obs, 1);
+        quick_save(prefix + "NUM_DIM", &my_dim, 1);
+        my_metric->save(prefix + "DISTANCE_");
     }
 
     BruteforcePrebuilt(const std::string& prefix) {
-        quick_load(prefix + "num_obs", &my_obs, 1);
-        quick_load(prefix + "num_dim", &my_dim, 1);
+        quick_load(prefix + "NUM_OBS", &my_obs, 1);
+        quick_load(prefix + "NUM_DIM", &my_dim, 1);
 
         my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(sanisizer::attest_gez(my_obs), my_dim));
-        quick_load(prefix + "data", my_data.data(), my_data.size());
+        quick_load(prefix + "DATA", my_data.data(), my_data.size());
 
-        auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "distance_");
+        auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "DISTANCE_");
         auto xptr = dynamic_cast<DistanceMetric_*>(dptr);
         assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
         my_metric.reset(xptr);

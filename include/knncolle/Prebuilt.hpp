@@ -61,14 +61,13 @@ public:
     /**
      * Save the prebuilt index to disk, to be reloaded with `load_prebuilt_raw()` and friends.
      *
-     * It is expected that `load_prebuilt_raw()` should create an object that is "equivalent" to the object that was saved with `save()`.
-     * That is, any neighbor search results should be the same across the original and reloaded object.
-     * It is also expected that the relevant template parameters used in `load_prebuilt_raw()` should be the same as those in the original `Prebuilt` object.
-     * 
      * An implementation of this method should create a `<prefix>ALGORITHM` file that contains the search algorithm's name.
      * This should be an ASCII file with no newlines, where the algorithm name should follow the `<library>::<algorithm>` format, e.g., `knncolle::Vptree`.
      * This will be used by `load_prebuilt_raw()` to determine the exact loader function to call. 
+     *
      * Other than the `ALGORITHM` file, each implementation may create any number of additional files of any format, as long as they start with `prefix`.
+     * We recommend that the remainder of the file path component immediately following `prefix` starts with an upper case letter and has all letters in upper-case.
+     * This allows applications to add more custom files without the risk of conflicts, e.g., by not starting the rest of the file name with an upper-case letter. 
      *
      * An implementation of this method is not required to use portable file formats.
      * `load_prebuilt_raw()` is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the `save()` call.

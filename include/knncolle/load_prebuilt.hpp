@@ -117,7 +117,9 @@ public:
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object.
- * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `Prebuilt::save()` was called.
+ * It is expected that `load_prebuilt_raw()` should create an object that is "equivalent" to the object that was saved with `save()`,
+ * i.e., any neighbor search results should be the same across the original and reloaded `Prebuilt` object.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
@@ -199,7 +201,7 @@ struct L2NormalizedPrebuiltTypes {
  */
 inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::string& prefix) {
     L2NormalizedPrebuiltTypes config;
-    quick_load(prefix + "normalized", &(config.normalized), 1);
+    quick_load(prefix + "NORMALIZED", &(config.normalized), 1);
     return config;
 }
 
