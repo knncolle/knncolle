@@ -53,7 +53,7 @@ auto default_prebuilt_registry() {
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Floating point type for the distances.
  *
- * @return Reference to a global map of method names (see `Prebuilt::save()`) to prebuilt loading functions.
+ * @return Reference to a global map of algorithm names (see `Prebuilt::save()`) to prebuilt loading functions.
  *
  * Note that no loading function is implemented by default for prebuilt indices created by `L2NormalizedBuilder()`.
  * This should be added separately with `l2normalized_save_name`, `load_l2normalized_prebuilt_types()`, and `load_l2normalized_prebuilt()`.
@@ -63,6 +63,44 @@ inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Dista
     static std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Distance_> > registry = default_prebuilt_registry<Index_, Data_, Distance_>();
     return registry;
 }
+
+/**
+ * @brief Exception for unknown search algorithms in `load_prebuilt_raw()`.
+ *
+ * This is thrown by `load_prebuilt_raw()` and related functions when they cannot find a function in the `load_prebuilt_registry()` for a particular algorithm.
+ */
+class LoadPrebuiltNotFoundError final : public std::runtime_error {
+public:
+    /**
+     * @cond
+     */
+    LoadPrebuiltNotFoundError(std::string algorithm, std::string path) : 
+        std::runtime_error("cannot find loading function for '" + algorithm + "' at '" + path + "'"),
+        my_algorithm(std::move(algorithm)),
+        my_path(std::move(path))
+    {}
+    /**
+     * @endcond
+     */
+
+private:
+    std::string my_algorithm, my_path;
+
+public:
+    /**
+     * @return Name of the unknown neighbor search algorithm for the saved `Prebuilt` instance. 
+     */
+    const std::string& get_algorithm() const {
+        return my_algorithm;
+    }
+
+    /**
+     * @return Path to the `ALGORITHM` file containing the algorithm name for the saved `Prebuilt` instance.
+     */
+    const std::string& get_path() const {
+        return my_path;
+    }
+};
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object.
@@ -75,16 +113,17 @@ inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Dista
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
  * @return Pointer to a `Prebuilt` instance, created from the files at `prefix`.
+ * If no loading function can be found for the search algorithm at `prefix`, a `LoadPrebuiltNotFoundError` is thrown.
  */
 template<typename Index_, typename Data_, typename Distance_>
 Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix) {
-    const auto meth_path = prefix + "ALGORITHM";
-    auto method = quick_load_as_string(meth_path);
+    const auto alg_path = prefix + "ALGORITHM";
+    const auto algorithm = quick_load_as_string(alg_path);
 
     const auto& reg = load_prebuilt_registry<Index_, Data_, Distance_>(); 
-    auto it = reg.find(method);
+    auto it = reg.find(algorithm);
     if (it == reg.end()) {
-        throw std::runtime_error("cannot find load_prebuilt method for '" + method + "' at '" + meth_path + "'");
+        throw LoadPrebuiltNotFoundError(algorithm, alg_path);
     }
 
     return (it->second)(prefix);

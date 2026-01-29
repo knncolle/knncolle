@@ -160,8 +160,10 @@ TEST_F(LoadPrebuiltTest, Errors) {
     std::string msg;
     try {
         knncolle::load_prebuilt_shared<int, double, double>(prefix.string());
-    } catch (std::exception& e) {
+    } catch (knncolle::LoadPrebuiltNotFoundError& e) {
         msg = e.what();
+        EXPECT_EQ(e.get_algorithm(), "superfoobar");
+        EXPECT_FALSE(e.get_path().find("error_ALGORITHM") == std::string::npos);
     }
     EXPECT_TRUE(msg.find("superfoobar") != std::string::npos);
 
