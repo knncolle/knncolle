@@ -32,6 +32,7 @@
     <class kind="class">knncolle::DistanceMetric</class>
     <class kind="class">knncolle::EuclideanDistance</class>
     <class kind="class">knncolle::ManhattanDistance</class>
+    <class kind="class">knncolle::LoadDistanceMetricNotFoundError</class>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -391,6 +392,24 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>knncolle::LoadDistanceMetricNotFoundError</name>
+    <filename>classknncolle_1_1LoadDistanceMetricNotFoundError.html</filename>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_distance</name>
+      <anchorfile>classknncolle_1_1LoadDistanceMetricNotFoundError.html</anchorfile>
+      <anchor>acae588825af44bb32b555cd780c0fcd8</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_path</name>
+      <anchorfile>classknncolle_1_1LoadDistanceMetricNotFoundError.html</anchorfile>
+      <anchor>ab59f0c184075d5d6a5ee642d12073526</anchor>
+      <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>knncolle::LoadPrebuiltNotFoundError</name>
     <filename>classknncolle_1_1LoadPrebuiltNotFoundError.html</filename>
     <member kind="function">
@@ -697,6 +716,7 @@
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="struct">knncolle::L2NormalizedPrebuiltTypes</class>
+    <class kind="class">knncolle::LoadDistanceMetricNotFoundError</class>
     <class kind="class">knncolle::LoadPrebuiltNotFoundError</class>
     <class kind="class">knncolle::ManhattanDistance</class>
     <class kind="class">knncolle::Matrix</class>
@@ -820,6 +840,13 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a8406dfe7aac78dee986262a5f6bceee7</anchor>
       <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::function&lt; void(const std::string &amp;)&gt; &amp;</type>
+      <name>custom_save_for_l2normalized_normalized</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>acb93f1814ffa0816dfbabc41bc3d5be7</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>std::unordered_map&lt; std::string, LoadPrebuiltFunction&lt; Index_, Data_, Distance_ &gt; &gt; &amp;</type>
