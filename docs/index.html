@@ -235,7 +235,8 @@ $(function(){ initResizable(false); });
 <div class="line">&gt; VptreeEuclideanSimple;</div>
 </div><!-- fragment --><h1>Saving indices to file</h1>
 <p>Once a <code>Prebuilt</code> search index is constructed, we can save it to file. We can then load it back into memory on its next use, thus avoiding the need to rebuild the same index.</p>
-<div class="fragment"><div class="line">vp_index-&gt;save(<span class="stringliteral">&quot;foo/bar_&quot;</span>);</div>
+<div class="fragment"><div class="line">std::filesystem::path save_dir = <span class="stringliteral">&quot;foo/bar&quot;</span>;</div>
+<div class="line">vp_index-&gt;save(save_dir);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Register all the distances and search algorithms that we want to support.</span></div>
 <div class="line"><a class="code hl_function" href="namespaceknncolle.html#a7bbb674b2e46e25b2ce01301c45d8ec9">knncolle::register_load_bruteforce_prebuilt&lt;int, double, double&gt;</a>();</div>
@@ -245,7 +246,7 @@ $(function(){ initResizable(false); });
 <div class="line"> </div>
 <div class="line"><span class="comment">// This should be called with the same template parameters as the Prebuilt</span></div>
 <div class="line"><span class="comment">// object that was saved (Index_ = int, Data_ = double, Distance_ = double).</span></div>
-<div class="line"><span class="keyword">auto</span> reloaded = <a class="code hl_function" href="namespaceknncolle.html#a0958bf13fd4ad18e0fa0d35d9bd47665">knncolle::load_prebuilt_shared&lt;int, double, double&gt;</a>(<span class="stringliteral">&quot;foo/bar_&quot;</span>);</div>
+<div class="line"><span class="keyword">auto</span> reloaded = <a class="code hl_function" href="namespaceknncolle.html#a0958bf13fd4ad18e0fa0d35d9bd47665">knncolle::load_prebuilt_shared&lt;int, double, double&gt;</a>(save_dir);</div>
 <div class="ttc" id="anamespaceknncolle_html_a0958bf13fd4ad18e0fa0d35d9bd47665"><div class="ttname"><a href="namespaceknncolle.html#a0958bf13fd4ad18e0fa0d35d9bd47665">knncolle::load_prebuilt_shared</a></div><div class="ttdeci">std::shared_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt; load_prebuilt_shared(const std::filesystem::path &amp;dir)</div><div class="ttdef"><b>Definition</b> load_prebuilt.hpp:180</div></div>
 <div class="ttc" id="anamespaceknncolle_html_a116ccc4bacb892217dc1ec3a53e49e33"><div class="ttname"><a href="namespaceknncolle.html#a116ccc4bacb892217dc1ec3a53e49e33">knncolle::register_load_vptree_prebuilt</a></div><div class="ttdeci">void register_load_vptree_prebuilt()</div><div class="ttdef"><b>Definition</b> load_prebuilt.hpp:73</div></div>
 <div class="ttc" id="anamespaceknncolle_html_a72ca6694c66f6c7107baffb3b8614d2e"><div class="ttname"><a href="namespaceknncolle.html#a72ca6694c66f6c7107baffb3b8614d2e">knncolle::register_load_euclidean_distance</a></div><div class="ttdeci">void register_load_euclidean_distance()</div><div class="ttdef"><b>Definition</b> distances.hpp:217</div></div>
@@ -253,7 +254,7 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="anamespaceknncolle_html_a9e446385ed1746050c0bd2450a8e7298"><div class="ttname"><a href="namespaceknncolle.html#a9e446385ed1746050c0bd2450a8e7298">knncolle::register_load_manhattan_distance</a></div><div class="ttdeci">void register_load_manhattan_distance()</div><div class="ttdef"><b>Definition</b> distances.hpp:229</div></div>
 </div><!-- fragment --><p>For L2-normalized matrices, the situation is a little trickier as we need to consider the data type after normalization. Here, we specify the supported set of normalized types for our loading function:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; reg = <a class="code hl_function" href="namespaceknncolle.html#aa08de1eb1a23d5e13dc11e23ad7967ea">knncolle::load_prebuilt_registry</a>();</div>
-<div class="line">reg[knncolle::l2normalized_save_name] = [](<span class="keyword">const</span> std::string&amp; prefix) -&gt; <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;int, double, double&gt;</a>* {</div>
+<div class="line">reg[knncolle::l2normalized_save_name] = [](<span class="keyword">const</span> std::filesystem::path&amp; dir) -&gt; <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;int, double, double&gt;</a>* {</div>
 <div class="line">    <span class="keyword">auto</span> config = <a class="code hl_function" href="namespaceknncolle.html#a7226ddc157c8e3c39d89b13bb412dda4">knncolle::load_l2normalized_prebuilt_types</a>();</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Possibly could support float, if we expected to get single-precision saved indices.</span></div>
@@ -261,7 +262,7 @@ $(function(){ initResizable(false); });
 <div class="line">        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;don&#39;t know how to handle non-double normalized types&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceknncolle.html#a54a79aea2d2c0a9ece9e107c60776c22">knncolle::load_l2normalized_prebuilt&lt;int, double, double, double&gt;</a>(prefix);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceknncolle.html#a54a79aea2d2c0a9ece9e107c60776c22">knncolle::load_l2normalized_prebuilt&lt;int, double, double, double&gt;</a>(dir);</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:29</div></div>
 <div class="ttc" id="anamespaceknncolle_html_a54a79aea2d2c0a9ece9e107c60776c22"><div class="ttname"><a href="namespaceknncolle.html#a54a79aea2d2c0a9ece9e107c60776c22">knncolle::load_l2normalized_prebuilt</a></div><div class="ttdeci">Prebuilt&lt; Index_, Data_, Distance_ &gt; * load_l2normalized_prebuilt(const std::filesystem::path &amp;dir)</div><div class="ttdef"><b>Definition</b> load_prebuilt.hpp:225</div></div>
