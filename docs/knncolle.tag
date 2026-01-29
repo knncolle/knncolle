@@ -28,6 +28,7 @@
     <name>distances.hpp</name>
     <path>knncolle/</path>
     <filename>distances_8hpp.html</filename>
+    <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
     <class kind="class">knncolle::DistanceMetric</class>
     <class kind="class">knncolle::EuclideanDistance</class>
     <class kind="class">knncolle::ManhattanDistance</class>
@@ -765,6 +766,20 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>register_load_euclidean_distance</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a72ca6694c66f6c7107baffb3b8614d2e</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>register_load_manhattan_distance</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a9e446385ed1746050c0bd2450a8e7298</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>DistanceMetric&lt; Data_, Distance_ &gt; *</type>
       <name>load_distance_metric_raw</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
@@ -811,6 +826,20 @@
       <name>load_prebuilt_registry</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>aa08de1eb1a23d5e13dc11e23ad7967ea</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>register_load_bruteforce_prebuilt</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a7bbb674b2e46e25b2ce01301c45d8ec9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>register_load_vptree_prebuilt</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a116ccc4bacb892217dc1ec3a53e49e33</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">

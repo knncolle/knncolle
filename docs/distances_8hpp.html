@@ -106,28 +106,39 @@ $(function(){ initResizable(false); });
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &quot;<a class="el" href="utils_8hpp_source.html">utils.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for distances.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="distances_8hpp__incl.png" border="0" usemap="#aknncolle_2distances_8hpp" alt=""/></div>
 <map name="aknncolle_2distances_8hpp" id="aknncolle_2distances_8hpp">
-<area shape="rect" title="Classes for distance calculations." alt="" coords="231,5,384,31"/>
+<area shape="rect" title="Classes for distance calculations." alt="" coords="203,5,356,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,63,105"/>
-<area shape="poly" title=" " alt="" coords="259,34,78,81,77,76,258,29"/>
-<area shape="rect" title=" " alt="" coords="87,79,152,105"/>
-<area shape="poly" title=" " alt="" coords="276,34,167,75,165,70,274,29"/>
-<area shape="rect" title=" " alt="" coords="175,79,229,105"/>
-<area shape="poly" title=" " alt="" coords="291,34,234,72,231,68,288,29"/>
-<area shape="rect" title=" " alt="" coords="252,79,362,105"/>
-<area shape="poly" title=" " alt="" coords="310,31,310,63,305,63,305,31"/>
-<area shape="rect" title=" " alt="" coords="386,79,463,105"/>
-<area shape="poly" title=" " alt="" coords="329,29,393,68,391,73,326,34"/>
-<area shape="rect" title=" " alt="" coords="488,79,553,105"/>
-<area shape="poly" title=" " alt="" coords="344,29,474,72,472,77,343,34"/>
-<area shape="rect" title=" " alt="" coords="578,79,645,105"/>
-<area shape="poly" title=" " alt="" coords="362,29,563,76,562,81,361,34"/>
+<area shape="poly" title=" " alt="" coords="238,34,78,80,77,75,237,29"/>
+<area shape="rect" title=" " alt="" coords="36,153,101,178"/>
+<area shape="poly" title=" " alt="" coords="250,34,206,54,160,81,122,112,90,144,87,140,118,108,156,77,203,49,247,29"/>
+<area shape="rect" title=" " alt="" coords="125,153,178,178"/>
+<area shape="poly" title=" " alt="" coords="246,34,211,53,179,81,164,109,157,138,151,137,159,107,175,77,208,48,244,29"/>
+<area shape="rect" title=" " alt="" coords="282,79,392,105"/>
+<area shape="poly" title=" " alt="" coords="291,30,319,65,315,68,287,33"/>
+<area shape="rect" title=" " alt="" coords="415,79,493,105"/>
+<area shape="poly" title=" " alt="" coords="310,29,411,70,409,75,308,34"/>
+<area shape="rect" title=" " alt="" coords="517,79,578,105"/>
+<area shape="poly" title=" " alt="" coords="326,29,503,76,501,81,325,34"/>
+<area shape="rect" title=" " alt="" coords="602,79,669,105"/>
+<area shape="poly" title=" " alt="" coords="349,29,587,76,586,81,348,34"/>
+<area shape="rect" href="utils_8hpp.html" title="Miscellaneous utilities for knncolle" alt="" coords="189,79,258,105"/>
+<area shape="poly" title=" " alt="" coords="272,33,244,68,240,65,268,30"/>
+<area shape="poly" title=" " alt="" coords="198,108,110,148,108,143,196,103"/>
+<area shape="poly" title=" " alt="" coords="213,107,176,143,172,140,210,103"/>
+<area shape="rect" title=" " alt="" coords="203,153,268,178"/>
+<area shape="poly" title=" " alt="" coords="228,104,233,137,228,138,223,105"/>
+<area shape="rect" title=" " alt="" coords="292,153,373,178"/>
+<area shape="poly" title=" " alt="" coords="243,103,303,142,300,146,240,107"/>
+<area shape="rect" title=" " alt="" coords="397,153,548,178"/>
+<area shape="poly" title=" " alt="" coords="259,101,417,145,415,151,258,106"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -182,6 +193,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ad4af1d9292bd24d4bd3f72f4f99d9cbc" id="r_ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memTemplItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="namespaceknncolle.html#ac850c74c54af62105c165c458f7516b7">LoadDistanceMetricFunction</a>&lt; Data_, Distance_ &gt; &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#ad4af1d9292bd24d4bd3f72f4f99d9cbc">knncolle::load_distance_metric_registry</a> ()</td></tr>
 <tr class="separator:ad4af1d9292bd24d4bd3f72f4f99d9cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ca6694c66f6c7107baffb3b8614d2e" id="r_a72ca6694c66f6c7107baffb3b8614d2e"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:a72ca6694c66f6c7107baffb3b8614d2e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a72ca6694c66f6c7107baffb3b8614d2e">knncolle::register_load_euclidean_distance</a> ()</td></tr>
+<tr class="separator:a72ca6694c66f6c7107baffb3b8614d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e446385ed1746050c0bd2450a8e7298" id="r_a9e446385ed1746050c0bd2450a8e7298"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:a9e446385ed1746050c0bd2450a8e7298"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a9e446385ed1746050c0bd2450a8e7298">knncolle::register_load_manhattan_distance</a> ()</td></tr>
+<tr class="separator:a9e446385ed1746050c0bd2450a8e7298"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c0df62bd7206b0b3892aedadb2a962c" id="r_a5c0df62bd7206b0b3892aedadb2a962c"><td class="memTemplParams" colspan="2">template&lt;typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a5c0df62bd7206b0b3892aedadb2a962c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1DistanceMetric.html">DistanceMetric</a>&lt; Data_, Distance_ &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a5c0df62bd7206b0b3892aedadb2a962c">knncolle::load_distance_metric_raw</a> (const std::string &amp;prefix)</td></tr>
 <tr class="separator:a5c0df62bd7206b0b3892aedadb2a962c"><td class="memSeparator" colspan="2">&#160;</td></tr>
