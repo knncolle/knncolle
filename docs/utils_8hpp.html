@@ -103,23 +103,26 @@ $(function(){ initResizable(false); });
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;filesystem&gt;</code><br />
 <code>#include &quot;sanisizer/sanisizer.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for utils.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="utils_8hpp__incl.png" border="0" usemap="#aknncolle_2utils_8hpp" alt=""/></div>
 <map name="aknncolle_2utils_8hpp" id="aknncolle_2utils_8hpp">
-<area shape="rect" title="Miscellaneous utilities for knncolle" alt="" coords="144,5,265,31"/>
+<area shape="rect" title="Miscellaneous utilities for knncolle" alt="" coords="192,5,313,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,71,105"/>
-<area shape="poly" title=" " alt="" coords="177,34,81,75,79,70,175,29"/>
+<area shape="poly" title=" " alt="" coords="217,34,86,77,84,72,215,29"/>
 <area shape="rect" title=" " alt="" coords="95,79,149,105"/>
-<area shape="poly" title=" " alt="" coords="192,34,149,71,146,67,189,30"/>
+<area shape="poly" title=" " alt="" coords="232,34,158,74,156,69,229,29"/>
 <area shape="rect" title=" " alt="" coords="172,79,237,105"/>
-<area shape="poly" title=" " alt="" coords="207,31,207,63,202,63,202,31"/>
+<area shape="poly" title=" " alt="" coords="247,33,224,67,219,64,243,30"/>
 <area shape="rect" title=" " alt="" coords="261,79,343,105"/>
-<area shape="poly" title=" " alt="" coords="223,29,275,68,272,72,220,34"/>
-<area shape="rect" title=" " alt="" coords="366,79,518,105"/>
-<area shape="poly" title=" " alt="" coords="246,29,388,71,386,77,244,34"/>
+<area shape="poly" title=" " alt="" coords="263,30,287,65,283,68,259,33"/>
+<area shape="rect" title=" " alt="" coords="366,79,446,105"/>
+<area shape="poly" title=" " alt="" coords="280,29,367,70,365,75,278,34"/>
+<area shape="rect" title=" " alt="" coords="470,79,622,105"/>
+<area shape="poly" title=" " alt="" coords="303,29,482,72,481,77,302,34"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -165,14 +168,14 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afc954146b2f7fe5cbd1c7f3a5610ba94" id="r_afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
-<tr class="memitem:afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">knncolle::quick_save</a> (const std::string &amp;path, const Input_ *const contents, const Length_ length)</td></tr>
-<tr class="separator:afc954146b2f7fe5cbd1c7f3a5610ba94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c" id="r_ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
-<tr class="memitem:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#ac5079c0b39b7f9e10bd97341ccfad46c">knncolle::quick_load</a> (const std::string &amp;path, Input_ *const contents, const Length_ length)</td></tr>
-<tr class="separator:ac5079c0b39b7f9e10bd97341ccfad46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83e38fc963fa7d735ef8f0d11f1f5a4b" id="r_a83e38fc963fa7d735ef8f0d11f1f5a4b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a83e38fc963fa7d735ef8f0d11f1f5a4b">knncolle::quick_load_as_string</a> (const std::string &amp;path)</td></tr>
-<tr class="separator:a83e38fc963fa7d735ef8f0d11f1f5a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf69c31b24c8a2bda72371f64133f8b8" id="r_acf69c31b24c8a2bda72371f64133f8b8"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
+<tr class="memitem:acf69c31b24c8a2bda72371f64133f8b8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#acf69c31b24c8a2bda72371f64133f8b8">knncolle::quick_save</a> (const std::filesystem::path &amp;path, const Input_ *const contents, const Length_ length)</td></tr>
+<tr class="separator:acf69c31b24c8a2bda72371f64133f8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e25b966ec80b5ab45dced14fe690e6b" id="r_a1e25b966ec80b5ab45dced14fe690e6b"><td class="memTemplParams" colspan="2">template&lt;typename Input_ , typename Length_ &gt; </td></tr>
+<tr class="memitem:a1e25b966ec80b5ab45dced14fe690e6b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a1e25b966ec80b5ab45dced14fe690e6b">knncolle::quick_load</a> (const std::filesystem::path &amp;path, Input_ *const contents, const Length_ length)</td></tr>
+<tr class="separator:a1e25b966ec80b5ab45dced14fe690e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9191267167f1e0d7201b276c8a9caa2a" id="r_a9191267167f1e0d7201b276c8a9caa2a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a9191267167f1e0d7201b276c8a9caa2a">knncolle::quick_load_as_string</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="separator:a9191267167f1e0d7201b276c8a9caa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Miscellaneous utilities for <b>knncolle</b> </p>

@@ -104,274 +104,277 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;cstring&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="Searcher_8hpp.html">Searcher.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="Prebuilt_8hpp.html">Prebuilt.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="Builder_8hpp.html">Builder.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="Matrix_8hpp.html">Matrix.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="NumericType_8hpp.html">NumericType.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="utils_8hpp.html">utils.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">inline</span> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* l2normalized_prebuilt_save_name = <span class="stringliteral">&quot;knncolle::L2Normalized&quot;</span>;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Normalized_&gt;</div>
-<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#acb93f1814ffa0816dfbabc41bc3d5be7">   48</a></span>std::function&lt;void(<span class="keyword">const</span> std::string&amp;)&gt;&amp; <a class="code hl_function" href="namespaceknncolle.html#acb93f1814ffa0816dfbabc41bc3d5be7">custom_save_for_l2normalized_normalized</a>() {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">static</span> std::function&lt;void(<span class="keyword">const</span> std::string&amp;)&gt; fun;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> fun;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="Searcher_8hpp.html">Searcher.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="Prebuilt_8hpp.html">Prebuilt.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="Builder_8hpp.html">Builder.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="Matrix_8hpp.html">Matrix.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="NumericType_8hpp.html">NumericType.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="utils_8hpp.html">utils.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">inline</span> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* l2normalized_prebuilt_save_name = <span class="stringliteral">&quot;knncolle::L2Normalized&quot;</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Normalized_&gt;</div>
+<div class="foldopen" id="foldopen00049" data-start="{" data-end="}">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespaceknncolle.html#addf5942d7b462be001619860d8b4b158">   49</a></span>std::function&lt;void(<span class="keyword">const</span> std::filesystem::path&amp;)&gt;&amp; <a class="code hl_function" href="namespaceknncolle.html#addf5942d7b462be001619860d8b4b158">custom_save_for_l2normalized_normalized</a>() {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">static</span> std::function&lt;void(<span class="keyword">const</span> std::filesystem::path&amp;)&gt; fun;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> fun;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">namespace </span>internal {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_&gt;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keywordtype">void</span> l2norm(<span class="keyword">const</span> Data_* ptr, std::size_t ndim, Normalized_* buffer) {</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    Normalized_ l2 = 0;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; ndim; ++d) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        Normalized_ val = ptr[d]; <span class="comment">// cast to Normalized_ to avoid issues with integer overflow.</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        buffer[d] = val;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        l2 += val * val;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">if</span> (l2 &gt; 0) {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        l2 = std::sqrt(l2);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; ndim; ++d) {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            buffer[d] /= l2;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Searcher_&gt;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">class </span>L2NormalizedSearcher final : <span class="keyword">public</span> Searcher&lt;Index_, Data_, Distance_&gt; {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    L2NormalizedSearcher(std::unique_ptr&lt;Searcher_&gt; searcher, std::size_t num_dimensions) : </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        my_searcher(std::move(searcher)),</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        buffer(sanisizer::cast&lt;I&lt;decltype(buffer.size())&gt; &gt;(num_dimensions))</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    {}</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// No way around this; the L2-normalized values must be floating-point,</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">// so the internal searcher must accept floats.</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keyword">static_assert</span>(std::is_floating_point&lt;Normalized_&gt;::value);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    std::unique_ptr&lt;Searcher_&gt; my_searcher;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    std::vector&lt;Normalized_&gt; buffer;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordtype">void</span> search(Index_ i, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        my_searcher-&gt;search(i, k, output_indices, output_distances);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    }</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> search(<span class="keyword">const</span> Data_* ptr, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        internal::l2norm(ptr, buffer.size(), normalized);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        my_searcher-&gt;search(normalized, k, output_indices, output_distances);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">bool</span> can_search_all()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">return</span> my_searcher-&gt;can_search_all();</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    }</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    Index_ search_all(Index_ i, Distance_ threshold, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        <span class="keywordflow">return</span> my_searcher-&gt;search_all(i, threshold, output_indices, output_distances);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    Index_ search_all(<span class="keyword">const</span> Data_* ptr, Distance_ threshold, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        internal::l2norm(ptr, buffer.size(), normalized);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">return</span> my_searcher-&gt;search_all(normalized, threshold, output_indices, output_distances);</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_&gt;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>Prebuilt&lt;Index_, Data_, Distance_&gt;* <a class="code hl_function" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw</a>(<span class="keyword">const</span> std::string&amp;);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_&gt;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">class </span>L2NormalizedPrebuilt final : <span class="keyword">public</span> Prebuilt&lt;Index_, Data_, Distance_&gt; {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    L2NormalizedPrebuilt(std::unique_ptr&lt;Prebuilt&lt;Index_, Normalized_, Distance_&gt; &gt; prebuilt) : my_prebuilt(std::move(prebuilt)) {}</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    std::unique_ptr&lt;Prebuilt&lt;Index_, Normalized_, Distance_&gt; &gt; my_prebuilt;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    Index_ num_observations()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">return</span> my_prebuilt-&gt;num_observations();</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    std::size_t num_dimensions()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keywordflow">return</span> my_prebuilt-&gt;num_dimensions();</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    }</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    std::unique_ptr&lt;Searcher&lt;Index_, Data_, Distance_&gt; &gt; initialize()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keywordflow">return</span> initialize_known();</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    }</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keyword">auto</span> initialize_known()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keyword">typedef</span> I&lt;<span class="keyword">decltype</span>(*(my_prebuilt-&gt;initialize_known()))&gt; KnownSearcher;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keywordflow">return</span> std::make_unique&lt;L2NormalizedSearcher&lt;Index_, Data_, Distance_, Normalized_, KnownSearcher&gt; &gt;(my_prebuilt-&gt;initialize_known(), my_prebuilt-&gt;num_dimensions());</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    }</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordtype">void</span> save(<span class="keyword">const</span> std::string&amp; prefix)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <a class="code hl_function" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">quick_save</a>(prefix + <span class="stringliteral">&quot;ALGORITHM&quot;</span>, l2normalized_prebuilt_save_name, std::strlen(l2normalized_prebuilt_save_name));</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keyword">auto</span> norm_type = get_numeric_type&lt;Normalized_&gt;();</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <a class="code hl_function" href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">quick_save</a>(prefix + <span class="stringliteral">&quot;NORMALIZED&quot;</span>, &amp;norm_type, 1);</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keyword">auto</span>&amp; cust = custom_save_for_l2normalized_normalized&lt;Normalized_&gt;();</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keywordflow">if</span> (cust) {</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            cust(prefix);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        }</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        my_prebuilt-&gt;save(prefix + <span class="stringliteral">&quot;INDEX_&quot;</span>);</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    }</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    L2NormalizedPrebuilt(<span class="keyword">const</span> std::string&amp; prefix) : my_prebuilt(<a class="code hl_function" href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw</a>&lt;Index_, Normalized_, Distance_&gt;(prefix + <span class="stringliteral">&quot;INDEX_&quot;</span>)) {}</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">namespace </span>internal {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_&gt;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span> l2norm(<span class="keyword">const</span> Data_* ptr, std::size_t ndim, Normalized_* buffer) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    Normalized_ l2 = 0;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; ndim; ++d) {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        Normalized_ val = ptr[d]; <span class="comment">// cast to Normalized_ to avoid issues with integer overflow.</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        buffer[d] = val;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        l2 += val * val;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">if</span> (l2 &gt; 0) {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        l2 = std::sqrt(l2);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; ndim; ++d) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            buffer[d] /= l2;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>}</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Searcher_&gt;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keyword">class </span>L2NormalizedSearcher final : <span class="keyword">public</span> Searcher&lt;Index_, Data_, Distance_&gt; {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    L2NormalizedSearcher(std::unique_ptr&lt;Searcher_&gt; searcher, std::size_t num_dimensions) : </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        my_searcher(std::move(searcher)),</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        buffer(sanisizer::cast&lt;I&lt;decltype(buffer.size())&gt; &gt;(num_dimensions))</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    {}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">// No way around this; the L2-normalized values must be floating-point,</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="comment">// so the internal searcher must accept floats.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keyword">static_assert</span>(std::is_floating_point&lt;Normalized_&gt;::value);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    std::unique_ptr&lt;Searcher_&gt; my_searcher;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    std::vector&lt;Normalized_&gt; buffer;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">void</span> search(Index_ i, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        my_searcher-&gt;search(i, k, output_indices, output_distances);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">void</span> search(<span class="keyword">const</span> Data_* ptr, Index_ k, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        internal::l2norm(ptr, buffer.size(), normalized);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        my_searcher-&gt;search(normalized, k, output_indices, output_distances);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    }</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">bool</span> can_search_all()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">return</span> my_searcher-&gt;can_search_all();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    Index_ search_all(Index_ i, Distance_ threshold, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">return</span> my_searcher-&gt;search_all(i, threshold, output_indices, output_distances);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    Index_ search_all(<span class="keyword">const</span> Data_* ptr, Distance_ threshold, std::vector&lt;Index_&gt;* output_indices, std::vector&lt;Distance_&gt;* output_distances) {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        internal::l2norm(ptr, buffer.size(), normalized);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="keywordflow">return</span> my_searcher-&gt;search_all(normalized, threshold, output_indices, output_distances);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>};</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_&gt;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>Prebuilt&lt;Index_, Data_, Distance_&gt;* <a class="code hl_function" href="namespaceknncolle.html#a2157dec9e895be903278fc6903c793e0">load_prebuilt_raw</a>(<span class="keyword">const</span> std::filesystem::path&amp;);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_&gt;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">class </span>L2NormalizedPrebuilt final : <span class="keyword">public</span> Prebuilt&lt;Index_, Data_, Distance_&gt; {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    L2NormalizedPrebuilt(std::unique_ptr&lt;Prebuilt&lt;Index_, Normalized_, Distance_&gt; &gt; prebuilt) : my_prebuilt(std::move(prebuilt)) {}</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    std::unique_ptr&lt;Prebuilt&lt;Index_, Normalized_, Distance_&gt; &gt; my_prebuilt;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    Index_ num_observations()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <span class="keywordflow">return</span> my_prebuilt-&gt;num_observations();</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    }</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    std::size_t num_dimensions()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">return</span> my_prebuilt-&gt;num_dimensions();</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    }</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    std::unique_ptr&lt;Searcher&lt;Index_, Data_, Distance_&gt; &gt; initialize()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">return</span> initialize_known();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">auto</span> initialize_known()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keyword">typedef</span> I&lt;<span class="keyword">decltype</span>(*(my_prebuilt-&gt;initialize_known()))&gt; KnownSearcher;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">return</span> std::make_unique&lt;L2NormalizedSearcher&lt;Index_, Data_, Distance_, Normalized_, KnownSearcher&gt; &gt;(my_prebuilt-&gt;initialize_known(), my_prebuilt-&gt;num_dimensions());</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordtype">void</span> save(<span class="keyword">const</span> std::filesystem::path&amp; dir)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <a class="code hl_function" href="namespaceknncolle.html#acf69c31b24c8a2bda72371f64133f8b8">quick_save</a>(dir / <span class="stringliteral">&quot;ALGORITHM&quot;</span>, l2normalized_prebuilt_save_name, std::strlen(l2normalized_prebuilt_save_name));</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keyword">auto</span> norm_type = get_numeric_type&lt;Normalized_&gt;();</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <a class="code hl_function" href="namespaceknncolle.html#acf69c31b24c8a2bda72371f64133f8b8">quick_save</a>(dir / <span class="stringliteral">&quot;NORMALIZED&quot;</span>, &amp;norm_type, 1);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keyword">auto</span>&amp; cust = custom_save_for_l2normalized_normalized&lt;Normalized_&gt;();</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">if</span> (cust) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            cust(dir);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keyword">const</span> <span class="keyword">auto</span> indexdir = dir / <span class="stringliteral">&quot;INDEX&quot;</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        std::filesystem::create_directory(indexdir);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        my_prebuilt-&gt;save(indexdir);</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">typename</span> Matrix_&gt;</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">class </span>L2NormalizedMatrix;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    L2NormalizedPrebuilt(<span class="keyword">const</span> std::filesystem::path&amp; dir) : my_prebuilt(<a class="code hl_function" href="namespaceknncolle.html#a2157dec9e895be903278fc6903c793e0">load_prebuilt_raw</a>&lt;Index_, Normalized_, Distance_&gt;(dir / <span class="stringliteral">&quot;INDEX&quot;</span>)) {}</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Extractor_ = MatrixExtractor&lt;Data_&gt; &gt;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">class </span>L2NormalizedMatrixExtractor final : <span class="keyword">public</span> MatrixExtractor&lt;Normalized_&gt; {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    L2NormalizedMatrixExtractor(std::unique_ptr&lt;Extractor_&gt; extractor, std::size_t dim) : </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        my_extractor(std::move(extractor)),</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        buffer(sanisizer::cast&lt;I&lt;decltype(buffer.size())&gt; &gt;(dim))</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    {}</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    std::unique_ptr&lt;Extractor_&gt; my_extractor;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    std::vector&lt;Normalized_&gt; buffer;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">const</span> Normalized_* next() {</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keyword">auto</span> raw = my_extractor-&gt;next();</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        internal::l2norm(raw, buffer.size(), normalized);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">return</span> normalized;</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    }</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>};</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">typename</span> Matrix_ = Matrix&lt;Index_, Data_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00208" data-start="{" data-end="};">
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html">  208</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&lt;Index_, Normalized_&gt; {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix</a>(<span class="keyword">const</span> Matrix_&amp; matrix) : my_matrix(matrix) {}</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">static_assert</span>(std::is_same&lt;decltype(std::declval&lt;Matrix_&gt;().num_observations()), Index_&gt;::value);</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keyword">static_assert</span>(std::is_same&lt;typename std::remove_pointer&lt;decltype(std::declval&lt;Matrix_&gt;().new_extractor()-&gt;next())&gt;::type, <span class="keyword">const</span> Data_&gt;::value);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="keyword">const</span> Matrix_&amp; my_matrix;</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00225" data-start="{" data-end="}">
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">  225</a></span>    std::size_t <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">num_dimensions</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        <span class="keywordflow">return</span> my_matrix.num_dimensions();</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    }</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">typename</span> Matrix_&gt;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">class </span>L2NormalizedMatrix;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Extractor_ = MatrixExtractor&lt;Data_&gt; &gt;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keyword">class </span>L2NormalizedMatrixExtractor final : <span class="keyword">public</span> MatrixExtractor&lt;Normalized_&gt; {</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    L2NormalizedMatrixExtractor(std::unique_ptr&lt;Extractor_&gt; extractor, std::size_t dim) : </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        my_extractor(std::move(extractor)),</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        buffer(sanisizer::cast&lt;I&lt;decltype(buffer.size())&gt; &gt;(dim))</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    {}</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    std::unique_ptr&lt;Extractor_&gt; my_extractor;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    std::vector&lt;Normalized_&gt; buffer;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="keyword">const</span> Normalized_* next() {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keyword">auto</span> raw = my_extractor-&gt;next();</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keyword">auto</span> normalized = buffer.data();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        internal::l2norm(raw, buffer.size(), normalized);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">return</span> normalized;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>};</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Normalized_, <span class="keyword">typename</span> Matrix_ = Matrix&lt;Index_, Data_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00211" data-start="{" data-end="};">
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html">  211</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Matrix.html">Matrix</a>&lt;Index_, Normalized_&gt; {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix</a>(<span class="keyword">const</span> Matrix_&amp; matrix) : my_matrix(matrix) {}</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="keyword">static_assert</span>(std::is_same&lt;decltype(std::declval&lt;Matrix_&gt;().num_observations()), Index_&gt;::value);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keyword">static_assert</span>(std::is_same&lt;typename std::remove_pointer&lt;decltype(std::declval&lt;Matrix_&gt;().new_extractor()-&gt;next())&gt;::type, <span class="keyword">const</span> Data_&gt;::value);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keyword">const</span> Matrix_&amp; my_matrix;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00228" data-start="{" data-end="}">
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">  228</a></span>    std::size_t <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">num_dimensions</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">return</span> my_matrix.num_dimensions();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    }</div>
 </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
-<div class="foldopen" id="foldopen00229" data-start="{" data-end="}">
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">  229</a></span>    Index_ <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">num_observations</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keywordflow">return</span> my_matrix.num_observations();</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="foldopen" id="foldopen00232" data-start="{" data-end="}">
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">  232</a></span>    Index_ <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">num_observations</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keywordflow">return</span> my_matrix.num_observations();</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    }</div>
 </div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
-<div class="foldopen" id="foldopen00236" data-start="{" data-end="}">
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">  236</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keyword">typedef</span> I&lt;<span class="keyword">decltype</span>(*(my_matrix.new_known_extractor()))&gt; KnownExtractor;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keywordflow">return</span> std::make_unique&lt;L2NormalizedMatrixExtractor&lt;Index_, Data_, Normalized_, KnownExtractor&gt; &gt;(my_matrix.new_known_extractor(), <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">num_dimensions</a>());</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="foldopen" id="foldopen00239" data-start="{" data-end="}">
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">  239</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">new_known_extractor</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keyword">typedef</span> I&lt;<span class="keyword">decltype</span>(*(my_matrix.new_known_extractor()))&gt; KnownExtractor;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <span class="keywordflow">return</span> std::make_unique&lt;L2NormalizedMatrixExtractor&lt;Index_, Data_, Normalized_, KnownExtractor&gt; &gt;(my_matrix.new_known_extractor(), <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">num_dimensions</a>());</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    }</div>
 </div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="foldopen" id="foldopen00241" data-start="{" data-end="}">
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">  241</a></span>    std::unique_ptr&lt;MatrixExtractor&lt;Normalized_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">new_extractor</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">new_known_extractor</a>();</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    }</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="foldopen" id="foldopen00244" data-start="{" data-end="}">
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">  244</a></span>    std::unique_ptr&lt;MatrixExtractor&lt;Normalized_&gt; &gt; <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">new_extractor</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">new_known_extractor</a>();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
 </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>};</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>};</div>
 </div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Matrix_ = Matrix&lt;Index_, Data_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00262" data-start="{" data-end="};">
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html">  262</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">L2NormalizedBuilder</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Builder.html">Builder</a>&lt;Index_, Data_, Distance_, Matrix_&gt; {</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">  267</a></span>    <span class="keyword">typedef</span> <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix&lt;Index_, Data_, Normalized_, Matrix_&gt;</a> <a class="code hl_typedef" href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">NormalizedMatrix</a>;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        std::is_base_of&lt;Matrix_, NormalizedMatrix&gt;::value,</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        Matrix_,</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">NormalizedMatrix</a></div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">  284</a></span>    &gt;::type <a class="code hl_typedef" href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">BuilderMatrix</a>;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">  290</a></span>    <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">L2NormalizedBuilder</a>(std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Builder.html">Builder&lt;Index_, Normalized_, Distance_, BuilderMatrix&gt;</a> &gt; builder) : my_builder(std::move(builder)) {}</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    std::shared_ptr&lt;const Builder&lt;Index_, Normalized_, Distance_, BuilderMatrix&gt; &gt; my_builder;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Data_, <span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Normalized_, <span class="keyword">class</span> Matrix_ = Matrix&lt;Index_, Data_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00265" data-start="{" data-end="};">
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html">  265</a></span><span class="keyword">class </span><a class="code hl_class" href="classknncolle_1_1L2NormalizedBuilder.html">L2NormalizedBuilder</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classknncolle_1_1Builder.html">Builder</a>&lt;Index_, Data_, Distance_, Matrix_&gt; {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">  270</a></span>    <span class="keyword">typedef</span> <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">L2NormalizedMatrix&lt;Index_, Data_, Normalized_, Matrix_&gt;</a> <a class="code hl_typedef" href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">NormalizedMatrix</a>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        std::is_base_of&lt;Matrix_, NormalizedMatrix&gt;::value,</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        Matrix_,</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">NormalizedMatrix</a></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">  287</a></span>    &gt;::type <a class="code hl_typedef" href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">BuilderMatrix</a>;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">  293</a></span>    <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">L2NormalizedBuilder</a>(std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_class" href="classknncolle_1_1Builder.html">Builder&lt;Index_, Normalized_, Distance_, BuilderMatrix&gt;</a> &gt; builder) : my_builder(std::move(builder)) {}</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00296" data-start="{" data-end="}">
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">  296</a></span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Index_, Data_, Distance_&gt;</a>* <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">build_raw</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data);</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    std::shared_ptr&lt;const Builder&lt;Index_, Normalized_, Distance_, BuilderMatrix&gt; &gt; my_builder;</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">  299</a></span>    <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">Prebuilt&lt;Index_, Data_, Distance_&gt;</a>* <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">build_raw</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    }</div>
 </div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00304" data-start="{" data-end="}">
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">  304</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">NormalizedMatrix</a> normalized(data);</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> L2NormalizedPrebuilt&lt;Index_, Data_, Distance_, Normalized_&gt;(my_builder-&gt;build_unique(normalized));</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    }</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00307" data-start="{" data-end="}">
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">  307</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <a class="code hl_class" href="classknncolle_1_1L2NormalizedMatrix.html">NormalizedMatrix</a> normalized(data);</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> L2NormalizedPrebuilt&lt;Index_, Data_, Distance_, Normalized_&gt;(my_builder-&gt;build_unique(normalized));</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    }</div>
 </div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
-<div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">  312</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">build_known_unique</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        <span class="keywordflow">return</span> std::unique_ptr&lt;I&lt;<span class="keyword">decltype</span>(*(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data)))&gt; &gt;(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data));</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    }</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
+<div class="foldopen" id="foldopen00315" data-start="{" data-end="}">
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">  315</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">build_known_unique</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        <span class="keywordflow">return</span> std::unique_ptr&lt;I&lt;<span class="keyword">decltype</span>(*(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data)))&gt; &gt;(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data));</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
 </div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="foldopen" id="foldopen00319" data-start="{" data-end="}">
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">  319</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">build_known_shared</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <span class="keywordflow">return</span> std::shared_ptr&lt;I&lt;<span class="keyword">decltype</span>(*(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data)))&gt; &gt;(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data));</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    }</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> </div>
+<div class="foldopen" id="foldopen00322" data-start="{" data-end="}">
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno"><a class="line" href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">  322</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">build_known_shared</a>(<span class="keyword">const</span> Matrix_&amp; data)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        <span class="keywordflow">return</span> std::shared_ptr&lt;I&lt;<span class="keyword">decltype</span>(*(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data)))&gt; &gt;(<a class="code hl_function" href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a>(data));</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    }</div>
 </div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>};</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>};</div>
 </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>}</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>}</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aBuilder_8hpp_html"><div class="ttname"><a href="Builder_8hpp.html">Builder.hpp</a></div><div class="ttdoc">Interface to build nearest-neighbor indices.</div></div>
 <div class="ttc" id="aMatrix_8hpp_html"><div class="ttname"><a href="Matrix_8hpp.html">Matrix.hpp</a></div><div class="ttdoc">Interface for the input matrix.</div></div>
 <div class="ttc" id="aNumericType_8hpp_html"><div class="ttname"><a href="NumericType_8hpp.html">NumericType.hpp</a></div><div class="ttdoc">Preserve numeric types when saving prebuilt indices.</div></div>
 <div class="ttc" id="aPrebuilt_8hpp_html"><div class="ttname"><a href="Prebuilt_8hpp.html">Prebuilt.hpp</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor indices.</div></div>
 <div class="ttc" id="aSearcher_8hpp_html"><div class="ttname"><a href="Searcher_8hpp.html">Searcher.hpp</a></div><div class="ttdoc">Interface for searching nearest-neighbor indices.</div></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="classknncolle_1_1Builder.html">knncolle::Builder</a></div><div class="ttdoc">Interface to build nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Builder.hpp:28</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:262</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a1098d7699574f9d509508b6a1fe23a32"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">knncolle::L2NormalizedBuilder::NormalizedMatrix</a></div><div class="ttdeci">L2NormalizedMatrix&lt; Index_, Data_, Normalized_, Matrix_ &gt; NormalizedMatrix</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:267</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a387250ea0ae7654b186545814cd51da3"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">knncolle::L2NormalizedBuilder::L2NormalizedBuilder</a></div><div class="ttdeci">L2NormalizedBuilder(std::shared_ptr&lt; const Builder&lt; Index_, Normalized_, Distance_, BuilderMatrix &gt; &gt; builder)</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:290</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a437ca7f6f9a3b82fa32762edba0cd08b"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">knncolle::L2NormalizedBuilder::build_raw</a></div><div class="ttdeci">Prebuilt&lt; Index_, Data_, Distance_ &gt; * build_raw(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:296</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a4a089482a8c6ba27cf477df95a2885d6"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">knncolle::L2NormalizedBuilder::build_known_raw</a></div><div class="ttdeci">auto build_known_raw(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:304</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_abeaefcb9c85ef73693defd5f59503ff2"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">knncolle::L2NormalizedBuilder::BuilderMatrix</a></div><div class="ttdeci">std::conditional&lt; std::is_base_of&lt; Matrix_, NormalizedMatrix &gt;::value, Matrix_, NormalizedMatrix &gt;::type BuilderMatrix</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:284</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_ae1a1855022a9acd44a7741840e84889f"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">knncolle::L2NormalizedBuilder::build_known_shared</a></div><div class="ttdeci">auto build_known_shared(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:319</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_ae50b402db117884065a9d77a9788baa6"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">knncolle::L2NormalizedBuilder::build_known_unique</a></div><div class="ttdeci">auto build_known_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:312</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix</a></div><div class="ttdoc">Wrapper around a matrix with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:208</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_a88d0b083b6135c6656f66727a4c777ee"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">knncolle::L2NormalizedMatrix::num_dimensions</a></div><div class="ttdeci">std::size_t num_dimensions() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:225</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_a89fda7fe45f3117a3ab12646e4343407"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">knncolle::L2NormalizedMatrix::num_observations</a></div><div class="ttdeci">Index_ num_observations() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:229</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_aa017b9aa57a5e98638ed63e201a5f046"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">knncolle::L2NormalizedMatrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:236</div></div>
-<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_aa09c1ba642b3541de3b5f568b0ad792d"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">knncolle::L2NormalizedMatrix::new_extractor</a></div><div class="ttdeci">std::unique_ptr&lt; MatrixExtractor&lt; Normalized_ &gt; &gt; new_extractor() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:241</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a></div><div class="ttdoc">Wrapper around a builder with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:265</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a1098d7699574f9d509508b6a1fe23a32"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a1098d7699574f9d509508b6a1fe23a32">knncolle::L2NormalizedBuilder::NormalizedMatrix</a></div><div class="ttdeci">L2NormalizedMatrix&lt; Index_, Data_, Normalized_, Matrix_ &gt; NormalizedMatrix</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:270</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a387250ea0ae7654b186545814cd51da3"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a387250ea0ae7654b186545814cd51da3">knncolle::L2NormalizedBuilder::L2NormalizedBuilder</a></div><div class="ttdeci">L2NormalizedBuilder(std::shared_ptr&lt; const Builder&lt; Index_, Normalized_, Distance_, BuilderMatrix &gt; &gt; builder)</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:293</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a437ca7f6f9a3b82fa32762edba0cd08b"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a437ca7f6f9a3b82fa32762edba0cd08b">knncolle::L2NormalizedBuilder::build_raw</a></div><div class="ttdeci">Prebuilt&lt; Index_, Data_, Distance_ &gt; * build_raw(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:299</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_a4a089482a8c6ba27cf477df95a2885d6"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#a4a089482a8c6ba27cf477df95a2885d6">knncolle::L2NormalizedBuilder::build_known_raw</a></div><div class="ttdeci">auto build_known_raw(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:307</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_abeaefcb9c85ef73693defd5f59503ff2"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#abeaefcb9c85ef73693defd5f59503ff2">knncolle::L2NormalizedBuilder::BuilderMatrix</a></div><div class="ttdeci">std::conditional&lt; std::is_base_of&lt; Matrix_, NormalizedMatrix &gt;::value, Matrix_, NormalizedMatrix &gt;::type BuilderMatrix</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:287</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_ae1a1855022a9acd44a7741840e84889f"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#ae1a1855022a9acd44a7741840e84889f">knncolle::L2NormalizedBuilder::build_known_shared</a></div><div class="ttdeci">auto build_known_shared(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:322</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedBuilder_html_ae50b402db117884065a9d77a9788baa6"><div class="ttname"><a href="classknncolle_1_1L2NormalizedBuilder.html#ae50b402db117884065a9d77a9788baa6">knncolle::L2NormalizedBuilder::build_known_unique</a></div><div class="ttdeci">auto build_known_unique(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:315</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html">knncolle::L2NormalizedMatrix</a></div><div class="ttdoc">Wrapper around a matrix with L2 normalization.</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:211</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_a88d0b083b6135c6656f66727a4c777ee"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#a88d0b083b6135c6656f66727a4c777ee">knncolle::L2NormalizedMatrix::num_dimensions</a></div><div class="ttdeci">std::size_t num_dimensions() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:228</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_a89fda7fe45f3117a3ab12646e4343407"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#a89fda7fe45f3117a3ab12646e4343407">knncolle::L2NormalizedMatrix::num_observations</a></div><div class="ttdeci">Index_ num_observations() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:232</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_aa017b9aa57a5e98638ed63e201a5f046"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#aa017b9aa57a5e98638ed63e201a5f046">knncolle::L2NormalizedMatrix::new_known_extractor</a></div><div class="ttdeci">auto new_known_extractor() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:239</div></div>
+<div class="ttc" id="aclassknncolle_1_1L2NormalizedMatrix_html_aa09c1ba642b3541de3b5f568b0ad792d"><div class="ttname"><a href="classknncolle_1_1L2NormalizedMatrix.html#aa09c1ba642b3541de3b5f568b0ad792d">knncolle::L2NormalizedMatrix::new_extractor</a></div><div class="ttdeci">std::unique_ptr&lt; MatrixExtractor&lt; Normalized_ &gt; &gt; new_extractor() const</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:244</div></div>
 <div class="ttc" id="aclassknncolle_1_1Matrix_html"><div class="ttname"><a href="classknncolle_1_1Matrix.html">knncolle::Matrix</a></div><div class="ttdoc">Interface for matrix data.</div><div class="ttdef"><b>Definition</b> Matrix.hpp:59</div></div>
-<div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:28</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:29</div></div>
-<div class="ttc" id="anamespaceknncolle_html_acb93f1814ffa0816dfbabc41bc3d5be7"><div class="ttname"><a href="namespaceknncolle.html#acb93f1814ffa0816dfbabc41bc3d5be7">knncolle::custom_save_for_l2normalized_normalized</a></div><div class="ttdeci">std::function&lt; void(const std::string &amp;)&gt; &amp; custom_save_for_l2normalized_normalized()</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:48</div></div>
-<div class="ttc" id="anamespaceknncolle_html_af261ec286ec7a275c3926ba0fdb8dc11"><div class="ttname"><a href="namespaceknncolle.html#af261ec286ec7a275c3926ba0fdb8dc11">knncolle::load_prebuilt_raw</a></div><div class="ttdeci">Prebuilt&lt; Index_, Data_, Distance_ &gt; * load_prebuilt_raw(const std::string &amp;prefix)</div><div class="ttdef"><b>Definition</b> load_prebuilt.hpp:134</div></div>
-<div class="ttc" id="anamespaceknncolle_html_afc954146b2f7fe5cbd1c7f3a5610ba94"><div class="ttname"><a href="namespaceknncolle.html#afc954146b2f7fe5cbd1c7f3a5610ba94">knncolle::quick_save</a></div><div class="ttdeci">void quick_save(const std::string &amp;path, const Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:32</div></div>
+<div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor search indices.</div><div class="ttdef"><b>Definition</b> Prebuilt.hpp:29</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:30</div></div>
+<div class="ttc" id="anamespaceknncolle_html_a2157dec9e895be903278fc6903c793e0"><div class="ttname"><a href="namespaceknncolle.html#a2157dec9e895be903278fc6903c793e0">knncolle::load_prebuilt_raw</a></div><div class="ttdeci">Prebuilt&lt; Index_, Data_, Distance_ &gt; * load_prebuilt_raw(const std::filesystem::path &amp;dir)</div><div class="ttdef"><b>Definition</b> load_prebuilt.hpp:135</div></div>
+<div class="ttc" id="anamespaceknncolle_html_acf69c31b24c8a2bda72371f64133f8b8"><div class="ttname"><a href="namespaceknncolle.html#acf69c31b24c8a2bda72371f64133f8b8">knncolle::quick_save</a></div><div class="ttdeci">void quick_save(const std::filesystem::path &amp;path, const Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:33</div></div>
+<div class="ttc" id="anamespaceknncolle_html_addf5942d7b462be001619860d8b4b158"><div class="ttname"><a href="namespaceknncolle.html#addf5942d7b462be001619860d8b4b158">knncolle::custom_save_for_l2normalized_normalized</a></div><div class="ttdeci">std::function&lt; void(const std::filesystem::path &amp;)&gt; &amp; custom_save_for_l2normalized_normalized()</div><div class="ttdef"><b>Definition</b> L2Normalized.hpp:49</div></div>
 <div class="ttc" id="autils_8hpp_html"><div class="ttname"><a href="utils_8hpp.html">utils.hpp</a></div><div class="ttdoc">Miscellaneous utilities for knncolle</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

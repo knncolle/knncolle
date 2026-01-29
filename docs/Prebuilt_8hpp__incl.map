@@ -1,13 +1,15 @@
 <map id="knncolle/Prebuilt.hpp" name="knncolle/Prebuilt.hpp">
-<area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="58,5,199,31"/>
+<area shape="rect" id="Node000001" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="106,5,247,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,73,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,34,68,71,64,67,112,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,34,77,74,75,69,152,29"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="96,79,160,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="131,31,131,63,126,63,126,31"/>
-<area shape="rect" id="Node000004" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="185,79,282,105"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="148,29,205,68,202,72,145,34"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="158,153,216,178"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="228,106,205,141,201,138,224,103"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="240,153,318,178"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="243,103,266,138,261,141,239,106"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="171,33,147,67,143,64,166,30"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,79,264,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,30,210,64,205,67,182,33"/>
+<area shape="rect" id="Node000005" href="$Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="288,79,385,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="205,29,296,70,294,75,202,34"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="261,153,318,178"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="331,106,308,141,304,138,326,103"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="343,153,420,178"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="346,103,368,138,364,141,342,106"/>
 </map>

@@ -108,6 +108,7 @@ $(function(){ initResizable(false); });
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;filesystem&gt;</code><br />
 <code>#include &quot;<a class="el" href="Searcher_8hpp_source.html">Searcher.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Prebuilt_8hpp_source.html">Prebuilt.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Builder_8hpp_source.html">Builder.hpp</a>&quot;</code><br />
@@ -119,61 +120,65 @@ Include dependency graph for L2Normalized.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="L2Normalized_8hpp__incl.png" border="0" usemap="#aknncolle_2L2Normalized_8hpp" alt=""/></div>
 <map name="aknncolle_2L2Normalized_8hpp" id="aknncolle_2L2Normalized_8hpp">
-<area shape="rect" title="Wrapper for L2 normalization prior to search." alt="" coords="516,5,693,31"/>
+<area shape="rect" title="Wrapper for L2 normalization prior to search." alt="" coords="568,5,745,31"/>
 <area shape="rect" title=" " alt="" coords="5,300,63,326"/>
-<area shape="poly" title=" " alt="" coords="516,26,424,33,324,44,234,60,199,70,173,81,146,101,122,125,84,181,59,239,43,286,38,284,54,237,80,179,118,122,142,97,170,77,197,65,233,55,323,39,423,28,515,21"/>
-<area shape="rect" title=" " alt="" coords="944,79,1001,105"/>
-<area shape="poly" title=" " alt="" coords="676,29,925,76,930,77,929,83,924,82,675,34"/>
-<area shape="rect" title=" " alt="" coords="271,226,338,252"/>
-<area shape="poly" title=" " alt="" coords="516,30,403,48,343,62,284,82,213,106,188,123,164,154,160,168,162,180,170,190,183,200,218,216,256,227,255,232,216,221,180,205,166,194,157,182,155,167,160,151,184,119,211,101,282,76,341,57,402,43,515,25"/>
-<area shape="rect" title=" " alt="" coords="1025,79,1078,105"/>
-<area shape="poly" title=" " alt="" coords="694,26,839,45,1010,76,1009,81,838,50,693,31"/>
-<area shape="rect" title=" " alt="" coords="688,226,753,252"/>
-<area shape="poly" title=" " alt="" coords="660,29,698,47,716,61,730,78,743,112,745,148,740,183,733,212,728,211,735,182,740,148,737,113,725,80,712,65,696,52,658,34"/>
+<area shape="poly" title=" " alt="" coords="568,25,463,30,348,41,243,57,202,68,171,81,144,101,121,125,84,181,58,238,43,285,38,284,53,237,79,179,117,122,141,97,169,77,200,63,242,52,347,35,463,25,567,19"/>
+<area shape="rect" title=" " alt="" coords="1145,79,1203,105"/>
+<area shape="poly" title=" " alt="" coords="746,25,922,45,1126,76,1131,77,1130,83,1126,82,922,51,745,31"/>
+<area shape="rect" title=" " alt="" coords="234,226,301,252"/>
+<area shape="poly" title=" " alt="" coords="568,26,430,43,354,59,280,82,211,106,187,123,164,154,161,164,161,174,173,191,194,207,220,219,218,224,191,211,169,195,156,175,155,164,160,151,183,120,209,101,278,76,353,54,429,37,567,21"/>
+<area shape="rect" title=" " alt="" coords="1226,79,1279,105"/>
+<area shape="poly" title=" " alt="" coords="746,21,955,38,1082,54,1211,76,1211,81,1081,59,954,43,745,26"/>
+<area shape="rect" title=" " alt="" coords="604,226,669,252"/>
+<area shape="poly" title=" " alt="" coords="680,29,707,50,732,77,748,104,759,128,760,152,750,180,737,196,721,209,685,228,683,223,718,205,733,192,745,177,755,152,754,129,744,106,728,81,704,54,677,34"/>
 <area shape="rect" title=" " alt="" coords="517,153,599,178"/>
-<area shape="poly" title=" " alt="" coords="602,33,583,80,567,138,562,137,578,78,597,31"/>
-<area shape="rect" title=" " alt="" coords="1101,79,1162,105"/>
-<area shape="poly" title=" " alt="" coords="694,24,872,42,978,57,1086,76,1086,81,977,62,871,48,694,29"/>
-<area shape="rect" title=" " alt="" coords="1001,153,1054,178"/>
-<area shape="poly" title=" " alt="" coords="694,29,786,47,882,77,935,104,997,142,994,147,932,109,880,81,785,52,693,34"/>
+<area shape="poly" title=" " alt="" coords="637,34,610,54,586,80,572,109,564,138,559,137,567,107,581,78,607,50,634,29"/>
+<area shape="rect" title=" " alt="" coords="1302,79,1363,105"/>
+<area shape="poly" title=" " alt="" coords="746,20,987,37,1136,53,1288,76,1287,81,1135,58,986,42,745,26"/>
+<area shape="rect" title=" " alt="" coords="1053,153,1106,178"/>
+<area shape="poly" title=" " alt="" coords="746,28,842,46,893,60,942,77,1003,108,1053,141,1050,145,1000,112,940,81,891,65,841,51,745,33"/>
+<area shape="rect" title=" " alt="" coords="976,226,1055,252"/>
+<area shape="poly" title=" " alt="" coords="746,25,861,44,923,58,984,76,1063,100,1093,118,1120,151,1125,163,1124,174,1113,193,1092,210,1067,222,1065,218,1089,205,1109,190,1119,173,1119,164,1116,154,1090,122,1061,105,983,82,922,63,860,49,745,31"/>
 <area shape="rect" href="Searcher_8hpp.html" title="Interface for searching nearest&#45;neighbor indices." alt="" coords="75,226,172,252"/>
-<area shape="poly" title=" " alt="" coords="516,27,341,46,261,61,229,71,206,81,176,108,154,143,140,180,131,212,126,210,134,178,149,141,172,105,203,77,227,66,260,56,341,40,515,22"/>
+<area shape="poly" title=" " alt="" coords="568,25,471,31,365,42,270,58,232,69,205,81,175,108,153,143,139,180,131,212,125,210,134,178,149,141,171,105,202,77,230,64,269,53,364,37,471,26,567,20"/>
 <area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="173,153,263,178"/>
-<area shape="poly" title=" " alt="" coords="516,32,426,50,379,64,334,81,283,112,243,144,239,140,280,107,331,77,377,59,425,45,515,27"/>
-<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="345,79,430,105"/>
-<area shape="poly" title=" " alt="" coords="569,34,440,76,438,71,567,29"/>
+<area shape="poly" title=" " alt="" coords="568,27,451,44,388,59,328,81,280,111,242,144,238,139,277,106,326,77,387,54,450,38,567,21"/>
+<area shape="rect" href="Builder_8hpp.html" title="Interface to build nearest&#45;neighbor indices." alt="" coords="339,79,425,105"/>
+<area shape="poly" title=" " alt="" coords="611,34,440,78,439,73,609,29"/>
 <area shape="rect" href="Matrix_8hpp.html" title="Interface for the input matrix." alt="" coords="412,153,493,178"/>
-<area shape="poly" title=" " alt="" coords="594,33,478,144,474,140,590,29"/>
-<area shape="rect" href="NumericType_8hpp.html" title="Preserve numeric types when saving prebuilt indices." alt="" coords="593,79,715,105"/>
-<area shape="poly" title=" " alt="" coords="615,30,639,65,635,68,611,33"/>
-<area shape="rect" href="utils_8hpp.html" title="Miscellaneous utilities for knncolle" alt="" coords="799,79,869,105"/>
-<area shape="poly" title=" " alt="" coords="644,29,785,73,784,78,643,34"/>
+<area shape="poly" title=" " alt="" coords="639,34,568,81,481,145,478,141,564,77,636,29"/>
+<area shape="rect" href="NumericType_8hpp.html" title="Preserve numeric types when saving prebuilt indices." alt="" coords="596,79,718,105"/>
+<area shape="poly" title=" " alt="" coords="659,31,659,63,654,63,654,31"/>
+<area shape="rect" href="utils_8hpp.html" title="Miscellaneous utilities for knncolle" alt="" coords="859,79,929,105"/>
+<area shape="poly" title=" " alt="" coords="698,29,845,73,844,78,696,34"/>
 <area shape="poly" title=" " alt="" coords="110,255,63,292,59,288,107,250"/>
 <area shape="rect" title=" " alt="" coords="87,300,165,326"/>
 <area shape="poly" title=" " alt="" coords="126,252,128,284,122,285,121,252"/>
-<area shape="poly" title=" " alt="" coords="234,177,280,214,277,218,231,181"/>
-<area shape="poly" title=" " alt="" coords="263,174,276,176,498,208,673,230,673,235,497,214,275,181,263,179"/>
+<area shape="poly" title=" " alt="" coords="228,177,253,212,248,215,224,180"/>
+<area shape="poly" title=" " alt="" coords="264,172,589,227,589,232,263,177"/>
+<area shape="poly" title=" " alt="" coords="263,169,326,176,618,200,910,224,961,229,960,234,910,229,618,205,326,181,263,175"/>
 <area shape="poly" title=" " alt="" coords="204,181,153,219,150,215,200,177"/>
-<area shape="poly" title=" " alt="" coords="386,106,372,140,352,180,327,216,323,213,348,177,367,138,381,104"/>
-<area shape="poly" title=" " alt="" coords="417,103,516,144,514,149,415,108"/>
-<area shape="poly" title=" " alt="" coords="360,108,262,149,260,144,358,103"/>
-<area shape="poly" title=" " alt="" coords="400,103,433,139,429,143,396,107"/>
-<area shape="rect" title=" " alt="" coords="287,153,338,178"/>
-<area shape="poly" title=" " alt="" coords="377,107,338,144,334,140,373,103"/>
-<area shape="poly" title=" " alt="" coords="429,181,345,222,343,217,426,176"/>
-<area shape="poly" title=" " alt="" coords="494,175,675,223,673,228,493,180"/>
-<area shape="rect" title=" " alt="" coords="786,226,938,252"/>
-<area shape="poly" title=" " alt="" coords="494,173,506,176,771,221,770,226,506,181,493,178"/>
-<area shape="poly" title=" " alt="" coords="666,104,698,151,718,210,713,212,693,154,662,107"/>
-<area shape="poly" title=" " alt="" coords="639,107,588,146,584,141,636,103"/>
-<area shape="rect" title=" " alt="" coords="622,153,683,178"/>
-<area shape="poly" title=" " alt="" coords="656,105,656,137,651,137,651,105"/>
-<area shape="poly" title=" " alt="" coords="832,106,817,141,792,180,752,219,748,215,788,177,812,138,827,104"/>
-<area shape="poly" title=" " alt="" coords="800,105,614,152,613,147,798,100"/>
-<area shape="poly" title=" " alt="" coords="868,103,987,146,985,151,866,108"/>
-<area shape="poly" title=" " alt="" coords="839,104,859,210,854,211,834,106"/>
-<area shape="rect" title=" " alt="" coords="911,153,976,178"/>
-<area shape="poly" title=" " alt="" coords="854,103,914,142,911,146,851,107"/>
+<area shape="poly" title=" " alt="" coords="372,107,328,154,285,215,281,212,324,151,368,103"/>
+<area shape="poly" title=" " alt="" coords="413,103,515,144,513,149,411,108"/>
+<area shape="poly" title=" " alt="" coords="355,108,261,149,259,144,353,103"/>
+<area shape="poly" title=" " alt="" coords="396,103,432,140,428,143,392,107"/>
+<area shape="rect" title=" " alt="" coords="338,153,389,178"/>
+<area shape="poly" title=" " alt="" coords="381,106,373,138,368,137,376,104"/>
+<area shape="poly" title=" " alt="" coords="422,181,314,223,312,218,420,176"/>
+<area shape="poly" title=" " alt="" coords="485,176,592,218,590,223,483,181"/>
+<area shape="rect" title=" " alt="" coords="746,226,898,252"/>
+<area shape="poly" title=" " alt="" coords="494,173,507,176,740,220,739,226,505,181,493,178"/>
+<area shape="poly" title=" " alt="" coords="658,105,643,211,638,211,652,105"/>
+<area shape="poly" title=" " alt="" coords="641,107,588,146,585,141,638,103"/>
+<area shape="rect" title=" " alt="" coords="674,153,735,178"/>
+<area shape="poly" title=" " alt="" coords="667,103,690,138,686,141,662,106"/>
+<area shape="poly" title=" " alt="" coords="884,107,845,142,793,181,738,207,685,227,683,222,736,202,790,176,842,138,881,103"/>
+<area shape="poly" title=" " alt="" coords="859,103,615,155,613,150,858,98"/>
+<area shape="poly" title=" " alt="" coords="926,103,1039,146,1037,151,924,108"/>
+<area shape="poly" title=" " alt="" coords="912,103,937,124,963,151,1004,211,1000,214,959,154,933,128,908,107"/>
+<area shape="poly" title=" " alt="" coords="910,103,925,118,939,137,946,158,942,180,918,205,888,222,885,218,914,201,937,177,941,159,934,140,921,122,907,107"/>
+<area shape="rect" title=" " alt="" coords="861,153,927,178"/>
+<area shape="poly" title=" " alt="" coords="897,105,897,137,891,137,891,105"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -209,9 +214,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acb93f1814ffa0816dfbabc41bc3d5be7" id="r_acb93f1814ffa0816dfbabc41bc3d5be7"><td class="memTemplParams" colspan="2">template&lt;typename Normalized_ &gt; </td></tr>
-<tr class="memitem:acb93f1814ffa0816dfbabc41bc3d5be7"><td class="memTemplItemLeft" align="right" valign="top">std::function&lt; void(const std::string &amp;)&gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#acb93f1814ffa0816dfbabc41bc3d5be7">knncolle::custom_save_for_l2normalized_normalized</a> ()</td></tr>
-<tr class="separator:acb93f1814ffa0816dfbabc41bc3d5be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addf5942d7b462be001619860d8b4b158" id="r_addf5942d7b462be001619860d8b4b158"><td class="memTemplParams" colspan="2">template&lt;typename Normalized_ &gt; </td></tr>
+<tr class="memitem:addf5942d7b462be001619860d8b4b158"><td class="memTemplItemLeft" align="right" valign="top">std::function&lt; void(const std::filesystem::path &amp;)&gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#addf5942d7b462be001619860d8b4b158">knncolle::custom_save_for_l2normalized_normalized</a> ()</td></tr>
+<tr class="separator:addf5942d7b462be001619860d8b4b158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper for L2 normalization prior to search. </p>

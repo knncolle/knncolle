@@ -1,27 +1,30 @@
 <map id="knncolle/distances.hpp" name="knncolle/distances.hpp">
-<area shape="rect" id="Node000001" title="Classes for distance calculations." alt="" coords="203,5,356,31"/>
+<area shape="rect" id="Node000001" title="Classes for distance calculations." alt="" coords="197,5,351,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,63,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,34,78,80,77,75,237,29"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,34,79,80,77,75,233,29"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="36,153,101,178"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="250,34,206,54,160,81,122,112,90,144,87,140,118,108,156,77,203,49,247,29"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="258,34,99,146,96,141,255,29"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="125,153,178,178"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,34,211,53,179,81,164,109,157,138,151,137,159,107,175,77,208,48,244,29"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="282,79,392,105"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="291,30,319,65,315,68,287,33"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="415,79,493,105"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="310,29,411,70,409,75,308,34"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="517,79,578,105"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="326,29,503,76,501,81,325,34"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="602,79,669,105"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="349,29,587,76,586,81,348,34"/>
-<area shape="rect" id="Node000009" href="$utils_8hpp.html" title="Miscellaneous utilities for knncolle" alt="" coords="189,79,258,105"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="272,33,244,68,240,65,268,30"/>
-<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="198,108,110,148,108,143,196,103"/>
-<area shape="poly" id="edge10_Node000009_Node000004" title=" " alt="" coords="213,107,176,143,172,140,210,103"/>
-<area shape="rect" id="Node000010" title=" " alt="" coords="203,153,268,178"/>
-<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="228,104,233,137,228,138,223,105"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="292,153,373,178"/>
-<area shape="poly" id="edge12_Node000009_Node000011" title=" " alt="" coords="243,103,303,142,300,146,240,107"/>
-<area shape="rect" id="Node000012" title=" " alt="" coords="397,153,548,178"/>
-<area shape="poly" id="edge13_Node000009_Node000012" title=" " alt="" coords="259,101,417,145,415,151,258,106"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="264,33,221,81,171,142,167,139,217,77,260,30"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="332,79,442,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="295,29,357,68,354,73,292,34"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="466,79,543,105"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="314,29,452,71,450,77,312,34"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="568,79,628,105"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="337,29,553,76,552,81,336,34"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="652,79,720,105"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="352,27,482,47,637,76,637,81,481,53,351,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="202,153,282,178"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="262,33,244,54,230,80,227,109,234,138,228,139,222,110,225,78,240,51,258,30"/>
+<area shape="rect" id="Node000010" href="$utils_8hpp.html" title="Miscellaneous utilities for knncolle" alt="" coords="239,79,309,105"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="277,31,277,63,271,63,271,31"/>
+<area shape="poly" id="edge12_Node000010_Node000003" title=" " alt="" coords="240,108,116,151,114,146,238,103"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="255,108,186,147,184,142,252,103"/>
+<area shape="poly" id="edge14_Node000010_Node000009" title=" " alt="" coords="271,106,256,139,251,137,266,104"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="305,153,371,178"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="287,103,319,139,315,143,283,107"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="395,153,476,178"/>
+<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="302,103,395,144,393,148,300,108"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="500,153,651,178"/>
+<area shape="poly" id="edge15_Node000010_Node000013" title=" " alt="" coords="310,99,321,102,509,146,507,151,320,107,309,104"/>
 </map>

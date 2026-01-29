@@ -273,8 +273,8 @@
       <type>virtual void</type>
       <name>save</name>
       <anchorfile>classknncolle_1_1DistanceMetric.html</anchorfile>
-      <anchor>a1afc3ebde534d693ef3ac82528de767d</anchor>
-      <arglist>(const std::string &amp;prefix) const</arglist>
+      <anchor>aa2989e7df3cb8e65d161629473914d55</anchor>
+      <arglist>(const std::filesystem::path &amp;dir) const</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -402,10 +402,10 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>const std::string &amp;</type>
+      <type>const std::filesystem::path &amp;</type>
       <name>get_path</name>
       <anchorfile>classknncolle_1_1LoadDistanceMetricNotFoundError.html</anchorfile>
-      <anchor>ab59f0c184075d5d6a5ee642d12073526</anchor>
+      <anchor>a1cd58ee3d4aeb55028816b935e5bf3b1</anchor>
       <arglist>() const</arglist>
     </member>
   </compound>
@@ -420,10 +420,10 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>const std::string &amp;</type>
+      <type>const std::filesystem::path &amp;</type>
       <name>get_path</name>
       <anchorfile>classknncolle_1_1LoadPrebuiltNotFoundError.html</anchorfile>
-      <anchor>aeea1e4dc86e1be027303feb54d50997d</anchor>
+      <anchor>ab9cb32c6bb99ec8216e4ca14e0d0432a</anchor>
       <arglist>() const</arglist>
     </member>
   </compound>
@@ -566,8 +566,8 @@
       <type>virtual void</type>
       <name>save</name>
       <anchorfile>classknncolle_1_1Prebuilt.html</anchorfile>
-      <anchor>a87930f878bf3a22297b851173caaf893</anchor>
-      <arglist>(const std::string &amp;prefix) const</arglist>
+      <anchor>add21dc74e08a6ad495c6e241fa3d5968</anchor>
+      <arglist>(const std::filesystem::path &amp;dir) const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
@@ -727,10 +727,10 @@
     <class kind="class">knncolle::SimpleMatrix</class>
     <class kind="class">knncolle::VptreeBuilder</class>
     <member kind="typedef">
-      <type>std::function&lt; DistanceMetric&lt; Data_, Distance_ &gt; *(const std::string &amp;)&gt;</type>
+      <type>std::function&lt; DistanceMetric&lt; Data_, Distance_ &gt; *(const std::filesystem::path &amp;)&gt;</type>
       <name>LoadDistanceMetricFunction</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>ac850c74c54af62105c165c458f7516b7</anchor>
+      <anchor>a67fb4089867eeafca50930f79698f820</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -741,10 +741,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>std::function&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; *(const std::string &amp;)&gt;</type>
+      <type>std::function&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; *(const std::filesystem::path &amp;)&gt;</type>
       <name>LoadPrebuiltFunction</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>af5bf682899b815f8e1d4a4c6ef80408a</anchor>
+      <anchor>a0574e57c9150cb0bfe1da0e7eff6aa01</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
@@ -803,8 +803,8 @@
       <type>DistanceMetric&lt; Data_, Distance_ &gt; *</type>
       <name>load_distance_metric_raw</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a5c0df62bd7206b0b3892aedadb2a962c</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>acd94b11fc8a2fade908a509ed2ecfddb</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -842,10 +842,10 @@
       <arglist>(const Prebuilt&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</arglist>
     </member>
     <member kind="function">
-      <type>std::function&lt; void(const std::string &amp;)&gt; &amp;</type>
+      <type>std::function&lt; void(const std::filesystem::path &amp;)&gt; &amp;</type>
       <name>custom_save_for_l2normalized_normalized</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>acb93f1814ffa0816dfbabc41bc3d5be7</anchor>
+      <anchor>addf5942d7b462be001619860d8b4b158</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -873,36 +873,36 @@
       <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>load_prebuilt_raw</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>af261ec286ec7a275c3926ba0fdb8dc11</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>a2157dec9e895be903278fc6903c793e0</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>load_prebuilt_unique</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>aa985f74dca21f1c23cfe914a25b2a412</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>a9cb4f999cb4b25dd5bd4595bfb680f10</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>std::shared_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt;</type>
       <name>load_prebuilt_shared</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>ae60afb430cc5948b0c8e5c2d4a4a7f84</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>a0958bf13fd4ad18e0fa0d35d9bd47665</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>L2NormalizedPrebuiltTypes</type>
       <name>load_l2normalized_prebuilt_types</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>acde4204d68e33d9c9689528da1d9ae4c</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>a7226ddc157c8e3c39d89b13bb412dda4</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>load_l2normalized_prebuilt</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a4ac0563a38deda032558537ac3f2d304</anchor>
-      <arglist>(const std::string &amp;prefix)</arglist>
+      <anchor>a54a79aea2d2c0a9ece9e107c60776c22</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
       <type>NumericType</type>
@@ -936,22 +936,22 @@
       <type>void</type>
       <name>quick_save</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>afc954146b2f7fe5cbd1c7f3a5610ba94</anchor>
-      <arglist>(const std::string &amp;path, const Input_ *const contents, const Length_ length)</arglist>
+      <anchor>acf69c31b24c8a2bda72371f64133f8b8</anchor>
+      <arglist>(const std::filesystem::path &amp;path, const Input_ *const contents, const Length_ length)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>quick_load</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>ac5079c0b39b7f9e10bd97341ccfad46c</anchor>
-      <arglist>(const std::string &amp;path, Input_ *const contents, const Length_ length)</arglist>
+      <anchor>a1e25b966ec80b5ab45dced14fe690e6b</anchor>
+      <arglist>(const std::filesystem::path &amp;path, Input_ *const contents, const Length_ length)</arglist>
     </member>
     <member kind="function">
       <type>std::string</type>
       <name>quick_load_as_string</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a83e38fc963fa7d735ef8f0d11f1f5a4b</anchor>
-      <arglist>(const std::string &amp;path)</arglist>
+      <anchor>a9191267167f1e0d7201b276c8a9caa2a</anchor>
+      <arglist>(const std::filesystem::path &amp;path)</arglist>
     </member>
   </compound>
   <compound kind="page">
