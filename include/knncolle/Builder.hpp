@@ -20,7 +20,7 @@ namespace knncolle {
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  * @tparam Matrix_ Class of the input data matrix. 
  * This should satisfy the `Matrix` interface.
  */

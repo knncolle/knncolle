@@ -23,7 +23,7 @@ namespace knncolle {
  * @brief Interface for a distance metric.
  *
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 class DistanceMetric {
@@ -102,9 +102,8 @@ inline static constexpr const char* euclidean_distance_save_name = "knncolle::Eu
 
 /**
  * @brief Compute Euclidean distances between two input vectors.
- *
- * @tparam Distance_ Floating-point type for the output distance.
  * @tparam Data_ Numeric type for the input data.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 class EuclideanDistance final : public DistanceMetric<Data_, Distance_> {
@@ -145,8 +144,8 @@ inline static constexpr const char* manhattan_distance_save_name = "knncolle::Ma
 /**
  * @brief Compute Manhattan distances between two input vectors.
  *
- * @tparam Distance_ Floating-point type for the output distance.
  * @tparam Data_ Numeric type for the input data.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 class ManhattanDistance final : public DistanceMetric<Data_, Distance_> {
@@ -184,14 +183,15 @@ public:
  * This accepts a file path prefix (see `DistanceMetric::save()`) and returns a pointer to a `Distance` instance.
  *
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 using LoadDistanceMetricFunction = std::function<DistanceMetric<Data_, Distance_>* (const std::string&)>;
 
+
 /**
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  *
  * @return Reference to a global map where the keys are distance metric names (see `DistanceMetric::save()`) and the values are distance loading functions.
  *
@@ -208,7 +208,7 @@ inline std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distanc
  * Register a loading function for `EuclideanDistance` using `euclidean_distance_save_name`.
  *
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 void register_load_euclidean_distance() {
@@ -220,7 +220,7 @@ void register_load_euclidean_distance() {
  * Register a loading function for `ManhattanDistance` using `manhattan_distance_save_name`.
  *
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
 void register_load_manhattan_distance() {
@@ -232,7 +232,7 @@ void register_load_manhattan_distance() {
  * Load a distance metric from disk into a `Distance` object.
  *
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the output distance.
+ * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  *
  * @param prefix File path prefix for a distance index that was saved to disk by `DistanceMetric::save()`.
  *

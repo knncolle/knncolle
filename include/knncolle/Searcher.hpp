@@ -22,7 +22,7 @@ namespace knncolle {
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  */
 template<typename Index_, typename Data_, typename Distance_>
 class Searcher {

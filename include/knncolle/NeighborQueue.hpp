@@ -29,7 +29,7 @@ namespace knncolle {
  * The appropriate `report()` overload can then be used to remove the observation of interest from its own neighbor list.
  *
  * @tparam Index_ Integer type for the observation indices.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  */
 template<typename Index_, typename Distance_>
 class NeighborQueue {

@@ -88,7 +88,7 @@ void report_all_neighbors_raw(std::vector<std::pair<Distance_, Index_> >& all_ne
  * Report the indices and distances of all neighbors in range of an observation of interest.
  * If the observation of interest is detected as its own neighbor, it will be removed from the output vectors.
  *
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  * @tparam Index_ Integer type for the observation indices.
  *
  * @param[in] all_neighbors Vector of (distance, index) pairs for all neighbors within range of the observation of interest.
@@ -117,7 +117,7 @@ void report_all_neighbors(std::vector<std::pair<Distance_, Index_> >& all_neighb
  * Report the indices and distances of all neighbors in range of an observation of interest.
  * It is assumed that the observation of interest is not detected as its own neighbor, presumably as it does not exist in the original input dataset.
  *
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  * @tparam Index_ Integer type for the observation indices.
  *
  * @param[in] all_neighbors Vector of (distance, index) pairs for all neighbors within range of the observation of interest.

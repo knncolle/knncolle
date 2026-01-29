@@ -50,7 +50,7 @@ void parallelize(int num_workers, Task_ num_tasks, Run_ run_task_range) {
  * sorted by increasing distance.
  *
  * @tparam Index_ Integer type for the indices.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  */
 template<typename Index_, typename Distance_>
 using NeighborList = std::vector<std::vector<std::pair<Index_, Distance_> > >;
@@ -99,7 +99,7 @@ int cap_k_query(int k, Index_ num_observations) {
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the input data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 
@@ -141,7 +141,7 @@ NeighborList<Index_, Distance_> find_nearest_neighbors(const Prebuilt<Index_, Da
  *
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @param index A `Prebuilt` index.
  * @param k Number of nearest neighbors. 

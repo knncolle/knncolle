@@ -25,7 +25,7 @@ namespace knncolle {
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  */
 template<typename Index_, typename Data_, typename Distance_>
 using LoadPrebuiltFunction = std::function<Prebuilt<Index_, Data_, Distance_>* (const std::string&)>;
@@ -33,7 +33,7 @@ using LoadPrebuiltFunction = std::function<Prebuilt<Index_, Data_, Distance_>* (
 /**
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @return Reference to a global map where the keys are algorithm names (see `Prebuilt::save()`) and the values are the prebuilt loading functions.
  *
@@ -121,7 +121,7 @@ public:
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
@@ -148,7 +148,7 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix)
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
@@ -166,7 +166,7 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
- * @tparam Distance_ Floating point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
  * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
@@ -210,7 +210,7 @@ inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::str
  *
  * @tparam Index_ Integer type for the indices.
  * @tparam Data_ Numeric type for the input and query data.
- * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Distance_ Numeric type for the distances, usually floating-point.
  * @tparam Normalized_ Floating-point type for the L2-normalized data.
  *
  * @param prefix Prefix of the file paths in which a prebuilt L2-normalized index was saved.
