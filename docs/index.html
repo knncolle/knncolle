@@ -254,7 +254,7 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="anamespaceknncolle_html_a9e446385ed1746050c0bd2450a8e7298"><div class="ttname"><a href="namespaceknncolle.html#a9e446385ed1746050c0bd2450a8e7298">knncolle::register_load_manhattan_distance</a></div><div class="ttdeci">void register_load_manhattan_distance()</div><div class="ttdef"><b>Definition</b> distances.hpp:229</div></div>
 </div><!-- fragment --><p>For L2-normalized matrices, the situation is a little trickier as we need to consider the data type after normalization. Here, we specify the supported set of normalized types for our loading function:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; reg = <a class="code hl_function" href="namespaceknncolle.html#aa08de1eb1a23d5e13dc11e23ad7967ea">knncolle::load_prebuilt_registry</a>();</div>
-<div class="line">reg[knncolle::l2normalized_save_name] = [](<span class="keyword">const</span> std::filesystem::path&amp; dir) -&gt; <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;int, double, double&gt;</a>* {</div>
+<div class="line">reg[knncolle::l2normalized_prebuilt_save_name] = [](<span class="keyword">const</span> std::filesystem::path&amp; dir) -&gt; <a class="code hl_class" href="classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;int, double, double&gt;</a>* {</div>
 <div class="line">    <span class="keyword">auto</span> config = <a class="code hl_function" href="namespaceknncolle.html#a7226ddc157c8e3c39d89b13bb412dda4">knncolle::load_l2normalized_prebuilt_types</a>();</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Possibly could support float, if we expected to get single-precision saved indices.</span></div>
