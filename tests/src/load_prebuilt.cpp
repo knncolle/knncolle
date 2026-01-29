@@ -147,6 +147,13 @@ TEST_F(LoadPrebuiltTest, L2NormalizedEuclidean) {
         EXPECT_EQ(output_i, output_i2);
         EXPECT_EQ(output_d, output_d2);
     }
+
+    // Injecting some customization.
+    knncolle::custom_save_for_l2normalized_normalized<double>() = [](const std::string& prefix) -> void {
+        knncolle::quick_save(prefix + "custom", "FOO", 3);
+    };
+    l2ptr->save(prefix);
+    EXPECT_EQ(knncolle::quick_load_as_string(prefix + "custom"), "FOO");
 }
 
 class FakePrebuilt final : public knncolle::Prebuilt<int, double, double> {
