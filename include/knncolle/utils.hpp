@@ -5,6 +5,7 @@
 #include <string>
 #include <cstddef>
 #include <type_traits>
+#include <filesystem>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -29,10 +30,10 @@ namespace knncolle {
  * This should be non-negative.
  */
 template<typename Input_, typename Length_>
-void quick_save(const std::string& path, const Input_* const contents, const Length_ length) {
+void quick_save(const std::filesystem::path& path, const Input_* const contents, const Length_ length) {
     std::ofstream output(path, std::ofstream::binary);
     if (!output) {
-        throw std::runtime_error("failed to open a binary file at '" + path + "'");
+        throw std::runtime_error("failed to open a binary file at '" + path.string() + "'");
     }
 
     output.exceptions(std::ofstream::failbit | std::ofstream::badbit);
@@ -53,10 +54,10 @@ void quick_save(const std::string& path, const Input_* const contents, const Len
  * This should be non-negative.
  */
 template<typename Input_, typename Length_>
-void quick_load(const std::string& path, Input_* const contents, const Length_ length) {
+void quick_load(const std::filesystem::path& path, Input_* const contents, const Length_ length) {
     std::ifstream input(path, std::ifstream::binary);
     if (!input) {
-        throw std::runtime_error("failed to open a binary file at '" + path + "'");
+        throw std::runtime_error("failed to open a binary file at '" + path.string() + "'");
     }
 
     input.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -70,10 +71,10 @@ void quick_load(const std::string& path, Input_* const contents, const Length_ l
  * @param path File path to read from.
  * @return Contents of `path` as a string.
  */
-inline std::string quick_load_as_string(const std::string& path) {
+inline std::string quick_load_as_string(const std::filesystem::path& path) {
     std::ifstream input(path, std::ifstream::binary);
     if (!input) {
-        throw std::runtime_error("failed to open a binary file at '" + path + "'");
+        throw std::runtime_error("failed to open a binary file at '" + path.string() + "'");
     }
 
     input.exceptions(std::ifstream::failbit | std::ifstream::badbit);

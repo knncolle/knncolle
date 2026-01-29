@@ -214,7 +214,8 @@ Once a `Prebuilt` search index is constructed, we can save it to file.
 We can then load it back into memory on its next use, thus avoiding the need to rebuild the same index.
 
 ```cpp
-vp_index->save("foo/bar_");
+std::filesystem::path save_dir = "foo/bar";
+vp_index->save(save_dir);
 
 // Register all the distances and search algorithms that we want to support.
 knncolle::register_load_bruteforce_prebuilt<int, double, double>();
@@ -224,7 +225,7 @@ knncolle::register_load_manhattan_distance<double, double>();
 
 // This should be called with the same template parameters as the Prebuilt
 // object that was saved (Index_ = int, Data_ = double, Distance_ = double).
-auto reloaded = knncolle::load_prebuilt_shared<int, double, double>("foo/bar_");
+auto reloaded = knncolle::load_prebuilt_shared<int, double, double>(save_dir);
 ```
 
 For L2-normalized matrices, the situation is a little trickier as we need to consider the data type after normalization.
@@ -232,7 +233,7 @@ Here, we specify the supported set of normalized types for our loading function:
 
 ```cpp
 auto& reg = knncolle::load_prebuilt_registry();
-reg[knncolle::l2normalized_save_name] = [](const std::string& prefix) -> knncolle::Prebuilt<int, double, double>* {
+reg[knncolle::l2normalized_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<int, double, double>* {
     auto config = knncolle::load_l2normalized_prebuilt_types();
 
     // Possibly could support float, if we expected to get single-precision saved indices.
@@ -240,7 +241,7 @@ reg[knncolle::l2normalized_save_name] = [](const std::string& prefix) -> knncoll
         throw std::runtime_error("don't know how to handle non-double normalized types");
     }
 
-    return knncolle::load_l2normalized_prebuilt<int, double, double, double>(prefix);
+    return knncolle::load_l2normalized_prebuilt<int, double, double, double>(dir);
 };
 ```
 

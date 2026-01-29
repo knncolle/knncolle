@@ -35,10 +35,11 @@ TEST_F(LoadPrebuiltTest, BruteforceEuclidean) {
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
 
-    const auto prefix = (savedir / "bruteforce_euclidean_").string();
-    bptr->save(prefix);
+    const auto dir = savedir / "bruteforce_euclidean";
+    std::filesystem::create_directory(dir);
+    bptr->save(dir);
 
-    auto reloaded = knncolle::load_prebuilt_shared<int, double, double>(prefix);
+    auto reloaded = knncolle::load_prebuilt_shared<int, double, double>(dir);
     std::vector<int> output_i, output_i2;
     std::vector<double> output_d, output_d2;
 
@@ -58,10 +59,11 @@ TEST_F(LoadPrebuiltTest, BruteforceManhattan) {
     knncolle::BruteforceBuilder<std::size_t, double, float> bb(mandist);
     auto bptr = bb.build_unique(knncolle::SimpleMatrix<std::size_t, double>(ndim, nobs, data.data()));
 
-    const auto prefix = (savedir / "bruteforce_manhattan_").string();
-    bptr->save(prefix);
+    const auto dir = savedir / "bruteforce_manhattan";
+    std::filesystem::create_directory(dir);
+    bptr->save(dir);
 
-    auto reloaded = knncolle::load_prebuilt_unique<std::size_t, double, float>(prefix);
+    auto reloaded = knncolle::load_prebuilt_unique<std::size_t, double, float>(dir);
     std::vector<std::size_t> output_i, output_i2;
     std::vector<float> output_d, output_d2;
 
@@ -80,10 +82,11 @@ TEST_F(LoadPrebuiltTest, VptreeEuclidean) {
     knncolle::VptreeBuilder<int, double, double> vb(eucdist);
     auto vptr = vb.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
 
-    const auto prefix = (savedir / "vptree_euclidean_").string();
-    vptr->save(prefix);
+    const auto dir = savedir / "vptree_euclidean";
+    std::filesystem::create_directory(dir);
+    vptr->save(dir);
 
-    auto reloaded = knncolle::load_prebuilt_shared<int, double, double>(prefix);
+    auto reloaded = knncolle::load_prebuilt_shared<int, double, double>(dir);
     std::vector<int> output_i, output_i2;
     std::vector<double> output_d, output_d2;
 
@@ -103,10 +106,11 @@ TEST_F(LoadPrebuiltTest, VptreeManhattan) {
     knncolle::VptreeBuilder<std::size_t, double, float> vb(mandist);
     auto vptr = vb.build_unique(knncolle::SimpleMatrix<std::size_t, double>(ndim, nobs, data.data()));
 
-    const auto prefix = (savedir / "vptree_manhattan_").string();
-    vptr->save(prefix);
+    const auto dir = savedir / "vptree_manhattan";
+    std::filesystem::create_directory(dir);
+    vptr->save(dir);
 
-    auto reloaded = knncolle::load_prebuilt_unique<std::size_t, double, float>(prefix);
+    auto reloaded = knncolle::load_prebuilt_unique<std::size_t, double, float>(dir);
     std::vector<std::size_t> output_i, output_i2;
     std::vector<float> output_d, output_d2;
 
@@ -122,20 +126,21 @@ TEST_F(LoadPrebuiltTest, VptreeManhattan) {
 
 TEST_F(LoadPrebuiltTest, L2NormalizedEuclidean) {
     auto& reg = knncolle::load_prebuilt_registry<int, double, double>(); 
-    reg[knncolle::l2normalized_prebuilt_save_name] = [](const std::string& prefix) -> knncolle::Prebuilt<int, double, double>* {
-        auto config = knncolle::load_l2normalized_prebuilt_types(prefix);
+    reg[knncolle::l2normalized_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<int, double, double>* {
+        auto config = knncolle::load_l2normalized_prebuilt_types(dir);
         EXPECT_EQ(config.normalized, knncolle::NumericType::DOUBLE);
-        return knncolle::load_l2normalized_prebuilt<int, double, double, double>(prefix);
+        return knncolle::load_l2normalized_prebuilt<int, double, double, double>(dir);
     };
 
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
     knncolle::L2NormalizedBuilder<int, double, double, double> l2b(std::make_shared<knncolle::VptreeBuilder<int, double, double> >(eucdist));
     auto l2ptr = l2b.build_unique(knncolle::SimpleMatrix<int, double>(ndim, nobs, data.data()));
 
-    const auto prefix = (savedir / "vptree_l2norm_").string();
-    l2ptr->save(prefix);
+    const auto dir = savedir / "vptree_l2norm";
+    std::filesystem::create_directory(dir);
+    l2ptr->save(dir);
 
-    auto reloaded = knncolle::load_prebuilt_unique<int, double, double>(prefix);
+    auto reloaded = knncolle::load_prebuilt_unique<int, double, double>(dir);
     std::vector<int> output_i, output_i2;
     std::vector<double> output_d, output_d2;
 
@@ -149,11 +154,11 @@ TEST_F(LoadPrebuiltTest, L2NormalizedEuclidean) {
     }
 
     // Injecting some customization.
-    knncolle::custom_save_for_l2normalized_normalized<double>() = [](const std::string& prefix) -> void {
-        knncolle::quick_save(prefix + "custom", "FOO", 3);
+    knncolle::custom_save_for_l2normalized_normalized<double>() = [](const std::filesystem::path& dir) -> void {
+        knncolle::quick_save(dir / "custom", "FOO", 3);
     };
-    l2ptr->save(prefix);
-    EXPECT_EQ(knncolle::quick_load_as_string(prefix + "custom"), "FOO");
+    l2ptr->save(dir);
+    EXPECT_EQ(knncolle::quick_load_as_string(dir / "custom"), "FOO");
 }
 
 class FakePrebuilt final : public knncolle::Prebuilt<int, double, double> {
@@ -164,21 +169,20 @@ public:
 };
 
 TEST_F(LoadPrebuiltTest, Errors) {
-    const auto prefix = savedir / "error_";
+    const auto dir = savedir / "error";
+    std::filesystem::create_directory(dir);
     {
-        auto dispatch = prefix;
-        dispatch += "ALGORITHM";
-        std::ofstream out(dispatch);
+        std::ofstream out(dir / "ALGORITHM");
         out << "superfoobar";
     }
 
     std::string msg;
     try {
-        knncolle::load_prebuilt_shared<int, double, double>(prefix.string());
+        knncolle::load_prebuilt_shared<int, double, double>(dir);
     } catch (knncolle::LoadPrebuiltNotFoundError& e) {
         msg = e.what();
         EXPECT_EQ(e.get_algorithm(), "superfoobar");
-        EXPECT_FALSE(e.get_path().find("error_ALGORITHM") == std::string::npos);
+        EXPECT_EQ(e.get_path().filename().string(), "ALGORITHM");
     }
     EXPECT_TRUE(msg.find("superfoobar") != std::string::npos);
 

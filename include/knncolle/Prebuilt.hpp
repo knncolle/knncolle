@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <cstddef>
+#include <filesystem>
 
 #include "Searcher.hpp"
 
@@ -61,13 +62,13 @@ public:
     /**
      * Save the prebuilt index to disk, to be reloaded with `load_prebuilt_raw()` and friends.
      *
-     * An implementation of this method should create a `<prefix>ALGORITHM` file that contains the search algorithm's name.
+     * An implementation of this method should create an `ALGORITHM` file inside `dir` that contains the search algorithm's name.
      * This should be an ASCII file with no newlines, where the algorithm name should follow the `<library>::<algorithm>` format, e.g., `knncolle::Vptree`.
      * This will be used by `load_prebuilt_raw()` to determine the exact loader function to call. 
      *
-     * Other than the `ALGORITHM` file, each implementation may create any number of additional files of any format, as long as they start with `prefix`.
-     * We recommend that the remainder of the file path component immediately following `prefix` starts with an upper case letter and has all letters in upper-case.
-     * This allows applications to add more custom files without the risk of conflicts, e.g., by not starting the rest of the file name with an upper-case letter. 
+     * Other than the `ALGORITHM` file, each implementation may create any number of additional files/directories of any format inside `dir`.
+     * We recommend that the name of each file/directory immediately starts with an upper case letter and is in all-capitals.
+     * This allows applications to add more custom files without the risk of conflicts, e.g., by naming them without an upper-case letter. 
      *
      * An implementation of this method is not required to use portable file formats.
      * `load_prebuilt_raw()` is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the `save()` call.
@@ -79,11 +80,10 @@ public:
      *
      * If a subclass does not implement this method, an error is thrown by default.
      *
-     * @param prefix Prefix of the file path(s) in which to save the index.
-     * All files created by this method should start with this prefix. 
-     * Any directories required to write a file starting with `prefix` should already have been created.
+     * @param dir Path to a directory in which to save the index.
+     * This directory should already exist.
      */
-    virtual void save([[maybe_unused]] const std::string& prefix) const {
+    virtual void save([[maybe_unused]] const std::filesystem::path& dir) const {
         throw std::runtime_error("saving is not supported");
     }
 

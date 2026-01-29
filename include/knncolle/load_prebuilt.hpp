@@ -21,14 +21,14 @@ namespace knncolle {
 
 /**
  * Prebuilt loading function.
- * This accepts a file path prefix (see `Prebuilt::save()`) and returns a pointer to a `Prebuilt` instance.
+ * This accepts a directory (see `Prebuilt::save()`) and returns a pointer to a `Prebuilt` instance.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
  */
 template<typename Index_, typename Data_, typename Distance_>
-using LoadPrebuiltFunction = std::function<Prebuilt<Index_, Data_, Distance_>* (const std::string&)>;
+using LoadPrebuiltFunction = std::function<Prebuilt<Index_, Data_, Distance_>* (const std::filesystem::path&)>;
 
 /**
  * @tparam Index_ Integer type for the observation indices.
@@ -57,8 +57,8 @@ inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Dista
 template<typename Index_, typename Data_, typename Distance_>
 void register_load_bruteforce_prebuilt() {
     auto& reg = load_prebuilt_registry<Index_, Data_, Distance_>();
-    reg[bruteforce_prebuilt_save_name] = [](const std::string& prefix) -> Prebuilt<Index_, Data_, Distance_>* {
-        return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric<Data_, Distance_> >(prefix);
+    reg[bruteforce_prebuilt_save_name] = [](const std::filesystem::path& dir) -> Prebuilt<Index_, Data_, Distance_>* {
+        return new BruteforcePrebuilt<Index_, Data_, Distance_, DistanceMetric<Data_, Distance_> >(dir);
     };
 }
 
@@ -72,8 +72,8 @@ void register_load_bruteforce_prebuilt() {
 template<typename Index_, typename Data_, typename Distance_>
 void register_load_vptree_prebuilt() {
     auto& reg = load_prebuilt_registry<Index_, Data_, Distance_>();
-    reg[vptree_prebuilt_save_name] = [](const std::string& prefix) -> Prebuilt<Index_, Data_, Distance_>* {
-        return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric<Data_, Distance_> >(prefix);
+    reg[vptree_prebuilt_save_name] = [](const std::filesystem::path& dir) -> Prebuilt<Index_, Data_, Distance_>* {
+        return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric<Data_, Distance_> >(dir);
     };
 }
 
@@ -87,8 +87,8 @@ public:
     /**
      * @cond
      */
-    LoadPrebuiltNotFoundError(std::string algorithm, std::string path) : 
-        std::runtime_error("cannot find a load_prebuilt_registry() function for '" + algorithm + "' at '" + path + "'"),
+    LoadPrebuiltNotFoundError(std::string algorithm, std::filesystem::path path) : 
+        std::runtime_error("cannot find a load_prebuilt_registry() function for '" + algorithm + "' at '" + path.string() + "'"),
         my_algorithm(std::move(algorithm)),
         my_path(std::move(path))
     {}
@@ -97,7 +97,8 @@ public:
      */
 
 private:
-    std::string my_algorithm, my_path;
+    std::string my_algorithm;
+    std::filesystem::path my_path;
 
 public:
     /**
@@ -110,7 +111,7 @@ public:
     /**
      * @return Path to the `ALGORITHM` file containing the algorithm name for the saved `Prebuilt` instance.
      */
-    const std::string& get_path() const {
+    const std::filesystem::path& get_path() const {
         return my_path;
     }
 };
@@ -125,14 +126,14 @@ public:
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
- * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
+ * @param dir Path to a directory containing a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
- * @return Pointer to a `Prebuilt` instance, created from the files at `prefix`.
- * If no loading function can be found for the search algorithm at `prefix`, a `LoadPrebuiltNotFoundError` is thrown.
+ * @return Pointer to a `Prebuilt` instance, created from the files at `dir`.
+ * If no loading function can be found for the search algorithm, a `LoadPrebuiltNotFoundError` is thrown.
  */
 template<typename Index_, typename Data_, typename Distance_>
-Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix) {
-    const auto alg_path = prefix + "ALGORITHM";
+Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::filesystem::path& dir) {
+    const auto alg_path = dir / "ALGORITHM";
     const auto algorithm = quick_load_as_string(alg_path);
 
     const auto& reg = load_prebuilt_registry<Index_, Data_, Distance_>(); 
@@ -141,7 +142,7 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix)
         throw LoadPrebuiltNotFoundError(algorithm, alg_path);
     }
 
-    return (it->second)(prefix);
+    return (it->second)(dir);
 }
 
 /**
@@ -152,14 +153,14 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::string& prefix)
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
- * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
+ * @param dir Path to a directory containing a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
- * @return Unique pointer to a `Prebuilt` instance, created from the files at `prefix`.
+ * @return Unique pointer to a `Prebuilt` instance, created from the files at `dir`.
  * This uses the return value of `load_prebuilt_raw()`. 
  */
 template<typename Index_, typename Data_, typename Distance_>
-std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const std::string& prefix) {
-    return std::unique_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(prefix));
+std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const std::filesystem::path& dir) {
+    return std::unique_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(dir));
 }
 
 /**
@@ -170,14 +171,14 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
  * @tparam Data_ Numeric type for the query data.
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
  *
- * @param prefix File path prefix for a prebuilt index that was saved to disk by `Prebuilt::save()`.
+ * @param dir Path to a directory containing a prebuilt index that was saved to disk by `Prebuilt::save()`.
  *
- * @return Shared pointer to a `Prebuilt` instance, created from the files at `prefix`.
+ * @return Shared pointer to a `Prebuilt` instance, created from the files at `dir`.
  * This uses the return value of `load_prebuilt_raw()`. 
  */
 template<typename Index_, typename Data_, typename Distance_>
-std::shared_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_shared(const std::string& prefix) {
-    return std::shared_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(prefix));
+std::shared_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_shared(const std::filesystem::path& dir) {
+    return std::shared_ptr<Prebuilt<Index_, Data_, Distance_> >(load_prebuilt_raw<Index_, Data_, Distance_>(dir));
 }
 
 /**
@@ -193,15 +194,15 @@ struct L2NormalizedPrebuiltTypes {
 };
 
 /**
- * @param prefix Prefix of the file paths in which a prebuilt L2-normalized index was saved.
+ * @param dir Path to a directory in which a prebuilt L2-normalized index was saved.
  * Files should have been generated by the `Prebuilt::save()` method of the L2-normalized `Prebuilt` subclass instance.
  *
  * @return Template types of the saved instance of a `Prebuilt` L2-normalized subclass.
  * This is typically used to choose template parameters for `load_l2normalized_prebuilt()`.
  */
-inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::string& prefix) {
+inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::filesystem::path& dir) {
     L2NormalizedPrebuiltTypes config;
-    quick_load(prefix + "NORMALIZED", &(config.normalized), 1);
+    quick_load(dir / "NORMALIZED", &(config.normalized), 1);
     return config;
 }
 
@@ -215,14 +216,14 @@ inline L2NormalizedPrebuiltTypes load_l2normalized_prebuilt_types(const std::str
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
  * @tparam Normalized_ Floating-point type for the L2-normalized data.
  *
- * @param prefix Prefix of the file paths in which a prebuilt L2-normalized index was saved.
+ * @param dir Path to a directory in which a prebuilt L2-normalized index was saved.
  * Files should have been generated by the `Prebuilt::save()` method of the L2-normalized `Prebuilt` subclass instance.
  * 
  * @return Pointer to an L2-normalized `knncolle::Prebuilt` instance.
  */
 template<typename Index_, typename Data_, typename Distance_, typename Normalized_>
-Prebuilt<Index_, Data_, Distance_>* load_l2normalized_prebuilt(const std::string& prefix) {
-    return new L2NormalizedPrebuilt<Index_, Data_, Distance_, Normalized_>(prefix);
+Prebuilt<Index_, Data_, Distance_>* load_l2normalized_prebuilt(const std::filesystem::path& dir) {
+    return new L2NormalizedPrebuilt<Index_, Data_, Distance_, Normalized_>(dir);
 }
 
 }

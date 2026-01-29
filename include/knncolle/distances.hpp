@@ -8,6 +8,7 @@
 #include <functional>
 #include <cstring>
 #include <memory>
+#include <filesystem>
 
 #include "utils.hpp"
 
@@ -71,10 +72,13 @@ public:
     /**
      * Save the distance metric to disk, to be reloaded with `load_distance_metric_raw()` and friends.
      *
-     * An implementation of this method should create a `<prefix>DISTANCE` file that contains the distance metric's name.
+     * An implementation of this method should create a `DISTANCE` file inside `dir` that contains the distance metric's name.
      * This should be an ASCII file with no newlines, where the metric name should follow the `<library>::<distance>` format, e.g., `knncolle::Euclidean`.
      * This will be used by `load_distance_metric_raw()` to determine the exact loader function to call. 
-     * Other than the `DISTANCE` file, each implementation may create any number of additional files of any format, as long as they start with `prefix`.
+     *
+     * Other than the `DISTANCE` file, each implementation may create any number of additional files of any format in `dir`.
+     * We recommend that the name of each file/directory immediately starts with an upper case letter and is in all-capitals.
+     * This allows applications to add more custom files without the risk of conflicts, e.g., by naming them without an upper-case letter. 
      *
      * An implementation of this method is not required to use portable file formats.
      * `load_distance_metric_raw()` is only expected to work on the same system (i.e., architecture, compiler, compilation settings) that was used for the `save()` call.
@@ -86,11 +90,10 @@ public:
      *
      * If a subclass does not implement this method, an error is thrown by default.
      *
-     * @param prefix Prefix of the file path(s) in which to save the index.
-     * All files created by this method should start with this prefix. 
-     * Any directories required to write a file starting with `prefix` should already have been created.
+     * @param dir Path to a directory in which to save the index.
+     * This should already exist.
      */
-    virtual void save([[maybe_unused]] const std::string& prefix) const {
+    virtual void save([[maybe_unused]] const std::filesystem::path& dir) const {
         throw std::runtime_error("saving is not supported");
     }
 };
@@ -128,8 +131,8 @@ public:
         return norm * norm;
     }
 
-    void save(const std::string& prefix) const {
-        quick_save(prefix + "DISTANCE", euclidean_distance_save_name, std::strlen(euclidean_distance_save_name));
+    void save(const std::filesystem::path& dir) const {
+        quick_save(dir / "DISTANCE", euclidean_distance_save_name, std::strlen(euclidean_distance_save_name));
     }
     /**
      * @endcond
@@ -170,8 +173,8 @@ public:
         return norm;
     }
 
-    void save(const std::string& prefix) const {
-        quick_save(prefix + "DISTANCE", manhattan_distance_save_name, std::strlen(manhattan_distance_save_name));
+    void save(const std::filesystem::path& dir) const {
+        quick_save(dir / "DISTANCE", manhattan_distance_save_name, std::strlen(manhattan_distance_save_name));
     }
     /**
      * @endcond
@@ -180,13 +183,13 @@ public:
 
 /**
  * Distance loading function.
- * This accepts a file path prefix (see `DistanceMetric::save()`) and returns a pointer to a `Distance` instance.
+ * This accepts a path to a directory (see `DistanceMetric::save()`) and returns a pointer to a `Distance` instance.
  *
  * @tparam Data_ Numeric type for the input data.
  * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  */
 template<typename Data_, typename Distance_>
-using LoadDistanceMetricFunction = std::function<DistanceMetric<Data_, Distance_>* (const std::string&)>;
+using LoadDistanceMetricFunction = std::function<DistanceMetric<Data_, Distance_>* (const std::filesystem::path&)>;
 
 
 /**
@@ -213,7 +216,7 @@ inline std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distanc
 template<typename Data_, typename Distance_>
 void register_load_euclidean_distance() {
     auto& reg = load_distance_metric_registry<Data_, Distance_>();
-    reg[euclidean_distance_save_name] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new EuclideanDistance<Data_, Distance_>; };
+    reg[euclidean_distance_save_name] = [](const std::filesystem::path&) -> DistanceMetric<Data_, Distance_>* { return new EuclideanDistance<Data_, Distance_>; };
 }
 
 /**
@@ -225,7 +228,7 @@ void register_load_euclidean_distance() {
 template<typename Data_, typename Distance_>
 void register_load_manhattan_distance() {
     auto& reg = load_distance_metric_registry<Data_, Distance_>();
-    reg[manhattan_distance_save_name] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new ManhattanDistance<Data_, Distance_>; };
+    reg[manhattan_distance_save_name] = [](const std::filesystem::path&) -> DistanceMetric<Data_, Distance_>* { return new ManhattanDistance<Data_, Distance_>; };
 }
 
 /**
@@ -238,8 +241,8 @@ public:
     /**
      * @cond
      */
-    LoadDistanceMetricNotFoundError(std::string distance, std::string path) : 
-        std::runtime_error("cannot find a load_distance_metric_registry() function for '" + distance + "' at '" + path + "'"),
+    LoadDistanceMetricNotFoundError(std::string distance, std::filesystem::path path) : 
+        std::runtime_error("cannot find a load_distance_metric_registry() function for '" + distance + "' at '" + path.string() + "'"),
         my_distance(std::move(distance)),
         my_path(std::move(path))
     {}
@@ -248,7 +251,8 @@ public:
      */
 
 private:
-    std::string my_distance, my_path;
+    std::string my_distance;
+    std::filesystem::path my_path;
 
 public:
     /**
@@ -261,7 +265,7 @@ public:
     /**
      * @return Path to the `DISTANCE` file containing the distance name for the saved `Prebuilt` instance.
      */
-    const std::string& get_path() const {
+    const std::filesystem::path& get_path() const {
         return my_path;
     }
 };
@@ -272,14 +276,14 @@ public:
  * @tparam Data_ Numeric type for the input data.
  * @tparam Distance_ Numeric type for the output distance, usually floating-point.
  *
- * @param prefix File path prefix for a distance index that was saved to disk by `DistanceMetric::save()`.
+ * @param dir Path to a directory containing a distance metric that was saved to disk by `DistanceMetric::save()`.
  *
- * @return Pointer to a `Distance` instance, created from the files at `prefix`.
+ * @return Pointer to a `Distance` instance, created from the files at `dir`.
  * If no loading function is available for the saved distance, a `LoadDistanceMetricNotFoundError` is thrown.
  */
 template<typename Data_, typename Distance_>
-DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::string& prefix) {
-    const auto metric_path =  prefix + "DISTANCE";
+DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::filesystem::path& dir) {
+    const auto metric_path =  dir / "DISTANCE";
     const auto metric_name = quick_load_as_string(metric_path);
 
     const auto& reg = load_distance_metric_registry<Data_, Distance_>(); 
@@ -288,7 +292,7 @@ DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::string& pr
         throw LoadDistanceMetricNotFoundError(metric_name, metric_path);
     }
 
-    return (it->second)(prefix);
+    return (it->second)(dir);
 }
 
 }

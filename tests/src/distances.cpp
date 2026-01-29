@@ -27,9 +27,11 @@ protected:
 
 TEST_F(DistanceMetricSaveTest, Euclidean) {
     knncolle::EuclideanDistance<double, double> metric;
-    const auto prefix = (savedir / "euclidean_").string();
-    metric.save(prefix);
-    std::shared_ptr<knncolle::DistanceMetric<double, double> > reloaded(knncolle::load_distance_metric_raw<double, double>(prefix));
+    const auto dir = savedir / "euclidean";
+    std::filesystem::create_directory(dir);
+    metric.save(dir);
+
+    std::shared_ptr<knncolle::DistanceMetric<double, double> > reloaded(knncolle::load_distance_metric_raw<double, double>(dir));
 
     const auto buf1 = data.data();
     const auto buf2 = data.data() + ndim;
@@ -38,9 +40,11 @@ TEST_F(DistanceMetricSaveTest, Euclidean) {
 
 TEST_F(DistanceMetricSaveTest, Manhattan) {
     knncolle::ManhattanDistance<double, double> metric;
-    const auto prefix = (savedir / "manhattan_").string();
-    metric.save(prefix);
-    std::shared_ptr<knncolle::DistanceMetric<double, double> > reloaded(knncolle::load_distance_metric_raw<double, double>(prefix));
+    const auto dir = savedir / "manhattan";
+    std::filesystem::create_directory(dir);
+    metric.save(dir);
+
+    std::shared_ptr<knncolle::DistanceMetric<double, double> > reloaded(knncolle::load_distance_metric_raw<double, double>(dir));
 
     const auto buf1 = data.data();
     const auto buf2 = data.data() + ndim;
@@ -67,8 +71,8 @@ public:
     double raw(std::size_t, const double*, const double*) const { return 0; }
     double normalize(double) const { return 0; }
     double denormalize(double) const { return 0; }
-    void save(const std::string& prefix) const {
-        knncolle::quick_save(prefix + "DISTANCE", "foo", 3);
+    void save(const std::filesystem::path& dir) const {
+        knncolle::quick_save(dir / "DISTANCE", "foo", 3);
     }
 };
 
@@ -78,16 +82,17 @@ TEST_F(DistanceMetricSaveTest, LoadError) {
     EXPECT_EQ(faker.normalize(0), 0);
     EXPECT_EQ(faker.denormalize(0), 0);
 
-    const auto prefix = (savedir / "error_").string();
-    faker.save(prefix);
+    const auto dir = savedir / "error";
+    std::filesystem::create_directory(dir);
+    faker.save(dir);
 
     std::string msg;
     try {
-        knncolle::load_distance_metric_raw<double, double>(prefix);
+        knncolle::load_distance_metric_raw<double, double>(dir);
     } catch (knncolle::LoadDistanceMetricNotFoundError& e) {
         msg = e.what();
         EXPECT_EQ(e.get_distance(), "foo");
-        EXPECT_FALSE(e.get_path().find("error_DISTANCE") == std::string::npos);
+        EXPECT_EQ(e.get_path().filename().string(), "DISTANCE");
     }
     EXPECT_TRUE(msg.find("cannot find") != std::string::npos);
 }

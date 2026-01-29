@@ -18,6 +18,7 @@
 #include <string>
 #include <cassert>
 #include <cstring>
+#include <filesystem>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -367,30 +368,33 @@ public:
     }
 
 public:
-    void save(const std::string& prefix) const {
-        quick_save(prefix + "ALGORITHM", vptree_prebuilt_save_name, std::strlen(vptree_prebuilt_save_name));
-        quick_save(prefix + "DATA", my_data.data(), my_data.size());
-        quick_save(prefix + "NUM_OBS", &my_obs, 1);
-        quick_save(prefix + "NUM_DIM", &my_dim, 1);
-        quick_save(prefix + "NODES", my_nodes.data(), my_nodes.size());
-        quick_save(prefix + "NEW_LOCATIONS", my_new_locations.data(), my_new_locations.size());
-        my_metric->save(prefix + "DISTANCE_");
+    void save(const std::filesystem::path& dir) const {
+        quick_save(dir / "ALGORITHM", vptree_prebuilt_save_name, std::strlen(vptree_prebuilt_save_name));
+        quick_save(dir / "DATA", my_data.data(), my_data.size());
+        quick_save(dir / "NUM_OBS", &my_obs, 1);
+        quick_save(dir / "NUM_DIM", &my_dim, 1);
+        quick_save(dir / "NODES", my_nodes.data(), my_nodes.size());
+        quick_save(dir / "NEW_LOCATIONS", my_new_locations.data(), my_new_locations.size());
+
+        const auto distdir = dir / "DISTANCE";
+        std::filesystem::create_directory(distdir);
+        my_metric->save(distdir);
     }
 
-    VptreePrebuilt(const std::string& prefix) {
-        quick_load(prefix + "NUM_OBS", &my_obs, 1);
-        quick_load(prefix + "NUM_DIM", &my_dim, 1);
+    VptreePrebuilt(const std::filesystem::path& dir) {
+        quick_load(dir / "NUM_OBS", &my_obs, 1);
+        quick_load(dir / "NUM_DIM", &my_dim, 1);
 
         my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(sanisizer::attest_gez(my_obs), my_dim));
-        quick_load(prefix + "DATA", my_data.data(), my_data.size());
+        quick_load(dir / "DATA", my_data.data(), my_data.size());
 
         sanisizer::resize(my_nodes, sanisizer::attest_gez(my_obs));
-        quick_load(prefix + "NODES", my_nodes.data(), my_nodes.size());
+        quick_load(dir / "NODES", my_nodes.data(), my_nodes.size());
 
         sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));
-        quick_load(prefix + "NEW_LOCATIONS", my_new_locations.data(), my_new_locations.size());
+        quick_load(dir / "NEW_LOCATIONS", my_new_locations.data(), my_new_locations.size());
 
-        auto dptr = load_distance_metric_raw<Data_, Distance_>(prefix + "DISTANCE_");
+        auto dptr = load_distance_metric_raw<Data_, Distance_>(dir / "DISTANCE");
         auto xptr = dynamic_cast<DistanceMetric_*>(dptr);
         assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
         my_metric.reset(xptr);
