@@ -6,8 +6,10 @@
 #include <string>
 #include <unordered_map>
 #include <functional>
-#include <fstream>
+#include <cstring>
 #include <memory>
+
+#include "utils.hpp"
 
 /**
  * @file distances.hpp
@@ -70,7 +72,7 @@ public:
      * Save the distance metric to disk, to be reloaded with `load_distance_metric_raw()` and friends.
      *
      * An implementation of this method should create a `<prefix>DISTANCE` file that contains the distance metric's name.
-     * This should be an ASCII file with no newlines, where the method name should follow the `<library>::<distance>` format, e.g., `knncolle::Euclidean`.
+     * This should be an ASCII file with no newlines, where the metric name should follow the `<library>::<distance>` format, e.g., `knncolle::Euclidean`.
      * This will be used by `load_distance_metric_raw()` to determine the exact loader function to call. 
      * Other than the `DISTANCE` file, each implementation may create any number of additional files of any format, as long as they start with `prefix`.
      *
@@ -92,6 +94,11 @@ public:
         throw std::runtime_error("saving is not supported");
     }
 };
+
+/**
+ * Name for loading a `EuclideanDistance` in the `load_distance_registry()`.
+ */
+inline static constexpr const char* euclidean_distance_save_name = "knncolle::Euclidean";
 
 /**
  * @brief Compute Euclidean distances between two input vectors.
@@ -123,15 +130,17 @@ public:
     }
 
     void save(const std::string& prefix) const {
-        const std::string method_name = "knncolle::Euclidean";
-        std::ofstream output(prefix + "DISTANCE");
-        output.write(method_name.c_str(), method_name.size());
+        quick_save(prefix + "DISTANCE", euclidean_distance_save_name, std::strlen(euclidean_distance_save_name));
     }
     /**
      * @endcond
      */
 };
 
+/**
+ * Name for loading a `ManhattanDistance` in the `load_distance_registry()`.
+ */
+inline static constexpr const char* manhattan_distance_save_name = "knncolle::Manhattan";
 
 /**
  * @brief Compute Manhattan distances between two input vectors.
@@ -163,9 +172,7 @@ public:
     }
 
     void save(const std::string& prefix) const {
-        const std::string method_name = "knncolle::Manhattan";
-        std::ofstream output(prefix + "DISTANCE");
-        output.write(method_name.c_str(), method_name.size());
+        quick_save(prefix + "DISTANCE", manhattan_distance_save_name, std::strlen(manhattan_distance_save_name));
     }
     /**
      * @endcond
@@ -183,29 +190,42 @@ template<typename Data_, typename Distance_>
 using LoadDistanceMetricFunction = std::function<DistanceMetric<Data_, Distance_>* (const std::string&)>;
 
 /**
- * @cond
- */
-template<typename Data_, typename Distance_>
-auto default_distance_metric_registry() {
-    std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distance_> > registry;
-    registry["knncolle::Euclidean"] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new EuclideanDistance<Data_, Distance_>; };
-    registry["knncolle::Manhattan"] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new ManhattanDistance<Data_, Distance_>; };
-    return registry;
-}
-/**
- * @endcond
- */
-
-/**
  * @tparam Data_ Numeric type for the input data.
  * @tparam Distance_ Floating-point type for the output distance.
  *
- * @return Reference to a global map of method names (see `DistanceMetric::save()`) to loading functions.
+ * @return Reference to a global map where the keys are distance metric names (see `DistanceMetric::save()`) and the values are distance loading functions.
+ *
+ * No loading functions are available when the global map is first initialized.
+ * Users should call `register_load_euclidean_distance()` and/or `register_load_manhattan_distance()` to populate the map with loaders for distances they intend to support.
  */
 template<typename Data_, typename Distance_>
 inline std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distance_> >& load_distance_metric_registry() {
-    static std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distance_> > registry = default_distance_metric_registry<Data_, Distance_>();
+    static std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distance_> > registry; 
     return registry;
+}
+
+/**
+ * Register a loading function for `EuclideanDistance` using `euclidean_distance_save_name`.
+ *
+ * @tparam Data_ Numeric type for the input data.
+ * @tparam Distance_ Floating-point type for the output distance.
+ */
+template<typename Data_, typename Distance_>
+void register_load_euclidean_distance() {
+    auto& reg = load_distance_metric_registry<Data_, Distance_>();
+    reg[euclidean_distance_save_name] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new EuclideanDistance<Data_, Distance_>; };
+}
+
+/**
+ * Register a loading function for `ManhattanDistance` using `manhattan_distance_save_name`.
+ *
+ * @tparam Data_ Numeric type for the input data.
+ * @tparam Distance_ Floating-point type for the output distance.
+ */
+template<typename Data_, typename Distance_>
+void register_load_manhattan_distance() {
+    auto& reg = load_distance_metric_registry<Data_, Distance_>();
+    reg[manhattan_distance_save_name] = [](const std::string&) -> DistanceMetric<Data_, Distance_>* { return new ManhattanDistance<Data_, Distance_>; };
 }
 
 /**
@@ -220,14 +240,13 @@ inline std::unordered_map<std::string, LoadDistanceMetricFunction<Data_, Distanc
  */
 template<typename Data_, typename Distance_>
 DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::string& prefix) {
-    const auto meth_path = prefix + "DISTANCE";
-    std::ifstream input(meth_path);
-    std::string method( (std::istreambuf_iterator<char>(input)), (std::istreambuf_iterator<char>()) );
+    const auto metric_path =  prefix + "DISTANCE";
+    const auto metric_name = quick_load_as_string(metric_path);
 
     const auto& reg = load_distance_metric_registry<Data_, Distance_>(); 
-    auto it = reg.find(method);
+    auto it = reg.find(metric_name);
     if (it == reg.end()) {
-        throw std::runtime_error("cannot find load_distance_metric method for '" + method + "' at '" + meth_path + "'");
+        throw std::runtime_error("cannot find a load_distance_metric_registry() function for '" + metric_name + "' at '" + metric_path + "'");
     }
 
     return (it->second)(prefix);

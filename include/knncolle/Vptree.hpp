@@ -16,8 +16,8 @@
 #include <memory>
 #include <cstddef>
 #include <string>
-#include <fstream>
 #include <cassert>
+#include <cstring>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -28,6 +28,11 @@
  */
 
 namespace knncolle {
+
+/**
+ * Name of the VP-tree algorithm when registering a loading function to `load_prebuilt_registry()`.
+ */
+inline static constexpr const char* vptree_prebuilt_save_name = "knncolle::Vptree";
 
 /**
  * @cond
@@ -363,8 +368,7 @@ public:
 
 public:
     void save(const std::string& prefix) const {
-        const std::string method_name = "knncolle::Vptree";
-        quick_save(prefix + "ALGORITHM", method_name.c_str(), method_name.size());
+        quick_save(prefix + "ALGORITHM", vptree_prebuilt_save_name, std::strlen(vptree_prebuilt_save_name));
         quick_save(prefix + "data", my_data.data(), my_data.size());
         quick_save(prefix + "num_obs", &my_obs, 1);
         quick_save(prefix + "num_dim", &my_dim, 1);

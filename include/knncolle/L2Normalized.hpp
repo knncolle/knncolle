@@ -25,9 +25,9 @@
 namespace knncolle {
 
 /**
- * Name of the L2-normalized algorithm when registering a loading function to `load_prebuilt_registry()`.
+ * Name of the L2-normalization algorithm when registering a loading function to `load_prebuilt_registry()`.
  */
-inline static const char* l2normalized_save_name = "knncolle::L2Normalized";
+inline static constexpr const char* l2normalized_prebuilt_save_name = "knncolle::L2Normalized";
 
 /**
  * @cond
@@ -128,7 +128,7 @@ public:
 
 public:
     void save(const std::string& prefix) const {
-        quick_save(prefix + "ALGORITHM", l2normalized_save_name, std::strlen(l2normalized_save_name));
+        quick_save(prefix + "ALGORITHM", l2normalized_prebuilt_save_name, std::strlen(l2normalized_prebuilt_save_name));
         auto norm_type = get_numeric_type<Normalized_>();
         quick_save(prefix + "normalized", &norm_type, 1);
         my_prebuilt->save(prefix + "index_");

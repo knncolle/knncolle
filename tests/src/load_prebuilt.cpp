@@ -19,6 +19,14 @@ protected:
         std::filesystem::remove_all(savedir);
         std::filesystem::create_directory(savedir);
         assemble({ 50, 5 });
+
+        knncolle::register_load_bruteforce_prebuilt<int, double, double>();
+        knncolle::register_load_vptree_prebuilt<int, double, double>();
+        knncolle::register_load_euclidean_distance<double, double>();
+
+        knncolle::register_load_bruteforce_prebuilt<std::size_t, double, float>();
+        knncolle::register_load_vptree_prebuilt<std::size_t, double, float>();
+        knncolle::register_load_manhattan_distance<double, float>();
     }
 };
 
@@ -114,7 +122,7 @@ TEST_F(LoadPrebuiltTest, VptreeManhattan) {
 
 TEST_F(LoadPrebuiltTest, L2NormalizedEuclidean) {
     auto& reg = knncolle::load_prebuilt_registry<int, double, double>(); 
-    reg[knncolle::l2normalized_save_name] = [](const std::string& prefix) -> knncolle::Prebuilt<int, double, double>* {
+    reg[knncolle::l2normalized_prebuilt_save_name] = [](const std::string& prefix) -> knncolle::Prebuilt<int, double, double>* {
         auto config = knncolle::load_l2normalized_prebuilt_types(prefix);
         EXPECT_EQ(config.normalized, knncolle::NumericType::DOUBLE);
         return knncolle::load_l2normalized_prebuilt<int, double, double, double>(prefix);

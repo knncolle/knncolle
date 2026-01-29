@@ -216,8 +216,14 @@ We can then load it back into memory on its next use, thus avoiding the need to 
 ```cpp
 vp_index->save("foo/bar_");
 
+// Register all the distances and search algorithms that we want to support.
+knncolle::register_load_bruteforce_prebuilt<int, double, double>();
+knncolle::register_load_vptree_prebuilt<int, double, double>();
+knncolle::register_load_euclidean_distance<double, double>();
+knncolle::register_load_manhattan_distance<double, double>();
+
 // This should be called with the same template parameters as the Prebuilt
-// object that was saved, i.e., Index_, Data_ and Distance_.
+// object that was saved (Index_ = int, Data_ = double, Distance_ = double).
 auto reloaded = knncolle::load_prebuilt_shared<int, double, double>("foo/bar_");
 ```
 

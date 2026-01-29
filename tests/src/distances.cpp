@@ -19,6 +19,9 @@ protected:
         std::filesystem::remove_all(savedir);
         std::filesystem::create_directory(savedir);
         assemble({ 2, 10 });
+
+        knncolle::register_load_euclidean_distance<double, double>();
+        knncolle::register_load_manhattan_distance<double, double>();
     }
 };
 
