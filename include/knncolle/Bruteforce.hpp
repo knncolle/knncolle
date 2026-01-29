@@ -31,7 +31,7 @@ namespace knncolle {
 /**
  * Name of the brute-force algorithm when registering a loading function to `load_prebuilt_registry()`.
  */
-inline static constexpr const char* bruteforce_prebuilt_save_name = "knncolle::BruteForce";
+inline static constexpr const char* bruteforce_prebuilt_save_name = "knncolle::Bruteforce";
 
 /**
  * @cond
