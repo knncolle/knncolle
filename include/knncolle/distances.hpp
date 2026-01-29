@@ -229,6 +229,44 @@ void register_load_manhattan_distance() {
 }
 
 /**
+ * @brief Exception for unknown distance metrics in `load_distance_metric_raw()`.
+ *
+ * This is thrown by `load_distance_metric_raw()` when it cannot find a function in the `load_distance_metric_registry()` for a particular distance metric.
+ */
+class LoadDistanceMetricNotFoundError final : public std::runtime_error {
+public:
+    /**
+     * @cond
+     */
+    LoadDistanceMetricNotFoundError(std::string distance, std::string path) : 
+        std::runtime_error("cannot find a load_distance_metric_registry() function for '" + distance + "' at '" + path + "'"),
+        my_distance(std::move(distance)),
+        my_path(std::move(path))
+    {}
+    /**
+     * @endcond
+     */
+
+private:
+    std::string my_distance, my_path;
+
+public:
+    /**
+     * @return Name of the unknown neighbor search distance for the saved `Prebuilt` instance. 
+     */
+    const std::string& get_distance() const {
+        return my_distance;
+    }
+
+    /**
+     * @return Path to the `DISTANCE` file containing the distance name for the saved `Prebuilt` instance.
+     */
+    const std::string& get_path() const {
+        return my_path;
+    }
+};
+
+/**
  * Load a distance metric from disk into a `Distance` object.
  *
  * @tparam Data_ Numeric type for the input data.
@@ -237,6 +275,7 @@ void register_load_manhattan_distance() {
  * @param prefix File path prefix for a distance index that was saved to disk by `DistanceMetric::save()`.
  *
  * @return Pointer to a `Distance` instance, created from the files at `prefix`.
+ * If no loading function is available for the saved distance, a `LoadDistanceMetricNotFoundError` is thrown.
  */
 template<typename Data_, typename Distance_>
 DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::string& prefix) {
@@ -246,7 +285,7 @@ DistanceMetric<Data_, Distance_>* load_distance_metric_raw(const std::string& pr
     const auto& reg = load_distance_metric_registry<Data_, Distance_>(); 
     auto it = reg.find(metric_name);
     if (it == reg.end()) {
-        throw std::runtime_error("cannot find a load_distance_metric_registry() function for '" + metric_name + "' at '" + metric_path + "'");
+        throw LoadDistanceMetricNotFoundError(metric_name, metric_path);
     }
 
     return (it->second)(prefix);
