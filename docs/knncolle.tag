@@ -78,6 +78,7 @@
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="L2Normalized_8hpp" name="L2Normalized.hpp" local="yes" import="no" module="no" objc="no">L2Normalized.hpp</includes>
+    <class kind="class">knncolle::LoadPrebuiltNotFoundError</class>
     <class kind="struct">knncolle::L2NormalizedPrebuiltTypes</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -389,6 +390,24 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>knncolle::LoadPrebuiltNotFoundError</name>
+    <filename>classknncolle_1_1LoadPrebuiltNotFoundError.html</filename>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_algorithm</name>
+      <anchorfile>classknncolle_1_1LoadPrebuiltNotFoundError.html</anchorfile>
+      <anchor>a6fca26db7d0862d759b71a81ae02a19e</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_path</name>
+      <anchorfile>classknncolle_1_1LoadPrebuiltNotFoundError.html</anchorfile>
+      <anchor>aeea1e4dc86e1be027303feb54d50997d</anchor>
+      <arglist>() const</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>knncolle::ManhattanDistance</name>
     <filename>classknncolle_1_1ManhattanDistance.html</filename>
     <templarg>typename Data_</templarg>
@@ -677,6 +696,7 @@
     <class kind="class">knncolle::L2NormalizedBuilder</class>
     <class kind="class">knncolle::L2NormalizedMatrix</class>
     <class kind="struct">knncolle::L2NormalizedPrebuiltTypes</class>
+    <class kind="class">knncolle::LoadPrebuiltNotFoundError</class>
     <class kind="class">knncolle::ManhattanDistance</class>
     <class kind="class">knncolle::Matrix</class>
     <class kind="class">knncolle::MatrixExtractor</class>

@@ -121,6 +121,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structknncolle_1_1L2NormalizedPrebuiltTypes.html">L2NormalizedPrebuiltTypes</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Template type of a saved L2-normalized index.  <a href="structknncolle_1_1L2NormalizedPrebuiltTypes.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1LoadPrebuiltNotFoundError.html">LoadPrebuiltNotFoundError</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception for unknown search algorithms in <code><a class="el" href="#af261ec286ec7a275c3926ba0fdb8dc11">load_prebuilt_raw()</a></code>.  <a href="classknncolle_1_1LoadPrebuiltNotFoundError.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1ManhattanDistance.html">ManhattanDistance</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Manhattan distances between two input vectors.  <a href="classknncolle_1_1ManhattanDistance.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -740,7 +743,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> instance, created from the files at <code>prefix</code>. If no loading function can be found for the search algorithm at <code>prefix</code>, a <code><a class="el" href="classknncolle_1_1LoadPrebuiltNotFoundError.html" title="Exception for unknown search algorithms in load_prebuilt_raw().">LoadPrebuiltNotFoundError</a></code> is thrown. </dd></dl>
 
 </div>
 </div>
@@ -776,7 +779,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of method names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) to prebuilt loading functions.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a global map of algorithm names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#a87930f878bf3a22297b851173caaf893">Prebuilt::save()</a></code>) to prebuilt loading functions.</dd></dl>
 <p>Note that no loading function is implemented by default for prebuilt indices created by <code>L2NormalizedBuilder()</code>. This should be added separately with <code>l2normalized_save_name</code>, <code><a class="el" href="#acde4204d68e33d9c9689528da1d9ae4c">load_l2normalized_prebuilt_types()</a></code>, and <code><a class="el" href="#a4ac0563a38deda032558537ac3f2d304">load_l2normalized_prebuilt()</a></code>. </p>
 
 </div>

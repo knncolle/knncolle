@@ -15,5 +15,6 @@ var searchData=
   ['load_5fprebuilt_5fshared_12',['load_prebuilt_shared',['../namespaceknncolle.html#ae60afb430cc5948b0c8e5c2d4a4a7f84',1,'knncolle']]],
   ['load_5fprebuilt_5funique_13',['load_prebuilt_unique',['../namespaceknncolle.html#aa985f74dca21f1c23cfe914a25b2a412',1,'knncolle']]],
   ['loaddistancemetricfunction_14',['LoadDistanceMetricFunction',['../namespaceknncolle.html#ac850c74c54af62105c165c458f7516b7',1,'knncolle']]],
-  ['loadprebuiltfunction_15',['LoadPrebuiltFunction',['../namespaceknncolle.html#af5bf682899b815f8e1d4a4c6ef80408a',1,'knncolle']]]
+  ['loadprebuiltfunction_15',['LoadPrebuiltFunction',['../namespaceknncolle.html#af5bf682899b815f8e1d4a4c6ef80408a',1,'knncolle']]],
+  ['loadprebuiltnotfounderror_16',['LoadPrebuiltNotFoundError',['../classknncolle_1_1LoadPrebuiltNotFoundError.html',1,'knncolle']]]
 ];
