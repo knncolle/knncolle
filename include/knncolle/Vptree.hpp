@@ -464,9 +464,15 @@ private:
     std::shared_ptr<const DistanceMetric_> my_metric;
 
 public:
+    /**
+     * @cond
+     */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
         return build_known_raw(data);
     }
+    /**
+     * @endcond
+     */
 
 public:
     /**

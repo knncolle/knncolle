@@ -42,7 +42,7 @@ void quick_save(const std::filesystem::path& path, const Input_* const contents,
 
 /**
  * Read an array from a binary file at `path`.
- * This is intended for developer use in `load_prebuilt()` functions. 
+ * This is intended for developer use when defining `LoadPrebuiltFunction` functions for `load_prebuilt_registry()`. 
  *
  * @tparam Input_ Type of values to be read.
  * @tparam Length_ Integer type of the length of the array.
@@ -66,7 +66,7 @@ void quick_load(const std::filesystem::path& path, Input_* const contents, const
 
 /**
  * Read the contents of a binary file as a string.
- * This is intended for developer use in `load_prebuilt()` functions.
+ * This is intended for developer use when defining `LoadPrebuiltFunction` functions for `load_prebuilt_registry()`. 
  *
  * @param path File path to read from.
  * @return Contents of `path` as a string.

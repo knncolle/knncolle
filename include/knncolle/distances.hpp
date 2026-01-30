@@ -183,7 +183,7 @@ public:
 
 /**
  * Distance loading function.
- * This accepts a path to a directory (see `DistanceMetric::save()`) and returns a pointer to a `Distance` instance.
+ * This accepts a path to a directory (see `DistanceMetric::save()`) and returns a pointer to a `DistanceMetric` instance.
  *
  * @tparam Data_ Numeric type for the input data.
  * @tparam Distance_ Numeric type for the output distance, usually floating-point.

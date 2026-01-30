@@ -38,8 +38,8 @@ using LoadPrebuiltFunction = std::function<Prebuilt<Index_, Data_, Distance_>* (
  * @return Reference to a global map where the keys are algorithm names (see `Prebuilt::save()`) and the values are the prebuilt loading functions.
  *
  * No loading functions are available when the global is first initialized.
- * Users should call `register_load_bruteforce_prebuilt()`, `register_load_vptree_prebuilt()`, etc. to populate the map with loaders for algorithms they intend to support.
- * For L2-normalized indices, a loader function can be defined with `load_l2normalized_prebuilt()`.
+ * Users should register `LoadPrebuiltFunction` functions for each algorithm they intend to support.
+ * This is facilitated by the `load_bruteforce_prebuilt()`, `load_vptree_prebuilt()` and `load_l2normalized_prebuilt()` helper functions.
  */
 template<typename Index_, typename Data_, typename Distance_>
 inline std::unordered_map<std::string, LoadPrebuiltFunction<Index_, Data_, Distance_> >& load_prebuilt_registry() {
@@ -117,7 +117,7 @@ Prebuilt<Index_, Data_, Distance_>* load_prebuilt_raw(const std::filesystem::pat
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object. 
- * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `Prebuilt::save()` was called.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.
@@ -135,7 +135,7 @@ std::unique_ptr<Prebuilt<Index_, Data_, Distance_> > load_prebuilt_unique(const 
 
 /**
  * Load a neighbor search index from disk into a `Prebuilt` object. 
- * This should be called with the same template parameters as the `Prebuilt` interface from which `save()` was called.
+ * This should be called with the same template parameters as the `Prebuilt` interface from which `Prebuilt::save()` was called.
  *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the query data.

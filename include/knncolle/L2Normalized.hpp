@@ -296,9 +296,15 @@ private:
     std::shared_ptr<const Builder<Index_, Normalized_, Distance_, BuilderMatrix> > my_builder;
 
 public:
+    /**
+     * @cond
+     */
     Prebuilt<Index_, Data_, Distance_>* build_raw(const Matrix_& data) const {
         return build_known_raw(data);
     }
+    /**
+     * @endcond
+     */
 
 public:
     /**
