@@ -16,7 +16,6 @@
 #include <cstddef>
 #include <string>
 #include <cstring>
-#include <cassert>
 #include <filesystem>
 
 #include "sanisizer/sanisizer.hpp"
@@ -203,7 +202,9 @@ public:
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(dir / "DISTANCE");
         auto xptr = dynamic_cast<DistanceMetric_*>(dptr);
-        assert(xptr != NULL); // this must be safe as we load with the default base DistanceMetric_.
+        if (xptr == NULL) {
+            throw std::runtime_error("cannot cast the loaded distance metric to a DistanceMetric_");
+        }
         my_metric.reset(xptr);
     }
 };

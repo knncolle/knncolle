@@ -20,13 +20,27 @@ protected:
         std::filesystem::create_directory(savedir);
         assemble({ 50, 5 });
 
-        knncolle::register_load_bruteforce_prebuilt<int, double, double>();
-        knncolle::register_load_vptree_prebuilt<int, double, double>();
-        knncolle::register_load_euclidean_distance<double, double>();
+        {
+            knncolle::register_load_euclidean_distance<double, double>();
+            auto& reg = knncolle::load_prebuilt_registry<int, double, double>();
+            reg[knncolle::bruteforce_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<int, double, double>* {
+                return knncolle::load_bruteforce_prebuilt<int, double, double>(dir);
+            };
+            reg[knncolle::vptree_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<int, double, double>* {
+                return knncolle::load_vptree_prebuilt<int, double, double>(dir);
+            };
+        }
 
-        knncolle::register_load_bruteforce_prebuilt<std::size_t, double, float>();
-        knncolle::register_load_vptree_prebuilt<std::size_t, double, float>();
-        knncolle::register_load_manhattan_distance<double, float>();
+        {
+            knncolle::register_load_manhattan_distance<double, float>();
+            auto& reg = knncolle::load_prebuilt_registry<std::size_t, double, float>();
+            reg[knncolle::bruteforce_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<std::size_t, double, float>* {
+                return knncolle::load_bruteforce_prebuilt<std::size_t, double, float>(dir);
+            };
+            reg[knncolle::vptree_prebuilt_save_name] = [](const std::filesystem::path& dir) -> knncolle::Prebuilt<std::size_t, double, float>* {
+                return knncolle::load_vptree_prebuilt<std::size_t, double, float>(dir);
+            };
+        }
     }
 };
 
@@ -191,4 +205,42 @@ TEST_F(LoadPrebuiltTest, Errors) {
     EXPECT_EQ(faker.num_dimensions(), 0);
     EXPECT_FALSE(faker.initialize());
     EXPECT_ANY_THROW(faker.save("FOO"));
+}
+
+TEST_F(LoadPrebuiltTest, DistanceErrors) {
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+
+    {
+        knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
+        auto bptr = bb.build_unique(mat);
+        const auto dir = savedir / "bruteforce_euclidean_fail";
+        std::filesystem::create_directory(dir);
+        bptr->save(dir);
+
+        std::string msg;
+        try {
+            knncolle::load_bruteforce_prebuilt<int, double, double, knncolle::ManhattanDistance<double, double> >(dir);
+        } catch (std::exception& e) {
+            msg = e.what();
+        }
+        EXPECT_TRUE(msg.find("cannot cast") != std::string::npos);
+    }
+
+    {
+        auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+        knncolle::VptreeBuilder<int, double, double> vb(eucdist);
+        auto vptr = vb.build_unique(mat);
+        const auto dir = savedir / "vptree_euclidean_fail";
+        std::filesystem::create_directory(dir);
+        vptr->save(dir);
+
+        std::string msg;
+        try {
+            knncolle::load_vptree_prebuilt<int, double, double, knncolle::ManhattanDistance<double, double> >(dir);
+        } catch (std::exception& e) {
+            msg = e.what();
+        }
+        EXPECT_TRUE(msg.find("cannot cast") != std::string::npos);
+    }
 }
