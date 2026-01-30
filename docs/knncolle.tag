@@ -165,13 +165,6 @@
       <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
     </member>
     <member kind="function">
-      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
-      <name>build_raw</name>
-      <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
-      <anchor>a96c9cd26d07b09768dc73b2e73899510</anchor>
-      <arglist>(const Matrix_ &amp;data) const</arglist>
-    </member>
-    <member kind="function">
       <type>auto</type>
       <name>build_known_raw</name>
       <anchorfile>classknncolle_1_1BruteforceBuilder.html</anchorfile>
@@ -313,13 +306,6 @@
       <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
       <anchor>a387250ea0ae7654b186545814cd51da3</anchor>
       <arglist>(std::shared_ptr&lt; const Builder&lt; Index_, Normalized_, Distance_, BuilderMatrix &gt; &gt; builder)</arglist>
-    </member>
-    <member kind="function">
-      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
-      <name>build_raw</name>
-      <anchorfile>classknncolle_1_1L2NormalizedBuilder.html</anchorfile>
-      <anchor>a437ca7f6f9a3b82fa32762edba0cd08b</anchor>
-      <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
@@ -676,13 +662,6 @@
       <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
       <anchor>a13f00af67d227d117fa4b9910861a438</anchor>
       <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
-    </member>
-    <member kind="function">
-      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
-      <name>build_raw</name>
-      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
-      <anchor>aafa5db0eecf99ebab88d21f038b6b15a</anchor>
-      <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>

@@ -292,7 +292,7 @@ template&lt;typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Distance loading function. This accepts a path to a directory (see <code><a class="el" href="classknncolle_1_1DistanceMetric.html#aa2989e7df3cb8e65d161629473914d55">DistanceMetric::save()</a></code>) and returns a pointer to a <code>Distance</code> instance.</p>
+<p>Distance loading function. This accepts a path to a directory (see <code><a class="el" href="classknncolle_1_1DistanceMetric.html#aa2989e7df3cb8e65d161629473914d55">DistanceMetric::save()</a></code>) and returns a pointer to a <code><a class="el" href="classknncolle_1_1DistanceMetric.html" title="Interface for a distance metric.">DistanceMetric</a></code> instance.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Data_</td><td>Numeric type for the input data. </td></tr>
@@ -869,7 +869,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to a global map where the keys are algorithm names (see <code><a class="el" href="classknncolle_1_1Prebuilt.html#add21dc74e08a6ad495c6e241fa3d5968">Prebuilt::save()</a></code>) and the values are the prebuilt loading functions.</dd></dl>
-<p>No loading functions are available when the global is first initialized. Users should call <code>register_load_bruteforce_prebuilt()</code>, <code>register_load_vptree_prebuilt()</code>, etc. to populate the map with loaders for algorithms they intend to support. For L2-normalized indices, a loader function can be defined with <code><a class="el" href="#a54a79aea2d2c0a9ece9e107c60776c22">load_l2normalized_prebuilt()</a></code>. </p>
+<p>No loading functions are available when the global is first initialized. Users should register <code>LoadPrebuiltFunction</code> functions for each algorithm they intend to support. This is facilitated by the <code><a class="el" href="#a061dcb25d3ba45a3f171123eed099cb9">load_bruteforce_prebuilt()</a></code>, <code><a class="el" href="#a68fe941ede848705fba1c15da9cf772a">load_vptree_prebuilt()</a></code> and <code><a class="el" href="#a54a79aea2d2c0a9ece9e107c60776c22">load_l2normalized_prebuilt()</a></code> helper functions. </p>
 
 </div>
 </div>
@@ -889,7 +889,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code>save()</code> was called.</p>
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code><a class="el" href="classknncolle_1_1Prebuilt.html#add21dc74e08a6ad495c6e241fa3d5968">Prebuilt::save()</a></code> was called.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
@@ -924,7 +924,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code>save()</code> was called.</p>
+<p>Load a neighbor search index from disk into a <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> object. This should be called with the same template parameters as the <code><a class="el" href="classknncolle_1_1Prebuilt.html" title="Interface for prebuilt nearest-neighbor search indices.">Prebuilt</a></code> interface from which <code><a class="el" href="classknncolle_1_1Prebuilt.html#add21dc74e08a6ad495c6e241fa3d5968">Prebuilt::save()</a></code> was called.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type for the observation indices. </td></tr>
@@ -1048,7 +1048,7 @@ template&lt;typename Input_ , typename Length_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read an array from a binary file at <code>path</code>. This is intended for developer use in <code>load_prebuilt()</code> functions.</p>
+<p>Read an array from a binary file at <code>path</code>. This is intended for developer use when defining <code>LoadPrebuiltFunction</code> functions for <code><a class="el" href="#aa08de1eb1a23d5e13dc11e23ad7967ea">load_prebuilt_registry()</a></code>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Input_</td><td>Type of values to be read. </td></tr>
@@ -1089,7 +1089,7 @@ template&lt;typename Input_ , typename Length_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Read the contents of a binary file as a string. This is intended for developer use in <code>load_prebuilt()</code> functions.</p>
+<p>Read the contents of a binary file as a string. This is intended for developer use when defining <code>LoadPrebuiltFunction</code> functions for <code><a class="el" href="#aa08de1eb1a23d5e13dc11e23ad7967ea">load_prebuilt_registry()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>File path to read from. </td></tr>

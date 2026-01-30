@@ -134,8 +134,6 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a387250ea0ae7654b186545814cd51da3" id="r_a387250ea0ae7654b186545814cd51da3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a387250ea0ae7654b186545814cd51da3">L2NormalizedBuilder</a> (std::shared_ptr&lt; const <a class="el" href="classknncolle_1_1Builder.html">Builder</a>&lt; Index_, Normalized_, Distance_, <a class="el" href="#abeaefcb9c85ef73693defd5f59503ff2">BuilderMatrix</a> &gt; &gt; builder)</td></tr>
 <tr class="separator:a387250ea0ae7654b186545814cd51da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a437ca7f6f9a3b82fa32762edba0cd08b" id="r_a437ca7f6f9a3b82fa32762edba0cd08b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a437ca7f6f9a3b82fa32762edba0cd08b">build_raw</a> (const Matrix_ &amp;data) const</td></tr>
-<tr class="separator:a437ca7f6f9a3b82fa32762edba0cd08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a089482a8c6ba27cf477df95a2885d6" id="r_a4a089482a8c6ba27cf477df95a2885d6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a089482a8c6ba27cf477df95a2885d6">build_known_raw</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:a4a089482a8c6ba27cf477df95a2885d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae50b402db117884065a9d77a9788baa6" id="r_ae50b402db117884065a9d77a9788baa6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae50b402db117884065a9d77a9788baa6">build_known_unique</a> (const Matrix_ &amp;data) const</td></tr>
@@ -143,6 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae1a1855022a9acd44a7741840e84889f" id="r_ae1a1855022a9acd44a7741840e84889f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1a1855022a9acd44a7741840e84889f">build_known_shared</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:ae1a1855022a9acd44a7741840e84889f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classknncolle_1_1Builder"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classknncolle_1_1Builder')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classknncolle_1_1Builder.html">knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</a></td></tr>
+<tr class="memitem:acd18a78af362f948ede3ddd8d5f6e88c inherit pub_methods_classknncolle_1_1Builder" id="r_acd18a78af362f948ede3ddd8d5f6e88c"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c">build_raw</a> (const Matrix_ &amp;data) const =0</td></tr>
+<tr class="separator:acd18a78af362f948ede3ddd8d5f6e88c inherit pub_methods_classknncolle_1_1Builder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a7a0cb39688bedba6ab406e59da6c90 inherit pub_methods_classknncolle_1_1Builder" id="r_a9a7a0cb39688bedba6ab406e59da6c90"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:a9a7a0cb39688bedba6ab406e59da6c90 inherit pub_methods_classknncolle_1_1Builder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93cac638de3e4ad31919bc5d677d16b7 inherit pub_methods_classknncolle_1_1Builder" id="r_a93cac638de3e4ad31919bc5d677d16b7"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a> (const Matrix_ &amp;data) const</td></tr>
@@ -184,7 +184,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Nor
 </div><div class="memdoc">
 <p>The expected matrix type in the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> instance in the constructor.</p>
 <p>If <code>Matrix_</code> is a base class of <code>NormalizedMatrix</code>, the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> can use the same <code>Matrix_</code> in its template parametrization. This is because <code>Matrix_</code> will be compatible with both the <code><a class="el" href="classknncolle_1_1L2NormalizedMatrix.html" title="Wrapper around a matrix with L2 normalization.">L2NormalizedMatrix</a></code> and the type of the original matrix, allowing us to transparently substitute an instance of the latter with that of the former. In general, this scenario requires the default <code>Matrix_</code> type and <code>Data_ == Normalized_</code>.</p>
-<p>Otherwise, the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> should explicitly have a <code>NormalizedMatrix</code> in its template parametrization. This is because it will be accepting the normalized matrix in <code><a class="el" href="#a437ca7f6f9a3b82fa32762edba0cd08b">build_raw()</a></code> instead of <code>Matrix_</code>. </p>
+<p>Otherwise, the <code><a class="el" href="classknncolle_1_1Builder.html" title="Interface to build nearest-neighbor search indices.">Builder</a></code> should explicitly have a <code>NormalizedMatrix</code> in its template parametrization. This is because it will be accepting the normalized matrix in <code><a class="el" href="classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c">build_raw()</a></code> instead of <code>Matrix_</code>. </p>
 
 </div>
 </div>
@@ -321,42 +321,6 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Nor
 </table>
 </div><div class="memdoc">
 <p>Override to assist devirtualization. </p>
-
-</div>
-</div>
-<a id="a437ca7f6f9a3b82fa32762edba0cd08b" name="a437ca7f6f9a3b82fa32762edba0cd08b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a437ca7f6f9a3b82fa32762edba0cd08b">&#9670;&#160;</a></span>build_raw()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Index_ , typename Data_ , typename Distance_ , typename Normalized_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; * <a class="el" href="classknncolle_1_1L2NormalizedBuilder.html">knncolle::L2NormalizedBuilder</a>&lt; Index_, Data_, Distance_, Normalized_, Matrix_ &gt;::build_raw </td>
-          <td>(</td>
-          <td class="paramtype">const Matrix_ &amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>Object satisfying the <code><a class="el" href="classknncolle_1_1Matrix.html" title="Interface for matrix data.">Matrix</a></code> interface, containing observations in columns and dimensions in rows. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to a pre-built search index. </dd></dl>
-
-<p>Implements <a class="el" href="classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c">knncolle::Builder&lt; Index_, Data_, Distance_, Matrix_ &gt;</a>.</p>
 
 </div>
 </div>
