@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(knncolle
-    VERSION 3.0.2
+    VERSION 3.1.0
     DESCRIPTION "Collection of k-nearest neighbors algorithms in C++"
     LANGUAGES CXX)
 
@@ -23,7 +23,7 @@ if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
     find_package(ltla_subpar 0.4.0 CONFIG REQUIRED)
-    find_package(ltla_sanisizer 0.1.0 CONFIG REQUIRED)
+    find_package(ltla_sanisizer 0.1.5 CONFIG REQUIRED)
 endif()
 
 target_link_libraries(knncolle INTERFACE ltla::subpar ltla::sanisizer)

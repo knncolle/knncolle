@@ -9,7 +9,7 @@ FetchContent_Declare(
 FetchContent_Declare(
   sanisizer
   GIT_REPOSITORY https://github.com/LTLA/sanisizer
-  GIT_TAG master # ^0.1.0
+  GIT_TAG master # ^0.1.5
 )
 
 FetchContent_MakeAvailable(subpar)
