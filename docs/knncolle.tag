@@ -384,10 +384,10 @@
     <name>knncolle::L2NormalizedPrebuiltTypes</name>
     <filename>structknncolle_1_1L2NormalizedPrebuiltTypes.html</filename>
     <member kind="variable">
-      <type>knncolle::NumericType</type>
+      <type>NumericType</type>
       <name>normalized</name>
       <anchorfile>structknncolle_1_1L2NormalizedPrebuiltTypes.html</anchorfile>
-      <anchor>ab1254d0f6e28152caaf3e560662f48c7</anchor>
+      <anchor>a59f1b5b8747665021453b9d1c548b86b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -856,20 +856,6 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
-      <name>register_load_bruteforce_prebuilt</name>
-      <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a7bbb674b2e46e25b2ce01301c45d8ec9</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>register_load_vptree_prebuilt</name>
-      <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a116ccc4bacb892217dc1ec3a53e49e33</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
       <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
       <name>load_prebuilt_raw</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
@@ -902,6 +888,20 @@
       <name>load_l2normalized_prebuilt</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a54a79aea2d2c0a9ece9e107c60776c22</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
+      <name>load_bruteforce_prebuilt</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a061dcb25d3ba45a3f171123eed099cb9</anchor>
+      <arglist>(const std::filesystem::path &amp;dir)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prebuilt&lt; Index_, Data_, Distance_ &gt; *</type>
+      <name>load_vptree_prebuilt</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a68fe941ede848705fba1c15da9cf772a</anchor>
       <arglist>(const std::filesystem::path &amp;dir)</arglist>
     </member>
     <member kind="function">
