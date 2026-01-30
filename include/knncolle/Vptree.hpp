@@ -419,6 +419,15 @@ public:
  * This reduces the memory usage of the tree and total number of distance calculations for any search.
  * It can also be very useful when the concept of an intermediate is not well-defined (e.g., for non-numeric data), though this is not particularly relevant for **knncolle**.
  *
+ * Note that the VP tree search is theoretically "exact" but the behavior of the implementation will be affected by round-off error for floating-point inputs.
+ * Search decisions based on the triangle inequality may not be correct in some edge cases involving tied distances.
+ * This manifests as a different selection of neighbors compared to an exhaustive search (e.g., by `BruteforceBuilder`),
+ * typically when (i) an observation is equidistant to multiple other observations that are not duplicates of each other
+ * and (ii) the tied distances occur at the `k`-th nearest neighbor for `Searcher::search()` or are tied with `threshold` for `Searcher::search_all()`.
+ * In practice, any errors are very rare and can probably be ignored for most applications.
+ * If more accuracy is required, a partial mitigation is to just increase `k` or `threshold` to reduce the risk of incorrect search decisions,
+ * and then filter the results to the desired set of neighbors.
+ *
  * @tparam Index_ Integer type for the observation indices.
  * @tparam Data_ Numeric type for the input and query data.
  * @tparam Distance_ Numeric type for the distances, usually floating-point.
