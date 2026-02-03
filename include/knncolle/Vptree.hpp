@@ -18,6 +18,7 @@
 #include <string>
 #include <cstring>
 #include <filesystem>
+#include <cassert>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -45,17 +46,17 @@ class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     VptreeSearcher(const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
 
-private:                
+private:
     const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
     NeighborQueue<Index_, Distance_> my_nearest;
+    std::vector<std::pair<char, Index_> > my_history;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
         auto iptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(my_parent.my_new_locations[i], my_parent.my_dim);
-        Distance_ max_dist = std::numeric_limits<Distance_>::max();
-        my_parent.search_nn(0, iptr, max_dist, my_nearest);
+        my_parent.search_nn(iptr, my_nearest, my_history);
         my_nearest.report(output_indices, output_distances, i);
     }
 
@@ -72,8 +73,7 @@ public:
 
         } else {
             my_nearest.reset(k);
-            Distance_ max_dist = std::numeric_limits<Distance_>::max();
-            my_parent.search_nn(0, query, max_dist, my_nearest);
+            my_parent.search_nn(query, my_nearest, my_history);
             my_nearest.report(output_indices, output_distances);
         }
     }
@@ -142,38 +142,84 @@ private:
 
     // Single node of a VP tree. 
     struct Node {
-        Distance_ radius = 0;  
+        Distance_ radius = 0;
 
         // Original index of current vantage point, defining the center of the node.
         Index_ index = 0;
 
-        // Node index of the next vantage point for all children closer than 'threshold' from the current vantage point.
+        // Node index of the next vantage point for all children no more than 'threshold' from the current vantage point.
         // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
-        Index_ left = LEAF;  
+        Index_ left = LEAF;
 
-        // Node index of the next vantage point for all children further than 'threshold' from the current vantage point.
+        // Node index of the next vantage point for all children no less than 'threshold' from the current vantage point.
         // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
         Index_ right = LEAF; 
     };
 
     std::vector<Node> my_nodes;
 
-    typedef std::pair<Distance_, Index_> DataPoint; 
+    void build() {
+        typedef std::pair<Distance_, Index_> DataPoint; 
+        std::vector<DataPoint> items;
+        items.reserve(my_obs);
+        for (Index_ i = 0; i < my_obs; ++i) {
+            items.emplace_back(0, i);
+        }
 
-    template<class Rng_>
-    Index_ build(Index_ lower, Index_ upper, const Data_* coords, std::vector<DataPoint>& items, Rng_& rng) {
-        /* 
-         * We're assuming that lower < upper at each point within this
-         * recursion. This requires some protection at the call site
-         * when nobs = 0, see the constructor.
-         */
+        // Statistical correctness doesn't matter (aside from tie breaking)
+        // so we'll just use a deterministically 'random' number to ensure
+        // we get the same ties for any given dataset but a different stream
+        // of numbers between datasets. Casting to get well-defined overflow. 
+        const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
+        std::mt19937_64 rng(base * m1 + m2);
 
-        Index_ pos = my_nodes.size();
-        my_nodes.emplace_back();
-        Node& node = my_nodes.back(); // this is safe during recursion because we reserved 'nodes' already to the number of observations, see the constructor.
+        // We're assuming that lower < upper at each loop. This requires some
+        // protection at the call site when nobs = 0, see the constructor.
+        Index_ lower = 0, upper = my_obs;
+        const auto coords = my_data.data();
+        my_nodes.reserve(my_obs);
 
-        Index_ gap = upper - lower;
-        if (gap > 1) { // not yet at a leaf.
+        struct History {
+            History(Index_ self, Index_ lower, Index_ upper) : self(self), lower(lower), upper(upper) {}
+            Index_ self, lower, upper; 
+            bool right = false;
+        };
+        std::vector<History> history;
+
+        while (1) {
+            Index_ pos = my_nodes.size();
+            my_nodes.emplace_back();
+            Node& node = my_nodes.back(); 
+
+            // If we're at a leaf, we've finished this particular branch of the
+            // tree, so we can start rolling back through history.
+            const Index_ gap = upper - lower;
+            assert(gap > 0);
+            if (gap == 1) {
+                const auto& leaf = items[lower];
+                node.index = leaf.second;
+
+                while (1) {
+                    if (history.empty()) {
+                        return;
+                    }
+                    if (!history.back().right) {
+                        break;
+                    }
+
+                    const auto parent_pos = history.back().self;
+                    my_nodes[parent_pos].right = pos;
+                    pos = parent_pos;
+                    history.pop_back();
+                }
+
+                auto& parent_info = history.back();
+                my_nodes[parent_info.self].left = pos;
+                lower = parent_info.lower;
+                upper = parent_info.upper;
+                parent_info.right = true;
+                continue;
+            }
 
             /* Choose an arbitrary point and move it to the start of the [lower, upper)
              * interval in 'items'; this is our new vantage point.
@@ -183,8 +229,8 @@ private:
              * here, and I don't want std::uniform_int_distribution's
              * implementation-specific behavior.
              */
-            Index_ i = (rng() % gap + lower);
-            std::swap(items[lower], items[i]);
+            const Index_ vp = (rng() % gap + lower);
+            std::swap(items[lower], items[vp]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
             const Data_* vantage_ptr = coords + sanisizer::product_unsafe<std::size_t>(vantage.second, my_dim);
@@ -196,27 +242,37 @@ private:
             }
 
             // Partition around the median distance from the vantage point.
-            Index_ median = lower + gap/2;
-            Index_ lower_p1 = lower + 1; // excluding the vantage point itself, obviously.
-            std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
+            // We +1 to exclude the vantage point itself, obviously.
+            const Index_ lower_p1 = lower + 1;
 
-            // Radius of the new node will be the distance to the median.
-            node.radius = my_metric->normalize(items[median].first);
+            if (gap > 2) {
+                const Index_ median = lower_p1 + (gap - 1)/2;
+                std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
 
-            // Recursively build tree.
-            if (lower_p1 < median) {
-                node.left = build(lower_p1, median, coords, items, rng);
+                // Radius of the new node will be the distance to the median.
+                node.radius = my_metric->normalize(items[median].first);
+
+                // Setting up jobs for the next iteration. We immediately
+                // process the left node (i.e., inside the ball) while we add
+                // the right node to the history for later processing.
+                history.emplace_back(pos, median, upper);
+                lower = lower_p1;
+                upper = median;
+
+            } else {
+                const Index_ median = lower_p1;
+                node.radius = my_metric->normalize(items[median].first);
+
+                // Here we only have one child, as this node has two observations
+                // and one of them was already used as the vantage point. So the
+                // other observation is used as the right child
+                // set right = true to avoid reprocessing this child.
+                history.emplace_back(pos, median, upper);
+                history.back().right = true; 
+                lower = median;
+                upper = upper;
             }
-            if (median < upper) {
-                node.right = build(median, upper, coords, items, rng);
-            }
-
-        } else {
-            const auto& leaf = items[lower];
-            node.index = leaf.second;
         }
-
-        return pos;
     }
 
 private:
@@ -230,22 +286,7 @@ public:
         my_metric(std::move(metric))
     {
         if (num_obs) {
-            std::vector<DataPoint> items;
-            items.reserve(my_obs);
-            for (Index_ i = 0; i < my_obs; ++i) {
-                items.emplace_back(0, i);
-            }
-
-            my_nodes.reserve(my_obs);
-
-            // Statistical correctness doesn't matter (aside from tie breaking)
-            // so we'll just use a deterministically 'random' number to ensure
-            // we get the same ties for any given dataset but a different stream
-            // of numbers between datasets. Casting to get well-defined overflow. 
-            const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
-            std::mt19937_64 rand(base * m1 + m2);
-
-            build(0, my_obs, my_data.data(), items, rand);
+            build();
 
             // Resorting data in place to match order of occurrence within
             // 'nodes', for better cache locality.
