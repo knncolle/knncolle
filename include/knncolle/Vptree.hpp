@@ -427,7 +427,7 @@ private:
             // The threshold isn't going to change and we'd have to search both children anyway.
             if (can_left) {
                 if (can_right) {
-                    history.emplace_back(false, curnode_offset);
+                    history.emplace_back(false, curnode_offset); // false is just a dummy value and is ignored in this rest of this function.
                 }
                 curnode_offset = curnode.left;
                 continue;
@@ -442,11 +442,7 @@ private:
             }
 
             auto& histinfo = history.back(); 
-            if (!histinfo.right) {
-                curnode_offset = my_nodes[histinfo.node].right; 
-            } else {
-                curnode_offset = my_nodes[histinfo.node].left;
-            }
+            curnode_offset = my_nodes[histinfo.node].right; 
             history.pop_back();
         }
     }
