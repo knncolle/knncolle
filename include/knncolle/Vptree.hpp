@@ -328,35 +328,89 @@ public:
     }
 
 private:
-    void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, NeighborQueue<Index_, Distance_>& nearest) const { 
-        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
-        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+    static bool can_progress_left(const Node& node, const Distance_ dist, const Distance_ max_dist) {
+        return node.left != LEAF && dist - max_dist <= node.radius; 
+    }
 
-        // If current node is within the maximum distance:
-        const auto& curnode = my_nodes[curnode_index];
-        if (dist <= max_dist) {
-            nearest.add(curnode.index, dist);
-            if (nearest.is_full()) {
-                max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)
+    static bool can_progress_right(const Node& node, const Distance_ dist, const Distance_ max_dist) {
+        // Using >= in the triangle inequality as there are some points that
+        // lie on the surface of the ball but are considered 'outside' the ball,
+        // e.g., the median point itself as well as anything with a tied distance.
+        return node.right != LEAF && dist + max_dist >= node.radius; 
+    }
+
+    void search_nn(const Data_* target, NeighborQueue<Index_, Distance_>& nearest, std::vector<std::pair<char, Index_> >& history) const { 
+        history.clear();
+        Index_ curnode_offset = 0;
+        Distance_ max_dist = std::numeric_limits<Distance_>::max();
+
+        constexpr char LEFT_DONE = 0, RIGHT_DONE = 1, BOTH_DONE = 2;
+
+        while (1) {
+            auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_offset, my_dim);
+            const Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+
+            const auto& curnode = my_nodes[curnode_offset];
+            if (dist <= max_dist) {
+                nearest.add(curnode.index, dist);
+                if (nearest.is_full()) {
+                    max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)
+                }
             }
-        }
 
-        if (dist < curnode.radius) { // If the target lies within the radius of ball:
-            if (curnode.left != LEAF && dist - max_dist <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_nn(curnode.left, target, max_dist, nearest);
+            if (dist < curnode.radius) {
+                // If the target lies within the radius of ball, chances are
+                // that its neighbors also lie inside the ball. So we check the
+                // points inside the ball first (i.e., left node) to try to
+                // shrink max_dist as fast as possible.
+                if (can_progress_left(curnode, dist, max_dist)) {
+                    curnode_offset = curnode.left;
+                    history.emplace_back(LEFT_DONE, curnode_offset);
+                    continue;
+                } else if (can_progress_right(curnode, dist, max_dist)) {
+                    curnode_offset = curnode.right;
+                    history.emplace_back(BOTH_DONE, curnode_offset);
+                    continue;
+                }
+
+            } else {
+                // Otherwise, if the target lies at or outside the radius of
+                // the ball, chances are its neighbors also lie outside the
+                // ball, so we check the points outside the ball first.
+                if (can_progress_right(curnode, dist, max_dist)) {
+                    curnode_offset = curnode.right;
+                    history.emplace_back(LEFT_DONE, curnode_offset);
+                    continue;
+                } else if (can_progress_left(curnode, dist, max_dist)) {
+                    curnode_offset = curnode.left;
+                    history.emplace_back(BOTH_DONE, curnode_offset);
+                    continue;
+                }
             }
 
-            if (curnode.right != LEAF && dist + max_dist >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_nn(curnode.right, target, max_dist, nearest);
-            }
+            // We don't have another point to process here, so we start rolling
+            // back through history to find the next point.
+            while (1) {
+                if (history.empty()) {
+                    return;
+                }
 
-        } else { // If the target lies outsize the radius of the ball:
-            if (curnode.right != LEAF && dist + max_dist >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_nn(curnode.right, target, max_dist, nearest);
-            }
+                const auto& histnode = my_nodes[history.back().second];
+                if (history.back().first == LEFT_DONE) {
+                    if (can_progress_right(histnode, dist, max_dist)) {
+                        history.back().first = BOTH_DONE;
+                        curnode_offset = histnode.right; 
+                        break;
+                    }
+                } else if (history.back().first == RIGHT_DONE) {
+                    if (can_progress_left(histnode, dist, max_dist)) {
+                        history.back().first = BOTH_DONE;
+                        curnode_offset = histnode.left;
+                        break;
+                    }
+                }
 
-            if (curnode.left != LEAF && dist - max_dist <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_nn(curnode.left, target, max_dist, nearest);
+                history.pop_back();
             }
         }
     }
