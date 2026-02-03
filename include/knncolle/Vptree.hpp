@@ -18,6 +18,7 @@
 #include <string>
 #include <cstring>
 #include <filesystem>
+#include <cassert>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -40,22 +41,29 @@ inline static constexpr const char* vptree_prebuilt_save_name = "knncolle::Vptre
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt;
 
+template<typename Index_>
+struct VptreeSearchHistory {
+    VptreeSearchHistory(bool right, Index_ node) : node(node), right(right) {}
+    Index_ node;
+    bool right; 
+};
+
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
     VptreeSearcher(const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& parent) : my_parent(parent) {}
 
-private:                
+private:
     const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
     NeighborQueue<Index_, Distance_> my_nearest;
+    std::vector<VptreeSearchHistory<Index_> > my_history;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
         auto iptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(my_parent.my_new_locations[i], my_parent.my_dim);
-        Distance_ max_dist = std::numeric_limits<Distance_>::max();
-        my_parent.search_nn(0, iptr, max_dist, my_nearest);
+        my_parent.search_nn(iptr, my_nearest, my_history);
         my_nearest.report(output_indices, output_distances, i);
     }
 
@@ -72,8 +80,7 @@ public:
 
         } else {
             my_nearest.reset(k);
-            Distance_ max_dist = std::numeric_limits<Distance_>::max();
-            my_parent.search_nn(0, query, max_dist, my_nearest);
+            my_parent.search_nn(query, my_nearest, my_history);
             my_nearest.report(output_indices, output_distances);
         }
     }
@@ -87,12 +94,12 @@ public:
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.template search_all<true>(0, iptr, d, count);
+            my_parent.template search_all<true>(iptr, d, count, my_history);
             return count_all_neighbors_without_self(count);
 
         } else {
             my_all_neighbors.clear();
-            my_parent.template search_all<false>(0, iptr, d, my_all_neighbors);
+            my_parent.template search_all<false>(iptr, d, my_all_neighbors, my_history);
             report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
             return count_all_neighbors_without_self(my_all_neighbors.size());
         }
@@ -107,12 +114,12 @@ public:
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.template search_all<true>(0, query, d, count);
+            my_parent.template search_all<true>(query, d, count, my_history);
             return count;
 
         } else {
             my_all_neighbors.clear();
-            my_parent.template search_all<false>(0, query, d, my_all_neighbors);
+            my_parent.template search_all<false>(query, d, my_all_neighbors, my_history);
             report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             return my_all_neighbors.size();
         }
@@ -138,85 +145,125 @@ public:
 
 private:
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
-    static const Index_ LEAF = 0;
+
+
+    // Normally, 'left' or 'right' must be > 0, as the first node in 'nodes' is
+    // the root and cannot be referenced from other nodes. This means that we
+    // can use 0 as a sentinel to indicate that no child exists here.
+    static const Index_ TERMINAL = 0;
 
     // Single node of a VP tree. 
     struct Node {
-        Distance_ radius = 0;  
+        Distance_ radius = 0;
 
         // Original index of current vantage point, defining the center of the node.
         Index_ index = 0;
 
-        // Node index of the next vantage point for all children closer than 'threshold' from the current vantage point.
-        // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
-        Index_ left = LEAF;  
+        // Node index of the next vantage point for all children no more than 'threshold' from the current vantage point.
+        Index_ left = TERMINAL;
 
-        // Node index of the next vantage point for all children further than 'threshold' from the current vantage point.
-        // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
-        Index_ right = LEAF; 
+        // Node index of the next vantage point for all children no less than 'threshold' from the current vantage point.
+        Index_ right = TERMINAL; 
     };
 
     std::vector<Node> my_nodes;
 
-    typedef std::pair<Distance_, Index_> DataPoint; 
+    void build() {
+        typedef std::pair<Distance_, Index_> DataPoint; 
+        std::vector<DataPoint> items;
+        items.reserve(my_obs);
+        for (Index_ i = 0; i < my_obs; ++i) {
+            items.emplace_back(0, i);
+        }
 
-    template<class Rng_>
-    Index_ build(Index_ lower, Index_ upper, const Data_* coords, std::vector<DataPoint>& items, Rng_& rng) {
-        /* 
-         * We're assuming that lower < upper at each point within this
-         * recursion. This requires some protection at the call site
-         * when nobs = 0, see the constructor.
-         */
+        // Statistical correctness doesn't matter (aside from tie breaking)
+        // so we'll just use a deterministically 'random' number to ensure
+        // we get the same ties for any given dataset but a different stream
+        // of numbers between datasets. Casting to get well-defined overflow. 
+        const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
+        std::mt19937_64 rng(base * m1 + m2);
 
-        Index_ pos = my_nodes.size();
-        my_nodes.emplace_back();
-        Node& node = my_nodes.back(); // this is safe during recursion because we reserved 'nodes' already to the number of observations, see the constructor.
+        // We're assuming that lower < upper at each loop. This requires some protection at the call site when nobs = 0, see the constructor.
+        Index_ lower = 0, upper = my_obs;
 
-        Index_ gap = upper - lower;
-        if (gap > 1) { // not yet at a leaf.
+        // Reserving everything so there there won't be a reallocation, which ensures that pointers to various members will remain valid. 
+        my_nodes.reserve(my_obs);
+        const auto coords = my_data.data();
 
-            /* Choose an arbitrary point and move it to the start of the [lower, upper)
-             * interval in 'items'; this is our new vantage point.
-             * 
-             * Yes, I know that the modulo method does not provide strictly
-             * uniform values but statistical correctness doesn't really matter
-             * here, and I don't want std::uniform_int_distribution's
-             * implementation-specific behavior.
-             */
-            Index_ i = (rng() % gap + lower);
-            std::swap(items[lower], items[i]);
+        struct BuildHistory {
+            BuildHistory(Index_ lower, Index_ upper, Index_* right) : right(right), lower(lower), upper(upper) {}
+            Index_* right; // This is a pointer to the 'Node::right' of the parent of the node-to-be-added.
+            Index_ lower, upper; // Lower and upper ranges of the items in the node-to-be-added.
+        };
+        std::vector<BuildHistory> history;
+
+        while (1) {
+            my_nodes.emplace_back();
+            Node& node = my_nodes.back(); 
+
+            const Index_ gap = upper - lower;
+            assert(gap > 0);
+            if (gap == 1) { // i.e., we're at a leaf.
+                const auto& leaf = items[lower];
+                node.index = leaf.second;
+
+                // If we're at a leaf, we've finished this particular branch of the tree, so we can start rolling back through history.
+                if (history.empty()) {
+                    return;
+                }
+                *(history.back().right) = my_nodes.size();
+                lower = history.back().lower;
+                upper = history.back().upper;
+                history.pop_back();
+                continue;
+            }
+
+            // Choose an arbitrary point and move it to the start of the [lower, upper) interval in 'items'; this is our new vantage point.
+            // Yes, I know that the modulo method does not provide strictly uniform values but statistical correctness doesn't really matter here,
+            // and I don't want std::uniform_int_distribution's implementation-specific behavior.
+            const Index_ vp = (rng() % gap + lower);
+            std::swap(items[lower], items[vp]);
             const auto& vantage = items[lower];
             node.index = vantage.second;
             const Data_* vantage_ptr = coords + sanisizer::product_unsafe<std::size_t>(vantage.second, my_dim);
 
             // Compute distances to the new vantage point.
-            for (Index_ i = lower + 1; i < upper; ++i) {
+            // We +1 to exclude the vantage point itself, obviously.
+            const Index_ lower_p1 = lower + 1;
+            for (Index_ i = lower_p1 ; i < upper; ++i) {
                 const Data_* loc = coords + sanisizer::product_unsafe<std::size_t>(items[i].second, my_dim);
                 items[i].first = my_metric->raw(my_dim, vantage_ptr, loc);
             }
 
-            // Partition around the median distance from the vantage point.
-            Index_ median = lower + gap/2;
-            Index_ lower_p1 = lower + 1; // excluding the vantage point itself, obviously.
-            std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
+            if (gap > 2) {
+                // Partition around the median distance from the vantage point.
+                const Index_ median = lower_p1 + (gap - 1)/2;
+                std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
 
-            // Radius of the new node will be the distance to the median.
-            node.radius = my_metric->normalize(items[median].first);
+                // Radius of the new node will be the distance to the median.
+                node.radius = my_metric->normalize(items[median].first);
 
-            // Recursively build tree.
-            if (lower_p1 < median) {
-                node.left = build(lower_p1, median, coords, items, rng);
+                // The next iteration will process the left node (i.e., inside the ball).
+                // We store the boundaries of the yet-to-be-added right node to the history for later processing.
+                history.emplace_back(median, upper, &(node.right));
+                node.left = my_nodes.size();
+                lower = lower_p1;
+                upper = median;
+
+            } else {
+                // Here we only have one child, as this node has two observations and one of them was already used as the vantage point.
+                // So the other observation is used directly as the right node.
+                const Index_ median = lower_p1;
+                node.radius = my_metric->normalize(items[median].first);
+                node.right = my_nodes.size();
+                lower = median;
+
+                // Several points worth mentioning here:
+                // - No need to set upper, as we'd end up just doing upper = upper and clang complains.
+                // - This code allows us to get a node where left = TERMINAL and right != TERMINAL, but the opposite is impossible.
+                //   This fact is exploited in search_nn() for some minor optimizations.
             }
-            if (median < upper) {
-                node.right = build(median, upper, coords, items, rng);
-            }
-
-        } else {
-            const auto& leaf = items[lower];
-            node.index = leaf.second;
         }
-
-        return pos;
     }
 
 private:
@@ -230,25 +277,9 @@ public:
         my_metric(std::move(metric))
     {
         if (num_obs) {
-            std::vector<DataPoint> items;
-            items.reserve(my_obs);
-            for (Index_ i = 0; i < my_obs; ++i) {
-                items.emplace_back(0, i);
-            }
+            build();
 
-            my_nodes.reserve(my_obs);
-
-            // Statistical correctness doesn't matter (aside from tie breaking)
-            // so we'll just use a deterministically 'random' number to ensure
-            // we get the same ties for any given dataset but a different stream
-            // of numbers between datasets. Casting to get well-defined overflow. 
-            const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
-            std::mt19937_64 rand(base * m1 + m2);
-
-            build(0, my_obs, my_data.data(), items, rand);
-
-            // Resorting data in place to match order of occurrence within
-            // 'nodes', for better cache locality.
+            // Resorting data in place to match order of occurrence within 'nodes', for better cache locality.
             auto used = sanisizer::create<std::vector<char> >(sanisizer::attest_gez(my_obs));
             auto buffer = sanisizer::create<std::vector<Data_> >(sanisizer::attest_gez(my_dim));
             sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));
@@ -287,71 +318,132 @@ public:
     }
 
 private:
-    void search_nn(Index_ curnode_index, const Data_* target, Distance_& max_dist, NeighborQueue<Index_, Distance_>& nearest) const { 
-        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
-        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+    static bool can_progress_left(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
+        return node.left != TERMINAL && dist_to_vp - threshold <= node.radius; 
+    }
 
-        // If current node is within the maximum distance:
-        const auto& curnode = my_nodes[curnode_index];
-        if (dist <= max_dist) {
-            nearest.add(curnode.index, dist);
-            if (nearest.is_full()) {
-                max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)
-            }
-        }
+    static bool can_progress_right(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
+        // Using >= in the triangle inequality as there are some points that lie on the surface of the ball but are considered 'outside' the ball,
+        // e.g., the median point itself as well as anything with a tied distance.
+        return node.right != TERMINAL && dist_to_vp + threshold >= node.radius; 
+    }
 
-        if (dist < curnode.radius) { // If the target lies within the radius of ball:
-            if (curnode.left != LEAF && dist - max_dist <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_nn(curnode.left, target, max_dist, nearest);
+    void search_nn(const Data_* target, NeighborQueue<Index_, Distance_>& nearest, std::vector<VptreeSearchHistory<Index_> >& history) const { 
+        history.clear();
+        Index_ curnode_offset = 0;
+        Distance_ max_dist = std::numeric_limits<Distance_>::max();
+
+        while (1) {
+            auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_offset, my_dim);
+            const Distance_ dist_to_vp = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+
+            const auto& curnode = my_nodes[curnode_offset];
+            if (dist_to_vp <= max_dist) {
+                nearest.add(curnode.index, dist_to_vp);
+                if (nearest.is_full()) {
+                    max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)
+                }
             }
 
-            if (curnode.right != LEAF && dist + max_dist >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_nn(curnode.right, target, max_dist, nearest);
+            if (dist_to_vp < curnode.radius) {
+                // If the target lies within the radius of ball, chances are that its neighbors also lie inside the ball.
+                // So we check the points inside the ball first (i.e., left node) to try to shrink max_dist as fast as possible.
+
+                // A quirk here is that, if dist_to_vp < curnode.radius, then can_progress_left must be true if curnode.left != TERMINAL.
+                // So we don't bother to compute the full function.
+                const bool can_left = curnode.left != TERMINAL;
+                const bool can_right = can_progress_right(curnode, dist_to_vp, max_dist);
+
+                if (can_left) {
+                    if (can_right) {
+                        history.emplace_back(false, curnode_offset);
+                    }
+                    curnode_offset = curnode.left;
+                    continue;
+                } else if (can_right) {
+                    curnode_offset = curnode.right;
+                    continue;
+                }
+
+            } else {
+                // Otherwise, if the target lies at or outside the radius of the ball, chances are its neighbors also lie outside the ball.
+                // So we check the points outside the ball first (i.e., right node) to try to shrink max_dist as fast as possible.
+
+                // A quirk here is that, if dist_to_vp >= curnode.radius, then can_progress_right must be true if curnode.right != TERMINAL.
+                // So we don't bother to compute the full function.
+                const bool can_right = curnode.right != TERMINAL;
+                const bool can_left = can_progress_left(curnode, dist_to_vp, max_dist);
+
+                if (can_right) {
+                    if (can_left) {
+                        history.emplace_back(true, curnode_offset);
+                    }
+                    curnode_offset = curnode.right;
+                    continue;
+                } else {
+                    // The manner of construction of the VP tree prevents the existence of a node where right == TERMINAL but left != TERMINAL.
+                    // As such, there's no need to consider the 'else if (can_left) {' condition that we would otherwise expect for symmetry with the inside-ball code.
+                    assert(!can_left);
+                }
             }
 
-        } else { // If the target lies outsize the radius of the ball:
-            if (curnode.right != LEAF && dist + max_dist >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_nn(curnode.right, target, max_dist, nearest);
+            // We don't have anything else to do here, so we move back to the last branching node in our history. 
+            if (history.empty()) {
+                return;
             }
 
-            if (curnode.left != LEAF && dist - max_dist <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_nn(curnode.left, target, max_dist, nearest);
+            auto& histinfo = history.back(); 
+            if (!histinfo.right) {
+                curnode_offset = my_nodes[histinfo.node].right; 
+            } else {
+                curnode_offset = my_nodes[histinfo.node].left;
             }
+            history.pop_back();
         }
     }
 
     template<bool count_only_, typename Output_>
-    void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
-        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
-        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+    void search_all(const Data_* target, const Distance_ threshold, Output_& all_neighbors, std::vector<VptreeSearchHistory<Index_> >& history) const { 
+        history.clear();
+        Index_ curnode_offset = 0;
 
-        // If current node is within the maximum distance:
-        const auto& curnode = my_nodes[curnode_index];
-        if (dist <= threshold) {
-            if constexpr(count_only_) {
-                ++all_neighbors;
-            } else {
-                all_neighbors.emplace_back(dist, curnode.index);
-            }
-        }
+        while (1) {
+            auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_offset, my_dim);
+            const Distance_ dist_to_vp = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
-        if (dist < curnode.radius) { // If the target lies within the radius of ball:
-            if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
+            const auto& curnode = my_nodes[curnode_offset];
+            if (dist_to_vp <= threshold) {
+                if constexpr(count_only_) {
+                    ++all_neighbors;
+                } else {
+                    all_neighbors.emplace_back(dist_to_vp, curnode.index);
+                }
             }
 
-            if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
+            const bool can_left = can_progress_left(curnode, dist_to_vp, threshold);
+            const bool can_right = can_progress_right(curnode, dist_to_vp, threshold);
+
+            // Unlike in search_nn(), we don't bother with different priorities for left/right.
+            // The threshold isn't going to change and we'd have to search both children anyway.
+            if (can_left) {
+                if (can_right) {
+                    history.emplace_back(false, curnode_offset); // false is just a dummy value and is ignored in this rest of this function.
+                }
+                curnode_offset = curnode.left;
+                continue;
+            } else if (can_right) {
+                curnode_offset = curnode.right;
+                continue;
             }
 
-        } else { // If the target lies outsize the radius of the ball:
-            if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
+            // We don't have anything else to do here, so we move back to the last branching node in our history. 
+            if (history.empty()) {
+                return;
             }
 
-            if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
-            }
+            auto& histinfo = history.back(); 
+            curnode_offset = my_nodes[histinfo.node].right; 
+            history.pop_back();
         }
     }
 
