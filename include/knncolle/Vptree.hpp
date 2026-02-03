@@ -145,7 +145,12 @@ public:
 
 private:
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
-    static const Index_ LEAF = 0;
+
+
+    // Normally, 'left' or 'right' must be > 0, as the first node in 'nodes' is
+    // the root and cannot be referenced from other nodes. This means that we
+    // can use 0 as a sentinel to indicate that no child exists here.
+    static const Index_ TERMINAL = 0;
 
     // Single node of a VP tree. 
     struct Node {
@@ -155,12 +160,10 @@ private:
         Index_ index = 0;
 
         // Node index of the next vantage point for all children no more than 'threshold' from the current vantage point.
-        // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
-        Index_ left = LEAF;
+        Index_ left = TERMINAL;
 
         // Node index of the next vantage point for all children no less than 'threshold' from the current vantage point.
-        // This must be > 0, as the first node in 'nodes' is the root and cannot be referenced from other nodes.
-        Index_ right = LEAF; 
+        Index_ right = TERMINAL; 
     };
 
     std::vector<Node> my_nodes;
@@ -183,48 +186,38 @@ private:
         // We're assuming that lower < upper at each loop. This requires some
         // protection at the call site when nobs = 0, see the constructor.
         Index_ lower = 0, upper = my_obs;
-        const auto coords = my_data.data();
-        my_nodes.reserve(my_obs);
 
-        struct History {
-            History(Index_ self, Index_ lower, Index_ upper) : self(self), lower(lower), upper(upper) {}
-            Index_ self, lower, upper; 
-            bool right = false;
+        // Reserving everything so there there won't be a reallocation, which
+        // ensures that pointers to various members will remain valid. 
+        my_nodes.reserve(my_obs);
+        const auto coords = my_data.data();
+
+        struct BuildHistory {
+            BuildHistory(Index_ lower, Index_ upper, Index_* right) : right(right), lower(lower), upper(upper) {}
+            Index_* right; // This is a pointer to the 'Node::right' of the parent of the node-to-be-added.
+            Index_ lower, upper; // Lower and upper ranges of the items in the node-to-be-added.
         };
-        std::vector<History> history;
+        std::vector<BuildHistory> history;
 
         while (1) {
-            Index_ pos = my_nodes.size();
             my_nodes.emplace_back();
             Node& node = my_nodes.back(); 
 
-            // If we're at a leaf, we've finished this particular branch of the
-            // tree, so we can start rolling back through history.
             const Index_ gap = upper - lower;
             assert(gap > 0);
-            if (gap == 1) {
+            if (gap == 1) { // i.e., we're at a leaf.
                 const auto& leaf = items[lower];
                 node.index = leaf.second;
 
-                while (1) {
-                    if (history.empty()) {
-                        return;
-                    }
-                    if (!history.back().right) {
-                        break;
-                    }
-
-                    const auto parent_pos = history.back().self;
-                    my_nodes[parent_pos].right = pos;
-                    pos = parent_pos;
-                    history.pop_back();
+                // If we're at a leaf, we've finished this particular branch of
+                // the tree, so we can start rolling back through history.
+                if (history.empty()) {
+                    return;
                 }
-
-                auto& parent_info = history.back();
-                my_nodes[parent_info.self].left = pos;
-                lower = parent_info.lower;
-                upper = parent_info.upper;
-                parent_info.right = true;
+                *(history.back().right) = my_nodes.size();
+                lower = history.back().lower;
+                upper = history.back().upper;
+                history.pop_back();
                 continue;
             }
 
@@ -243,39 +236,36 @@ private:
             const Data_* vantage_ptr = coords + sanisizer::product_unsafe<std::size_t>(vantage.second, my_dim);
 
             // Compute distances to the new vantage point.
-            for (Index_ i = lower + 1; i < upper; ++i) {
+            // We +1 to exclude the vantage point itself, obviously.
+            const Index_ lower_p1 = lower + 1;
+            for (Index_ i = lower_p1 ; i < upper; ++i) {
                 const Data_* loc = coords + sanisizer::product_unsafe<std::size_t>(items[i].second, my_dim);
                 items[i].first = my_metric->raw(my_dim, vantage_ptr, loc);
             }
 
-            // Partition around the median distance from the vantage point.
-            // We +1 to exclude the vantage point itself, obviously.
-            const Index_ lower_p1 = lower + 1;
-
             if (gap > 2) {
+                // Partition around the median distance from the vantage point.
                 const Index_ median = lower_p1 + (gap - 1)/2;
                 std::nth_element(items.begin() + lower_p1, items.begin() + median, items.begin() + upper);
 
                 // Radius of the new node will be the distance to the median.
                 node.radius = my_metric->normalize(items[median].first);
 
-                // Setting up jobs for the next iteration. We immediately
-                // process the left node (i.e., inside the ball) while we add
-                // the right node to the history for later processing.
-                history.emplace_back(pos, median, upper);
+                // The next iteration will process the left node (i.e., inside
+                // the ball) while we add the boundaries of the right node to
+                // the history for later processing.
+                history.emplace_back(median, upper, &(node.right));
+                node.left = my_nodes.size();
                 lower = lower_p1;
                 upper = median;
 
             } else {
-                const Index_ median = lower_p1;
-                node.radius = my_metric->normalize(items[median].first);
-
                 // Here we only have one child, as this node has two observations
                 // and one of them was already used as the vantage point. So the
-                // other observation is used as the right child
-                // set right = true to avoid reprocessing this child.
-                history.emplace_back(pos, median, upper);
-                history.back().right = true; 
+                // other observation is used directly as the right node.
+                const Index_ median = lower_p1;
+                node.radius = my_metric->normalize(items[median].first);
+                node.right = my_nodes.size();
                 lower = median;
                 upper = upper;
             }
@@ -336,14 +326,14 @@ public:
 
 private:
     static bool can_progress_left(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
-        return node.left != LEAF && dist_to_vp - threshold <= node.radius; 
+        return node.left != TERMINAL && dist_to_vp - threshold <= node.radius; 
     }
 
     static bool can_progress_right(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
         // Using >= in the triangle inequality as there are some points that
         // lie on the surface of the ball but are considered 'outside' the ball,
         // e.g., the median point itself as well as anything with a tied distance.
-        return node.right != LEAF && dist_to_vp + threshold >= node.radius; 
+        return node.right != TERMINAL && dist_to_vp + threshold >= node.radius; 
     }
 
     void search_nn(const Data_* target, NeighborQueue<Index_, Distance_>& nearest, std::vector<VptreeSearchHistory<Index_> >& history) const { 
