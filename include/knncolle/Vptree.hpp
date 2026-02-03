@@ -267,7 +267,7 @@ private:
                 node.radius = my_metric->normalize(items[median].first);
                 node.right = my_nodes.size();
                 lower = median;
-                upper = upper;
+                // No need to set upper, as we'd end up just doing upper = upper and clang complains.
             }
         }
     }
