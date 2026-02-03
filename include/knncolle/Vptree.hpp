@@ -41,6 +41,16 @@ inline static constexpr const char* vptree_prebuilt_save_name = "knncolle::Vptre
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreePrebuilt;
 
+enum class VptreeSearchStatus : char { LEFT_DONE, RIGHT_DONE, BOTH_DONE };
+
+template<typename Index_, typename Distance_>
+struct VptreeSearchHistory {
+    VptreeSearchHistory(VptreeSearchStatus status, Index_ node, Distance_ distance) : distance(distance), node(node), status(status) {}
+    Distance_ distance;
+    Index_ node;
+    VptreeSearchStatus status; 
+};
+
 template<typename Index_, typename Data_, typename Distance_, class DistanceMetric_>
 class VptreeSearcher final : public Searcher<Index_, Data_, Distance_> {
 public:
@@ -49,7 +59,7 @@ public:
 private:
     const VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>& my_parent;
     NeighborQueue<Index_, Distance_> my_nearest;
-    std::vector<std::pair<char, Index_> > my_history;
+    std::vector<VptreeSearchHistory<Index_, Distance_> > my_history;
     std::vector<std::pair<Distance_, Index_> > my_all_neighbors;
 
 public:
@@ -87,12 +97,12 @@ public:
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.template search_all<true>(0, iptr, d, count);
+            my_parent.template search_all<true>(iptr, d, count, my_history);
             return count_all_neighbors_without_self(count);
 
         } else {
             my_all_neighbors.clear();
-            my_parent.template search_all<false>(0, iptr, d, my_all_neighbors);
+            my_parent.template search_all<false>(iptr, d, my_all_neighbors, my_history);
             report_all_neighbors(my_all_neighbors, output_indices, output_distances, i);
             return count_all_neighbors_without_self(my_all_neighbors.size());
         }
@@ -107,12 +117,12 @@ public:
 
         if (!output_indices && !output_distances) {
             Index_ count = 0;
-            my_parent.template search_all<true>(0, query, d, count);
+            my_parent.template search_all<true>(query, d, count, my_history);
             return count;
 
         } else {
             my_all_neighbors.clear();
-            my_parent.template search_all<false>(0, query, d, my_all_neighbors);
+            my_parent.template search_all<false>(query, d, my_all_neighbors, my_history);
             report_all_neighbors(my_all_neighbors, output_indices, output_distances);
             return my_all_neighbors.size();
         }
@@ -328,48 +338,46 @@ public:
     }
 
 private:
-    static bool can_progress_left(const Node& node, const Distance_ dist, const Distance_ max_dist) {
-        return node.left != LEAF && dist - max_dist <= node.radius; 
+    static bool can_progress_left(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
+        return node.left != LEAF && dist_to_vp - threshold <= node.radius; 
     }
 
-    static bool can_progress_right(const Node& node, const Distance_ dist, const Distance_ max_dist) {
+    static bool can_progress_right(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
         // Using >= in the triangle inequality as there are some points that
         // lie on the surface of the ball but are considered 'outside' the ball,
         // e.g., the median point itself as well as anything with a tied distance.
-        return node.right != LEAF && dist + max_dist >= node.radius; 
+        return node.right != LEAF && dist_to_vp + threshold >= node.radius; 
     }
 
-    void search_nn(const Data_* target, NeighborQueue<Index_, Distance_>& nearest, std::vector<std::pair<char, Index_> >& history) const { 
+    void search_nn(const Data_* target, NeighborQueue<Index_, Distance_>& nearest, std::vector<VptreeSearchHistory<Index_, Distance_> >& history) const { 
         history.clear();
         Index_ curnode_offset = 0;
         Distance_ max_dist = std::numeric_limits<Distance_>::max();
 
-        constexpr char LEFT_DONE = 0, RIGHT_DONE = 1, BOTH_DONE = 2;
-
         while (1) {
             auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_offset, my_dim);
-            const Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+            const Distance_ dist_to_vp = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
             const auto& curnode = my_nodes[curnode_offset];
-            if (dist <= max_dist) {
-                nearest.add(curnode.index, dist);
+            if (dist_to_vp <= max_dist) {
+                nearest.add(curnode.index, dist_to_vp);
                 if (nearest.is_full()) {
                     max_dist = nearest.limit(); // update value of max_dist (farthest point in result list)
                 }
             }
 
-            if (dist < curnode.radius) {
+            if (dist_to_vp < curnode.radius) {
                 // If the target lies within the radius of ball, chances are
                 // that its neighbors also lie inside the ball. So we check the
                 // points inside the ball first (i.e., left node) to try to
                 // shrink max_dist as fast as possible.
-                if (can_progress_left(curnode, dist, max_dist)) {
+                if (can_progress_left(curnode, dist_to_vp, max_dist)) {
+                    history.emplace_back(VptreeSearchStatus::LEFT_DONE, curnode_offset, dist_to_vp);
                     curnode_offset = curnode.left;
-                    history.emplace_back(LEFT_DONE, curnode_offset);
                     continue;
-                } else if (can_progress_right(curnode, dist, max_dist)) {
+                } else if (can_progress_right(curnode, dist_to_vp, max_dist)) {
+                    history.emplace_back(VptreeSearchStatus::BOTH_DONE, curnode_offset, dist_to_vp);
                     curnode_offset = curnode.right;
-                    history.emplace_back(BOTH_DONE, curnode_offset);
                     continue;
                 }
 
@@ -377,13 +385,13 @@ private:
                 // Otherwise, if the target lies at or outside the radius of
                 // the ball, chances are its neighbors also lie outside the
                 // ball, so we check the points outside the ball first.
-                if (can_progress_right(curnode, dist, max_dist)) {
+                if (can_progress_right(curnode, dist_to_vp, max_dist)) {
+                    history.emplace_back(VptreeSearchStatus::RIGHT_DONE, curnode_offset, dist_to_vp);
                     curnode_offset = curnode.right;
-                    history.emplace_back(LEFT_DONE, curnode_offset);
                     continue;
-                } else if (can_progress_left(curnode, dist, max_dist)) {
+                } else if (can_progress_left(curnode, dist_to_vp, max_dist)) {
+                    history.emplace_back(VptreeSearchStatus::BOTH_DONE, curnode_offset, dist_to_vp);
                     curnode_offset = curnode.left;
-                    history.emplace_back(BOTH_DONE, curnode_offset);
                     continue;
                 }
             }
@@ -395,16 +403,18 @@ private:
                     return;
                 }
 
-                const auto& histnode = my_nodes[history.back().second];
-                if (history.back().first == LEFT_DONE) {
-                    if (can_progress_right(histnode, dist, max_dist)) {
-                        history.back().first = BOTH_DONE;
+                auto& histinfo = history.back(); 
+                const auto& histnode = my_nodes[histinfo.node];
+                const auto histdist_to_vp = histinfo.distance;
+                if (histinfo.status == VptreeSearchStatus::LEFT_DONE) {
+                    if (can_progress_right(histnode, histdist_to_vp, max_dist)) {
+                        histinfo.status = VptreeSearchStatus::BOTH_DONE;
                         curnode_offset = histnode.right; 
                         break;
                     }
-                } else if (history.back().first == RIGHT_DONE) {
-                    if (can_progress_left(histnode, dist, max_dist)) {
-                        history.back().first = BOTH_DONE;
+                } else if (histinfo.status == VptreeSearchStatus::RIGHT_DONE) {
+                    if (can_progress_left(histnode, histdist_to_vp, max_dist)) {
+                        histinfo.status = VptreeSearchStatus::BOTH_DONE;
                         curnode_offset = histnode.left;
                         break;
                     }
@@ -416,36 +426,55 @@ private:
     }
 
     template<bool count_only_, typename Output_>
-    void search_all(Index_ curnode_index, const Data_* target, Distance_ threshold, Output_& all_neighbors) const { 
-        auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_index, my_dim);
-        Distance_ dist = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
+    void search_all(const Data_* target, const Distance_ threshold, Output_& all_neighbors, std::vector<VptreeSearchHistory<Index_, Distance_> >& history) const { 
+        history.clear();
+        Index_ curnode_offset = 0;
 
-        // If current node is within the maximum distance:
-        const auto& curnode = my_nodes[curnode_index];
-        if (dist <= threshold) {
-            if constexpr(count_only_) {
-                ++all_neighbors;
-            } else {
-                all_neighbors.emplace_back(dist, curnode.index);
-            }
-        }
+        while (1) {
+            auto nptr = my_data.data() + sanisizer::product_unsafe<std::size_t>(curnode_offset, my_dim);
+            const Distance_ dist_to_vp = my_metric->normalize(my_metric->raw(my_dim, nptr, target));
 
-        if (dist < curnode.radius) { // If the target lies within the radius of ball:
-            if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child first
-                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
+            const auto& curnode = my_nodes[curnode_offset];
+            if (dist_to_vp <= threshold) {
+                if constexpr(count_only_) {
+                    ++all_neighbors;
+                } else {
+                    all_neighbors.emplace_back(dist_to_vp, curnode.index);
+                }
             }
 
-            if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child
-                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
+            // Unlike in search_nn(), we don't bother with different priorities
+            // for left/right, because the threshold isn't going to change, and
+            // we'd have to search both of them anyway.
+            if (can_progress_left(curnode, dist_to_vp, threshold)) {
+                history.emplace_back(VptreeSearchStatus::LEFT_DONE, curnode_offset, dist_to_vp);
+                curnode_offset = curnode.left;
+                continue;
+            } else if (can_progress_right(curnode, dist_to_vp, threshold)) {
+                history.emplace_back(VptreeSearchStatus::BOTH_DONE, curnode_offset, dist_to_vp);
+                curnode_offset = curnode.right;
+                continue;
             }
 
-        } else { // If the target lies outsize the radius of the ball:
-            if (curnode.right != LEAF && dist + threshold >= curnode.radius) { // if there can still be neighbors outside the ball, recursively search right child first
-                search_all<count_only_>(curnode.right, target, threshold, all_neighbors);
-            }
+            // We don't have another point to process here, so we start rolling
+            // back through history to find the next point.
+            while (1) {
+                if (history.empty()) {
+                    return;
+                }
 
-            if (curnode.left != LEAF && dist - threshold <= curnode.radius) { // if there can still be neighbors inside the ball, recursively search left child
-                search_all<count_only_>(curnode.left, target, threshold, all_neighbors);
+                auto& histinfo = history.back(); 
+                const auto& histnode = my_nodes[histinfo.node];
+                const auto histdist_to_vp = histinfo.distance;
+                if (histinfo.status == VptreeSearchStatus::LEFT_DONE) {
+                    if (can_progress_right(histnode, histdist_to_vp, threshold)) {
+                        histinfo.status = VptreeSearchStatus::BOTH_DONE;
+                        curnode_offset = histnode.right; 
+                        break;
+                    }
+                }
+
+                history.pop_back();
             }
         }
     }
