@@ -183,12 +183,10 @@ private:
         const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
         std::mt19937_64 rng(base * m1 + m2);
 
-        // We're assuming that lower < upper at each loop. This requires some
-        // protection at the call site when nobs = 0, see the constructor.
+        // We're assuming that lower < upper at each loop. This requires some protection at the call site when nobs = 0, see the constructor.
         Index_ lower = 0, upper = my_obs;
 
-        // Reserving everything so there there won't be a reallocation, which
-        // ensures that pointers to various members will remain valid. 
+        // Reserving everything so there there won't be a reallocation, which ensures that pointers to various members will remain valid. 
         my_nodes.reserve(my_obs);
         const auto coords = my_data.data();
 
@@ -209,8 +207,7 @@ private:
                 const auto& leaf = items[lower];
                 node.index = leaf.second;
 
-                // If we're at a leaf, we've finished this particular branch of
-                // the tree, so we can start rolling back through history.
+                // If we're at a leaf, we've finished this particular branch of the tree, so we can start rolling back through history.
                 if (history.empty()) {
                     return;
                 }
@@ -221,14 +218,9 @@ private:
                 continue;
             }
 
-            /* Choose an arbitrary point and move it to the start of the [lower, upper)
-             * interval in 'items'; this is our new vantage point.
-             * 
-             * Yes, I know that the modulo method does not provide strictly
-             * uniform values but statistical correctness doesn't really matter
-             * here, and I don't want std::uniform_int_distribution's
-             * implementation-specific behavior.
-             */
+            // Choose an arbitrary point and move it to the start of the [lower, upper) interval in 'items'; this is our new vantage point.
+            // Yes, I know that the modulo method does not provide strictly uniform values but statistical correctness doesn't really matter here,
+            // and I don't want std::uniform_int_distribution's implementation-specific behavior.
             const Index_ vp = (rng() % gap + lower);
             std::swap(items[lower], items[vp]);
             const auto& vantage = items[lower];
@@ -251,23 +243,25 @@ private:
                 // Radius of the new node will be the distance to the median.
                 node.radius = my_metric->normalize(items[median].first);
 
-                // The next iteration will process the left node (i.e., inside
-                // the ball) while we add the boundaries of the right node to
-                // the history for later processing.
+                // The next iteration will process the left node (i.e., inside the ball).
+                // We store the boundaries of the yet-to-be-added right node to the history for later processing.
                 history.emplace_back(median, upper, &(node.right));
                 node.left = my_nodes.size();
                 lower = lower_p1;
                 upper = median;
 
             } else {
-                // Here we only have one child, as this node has two observations
-                // and one of them was already used as the vantage point. So the
-                // other observation is used directly as the right node.
+                // Here we only have one child, as this node has two observations and one of them was already used as the vantage point.
+                // So the other observation is used directly as the right node.
                 const Index_ median = lower_p1;
                 node.radius = my_metric->normalize(items[median].first);
                 node.right = my_nodes.size();
                 lower = median;
-                // No need to set upper, as we'd end up just doing upper = upper and clang complains.
+
+                // Several points worth mentioning here:
+                // - No need to set upper, as we'd end up just doing upper = upper and clang complains.
+                // - This code allows us to get a node where left = TERMINAL and right != TERMINAL, but the opposite is impossible.
+                //   This fact is exploited in search_nn() for some minor optimizations.
             }
         }
     }
@@ -285,8 +279,7 @@ public:
         if (num_obs) {
             build();
 
-            // Resorting data in place to match order of occurrence within
-            // 'nodes', for better cache locality.
+            // Resorting data in place to match order of occurrence within 'nodes', for better cache locality.
             auto used = sanisizer::create<std::vector<char> >(sanisizer::attest_gez(my_obs));
             auto buffer = sanisizer::create<std::vector<Data_> >(sanisizer::attest_gez(my_dim));
             sanisizer::resize(my_new_locations, sanisizer::attest_gez(my_obs));
@@ -330,8 +323,7 @@ private:
     }
 
     static bool can_progress_right(const Node& node, const Distance_ dist_to_vp, const Distance_ threshold) {
-        // Using >= in the triangle inequality as there are some points that
-        // lie on the surface of the ball but are considered 'outside' the ball,
+        // Using >= in the triangle inequality as there are some points that lie on the surface of the ball but are considered 'outside' the ball,
         // e.g., the median point itself as well as anything with a tied distance.
         return node.right != TERMINAL && dist_to_vp + threshold >= node.radius; 
     }
@@ -353,14 +345,15 @@ private:
                 }
             }
 
-            const bool can_left = can_progress_left(curnode, dist_to_vp, max_dist);
-            const bool can_right = can_progress_right(curnode, dist_to_vp, max_dist);
-
             if (dist_to_vp < curnode.radius) {
-                // If the target lies within the radius of ball, chances are
-                // that its neighbors also lie inside the ball. So we check the
-                // points inside the ball first (i.e., left node) to try to
-                // shrink max_dist as fast as possible.
+                // If the target lies within the radius of ball, chances are that its neighbors also lie inside the ball.
+                // So we check the points inside the ball first (i.e., left node) to try to shrink max_dist as fast as possible.
+
+                // A quirk here is that, if dist_to_vp < curnode.radius, then can_progress_left must be true if curnode.left != TERMINAL.
+                // So we don't bother to compute the full function.
+                const bool can_left = curnode.left != TERMINAL;
+                const bool can_right = can_progress_right(curnode, dist_to_vp, max_dist);
+
                 if (can_left) {
                     if (can_right) {
                         history.emplace_back(false, curnode_offset);
@@ -373,23 +366,28 @@ private:
                 }
 
             } else {
-                // Otherwise, if the target lies at or outside the radius of
-                // the ball, chances are its neighbors also lie outside the
-                // ball, so we check the points outside the ball first.
+                // Otherwise, if the target lies at or outside the radius of the ball, chances are its neighbors also lie outside the ball.
+                // So we check the points outside the ball first (i.e., right node) to try to shrink max_dist as fast as possible.
+
+                // A quirk here is that, if dist_to_vp >= curnode.radius, then can_progress_right must be true if curnode.right != TERMINAL.
+                // So we don't bother to compute the full function.
+                const bool can_right = curnode.right != TERMINAL;
+                const bool can_left = can_progress_left(curnode, dist_to_vp, max_dist);
+
                 if (can_right) {
                     if (can_left) {
                         history.emplace_back(true, curnode_offset);
                     }
                     curnode_offset = curnode.right;
                     continue;
-                } else if (can_left) {
-                    curnode_offset = curnode.left;
-                    continue;
+                } else {
+                    // The manner of construction of the VP tree prevents the existence of a node where right == TERMINAL but left != TERMINAL.
+                    // As such, there's no need to consider the 'else if (can_left) {' condition that we would otherwise expect for symmetry with the inside-ball code.
+                    assert(!can_left);
                 }
             }
 
-            // We don't have anything else to do here, so we move back to the
-            // last branching node in our history. 
+            // We don't have anything else to do here, so we move back to the last branching node in our history. 
             if (history.empty()) {
                 return;
             }
@@ -425,9 +423,8 @@ private:
             const bool can_left = can_progress_left(curnode, dist_to_vp, threshold);
             const bool can_right = can_progress_right(curnode, dist_to_vp, threshold);
 
-            // Unlike in search_nn(), we don't bother with different priorities
-            // for left/right, because the threshold isn't going to change, and
-            // we'd have to search both of them anyway.
+            // Unlike in search_nn(), we don't bother with different priorities for left/right.
+            // The threshold isn't going to change and we'd have to search both children anyway.
             if (can_left) {
                 if (can_right) {
                     history.emplace_back(false, curnode_offset);
@@ -439,8 +436,7 @@ private:
                 continue;
             }
 
-            // We don't have anything else to do here, so we move back to the
-            // last branching node in our history. 
+            // We don't have anything else to do here, so we move back to the last branching node in our history. 
             if (history.empty()) {
                 return;
             }
