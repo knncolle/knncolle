@@ -124,8 +124,12 @@ Collaboration diagram for knncolle::VptreeBuilder&lt; Index_, Data_, Distance_, 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aad91c7ac9485e1d6aa9f7f9be8323e6e" id="r_aad91c7ac9485e1d6aa9f7f9be8323e6e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad91c7ac9485e1d6aa9f7f9be8323e6e">VptreeBuilder</a> (std::shared_ptr&lt; const DistanceMetric_ &gt; metric, <a class="el" href="structknncolle_1_1VptreeOptions.html">VptreeOptions</a> options)</td></tr>
+<tr class="separator:aad91c7ac9485e1d6aa9f7f9be8323e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13f00af67d227d117fa4b9910861a438" id="r_a13f00af67d227d117fa4b9910861a438"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13f00af67d227d117fa4b9910861a438">VptreeBuilder</a> (std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</td></tr>
 <tr class="separator:a13f00af67d227d117fa4b9910861a438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41b7cfff30edfb71b54d5d94d1758506" id="r_a41b7cfff30edfb71b54d5d94d1758506"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structknncolle_1_1VptreeOptions.html">VptreeOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41b7cfff30edfb71b54d5d94d1758506">get_options</a> ()</td></tr>
+<tr class="separator:a41b7cfff30edfb71b54d5d94d1758506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca84dd37914e90d6504060e2eec0756d" id="r_aca84dd37914e90d6504060e2eec0756d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca84dd37914e90d6504060e2eec0756d">build_known_raw</a> (const Matrix_ &amp;data) const</td></tr>
 <tr class="separator:aca84dd37914e90d6504060e2eec0756d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a196f9ceaf5b67914b8443417e065cce0" id="r_a196f9ceaf5b67914b8443417e065cce0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a196f9ceaf5b67914b8443417e065cce0">build_known_unique</a> (const Matrix_ &amp;data) const</td></tr>
@@ -166,8 +170,46 @@ class knncolle::VptreeBuilder&lt; Index_, Data_, Distance_, Matrix_, DistanceMet
 <dd>
 Hanov S (2011). VP trees: A data structure for finding stuff fast. <a href="http://stevehanov.ca/blog/index.php?id=130">http://stevehanov.ca/blog/index.php?id=130</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aad91c7ac9485e1d6aa9f7f9be8323e6e" name="aad91c7ac9485e1d6aa9f7f9be8323e6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad91c7ac9485e1d6aa9f7f9be8323e6e">&#9670;&#160;</a></span>VptreeBuilder() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;, class DistanceMetric_  = DistanceMetric&lt;Data_, Distance_&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a>&lt; Index_, Data_, Distance_, Matrix_, DistanceMetric_ &gt;::VptreeBuilder </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; const DistanceMetric_ &gt;</td>          <td class="paramname"><span class="paramname"><em>metric</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structknncolle_1_1VptreeOptions.html">VptreeOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">metric</td><td>Pointer to a distance metric instance, e.g., <code><a class="el" href="classknncolle_1_1EuclideanDistance.html" title="Compute Euclidean distances between two input vectors.">EuclideanDistance</a></code>. </td></tr>
+    <tr><td class="paramname">options</td><td>Additional options. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a13f00af67d227d117fa4b9910861a438" name="a13f00af67d227d117fa4b9910861a438"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13f00af67d227d117fa4b9910861a438">&#9670;&#160;</a></span>VptreeBuilder()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a13f00af67d227d117fa4b9910861a438">&#9670;&#160;</a></span>VptreeBuilder() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -190,6 +232,7 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Overloaded constructor using the default options.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">metric</td><td>Pointer to a distance metric instance, e.g., <code><a class="el" href="classknncolle_1_1EuclideanDistance.html" title="Compute Euclidean distances between two input vectors.">EuclideanDistance</a></code>. </td></tr>
@@ -281,6 +324,34 @@ template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix
 </table>
 </div><div class="memdoc">
 <p>Override to assist devirtualization. </p>
+
+</div>
+</div>
+<a id="a41b7cfff30edfb71b54d5d94d1758506" name="a41b7cfff30edfb71b54d5d94d1758506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41b7cfff30edfb71b54d5d94d1758506">&#9670;&#160;</a></span>get_options()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Data_ , typename Distance_ , class Matrix_  = Matrix&lt;Index_, Data_&gt;, class DistanceMetric_  = DistanceMetric&lt;Data_, Distance_&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structknncolle_1_1VptreeOptions.html">VptreeOptions</a> &amp; <a class="el" href="classknncolle_1_1VptreeBuilder.html">knncolle::VptreeBuilder</a>&lt; Index_, Data_, Distance_, Matrix_, DistanceMetric_ &gt;::get_options </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Options for the VP tree algorithm. These can be modified prior to running <code><a class="el" href="classknncolle_1_1Builder.html#acd18a78af362f948ede3ddd8d5f6e88c">build_raw()</a></code> and friends. </dd></dl>
 
 </div>
 </div>

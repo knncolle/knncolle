@@ -6,8 +6,9 @@ var searchData=
   ['search_5fall_3',['search_all',['../classknncolle_1_1Searcher.html#a3ef8c1bf087751bff46af346bda2feb3',1,'knncolle::Searcher::search_all(Index_ i, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)'],['../classknncolle_1_1Searcher.html#a37c88e638622eadc5f3c0328e8a1c5f1',1,'knncolle::Searcher::search_all(const Data_ *query, Distance_ distance, std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances)']]],
   ['searcher_4',['Searcher',['../classknncolle_1_1Searcher.html',1,'knncolle']]],
   ['searcher_2ehpp_5',['Searcher.hpp',['../Searcher_8hpp.html',1,'']]],
-  ['simple_2ehpp_6',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
-  ['simplematrix_7',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
-  ['subpar_8',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
-  ['subpar_2ehpp_9',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
+  ['seed_6',['seed',['../structknncolle_1_1VptreeOptions.html#aa55f3dff5e333fe1d34dcfd98fe78aed',1,'knncolle::VptreeOptions']]],
+  ['simple_2ehpp_7',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
+  ['simplematrix_8',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
+  ['subpar_9',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
+  ['subpar_2ehpp_10',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
 ];

@@ -145,6 +145,7 @@
     <includes id="Matrix_8hpp" name="Matrix.hpp" local="yes" import="no" module="no" objc="no">Matrix.hpp</includes>
     <includes id="report__all__neighbors_8hpp" name="report_all_neighbors.hpp" local="yes" import="no" module="no" objc="no">report_all_neighbors.hpp</includes>
     <includes id="utils_8hpp" name="utils.hpp" local="yes" import="no" module="no" objc="no">utils.hpp</includes>
+    <class kind="struct">knncolle::VptreeOptions</class>
     <class kind="class">knncolle::VptreeBuilder</class>
     <namespace>knncolle</namespace>
   </compound>
@@ -660,8 +661,22 @@
       <type></type>
       <name>VptreeBuilder</name>
       <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
+      <anchor>aad91c7ac9485e1d6aa9f7f9be8323e6e</anchor>
+      <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric, VptreeOptions options)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>VptreeBuilder</name>
+      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
       <anchor>a13f00af67d227d117fa4b9910861a438</anchor>
       <arglist>(std::shared_ptr&lt; const DistanceMetric_ &gt; metric)</arglist>
+    </member>
+    <member kind="function">
+      <type>VptreeOptions &amp;</type>
+      <name>get_options</name>
+      <anchorfile>classknncolle_1_1VptreeBuilder.html</anchorfile>
+      <anchor>a41b7cfff30edfb71b54d5d94d1758506</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
@@ -685,6 +700,17 @@
       <arglist>(const Matrix_ &amp;data) const</arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>knncolle::VptreeOptions</name>
+    <filename>structknncolle_1_1VptreeOptions.html</filename>
+    <member kind="variable">
+      <type>std::optional&lt; typename std::mt19937_64::result_type &gt;</type>
+      <name>seed</name>
+      <anchorfile>structknncolle_1_1VptreeOptions.html</anchorfile>
+      <anchor>aa55f3dff5e333fe1d34dcfd98fe78aed</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="namespace">
     <name>knncolle</name>
     <filename>namespaceknncolle.html</filename>
@@ -705,6 +731,7 @@
     <class kind="class">knncolle::Searcher</class>
     <class kind="class">knncolle::SimpleMatrix</class>
     <class kind="class">knncolle::VptreeBuilder</class>
+    <class kind="struct">knncolle::VptreeOptions</class>
     <member kind="typedef">
       <type>std::function&lt; DistanceMetric&lt; Data_, Distance_ &gt; *(const std::filesystem::path &amp;)&gt;</type>
       <name>LoadDistanceMetricFunction</name>

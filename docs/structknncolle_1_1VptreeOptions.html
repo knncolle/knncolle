@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>knncolle: Class Members - Variables</title>
+<title>knncolle: knncolle::VptreeOptions Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -57,8 +57,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="doc-content">
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function(){ initResizable(false); });
@@ -85,10 +83,50 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceknncolle.html">knncolle</a></li><li class="navelem"><a class="el" href="structknncolle_1_1VptreeOptions.html">VptreeOptions</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structknncolle_1_1VptreeOptions-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">knncolle::VptreeOptions Struct Reference</div></div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented variables with links to the class documentation for each member:</div><ul>
-<li>normalized&#160;:&#160;<a class="el" href="structknncolle_1_1L2NormalizedPrebuiltTypes.html#a59f1b5b8747665021453b9d1c548b86b">knncolle::L2NormalizedPrebuiltTypes</a></li>
-<li>seed&#160;:&#160;<a class="el" href="structknncolle_1_1VptreeOptions.html#aa55f3dff5e333fe1d34dcfd98fe78aed">knncolle::VptreeOptions</a></li>
+
+<p>Options for <code><a class="el" href="classknncolle_1_1VptreeBuilder.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree.">VptreeBuilder</a></code> construction.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Vptree_8hpp_source.html">Vptree.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:aa55f3dff5e333fe1d34dcfd98fe78aed" id="r_aa55f3dff5e333fe1d34dcfd98fe78aed"><td class="memItemLeft" align="right" valign="top">std::optional&lt; typename std::mt19937_64::result_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa55f3dff5e333fe1d34dcfd98fe78aed">seed</a></td></tr>
+<tr class="separator:aa55f3dff5e333fe1d34dcfd98fe78aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Options for <code><a class="el" href="classknncolle_1_1VptreeBuilder.html" title="Perform a nearest neighbor search based on a vantage point (VP) tree.">VptreeBuilder</a></code> construction. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="aa55f3dff5e333fe1d34dcfd98fe78aed" name="aa55f3dff5e333fe1d34dcfd98fe78aed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55f3dff5e333fe1d34dcfd98fe78aed">&#9670;&#160;</a></span>seed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;typename std::mt19937_64::result_type&gt; knncolle::VptreeOptions::seed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Random seed for VP tree construction. If not specified, a seed is deterministically generated based on the dimensions of the dataset. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>knncolle/<a class="el" href="Vptree_8hpp_source.html">Vptree.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
