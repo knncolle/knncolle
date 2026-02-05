@@ -178,6 +178,30 @@ TEST_P(VptreeTest, AllEuclidean) {
     }
 }
 
+TEST_P(VptreeTest, Options) {
+    int k = std::get<1>(GetParam());    
+
+    auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
+    knncolle::VptreeBuilder<int, double, double> vb(eucdist);
+    knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
+    auto vptr = vb.build_unique(mat);
+
+    vb.get_options().seed = 123456;
+    auto vptr2 = vb.build_unique(mat);
+
+    std::vector<int> vres_i, vres_i2;
+    std::vector<double> vres_d, vres_d2;
+    auto vsptr = vptr->initialize();
+    auto vsptr2 = vptr2->initialize();
+
+    for (int x = 0; x < nobs; ++x) {
+        vsptr->search(x, k, &vres_i, &vres_d);
+        vsptr2->search(x, k, &vres_i2, &vres_d2);
+        EXPECT_EQ(vres_i, vres_i2);
+        EXPECT_EQ(vres_d, vres_d2);
+    }
+}
+
 INSTANTIATE_TEST_SUITE_P(
     Vptree,
     VptreeTest,

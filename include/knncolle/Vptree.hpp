@@ -19,6 +19,7 @@
 #include <cstring>
 #include <filesystem>
 #include <cassert>
+#include <optional>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -31,9 +32,20 @@
 namespace knncolle {
 
 /**
- * Name of the VP-tree algorithm when registering a loading function to `load_prebuilt_registry()`.
+ * Name of the VP tree algorithm when registering a loading function to `load_prebuilt_registry()`.
  */
 inline static constexpr const char* vptree_prebuilt_save_name = "knncolle::Vptree";
+
+/** 
+ * @brief Options for `VptreeBuilder` construction. 
+ */
+struct VptreeOptions {
+    /**
+     * Random seed for VP tree construction.
+     * If not specified, a seed is deterministically generated based on the dimensions of the dataset. 
+     */
+    std::optional<typename std::mt19937_64::result_type> seed;
+};
 
 /**
  * @cond
@@ -146,11 +158,10 @@ public:
 private:
     /* Adapted from http://stevehanov.ca/blog/index.php?id=130 */
 
-
     // Normally, 'left' or 'right' must be > 0, as the first node in 'nodes' is
     // the root and cannot be referenced from other nodes. This means that we
     // can use 0 as a sentinel to indicate that no child exists here.
-    static const Index_ TERMINAL = 0;
+    static constexpr Index_ TERMINAL = 0;
 
     // Single node of a VP tree. 
     struct Node {
@@ -168,7 +179,7 @@ private:
 
     std::vector<Node> my_nodes;
 
-    void build() {
+    void build(const VptreeOptions& options) {
         typedef std::pair<Distance_, Index_> DataPoint; 
         std::vector<DataPoint> items;
         items.reserve(my_obs);
@@ -176,12 +187,19 @@ private:
             items.emplace_back(0, i);
         }
 
-        // Statistical correctness doesn't matter (aside from tie breaking)
-        // so we'll just use a deterministically 'random' number to ensure
-        // we get the same ties for any given dataset but a different stream
-        // of numbers between datasets. Casting to get well-defined overflow. 
-        const std::mt19937_64::result_type base = 1234567890, m1 = my_obs, m2 = my_dim;
-        std::mt19937_64 rng(base * m1 + m2);
+        std::mt19937_64 rng([&]() {
+            if (options.seed.has_value()) {
+                return *(options.seed);
+            }
+
+            // Statistical correctness doesn't matter (aside from tie breaking)
+            // so we'll just use a deterministically 'random' number to ensure
+            // we get the same ties for any given dataset but a different stream
+            // of numbers between datasets. Casting to get well-defined overflow. 
+            typedef typename std::mt19937_64::result_type SeedType;
+            const SeedType base = 1234567890, m1 = my_obs, m2 = my_dim;
+            return static_cast<SeedType>(base * m1 + m2);
+        }());
 
         // We're assuming that lower < upper at each loop. This requires some protection at the call site when nobs = 0, see the constructor.
         Index_ lower = 0, upper = my_obs;
@@ -270,14 +288,14 @@ private:
     std::vector<Index_> my_new_locations;
 
 public:
-    VptreePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric) : 
+    VptreePrebuilt(std::size_t num_dim, Index_ num_obs, std::vector<Data_> data, std::shared_ptr<const DistanceMetric_> metric, const VptreeOptions& options) : 
         my_dim(num_dim),
         my_obs(num_obs),
         my_data(std::move(data)),
         my_metric(std::move(metric))
     {
         if (num_obs) {
-            build();
+            build(options);
 
             // Resorting data in place to match order of occurrence within 'nodes', for better cache locality.
             auto used = sanisizer::create<std::vector<char> >(sanisizer::attest_gez(my_obs));
@@ -549,11 +567,28 @@ class VptreeBuilder final : public Builder<Index_, Data_, Distance_, Matrix_> {
 public:
     /**
      * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
+     * @param options Additional options.
      */
-    VptreeBuilder(std::shared_ptr<const DistanceMetric_> metric) : my_metric(std::move(metric)) {}
+    VptreeBuilder(std::shared_ptr<const DistanceMetric_> metric, VptreeOptions options) : my_metric(std::move(metric)), my_options(std::move(options)) {}
+
+    /**
+     * Overloaded constructor using the default options.
+     *
+     * @param metric Pointer to a distance metric instance, e.g., `EuclideanDistance`.
+     */
+    VptreeBuilder(std::shared_ptr<const DistanceMetric_> metric) : VptreeBuilder(std::move(metric), {}) {}
+
+    /**
+     * @return Options for the VP tree algorithm.
+     * These can be modified prior to running `build_raw()` and friends.
+     */
+    VptreeOptions& get_options() {
+        return my_options;
+    }
 
 private:
     std::shared_ptr<const DistanceMetric_> my_metric;
+    VptreeOptions my_options;
 
 public:
     /**
@@ -581,7 +616,7 @@ public:
             std::copy_n(work->next(), ndim, store.data() + sanisizer::product_unsafe<std::size_t>(o, ndim));
         }
 
-        return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric);
+        return new VptreePrebuilt<Index_, Data_, Distance_, DistanceMetric_>(ndim, nobs, std::move(store), my_metric, my_options);
     }
 
     /**
