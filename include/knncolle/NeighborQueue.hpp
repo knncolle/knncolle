@@ -98,6 +98,60 @@ public:
         return;
     }
 
+private:
+    template<bool has_indices_, bool has_distances_>
+    void report_internal(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, const Index_ self) {
+        // We expect that nearest is non-empty, as a search should at least
+        // find 'self' (or duplicates thereof).
+        assert(!my_nearest.empty());
+        const Index_ num_expected = my_nearest.size() - 1;
+
+        if constexpr(has_indices_) {
+            output_indices->clear();
+            output_indices->reserve(num_expected);
+        }
+        if constexpr(has_distances_) {
+            output_distances->clear();
+            output_distances->reserve(num_expected);
+        }
+
+        bool found_self = false;
+        while (!my_nearest.empty()) {
+            const auto& top = my_nearest.top();
+            if (!found_self && top.second == self) {
+                found_self = true;
+            } else {
+                if constexpr(has_indices_) {
+                    output_indices->push_back(top.second);
+                }
+                if constexpr(has_distances_) {
+                    output_distances->push_back(top.first);
+                }
+            }
+            my_nearest.pop();
+        }
+
+        // We use push_back + reverse to give us sorting in increasing order;
+        // this is nicer than push_front() for std::vectors.
+        if constexpr(has_indices_) {
+            std::reverse(output_indices->begin(), output_indices->end());
+        }
+        if constexpr(has_distances_) {
+            std::reverse(output_distances->begin(), output_distances->end());
+        }
+
+        // Removing the most distance element if we couldn't find ourselves,
+        // e.g., because there are too many duplicates.
+        if (!found_self) {
+            if constexpr(has_indices_) {
+                output_indices->pop_back();
+            }
+            if constexpr(has_distances_) {
+                output_distances->pop_back();
+            }
+        }
+    } 
+
 public:
     /**
      * Report the indices and distances of the nearest neighbors in the queue.
@@ -112,56 +166,14 @@ public:
      * If present in the queue, this will be removed from `output_indices` and `output_distances`.
      */
     void report(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, Index_ self) {
-        // We expect that nearest is non-empty, as a search should at least
-        // find 'self' (or duplicates thereof).
-        assert(!my_nearest.empty());
-        auto num_expected = my_nearest.size() - 1;
-
-        if (output_indices) {
-            output_indices->clear();
-            output_indices->reserve(num_expected);
+        if (output_indices && output_distances) {
+            report_internal<true, true>(output_indices, output_distances, self);
+        } else if (output_indices) {
+            report_internal<true, false>(output_indices, NULL, self);
+        } else if (output_distances) {
+            report_internal<false, true>(NULL, output_distances, self);
         }
-        if (output_distances) {
-            output_distances->clear();
-            output_distances->reserve(num_expected);
-        }
-
-        bool found_self = false;
-        while (!my_nearest.empty()) {
-            const auto& top = my_nearest.top();
-            if (!found_self && top.second == self) {
-                found_self = true;
-            } else {
-                if (output_indices) {
-                    output_indices->push_back(top.second);
-                }
-                if (output_distances) {
-                    output_distances->push_back(top.first);
-                }
-            }
-            my_nearest.pop();
-        }
-
-        // We use push_back + reverse to give us sorting in increasing order;
-        // this is nicer than push_front() for std::vectors.
-        if (output_indices) {
-            std::reverse(output_indices->begin(), output_indices->end());
-        }
-        if (output_distances) {
-            std::reverse(output_distances->begin(), output_distances->end());
-        }
-
-        // Removing the most distance element if we couldn't find ourselves,
-        // e.g., because there are too many duplicates.
-        if (!found_self) {
-            if (output_indices) {
-                output_indices->pop_back();
-            }
-            if (output_distances) {
-                output_distances->pop_back();
-            }
-        }
-    } 
+    }
 
 private:
     template<bool has_indices_, bool has_distances_>
@@ -212,7 +224,7 @@ public:
 private:
     bool my_full = false;
     std::priority_queue<std::pair<Distance_, Index_> > my_nearest;
-    decltype(my_nearest.size()) my_neighbors = 1;
+    I<decltype(my_nearest.size())> my_neighbors = 1;
 };
 
 }
