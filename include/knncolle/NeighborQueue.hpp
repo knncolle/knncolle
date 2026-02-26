@@ -23,6 +23,7 @@ namespace knncolle {
  * This is a priority queue that tracks the nearest neighbors of an observation of interest.
  * Specifically, it contains indices and distances of the `k` nearest neighbors, in decreasing order from the top of the queue.
  * When the queue is at capacity and new elements are added, existing elements will be displaced by incoming elements with shorter distances.
+ * (In the presence of ties, neighbors with lower indices will prevail.)
  *
  * This class is intended to be used in implementations of `Searcher::search()` to track the `k`-nearest neighbors.
  * When searching for neighbors of an existing observation in the dataset, it is recommended to search for the `k + 1` neighbors.
@@ -49,7 +50,10 @@ public:
      * This should be a positive integer.
      */
     void reset(Index_ k) {
-        my_neighbors = sanisizer::cast<I<decltype(my_neighbors)> >(sanisizer::attest_gez(k));
+        // We don't allow k == 0 as otherwise we'd be in a position where is_full() == true but limit() can't be called.
+        // If the caller doesn't want any neighbors, they're better of just aborting the search altogether.
+        assert(k > 0);
+        my_neighbors = sanisizer::cast<I<decltype(my_neighbors)> >(k);
         my_full = false;
 
         // Popping any existing elements out, just in case. This shouldn't
@@ -77,34 +81,37 @@ public:
         return my_nearest.top().first;
    }
 
+    /**
+     * @return Number of elements in the queue.
+     * This will be no greater than `k`, and will equal `k` when `is_full()` is true.
+     */
+    auto size() const {
+        return my_nearest.size();
+    }
+
 public:
     /**
-     * Attempt to add a neighbor to the queue.
-     * This will be a no-op if `is_full()` is true and `d > limit()`.
+     * Attempt to add a potential nearest neighbor to the queue.
+     * If the incoming neighbor is closer than the furthest existing neighbor, the latter will be removed if `is_full() == true`.
      *
      * @param i Index of the neighbor.
      * @param d Distance to the neighbor.
      */
     void add(Index_ i, Distance_ d) {
-        if (!my_full) {
-            my_nearest.emplace(d, i);
-            if (my_nearest.size() == my_neighbors) {
-                my_full = true;
-            }
-        } else {
-            my_nearest.emplace(d, i);
+        my_nearest.emplace(d, i);
+        if (my_full) {
             my_nearest.pop();
+        } else if (size() == my_neighbors) {
+            my_full = true;
         }
-        return;
     }
 
 private:
     template<bool has_indices_, bool has_distances_>
     void report_internal(std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances, const Index_ self) {
-        // We expect that nearest is non-empty, as a search should at least
-        // find 'self' (or duplicates thereof).
+        // We expect that nearest is non-empty, as a search should at least find 'self' (or duplicates thereof).
         assert(!my_nearest.empty());
-        const Index_ num_expected = my_nearest.size() - 1;
+        const Index_ num_expected = size() - 1;
 
         if constexpr(has_indices_) {
             output_indices->clear();
@@ -154,8 +161,11 @@ private:
 
 public:
     /**
-     * Report the indices and distances of the nearest neighbors in the queue.
-     * If the observation of interest is detected as its own neighbor, it will be removed from the output vectors.
+     * Report the indices and distances of the nearest neighbors in the queue, excluding the observation of interest `self`. 
+     * Specifically, if the observation of interest (`self`) is detected as its own neighbor, it will be excluded from the output vectors.
+     * If `self` is not found in the set of nearest neighbors (e.g., `> k` tied points at zero distance), the furthest neighbor will be excluded instead.
+     *
+     * This method will report `size() - 1` neighbors in the output vectors and thus should only be called if `size() > 0`.
      *
      * @param[out] output_indices Pointer to a vector in which to store the indices of the nearest neighbors, sorted by distance.
      * If `NULL`, the indices will not be reported.
@@ -203,7 +213,6 @@ private:
 public:
     /**
      * Report the indices and distances of the nearest neighbors in the queue.
-     * It is assumed that the observation of interest is not detected as its own neighbor, presumably as it does not exist in the original input dataset.
      *
      * @param[out] output_indices Pointer to a vector in which to store the indices of the nearest neighbors, sorted by distance.
      * If `NULL`, the indices will not be reported.
