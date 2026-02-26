@@ -112,6 +112,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae459f76b2e81b65b7f437e01eea1689b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade4febddacc0e5725caa3c683486dcb0" id="r_ade4febddacc0e5725caa3c683486dcb0"><td class="memItemLeft" align="right" valign="top">Distance_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade4febddacc0e5725caa3c683486dcb0">limit</a> () const</td></tr>
 <tr class="separator:ade4febddacc0e5725caa3c683486dcb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ecb8b2fb208fba3213150b9a14f535" id="r_a08ecb8b2fb208fba3213150b9a14f535"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08ecb8b2fb208fba3213150b9a14f535">size</a> () const</td></tr>
+<tr class="separator:a08ecb8b2fb208fba3213150b9a14f535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0add776502ad89cc532ede0da9e7559" id="r_ac0add776502ad89cc532ede0da9e7559"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0add776502ad89cc532ede0da9e7559">add</a> (Index_ i, Distance_ d)</td></tr>
 <tr class="separator:ac0add776502ad89cc532ede0da9e7559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a611b8233976b0b5f930deac74c2b68c3" id="r_a611b8233976b0b5f930deac74c2b68c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a611b8233976b0b5f930deac74c2b68c3">report</a> (std::vector&lt; Index_ &gt; *output_indices, std::vector&lt; Distance_ &gt; *output_distances, Index_ self)</td></tr>
@@ -122,7 +124,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Index_, typename Distance_&gt;<br />
 class knncolle::NeighborQueue&lt; Index_, Distance_ &gt;</div><p>Helper class to track nearest neighbors. </p>
-<p>This is a priority queue that tracks the nearest neighbors of an observation of interest. Specifically, it contains indices and distances of the <code>k</code> nearest neighbors, in decreasing order from the top of the queue. When the queue is at capacity and new elements are added, existing elements will be displaced by incoming elements with shorter distances.</p>
+<p>This is a priority queue that tracks the nearest neighbors of an observation of interest. Specifically, it contains indices and distances of the <code>k</code> nearest neighbors, in decreasing order from the top of the queue. When the queue is at capacity and new elements are added, existing elements will be displaced by incoming elements with shorter distances. (In the presence of ties, neighbors with lower indices will prevail.)</p>
 <p>This class is intended to be used in implementations of <code><a class="el" href="classknncolle_1_1Searcher.html#ab0f6c2ce78952dd555f7f1a8fb3ac208">Searcher::search()</a></code> to track the <code>k</code>-nearest neighbors. When searching for neighbors of an existing observation in the dataset, it is recommended to search for the <code>k + 1</code> neighbors. The appropriate <code><a class="el" href="#a611b8233976b0b5f930deac74c2b68c3">report()</a></code> overload can then be used to remove the observation of interest from its own neighbor list.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -189,7 +191,7 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Attempt to add a neighbor to the queue. This will be a no-op if <code><a class="el" href="#ae459f76b2e81b65b7f437e01eea1689b">is_full()</a></code> is true and <code>d &gt; <a class="el" href="#ade4febddacc0e5725caa3c683486dcb0">limit()</a></code>.</p>
+<p>Attempt to add a potential nearest neighbor to the queue. If the incoming neighbor is closer than the furthest existing neighbor, the latter will be removed if <code><a class="el" href="#ae459f76b2e81b65b7f437e01eea1689b">is_full()</a> == true</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>Index of the neighbor. </td></tr>
@@ -284,7 +286,7 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Report the indices and distances of the nearest neighbors in the queue. It is assumed that the observation of interest is not detected as its own neighbor, presumably as it does not exist in the original input dataset.</p>
+<p>Report the indices and distances of the nearest neighbors in the queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector in which to store the indices of the nearest neighbors, sorted by distance. If <code>NULL</code>, the indices will not be reported. </td></tr>
@@ -328,7 +330,8 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Report the indices and distances of the nearest neighbors in the queue. If the observation of interest is detected as its own neighbor, it will be removed from the output vectors.</p>
+<p>Report the indices and distances of the nearest neighbors in the queue, excluding the observation of interest <code>self</code>. Specifically, if the observation of interest (<code>self</code>) is detected as its own neighbor, it will be excluded from the output vectors. If <code>self</code> is not found in the set of nearest neighbors (e.g., <code>&gt; k</code> tied points at zero distance), the furthest neighbor will be excluded instead.</p>
+<p>This method will report <code><a class="el" href="#a08ecb8b2fb208fba3213150b9a14f535">size()</a> - 1</code> neighbors in the output vectors and thus should only be called if <code><a class="el" href="#a08ecb8b2fb208fba3213150b9a14f535">size()</a> &gt; 0</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">output_indices</td><td>Pointer to a vector in which to store the indices of the nearest neighbors, sorted by distance. If <code>NULL</code>, the indices will not be reported. </td></tr>
@@ -371,6 +374,34 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a08ecb8b2fb208fba3213150b9a14f535" name="a08ecb8b2fb208fba3213150b9a14f535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08ecb8b2fb208fba3213150b9a14f535">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Distance_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classknncolle_1_1NeighborQueue.html">knncolle::NeighborQueue</a>&lt; Index_, Distance_ &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Number of elements in the queue. This will be no greater than <code>k</code>, and will equal <code>k</code> when <code><a class="el" href="#ae459f76b2e81b65b7f437e01eea1689b">is_full()</a></code> is true. </dd></dl>
 
 </div>
 </div>

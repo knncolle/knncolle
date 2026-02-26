@@ -501,6 +501,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>auto</type>
+      <name>size</name>
+      <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>
+      <anchor>a08ecb8b2fb208fba3213150b9a14f535</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>add</name>
       <anchorfile>classknncolle_1_1NeighborQueue.html</anchorfile>

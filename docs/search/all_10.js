@@ -9,6 +9,7 @@ var searchData=
   ['seed_6',['seed',['../structknncolle_1_1VptreeOptions.html#aa55f3dff5e333fe1d34dcfd98fe78aed',1,'knncolle::VptreeOptions']]],
   ['simple_2ehpp_7',['simple.hpp',['https://ltla.github.io/subpar/simple_8hpp.html',1,'']]],
   ['simplematrix_8',['SimpleMatrix',['../classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; Index_, Data_ &gt;'],['../classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
-  ['subpar_9',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
-  ['subpar_2ehpp_10',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
+  ['size_9',['size',['../classknncolle_1_1NeighborQueue.html#a08ecb8b2fb208fba3213150b9a14f535',1,'knncolle::NeighborQueue']]],
+  ['subpar_10',['subpar',['https://ltla.github.io/subpar/namespacesubpar.html',1,'']]],
+  ['subpar_2ehpp_11',['subpar.hpp',['https://ltla.github.io/subpar/subpar_8hpp.html',1,'']]]
 ];
