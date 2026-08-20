@@ -40,8 +40,13 @@ jobs:
     - name: Get latest CMake
       uses: lukka/get-cmake@latest
 
-    - name: Configure release build
-      if: ${{ matrix.config.release }}
+    # For Mac builds, we force strict FP to ensure there aren't FMA contractions that cause slightly different FP results in our L2Normalized tests.
+    - name: Configure Mac release build
+      if: ${{ matrix.config.release && matrix.config.os == 'macos-latest' }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-ffp-model=strict"
+
+    - name: Configure Ubuntu release build
+      if: ${{ matrix.config.release && matrix.config.os == 'ubuntu-latest' }}
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: Configure Mac debug build

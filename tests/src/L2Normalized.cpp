@@ -11,14 +11,30 @@ TEST(L2Normalized, Basic) {
     {
         std::vector<double> empty(5);
         std::vector<double> buffer(5, 123456);
-        knncolle::internal::l2norm(empty.data(), 5, buffer.data());
+        knncolle::l2norm(empty.data(), 5, buffer.data());
         EXPECT_EQ(buffer, empty);
     }
 
     {
         std::vector<double> input { 3, 4 };
         std::vector<double> output(2);
-        knncolle::internal::l2norm(input.data(), 2, output.data());
+        knncolle::l2norm(input.data(), 2, output.data());
+        EXPECT_FLOAT_EQ(output[0], 0.6);
+        EXPECT_FLOAT_EQ(output[1], 0.8);
+    }
+
+    // Works with different types as well.
+    {
+        std::vector<int> empty(5);
+        std::vector<double> buffer(5, 123456);
+        knncolle::l2norm(empty.data(), 5, buffer.data());
+        EXPECT_EQ(buffer, std::vector<double>(5));
+    }
+
+    {
+        std::vector<int> input { 3, 4 };
+        std::vector<double> output(2);
+        knncolle::l2norm(input.data(), 2, output.data());
         EXPECT_FLOAT_EQ(output[0], 0.6);
         EXPECT_FLOAT_EQ(output[1], 0.8);
     }
@@ -41,7 +57,7 @@ TEST_F(L2NormalizedMatrixTest, Matrix) {
 
     for (int i = 0; i < nobs; ++i) {
         auto mptr = mext->next();
-        knncolle::internal::l2norm(mptr, ndim, mbuffer.data());
+        knncolle::l2norm(mptr, ndim, mbuffer.data());
         auto nptr = next->next();
         std::copy_n(nptr, ndim, nbuffer.begin());
         EXPECT_EQ(mbuffer, nbuffer);

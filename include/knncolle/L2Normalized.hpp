@@ -54,25 +54,40 @@ std::function<void(const std::filesystem::path&)>& custom_save_for_l2normalized_
 /**
  * @cond
  */
-namespace internal {
-
 template<typename Data_, typename Normalized_>
 void l2norm(const Data_* ptr, std::size_t ndim, Normalized_* buffer) {
-    Normalized_ l2 = 0;
-    for (std::size_t d = 0; d < ndim; ++d) {
-        Normalized_ val = ptr[d]; // cast to Normalized_ to avoid issues with integer overflow.
-        buffer[d] = val;
-        l2 += val * val;
-    }
-
-    if (l2 > 0) {
-        l2 = std::sqrt(l2);
+    if constexpr(std::is_same<Data_, Normalized_>::value) {
+        // If it's the same type, we don't need to do an up-front cast of 'ptr[d]' to Normalized_.
+        Normalized_ l2 = 0;
         for (std::size_t d = 0; d < ndim; ++d) {
-            buffer[d] /= l2;
+            l2 += ptr[d] * ptr[d];
         }
-    }
-}
 
+        if (l2 > 0) {
+            l2 = std::sqrt(l2);
+            for (std::size_t d = 0; d < ndim; ++d) {
+                buffer[d] = ptr[d] / l2;
+            }
+        } else {
+            std::fill_n(buffer, ndim, 0);
+        }    
+
+    } else {
+        // Otherwise, we do the cast first to avoid any surprises, e.g., from the squared value overflowing an integer 'Data_' type.
+        std::copy_n(ptr, ndim, buffer);
+
+        Normalized_ l2 = 0;
+        for (std::size_t d = 0; d < ndim; ++d) {
+            l2 += buffer[d] * buffer[d];
+        }
+
+        if (l2 > 0) {
+            l2 = std::sqrt(l2);
+            for (std::size_t d = 0; d < ndim; ++d) {
+                buffer[d] /= l2;
+            }
+        }    
+    }
 }
 
 template<typename Index_, typename Data_, typename Distance_, typename Normalized_, class Searcher_>
@@ -98,7 +113,7 @@ public:
 
     void search(const Data_* ptr, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         auto normalized = buffer.data();
-        internal::l2norm(ptr, buffer.size(), normalized);
+        l2norm(ptr, buffer.size(), normalized);
         my_searcher->search(normalized, k, output_indices, output_distances);
     }
 
@@ -113,7 +128,7 @@ public:
 
     Index_ search_all(const Data_* ptr, Distance_ threshold, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
         auto normalized = buffer.data();
-        internal::l2norm(ptr, buffer.size(), normalized);
+        l2norm(ptr, buffer.size(), normalized);
         return my_searcher->search_all(normalized, threshold, output_indices, output_distances);
     }
 };
@@ -186,7 +201,7 @@ public:
     const Normalized_* next() {
         auto raw = my_extractor->next();
         auto normalized = buffer.data();
-        internal::l2norm(raw, buffer.size(), normalized);
+        l2norm(raw, buffer.size(), normalized);
         return normalized;
     }
 };
