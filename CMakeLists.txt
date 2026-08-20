@@ -22,8 +22,8 @@ option(KNNCOLLE_FETCH_EXTERN "Automatically fetch knncolle's external dependenci
 if(KNNCOLLE_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
-    find_package(ltla_subpar 0.4.0 CONFIG REQUIRED)
-    find_package(ltla_sanisizer 0.1.5 CONFIG REQUIRED)
+    find_package(ltla_subpar 0.5.0 CONFIG REQUIRED)
+    find_package(ltla_sanisizer 0.2.0 CONFIG REQUIRED)
 endif()
 
 target_link_libraries(knncolle INTERFACE ltla::subpar ltla::sanisizer)
