@@ -11,20 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Get latest CMake
       uses: lukka/get-cmake@latest
 
-    - name: Install kmeans
-      run: |
-        git clone https://github.com/LTLA/CppKmeans dep-kmeans --depth=1
-        cd dep-kmeans
-        cmake -S . -B build -DKMEANS_TESTS=OFF
-        sudo cmake --install build
-
     - name: Configure the build
-      run: cmake -S . -B build -DKNNCOLLE_TESTS=OFF -DKNNCOLLE_FETCH_EXTERN=OFF
+      run: cmake -S . -B build -DKNNCOLLE_TESTS=OFF
 
     - name: Install the library
       run: sudo cmake --install build

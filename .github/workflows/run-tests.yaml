@@ -15,29 +15,42 @@ jobs:
       matrix:
         config:
         - {
-            name: "Ubuntu Latest GCC, coverage enabled", 
+            name: "Ubuntu Latest GCC, debug, coverage enabled", 
             os: ubuntu-latest,
             cov: true
           }
         - {
-            name: "macOS Latest Clang", 
+            name: "macOS Latest Clang, debug", 
+            os: macos-latest
+          }
+        - {
+            name: "Ubuntu Latest GCC, release", 
+            os: ubuntu-latest,
+            release: true
+          }
+        - {
+            name: "macOS Latest Clang, release", 
             os: macos-latest,
-            cov: false
+            release: true 
           }
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Get latest CMake
       uses: lukka/get-cmake@latest
 
-    - name: Configure the build
-      if: ${{ matrix.config.cov == false }}
-      run: cmake -S . -B build
+    - name: Configure release build
+      if: ${{ matrix.config.release }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Configure Mac debug build
+      if: ${{ !matrix.config.release && matrix.config.os == 'macos-latest' }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
     - name: Configure the build with coverage
-      if: ${{ matrix.config.cov == true }}
-      run: cmake -S . -B build -DCODE_COVERAGE=ON
+      if: ${{ matrix.config.cov }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=ON
 
     - name: Run the build
       run: cmake --build build
@@ -63,7 +76,7 @@ jobs:
 
     - name: Upload to Codecov
       if: ${{ matrix.config.cov == true }}
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v7
       with:
         directory: build/tests/CMakeFiles/libtest.dir/src/
       env:
