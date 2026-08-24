@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
+
 #include "knncolle/Bruteforce.hpp"
+#include "knncolle/cap_k.hpp"
 
 #include <vector>
 #include <memory>
@@ -14,7 +16,7 @@ protected:
 };
 
 TEST_P(BruteforceTest, FindEuclidean) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
@@ -55,7 +57,7 @@ TEST_P(BruteforceTest, FindEuclidean) {
 }
 
 TEST_P(BruteforceTest, FindManhattan) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto mandist = std::make_shared<knncolle::ManhattanDistance<double, double> >();
 
     knncolle::BruteforceBuilder<int, double, double> bb(mandist);
@@ -72,7 +74,7 @@ TEST_P(BruteforceTest, FindManhattan) {
 }
 
 TEST_P(BruteforceTest, QueryEuclidean) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
@@ -104,7 +106,7 @@ TEST_P(BruteforceTest, QueryEuclidean) {
 }
 
 TEST_P(BruteforceTest, AllEuclidean) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::BruteforceBuilder<int, double, double> bb(eucdist);
@@ -164,7 +166,7 @@ TEST_P(BruteforceTest, AllEuclidean) {
 }
 
 TEST_P(BruteforceTest, AllManhattan) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto mandist = std::make_shared<knncolle::ManhattanDistance<double, double> >();
 
     // Using Manhattan to test that no-op denormalization is done correctly.

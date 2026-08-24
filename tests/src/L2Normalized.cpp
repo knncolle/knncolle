@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
 #include "knncolle/Vptree.hpp"
 #include "knncolle/L2Normalized.hpp"
+#include "knncolle/cap_k.hpp"
 
 #include <vector>
 #include <cmath>
@@ -87,7 +89,7 @@ protected:
 };
 
 TEST_P(L2NormalizedTest, Find) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto normalized = l2normalize(ndim, nobs, data);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
@@ -115,7 +117,7 @@ TEST_P(L2NormalizedTest, Find) {
 }
 
 TEST_P(L2NormalizedTest, Query) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k_query(std::get<1>(GetParam()), nobs);
     auto normalized = l2normalize(ndim, nobs, data);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
@@ -146,7 +148,7 @@ TEST_P(L2NormalizedTest, Query) {
 }
 
 TEST_P(L2NormalizedTest, All) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto normalized = l2normalize(ndim, nobs, data);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 

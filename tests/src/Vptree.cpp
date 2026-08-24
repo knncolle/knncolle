@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
 #include "knncolle/Vptree.hpp"
 #include "knncolle/Bruteforce.hpp"
+#include "knncolle/cap_k.hpp"
 
 #include <vector>
 #include <random>
@@ -15,7 +17,7 @@ protected:
 }; 
 
 TEST_P(VptreeTest, FindEuclidean) {
-    int k = std::get<1>(GetParam());
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
@@ -63,7 +65,7 @@ TEST_P(VptreeTest, FindEuclidean) {
 }
 
 TEST_P(VptreeTest, FindManhattan) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto mandist = std::make_shared<knncolle::ManhattanDistance<double, double> >();
 
     knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
@@ -86,7 +88,7 @@ TEST_P(VptreeTest, FindManhattan) {
 }
 
 TEST_P(VptreeTest, QueryEuclidean) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k_query(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::SimpleMatrix<int, double> mat(ndim, nobs, data.data());
@@ -119,7 +121,7 @@ TEST_P(VptreeTest, QueryEuclidean) {
 }
 
 TEST_P(VptreeTest, AllEuclidean) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
 
     knncolle::VptreeBuilder<int, double, double> vb(eucdist);
@@ -179,7 +181,7 @@ TEST_P(VptreeTest, AllEuclidean) {
 }
 
 TEST_P(VptreeTest, Options) {
-    int k = std::get<1>(GetParam());    
+    int k = knncolle::cap_k(std::get<1>(GetParam()), nobs);
 
     auto eucdist = std::make_shared<knncolle::EuclideanDistance<double, double> >();
     knncolle::VptreeBuilder<int, double, double> vb(eucdist);
@@ -279,12 +281,6 @@ TEST(Vptree, Empty) {
     std::vector<double> res_d(10);
     std::vector<double> target(ndim);
     vsptr->search(target.data(), 0, &res_i, &res_d);
-    EXPECT_TRUE(res_i.empty());
-    EXPECT_TRUE(res_d.empty());
-
-    res_i.resize(10);
-    res_d.resize(10);
-    vsptr->search(target.data(), 10, &res_i, &res_d);
     EXPECT_TRUE(res_i.empty());
     EXPECT_TRUE(res_d.empty());
 

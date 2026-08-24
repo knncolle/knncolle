@@ -12,6 +12,7 @@
 #include "Vptree.hpp"
 
 #include "find_nearest_neighbors.hpp"
+#include "cap_k.hpp"
 #include "load_prebuilt.hpp"
 
 #include "NumericType.hpp"

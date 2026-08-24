@@ -46,6 +46,7 @@ add_executable(
     src/L2Normalized.cpp
     src/distances.cpp
     src/find_nearest_neighbors.cpp
+    src/cap_k.cpp
     src/load_prebuilt.cpp
     src/misc.cpp
     src/NumericType.cpp
