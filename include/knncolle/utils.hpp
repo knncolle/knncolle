@@ -37,7 +37,7 @@ void quick_save(const std::filesystem::path& path, const Input_* const contents,
     }
 
     output.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    output.write(reinterpret_cast<const char*>(contents), sanisizer::product<std::streamsize>(sizeof(Input_), sanisizer::attest_gez(length)));
+    output.write(reinterpret_cast<const char*>(contents), sanisizer::product<std::streamsize>(sizeof(Input_), length));
 }
 
 /**
@@ -61,7 +61,7 @@ void quick_load(const std::filesystem::path& path, Input_* const contents, const
     }
 
     input.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    input.read(reinterpret_cast<char*>(contents), sanisizer::product<std::streamsize>(sizeof(Input_), sanisizer::attest_gez(length)));
+    input.read(reinterpret_cast<char*>(contents), sanisizer::product<std::streamsize>(sizeof(Input_), length));
 }
 
 /**

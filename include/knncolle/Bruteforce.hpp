@@ -200,7 +200,7 @@ public:
         quick_load(dir / "NUM_OBS", &my_obs, 1);
         quick_load(dir / "NUM_DIM", &my_dim, 1);
 
-        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(sanisizer::attest_gez(my_obs), my_dim));
+        my_data.resize(sanisizer::product<I<decltype(my_data.size())> >(my_obs, my_dim));
         quick_load(dir / "DATA", my_data.data(), my_data.size());
 
         auto dptr = load_distance_metric_raw<Data_, Distance_>(dir / "DISTANCE");
@@ -269,7 +269,7 @@ public:
         auto work = data.new_known_extractor();
 
         // We assume that that vector::size_type <= size_t, otherwise data() wouldn't be a contiguous array.
-        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, sanisizer::attest_gez(nobs)));
+        std::vector<Data_> store(sanisizer::product<typename std::vector<Data_>::size_type>(ndim, nobs));
         for (Index_ o = 0; o < nobs; ++o) {
             std::copy_n(work->next(), ndim, store.data() + sanisizer::product_unsafe<std::size_t>(o, ndim));
         }
