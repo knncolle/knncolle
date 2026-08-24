@@ -107,14 +107,15 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="Vptree_8hpp.html">Vptree.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="find__nearest__neighbors_8hpp.html">find_nearest_neighbors.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="load__prebuilt_8hpp.html">load_prebuilt.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="NumericType_8hpp.html">NumericType.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="cap__k_8hpp.html">cap_k.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="load__prebuilt_8hpp.html">load_prebuilt.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="NumericType_8hpp.html">NumericType.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceknncolle.html">knncolle</a> {}</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="ttc" id="aBruteforce_8hpp_html"><div class="ttname"><a href="Bruteforce_8hpp.html">Bruteforce.hpp</a></div><div class="ttdoc">Implements a brute-force search for nearest neighbors.</div></div>
 <div class="ttc" id="aBuilder_8hpp_html"><div class="ttname"><a href="Builder_8hpp.html">Builder.hpp</a></div><div class="ttdoc">Interface to build nearest-neighbor indices.</div></div>
 <div class="ttc" id="aL2Normalized_8hpp_html"><div class="ttname"><a href="L2Normalized_8hpp.html">L2Normalized.hpp</a></div><div class="ttdoc">Wrapper for L2 normalization prior to search.</div></div>
@@ -122,10 +123,11 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aNumericType_8hpp_html"><div class="ttname"><a href="NumericType_8hpp.html">NumericType.hpp</a></div><div class="ttdoc">Preserve numeric types when saving prebuilt indices.</div></div>
 <div class="ttc" id="aPrebuilt_8hpp_html"><div class="ttname"><a href="Prebuilt_8hpp.html">Prebuilt.hpp</a></div><div class="ttdoc">Interface for prebuilt nearest-neighbor indices.</div></div>
 <div class="ttc" id="aVptree_8hpp_html"><div class="ttname"><a href="Vptree_8hpp.html">Vptree.hpp</a></div><div class="ttdoc">Implements a vantage point (VP) tree to search for nearest neighbors.</div></div>
+<div class="ttc" id="acap__k_8hpp_html"><div class="ttname"><a href="cap__k_8hpp.html">cap_k.hpp</a></div><div class="ttdoc">Cap the number of requested neighbors.</div></div>
 <div class="ttc" id="adistances_8hpp_html"><div class="ttname"><a href="distances_8hpp.html">distances.hpp</a></div><div class="ttdoc">Classes for distance calculations.</div></div>
 <div class="ttc" id="afind__nearest__neighbors_8hpp_html"><div class="ttname"><a href="find__nearest__neighbors_8hpp.html">find_nearest_neighbors.hpp</a></div><div class="ttdoc">Find nearest neighbors from an existing index.</div></div>
 <div class="ttc" id="aload__prebuilt_8hpp_html"><div class="ttname"><a href="load__prebuilt_8hpp.html">load_prebuilt.hpp</a></div><div class="ttdoc">Load prebuilt search indices from disk.</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:29</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

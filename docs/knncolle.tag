@@ -25,6 +25,12 @@
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
+    <name>cap_k.hpp</name>
+    <path>knncolle/</path>
+    <filename>cap__k_8hpp.html</filename>
+    <namespace>knncolle</namespace>
+  </compound>
+  <compound kind="file">
     <name>distances.hpp</name>
     <path>knncolle/</path>
     <filename>distances_8hpp.html</filename>
@@ -40,6 +46,7 @@
     <path>knncolle/</path>
     <filename>find__nearest__neighbors_8hpp.html</filename>
     <includes id="Prebuilt_8hpp" name="Prebuilt.hpp" local="yes" import="no" module="no" objc="no">Prebuilt.hpp</includes>
+    <includes id="cap__k_8hpp" name="cap_k.hpp" local="yes" import="no" module="no" objc="no">cap_k.hpp</includes>
     <namespace>knncolle</namespace>
   </compound>
   <compound kind="file">
@@ -54,6 +61,7 @@
     <includes id="Bruteforce_8hpp" name="Bruteforce.hpp" local="yes" import="no" module="no" objc="no">Bruteforce.hpp</includes>
     <includes id="Vptree_8hpp" name="Vptree.hpp" local="yes" import="no" module="no" objc="no">Vptree.hpp</includes>
     <includes id="find__nearest__neighbors_8hpp" name="find_nearest_neighbors.hpp" local="yes" import="no" module="no" objc="no">find_nearest_neighbors.hpp</includes>
+    <includes id="cap__k_8hpp" name="cap_k.hpp" local="yes" import="no" module="no" objc="no">cap_k.hpp</includes>
     <includes id="load__prebuilt_8hpp" name="load_prebuilt.hpp" local="yes" import="no" module="no" objc="no">load_prebuilt.hpp</includes>
     <includes id="NumericType_8hpp" name="NumericType.hpp" local="yes" import="no" module="no" objc="no">NumericType.hpp</includes>
     <namespace>knncolle</namespace>
@@ -792,6 +800,20 @@
       <enumvalue file="namespaceknncolle.html" anchor="a9aa73a4ad540791a911eb9fa64b51de3a696b031073e74bf2cb98e5ef201d4aa3">UNKNOWN</enumvalue>
     </member>
     <member kind="function">
+      <type>int</type>
+      <name>cap_k</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a926c81cd626de7081b073a891d352543</anchor>
+      <arglist>(int k, Index_ num_observations)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>cap_k_query</name>
+      <anchorfile>namespaceknncolle.html</anchorfile>
+      <anchor>a918d96e82ead9e67d7c008bde1e22505</anchor>
+      <arglist>(int k, Index_ num_observations)</arglist>
+    </member>
+    <member kind="function">
       <type>std::unordered_map&lt; std::string, LoadDistanceMetricFunction&lt; Data_, Distance_ &gt; &gt; &amp;</type>
       <name>load_distance_metric_registry</name>
       <anchorfile>namespaceknncolle.html</anchorfile>
@@ -825,20 +847,6 @@
       <anchorfile>namespaceknncolle.html</anchorfile>
       <anchor>a5faf80c12bbfbab853c41f6d001fe073</anchor>
       <arglist>(int num_workers, Task_ num_tasks, Run_ run_task_range)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cap_k</name>
-      <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a926c81cd626de7081b073a891d352543</anchor>
-      <arglist>(int k, Index_ num_observations)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>cap_k_query</name>
-      <anchorfile>namespaceknncolle.html</anchorfile>
-      <anchor>a918d96e82ead9e67d7c008bde1e22505</anchor>
-      <arglist>(int k, Index_ num_observations)</arglist>
     </member>
     <member kind="function">
       <type>NeighborList&lt; Index_, Distance_ &gt;</type>

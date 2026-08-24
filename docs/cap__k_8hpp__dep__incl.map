@@ -1,0 +1,8 @@
+<map id="knncolle/cap_k.hpp" name="knncolle/cap_k.hpp">
+<area shape="rect" id="Node000001" title="Cap the number of requested neighbors." alt="" coords="66,5,198,31"/>
+<area shape="rect" id="Node000002" href="$find__nearest__neighbors_8hpp.html" title="Find nearest neighbors from an existing index." alt="" coords="5,79,149,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,45,93,80,88,77,113,42"/>
+<area shape="rect" id="Node000003" href="$knncolle_8hpp.html" title="Umbrella header for all algorithms." alt="" coords="59,168,204,193"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="150,44,164,78,167,99,164,120,154,147,142,168,137,166,149,144,158,119,161,99,158,80,145,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,131,125,166,121,169,97,134"/>
+</map>

@@ -1,17 +1,19 @@
 <map id="knncolle/find_nearest_neighbors.hpp" name="knncolle/find_nearest_neighbors.hpp">
-<area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="459,5,603,46"/>
+<area shape="rect" id="Node000001" title="Find nearest neighbors from an existing index." alt="" coords="505,5,648,46"/>
 <area shape="rect" id="Node000002" href="$Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="180,94,269,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="459,48,285,93,284,88,458,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="505,46,285,95,284,90,504,40"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="394,241,452,267"/>
-<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="498,49,472,69,451,95,437,128,428,163,424,226,419,226,423,163,431,127,446,93,468,65,495,44"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="514,49,479,68,450,96,434,127,426,162,423,196,423,226,418,226,417,196,420,161,429,125,446,92,476,64,511,44"/>
 <area shape="rect" id="Node000009" title=" " alt="" coords="460,94,511,120"/>
-<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="522,48,503,82,498,79,517,45"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="556,48,513,86,509,82,552,44"/>
 <area shape="rect" id="Node000010" title=" " alt="" coords="536,94,617,120"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="545,45,564,79,559,82,540,48"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="641,94,792,120"/>
-<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="578,44,675,85,673,90,576,49"/>
-<area shape="rect" id="Node000012" href="/github/workspace/docs/subpar.tag$subpar_8hpp.html" title=" " alt="" coords="817,94,944,120"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="604,41,813,88,811,93,602,46"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="579,46,579,78,574,78,574,46"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="694,168,845,193"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="598,44,682,118,739,157,736,161,679,122,595,48"/>
+<area shape="rect" id="Node000012" href="/github/workspace/docs/subpar.tag$subpar_8hpp.html" title=" " alt="" coords="693,94,820,120"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="622,44,716,85,714,90,620,49"/>
+<area shape="rect" id="Node000013" href="$cap__k_8hpp.html" title="Cap the number of requested neighbors." alt="" coords="844,94,924,120"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="649,43,830,89,828,94,648,48"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="5,168,73,193"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,123,86,164,84,159,192,118"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="96,168,160,193"/>
@@ -23,4 +25,5 @@
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="353,192,399,229,395,233,349,196"/>
 <area shape="rect" id="Node000008" title=" " alt="" coords="292,241,370,267"/>
 <area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="338,194,336,226,330,226,333,193"/>
+<area shape="poly" id="edge14_Node000013_Node000011" title=" " alt="" coords="866,122,804,161,801,157,863,118"/>
 </map>

@@ -106,24 +106,27 @@ $(function(){ initResizable(false); });
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &quot;sanisizer/sanisizer.hpp&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://ltla.github.io/subpar/subpar_8hpp.html">subpar/subpar.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="cap__k_8hpp_source.html">cap_k.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for find_nearest_neighbors.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="find__nearest__neighbors_8hpp__incl.png" border="0" usemap="#aknncolle_2find__nearest__neighbors_8hpp" alt=""/></div>
 <map name="aknncolle_2find__nearest__neighbors_8hpp" id="aknncolle_2find__nearest__neighbors_8hpp">
-<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="459,5,603,46"/>
+<area shape="rect" title="Find nearest neighbors from an existing index." alt="" coords="505,5,648,46"/>
 <area shape="rect" href="Prebuilt_8hpp.html" title="Interface for prebuilt nearest&#45;neighbor indices." alt="" coords="180,94,269,120"/>
-<area shape="poly" title=" " alt="" coords="459,48,285,93,284,88,458,43"/>
+<area shape="poly" title=" " alt="" coords="505,46,285,95,284,90,504,40"/>
 <area shape="rect" title=" " alt="" coords="394,241,452,267"/>
-<area shape="poly" title=" " alt="" coords="498,49,472,69,451,95,437,128,428,163,424,226,419,226,423,163,431,127,446,93,468,65,495,44"/>
+<area shape="poly" title=" " alt="" coords="514,49,479,68,450,96,434,127,426,162,423,196,423,226,418,226,417,196,420,161,429,125,446,92,476,64,511,44"/>
 <area shape="rect" title=" " alt="" coords="460,94,511,120"/>
-<area shape="poly" title=" " alt="" coords="522,48,503,82,498,79,517,45"/>
+<area shape="poly" title=" " alt="" coords="556,48,513,86,509,82,552,44"/>
 <area shape="rect" title=" " alt="" coords="536,94,617,120"/>
-<area shape="poly" title=" " alt="" coords="545,45,564,79,559,82,540,48"/>
-<area shape="rect" title=" " alt="" coords="641,94,792,120"/>
-<area shape="poly" title=" " alt="" coords="578,44,675,85,673,90,576,49"/>
-<area shape="rect" target="_parent" href="https://ltla.github.io/subpar/subpar_8hpp.html" title=" " alt="" coords="817,94,944,120"/>
-<area shape="poly" title=" " alt="" coords="604,41,813,88,811,93,602,46"/>
+<area shape="poly" title=" " alt="" coords="579,46,579,78,574,78,574,46"/>
+<area shape="rect" title=" " alt="" coords="694,168,845,193"/>
+<area shape="poly" title=" " alt="" coords="598,44,682,118,739,157,736,161,679,122,595,48"/>
+<area shape="rect" target="_parent" href="https://ltla.github.io/subpar/subpar_8hpp.html" title=" " alt="" coords="693,94,820,120"/>
+<area shape="poly" title=" " alt="" coords="622,44,716,85,714,90,620,49"/>
+<area shape="rect" href="cap__k_8hpp.html" title="Cap the number of requested neighbors." alt="" coords="844,94,924,120"/>
+<area shape="poly" title=" " alt="" coords="649,43,830,89,828,94,648,48"/>
 <area shape="rect" title=" " alt="" coords="5,168,73,193"/>
 <area shape="poly" title=" " alt="" coords="194,123,86,164,84,159,192,118"/>
 <area shape="rect" title=" " alt="" coords="96,168,160,193"/>
@@ -135,6 +138,7 @@ Include dependency graph for find_nearest_neighbors.hpp:</div>
 <area shape="poly" title=" " alt="" coords="353,192,399,229,395,233,349,196"/>
 <area shape="rect" title=" " alt="" coords="292,241,370,267"/>
 <area shape="poly" title=" " alt="" coords="338,194,336,226,330,226,333,193"/>
+<area shape="poly" title=" " alt="" coords="866,122,804,161,801,157,863,118"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -167,12 +171,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073" id="r_a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplParams" colspan="2">template&lt;typename Task_ , class Run_ &gt; </td></tr>
 <tr class="memitem:a5faf80c12bbfbab853c41f6d001fe073"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">knncolle::parallelize</a> (int num_workers, Task_ num_tasks, Run_ run_task_range)</td></tr>
 <tr class="separator:a5faf80c12bbfbab853c41f6d001fe073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a926c81cd626de7081b073a891d352543" id="r_a926c81cd626de7081b073a891d352543"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
-<tr class="memitem:a926c81cd626de7081b073a891d352543"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a926c81cd626de7081b073a891d352543">knncolle::cap_k</a> (int k, Index_ num_observations)</td></tr>
-<tr class="separator:a926c81cd626de7081b073a891d352543"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a918d96e82ead9e67d7c008bde1e22505" id="r_a918d96e82ead9e67d7c008bde1e22505"><td class="memTemplParams" colspan="2">template&lt;typename Index_ &gt; </td></tr>
-<tr class="memitem:a918d96e82ead9e67d7c008bde1e22505"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a918d96e82ead9e67d7c008bde1e22505">knncolle::cap_k_query</a> (int k, Index_ num_observations)</td></tr>
-<tr class="separator:a918d96e82ead9e67d7c008bde1e22505"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c6d8b116464bab254bda34216338c3c" id="r_a2c6d8b116464bab254bda34216338c3c"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Data_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a2c6d8b116464bab254bda34216338c3c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespaceknncolle.html#a97693d779b6041859ffa0ef2d9c1500b">NeighborList</a>&lt; Index_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceknncolle.html#a2c6d8b116464bab254bda34216338c3c">knncolle::find_nearest_neighbors</a> (const <a class="el" href="classknncolle_1_1Prebuilt.html">Prebuilt</a>&lt; Index_, Data_, Distance_ &gt; &amp;index, int k, int num_threads=1)</td></tr>
 <tr class="separator:a2c6d8b116464bab254bda34216338c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>

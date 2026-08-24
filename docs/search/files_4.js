@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['l2normalized_2ehpp_0',['L2Normalized.hpp',['../L2Normalized_8hpp.html',1,'']]],
-  ['load_5fprebuilt_2ehpp_1',['load_prebuilt.hpp',['../load__prebuilt_8hpp.html',1,'']]]
+  ['knncolle_2ehpp_0',['knncolle.hpp',['../knncolle_8hpp.html',1,'']]]
 ];
