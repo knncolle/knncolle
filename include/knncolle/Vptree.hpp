@@ -73,6 +73,7 @@ private:
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        assert(k == 0 || k < my_parent.num_observations());
         my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
         auto iptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(my_parent.my_new_locations[i], my_parent.my_dim);
         my_parent.search_nn(iptr, my_nearest, my_history);
@@ -80,6 +81,7 @@ public:
     }
 
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        assert(k <= my_parent.num_observations());
         // Protect the NeighborQueue from k = 0. This also protects search_nn()
         // when there are no observations (and no node 0 to start recursion). 
         if (k == 0 || my_parent.my_nodes.empty()) {

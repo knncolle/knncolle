@@ -63,25 +63,30 @@ Check out the [reference documentation](https://knncolle.github.io/knncolle/) fo
 
 ## Searching in more detail
 
-We can perform the search manually by constructing a `Searcher` instance and looping over the elements of interest.
+For more control, we can perform the search manually by constructing a `Searcher` instance and looping over the elements of interest.
 Continuing with the same variables defined in the previous section, we could replace the `find_nearest_neighbors()` call with:
 
 ```cpp
 auto searcher = vp_index->initialize();
+
+// Search for up to 10 neighbors, but don't ask for more neighbors than there
+// are observations in the dataset. This capping is automatically done by
+// 'find_nearest_neighbors()' but here we call it manually.
+auto k = knncolle::cap_k(10, vp_index->num_observations());
+
 std::vector<int> indices;
 std::vector<double> distances;
 for (int o = 0; o < nobs; ++o) {
-    searcher->search(o, 10, &indices, &distances);
-    // Do something with the search results for 'o'.
+    searcher->search(o, k, &indices, &distances);
+    // 'indices' and 'distances' are populated with the search results for 'o'.
 }
 ```
 
-Similarly, we can query the prebuilt index for the neighbors of an arbitrary vector.
-The code below searches for the nearest 5 neighbors to a query vector at the origin:
+Either of `indices` and `distances` may be `NULL`, in which case the corresponding values are not reported.
+This allows implementations to skip the extraction of distances when only the identities of the neighbors are of interest.
 
 ```cpp
-std::vector<double> query(ndim);
-searcher->search(query.data(), 5, &indices, &distances);
+searcher->search(0, k, &indices, NULL);
 ```
 
 To parallelize the loop, we just need to construct a separate `Searcher` (and the result vector) for each thread.
@@ -95,18 +100,31 @@ This is already implemented in `find_nearest_neighbors()` but is also easy to do
     std::vector<double> distances;
     #pragma omp for
     for (int o = 0; o < nobs; ++o) {
-        searcher->search(o, 10, &indices, &distances);
+        searcher->search(o, k, &indices, &distances);
         // Do something with the search 'results' for 'o'.
     }
 }
 ```
 
-Either (or both) of `indices` and `distances` may be `NULL`, in which case the corresponding values are not reported.
-This allows implementations to skip the extraction of distances when only the identities of the neighbors are of interest.
+## Querying a dataset for neighbors 
+
+We can query the prebuilt index for the neighbors of an arbitrary vector.
+This is done by passing the pointer to the vector coordinates to `Searcher::search()` instead of the index of the observation of interest.
 
 ```cpp
-searcher->search(0, 5, &indices, NULL);
+std::vector<double> query(ndim); // populate with a query point.
+
+// Search for up to 5 neighbors, but don't ask for more
+// neighbors than there are observations in the dataset.
+auto query_k = knncolle::cap_k_query(5, vp_index->num_observations());
+
+searcher->search(query.data(), query_k, &indices, &distances);
 ```
+
+Note that `cap_k()` and `cap_k_query()` are subtly different.
+The former will cap the requested number of neighbors to `N - 1` where `N` is the number of observations in the dataset,
+while the latter will cap the requested number of neighbors to `N`.
+This is because `cap_k()` is intended for a neighbor search with an existing point in the dataset, which excludes the point itself as a neighbor.
 
 ## Finding all neighbors within range
 

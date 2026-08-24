@@ -17,6 +17,7 @@
 #include <string>
 #include <cstring>
 #include <filesystem>
+#include <cassert>
 
 #include "sanisizer/sanisizer.hpp"
 
@@ -60,6 +61,7 @@ private:
 
 public:
     void search(Index_ i, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        assert(k == 0 || k < my_parent.num_observations());
         my_nearest.reset(k + 1); // +1 is safe as k < num_obs.
         auto ptr = my_parent.my_data.data() + sanisizer::product_unsafe<std::size_t>(i, my_parent.my_dim);
         my_parent.search(ptr, my_nearest);
@@ -68,6 +70,7 @@ public:
     }
 
     void search(const Data_* query, Index_ k, std::vector<Index_>* output_indices, std::vector<Distance_>* output_distances) {
+        assert(k <= my_parent.num_observations());
         if (k == 0) { // protect the NeighborQueue from k = 0.
             if (output_indices) {
                 output_indices->clear();
