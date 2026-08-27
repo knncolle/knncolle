@@ -107,14 +107,14 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;random&gt;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;tuple&gt;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;cstring&gt;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;cstring&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;sanisizer/sanisizer.hpp&quot;</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
@@ -668,7 +668,7 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html_aca84dd37914e90d6504060e2eec0756d"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html#aca84dd37914e90d6504060e2eec0756d">knncolle::VptreeBuilder::build_known_raw</a></div><div class="ttdeci">auto build_known_raw(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Vptree.hpp:610</div></div>
 <div class="ttc" id="aclassknncolle_1_1VptreeBuilder_html_affd707389f62b53165c1163ef53f38b9"><div class="ttname"><a href="classknncolle_1_1VptreeBuilder.html#affd707389f62b53165c1163ef53f38b9">knncolle::VptreeBuilder::build_known_shared</a></div><div class="ttdeci">auto build_known_shared(const Matrix_ &amp;data) const</div><div class="ttdef"><b>Definition</b> Vptree.hpp:634</div></div>
 <div class="ttc" id="adistances_8hpp_html"><div class="ttname"><a href="distances_8hpp.html">distances.hpp</a></div><div class="ttdoc">Classes for distance calculations.</div></div>
-<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:30</div></div>
+<div class="ttc" id="anamespaceknncolle_html"><div class="ttname"><a href="namespaceknncolle.html">knncolle</a></div><div class="ttdoc">Collection of KNN algorithms.</div><div class="ttdef"><b>Definition</b> Bruteforce.hpp:31</div></div>
 <div class="ttc" id="anamespaceknncolle_html_a1e25b966ec80b5ab45dced14fe690e6b"><div class="ttname"><a href="namespaceknncolle.html#a1e25b966ec80b5ab45dced14fe690e6b">knncolle::quick_load</a></div><div class="ttdeci">void quick_load(const std::filesystem::path &amp;path, Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:57</div></div>
 <div class="ttc" id="anamespaceknncolle_html_ab636bced615a3a669ef0e207b5d848cc"><div class="ttname"><a href="namespaceknncolle.html#ab636bced615a3a669ef0e207b5d848cc">knncolle::count_all_neighbors_without_self</a></div><div class="ttdeci">Index_ count_all_neighbors_without_self(Index_ count)</div><div class="ttdef"><b>Definition</b> report_all_neighbors.hpp:23</div></div>
 <div class="ttc" id="anamespaceknncolle_html_acf69c31b24c8a2bda72371f64133f8b8"><div class="ttname"><a href="namespaceknncolle.html#acf69c31b24c8a2bda72371f64133f8b8">knncolle::quick_save</a></div><div class="ttdeci">void quick_save(const std::filesystem::path &amp;path, const Input_ *const contents, const Length_ length)</div><div class="ttdef"><b>Definition</b> utils.hpp:33</div></div>
