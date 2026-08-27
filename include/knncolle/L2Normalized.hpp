@@ -10,6 +10,7 @@
 #include <cstring>
 #include <string>
 #include <filesystem>
+#include <algorithm>
 
 #include "Searcher.hpp"
 #include "Prebuilt.hpp"

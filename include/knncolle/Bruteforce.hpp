@@ -18,6 +18,7 @@
 #include <cstring>
 #include <filesystem>
 #include <cassert>
+#include <algorithm>
 
 #include "sanisizer/sanisizer.hpp"
 

@@ -12,7 +12,6 @@
 #include <vector>
 #include <random>
 #include <limits>
-#include <tuple>
 #include <memory>
 #include <cstddef>
 #include <string>
@@ -20,6 +19,7 @@
 #include <filesystem>
 #include <cassert>
 #include <optional>
+#include <algorithm>
 
 #include "sanisizer/sanisizer.hpp"
 
